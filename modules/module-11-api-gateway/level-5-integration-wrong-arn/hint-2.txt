@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Fix the URI in the integration to use the correct Lambda ARN

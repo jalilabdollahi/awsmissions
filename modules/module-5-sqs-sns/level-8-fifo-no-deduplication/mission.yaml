@@ -1,0 +1,16 @@
+name: Duplicate Messages
+description: "FIFO queue exists but `ContentBasedDeduplication` is disabled and application\
+  \ doesn't provide `MessageDeduplicationId` \u2014 duplicates processed"
+objective: Enable content-based deduplication on the FIFO queue
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- SQS
+- SNS
+- event delivery
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-8-fifo-no-deduplication
+implementation_status: playable

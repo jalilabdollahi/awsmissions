@@ -1,0 +1,16 @@
+name: EC2 Can't Talk to AWS
+description: Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile
+objective: Create instance profile with IAM role and associate it with the instance
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- EC2
+- VPC
+- networking
+- roles
+- REST APIs
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-12-iam-instance-profile-missing
+implementation_status: playable

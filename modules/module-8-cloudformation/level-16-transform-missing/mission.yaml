@@ -1,0 +1,15 @@
+name: SAM Template Rejected
+description: 'Template uses `AWS::Serverless::Function` but is missing `Transform:
+  AWS::Serverless-2016-10-31`'
+objective: Add the Transform declaration at the template root
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- CloudFormation
+- stacks
+- templates
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-16-transform-missing
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Mapping template transforms request body but uses wrong field name — Lambda receives null values

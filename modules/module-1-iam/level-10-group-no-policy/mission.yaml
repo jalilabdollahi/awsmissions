@@ -1,0 +1,16 @@
+name: The Empty Club
+description: "User is in a group but the group has no policies \u2014 all actions\
+  \ denied"
+objective: Attach a policy to the group
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-10-group-no-policy
+implementation_status: playable

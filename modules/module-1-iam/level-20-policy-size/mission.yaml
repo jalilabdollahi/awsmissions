@@ -1,0 +1,16 @@
+name: The Bloated Policy
+description: "Inline policy exceeds 2,048 character limit \u2014 IAM rejects the PutRolePolicy\
+  \ call"
+objective: 'Refactor: extract into a managed policy and attach it'
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-20-policy-size
+implementation_status: playable

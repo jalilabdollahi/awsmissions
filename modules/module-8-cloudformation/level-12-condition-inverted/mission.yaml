@@ -1,0 +1,15 @@
+name: Wrong Condition Logic
+description: "Condition `IsProduction: !Equals [!Ref Env, dev]` \u2014 logic is inverted\
+  \ (true when env is dev, not prod)"
+objective: Fix the condition expression
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- CloudFormation
+- stacks
+- templates
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-12-condition-inverted
+implementation_status: playable

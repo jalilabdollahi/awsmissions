@@ -1,0 +1,16 @@
+name: No Paper Trail
+description: "S3 server access logging is disabled \u2014 access logs not being collected"
+objective: 'Enable logging: `aws s3api put-bucket-logging`'
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- REST APIs
+module: module-2-s3
+module_title: S3 Mastery
+level: level-17-logging-disabled
+implementation_status: playable

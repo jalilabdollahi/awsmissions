@@ -1,0 +1,15 @@
+name: The Orphan User
+description: IAM user exists but is in no group and has no policies attached
+objective: Create a group with a policy, add the user to the group
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-9-user-no-group
+implementation_status: playable

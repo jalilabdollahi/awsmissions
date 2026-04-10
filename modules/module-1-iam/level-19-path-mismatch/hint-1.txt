@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: IAM user exists at path `/ops/` but policy ARN references `/dev/` — condition on path fails

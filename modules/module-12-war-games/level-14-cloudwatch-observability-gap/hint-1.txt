@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda has no log group + metric filter on wrong log group + alarm period mismatch + no SNS action

@@ -1,0 +1,16 @@
+name: Can't Switch Hats
+description: "User policy is missing `sts:AssumeRole` \u2014 cannot switch to the\
+  \ target role"
+objective: Add `sts:AssumeRole` on the target role ARN
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-15-assume-role-no-sts
+implementation_status: playable

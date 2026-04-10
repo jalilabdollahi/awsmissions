@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Bucket ACL is set to `public-read` — all objects are publicly readable

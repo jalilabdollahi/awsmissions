@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Table's hash key `userId` is defined as type `N` (Number) but application sends String values — all writes rejected

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Stack resources were manually modified outside CFN — stack has drifted

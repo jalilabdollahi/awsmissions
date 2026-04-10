@@ -1,0 +1,17 @@
+name: Unguarded VPC
+description: "Lambda VPC config has subnets but no security groups \u2014 cannot configure\
+  \ network interface"
+objective: Add at least one security group to the VPC configuration
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+- VPCs
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-17-vpc-no-sg
+implementation_status: playable

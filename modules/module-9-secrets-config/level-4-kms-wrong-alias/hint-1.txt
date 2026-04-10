@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application uses `alias/production-key` but key was created with alias `alias/prod-key`

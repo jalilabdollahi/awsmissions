@@ -1,0 +1,15 @@
+name: Eternal Records
+description: "Application expects expired records to be cleaned up automatically \u2014\
+  \ TTL is not enabled"
+objective: 'Enable TTL on the `expiresAt` attribute: `aws dynamodb update-time-to-live`'
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-8-ttl-disabled
+implementation_status: playable

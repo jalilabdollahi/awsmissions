@@ -1,0 +1,17 @@
+name: Lost History
+description: "Application expects versioned objects but versioning is disabled \u2014\
+  \ previous versions unreachable"
+objective: 'Enable versioning: `aws s3api put-bucket-versioning`'
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- REST APIs
+module: module-2-s3
+module_title: S3 Mastery
+level: level-4-versioning-disabled
+implementation_status: playable

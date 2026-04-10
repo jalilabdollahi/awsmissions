@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Execution role exists but trust policy has `ec2.amazonaws.com` instead of `lambda.amazonaws.com`

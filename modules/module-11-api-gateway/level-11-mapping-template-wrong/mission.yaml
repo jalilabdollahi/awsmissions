@@ -1,0 +1,17 @@
+name: Garbled Request
+description: "Mapping template transforms request body but uses wrong field name \u2014\
+  \ Lambda receives null values"
+objective: Fix the VTL mapping template to correctly map request fields
+xp: 375
+difficulty: advanced
+expected_time: 25m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- lambda functions
+- templates
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-11-mapping-template-wrong
+implementation_status: playable

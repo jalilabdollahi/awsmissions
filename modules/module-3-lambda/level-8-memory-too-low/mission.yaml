@@ -1,0 +1,17 @@
+name: Out of Memory
+description: "Function crashes with memory error \u2014 configured at 128MB, needs\
+  \ 512MB"
+objective: 'Increase memory: `aws lambda update-function-configuration --memory-size
+  512`'
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-8-memory-too-low
+implementation_status: playable

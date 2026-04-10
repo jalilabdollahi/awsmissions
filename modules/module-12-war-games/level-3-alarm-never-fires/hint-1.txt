@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Error metric filter uses wrong pattern + alarm threshold inverted + alarm has no SNS action

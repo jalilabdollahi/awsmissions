@@ -1,0 +1,1 @@
+Use the AWS CLI command family for this service and compare the current state against the target configuration.

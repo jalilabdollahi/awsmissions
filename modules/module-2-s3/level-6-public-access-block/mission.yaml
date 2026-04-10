@@ -1,0 +1,17 @@
+name: The Force Field
+description: "Bucket policy grants public read but `BlockPublicPolicy` is true \u2014\
+  \ policy silently rejected"
+objective: 'Disable public access block: `aws s3api put-public-access-block`'
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+- policy debugging
+- buckets
+module: module-2-s3
+module_title: S3 Mastery
+level: level-6-public-access-block
+implementation_status: playable

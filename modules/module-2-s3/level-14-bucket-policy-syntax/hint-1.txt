@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Bucket policy JSON has a syntax error (missing closing bracket) — policy rejected

@@ -1,0 +1,15 @@
+name: Wrong Lambda
+description: Integration exists but Lambda ARN points to non-existent function
+objective: Fix the URI in the integration to use the correct Lambda ARN
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- lambda functions
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-5-integration-wrong-arn
+implementation_status: playable

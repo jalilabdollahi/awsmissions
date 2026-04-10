@@ -1,0 +1,17 @@
+name: App Can't Access AWS
+description: "Task starts but application inside container can't read from S3 \u2014\
+  \ task role has no S3 permission"
+objective: Add S3 read permissions to the task IAM role
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- roles
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-5-task-role-wrong-perms
+implementation_status: playable

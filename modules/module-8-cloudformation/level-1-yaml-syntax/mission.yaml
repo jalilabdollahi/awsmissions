@@ -1,0 +1,15 @@
+name: Parse Error
+description: "CFN template has a YAML indentation error \u2014 stack creation fails\
+  \ immediately"
+objective: Fix the YAML syntax error in the template
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- CloudFormation
+- stacks
+- templates
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-1-yaml-syntax
+implementation_status: playable

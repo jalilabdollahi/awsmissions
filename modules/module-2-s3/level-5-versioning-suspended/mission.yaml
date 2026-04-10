@@ -1,0 +1,14 @@
+name: Frozen in Time
+description: "Versioning is Suspended (not Enabled) \u2014 new versions are not created"
+objective: Change versioning status from `Suspended` to `Enabled`
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-5-versioning-suspended
+implementation_status: playable

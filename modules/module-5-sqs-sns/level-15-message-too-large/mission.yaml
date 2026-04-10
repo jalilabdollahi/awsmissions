@@ -1,0 +1,17 @@
+name: Message Size Exceeded
+description: "Application sends 300KB messages \u2014 SQS limit is 256KB \u2014 sends\
+  \ fail"
+objective: 'Use the SQS Extended Client pattern: store payload in S3, send S3 reference
+  in queue'
+xp: 300
+difficulty: intermediate
+expected_time: 20m
+concepts:
+- SQS
+- SNS
+- event delivery
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-15-message-too-large
+implementation_status: playable

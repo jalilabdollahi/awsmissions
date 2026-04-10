@@ -1,0 +1,16 @@
+name: No Backend
+description: "Method exists but has no integration \u2014 request returns empty 200"
+objective: 'Add Lambda proxy integration: `aws apigateway put-integration`'
+xp: 300
+difficulty: advanced
+expected_time: 18m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- lambda functions
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-4-integration-missing
+implementation_status: playable

@@ -1,0 +1,15 @@
+name: Silent Failure
+description: "Error metric is being published but no CloudWatch alarm is configured\
+  \ \u2014 nobody gets alerted"
+objective: Create a CloudWatch alarm on the error metric
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-5-alarm-missing
+implementation_status: playable

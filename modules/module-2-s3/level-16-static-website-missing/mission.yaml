@@ -1,0 +1,14 @@
+name: Silent Website
+description: "Static website hosting is disabled \u2014 requests return `NoSuchWebsiteConfiguration`"
+objective: Enable static website hosting with index.html and error.html
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-16-static-website-missing
+implementation_status: playable

@@ -1,0 +1,16 @@
+name: API Key Rejected
+description: API requires API key but no usage plan exists associating the key to
+  the stage
+objective: Create usage plan, associate API stage, and link API key to usage plan
+xp: 375
+difficulty: advanced
+expected_time: 25m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-12-api-key-no-plan
+implementation_status: playable

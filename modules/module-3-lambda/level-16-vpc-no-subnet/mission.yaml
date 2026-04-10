@@ -1,0 +1,16 @@
+name: Stranded in VPC
+description: "Lambda has VPC config but `SubnetIds` is empty \u2014 deployment fails"
+objective: Add the correct subnet IDs to VPC configuration
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+- VPCs
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-16-vpc-no-subnet
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Attribute name `status` is a DynamoDB reserved word — query using it as an expression attribute fails

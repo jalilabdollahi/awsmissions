@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: SNS subscription has a filter policy `{"eventType": ["nonexistent"]}` — no messages pass through

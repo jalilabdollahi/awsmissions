@@ -1,0 +1,5 @@
+{
+  "RoleArn": "arn:aws:iam::000000000000:role/external-id-role",
+  "RoleSessionName": "mission-session",
+  "ExternalId": "mission-external-id"
+}

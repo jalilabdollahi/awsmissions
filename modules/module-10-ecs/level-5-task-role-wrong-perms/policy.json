@@ -1,0 +1,5 @@
+{
+  "allow": [
+    "s3:GetObject"
+  ]
+}

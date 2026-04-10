@@ -1,0 +1,17 @@
+name: Wrong Service
+description: "Lambda execution role has `\"Service\": \"ec2.amazonaws.com\"` in trust\
+  \ policy \u2014 Lambda can't assume it"
+objective: Change service principal to `"lambda.amazonaws.com"`
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- lambda functions
+module: module-1-iam
+module_title: IAM Foundations
+level: level-7-wrong-service-principal
+implementation_status: playable

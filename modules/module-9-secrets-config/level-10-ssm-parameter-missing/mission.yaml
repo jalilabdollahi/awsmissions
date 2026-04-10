@@ -1,0 +1,16 @@
+name: Missing Config
+description: "Application reads SSM parameter `/mission/config/db-host` \u2014 parameter\
+  \ doesn't exist"
+objective: 'Create the parameter: `aws ssm put-parameter`'
+xp: 225
+difficulty: advanced
+expected_time: 12m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- parameter store
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-10-ssm-parameter-missing
+implementation_status: playable

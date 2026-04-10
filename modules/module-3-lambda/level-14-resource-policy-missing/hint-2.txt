@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com` principal

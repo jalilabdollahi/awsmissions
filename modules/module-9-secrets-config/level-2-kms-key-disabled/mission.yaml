@@ -1,0 +1,15 @@
+name: Disabled Key
+description: "KMS key exists but is disabled \u2014 encrypt/decrypt operations fail\
+  \ with `DisabledException`"
+objective: 'Enable the key: `aws kms enable-key`'
+xp: 225
+difficulty: advanced
+expected_time: 12m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-2-kms-key-disabled
+implementation_status: playable

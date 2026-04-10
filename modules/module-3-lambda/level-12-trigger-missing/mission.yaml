@@ -1,0 +1,17 @@
+name: The Silent Upload
+description: "S3 bucket receives files but Lambda is never triggered \u2014 event\
+  \ source mapping missing"
+objective: Add S3 notification configuration pointing to the Lambda function
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- buckets
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-12-trigger-missing
+implementation_status: playable

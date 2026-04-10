@@ -1,0 +1,5 @@
+Resources:
+  MissionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: {}

@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Fix bucket policy to allow `s3:GetObject` for the required principal

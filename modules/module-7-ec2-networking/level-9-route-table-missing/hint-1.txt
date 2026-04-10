@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0` via IGW

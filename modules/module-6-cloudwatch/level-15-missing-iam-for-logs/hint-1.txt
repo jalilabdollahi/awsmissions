@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda execution role is missing `logs:CreateLogStream` and `logs:PutLogEvents` permissions

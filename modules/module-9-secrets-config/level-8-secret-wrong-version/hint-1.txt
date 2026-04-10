@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application pinned to a specific secret version that no longer exists (was rotated)

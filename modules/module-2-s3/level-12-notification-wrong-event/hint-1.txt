@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: S3 event notification is configured but targets `s3:ObjectRemoved:*` instead of `s3:ObjectCreated:*`

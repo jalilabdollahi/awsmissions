@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Multipart uploads are being abandoned and accumulating cost — no lifecycle rule to abort them

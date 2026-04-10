@@ -1,0 +1,15 @@
+name: No Task Definition
+description: Service references task definition `mission-task` with no revision registered
+objective: 'Register the task definition: `aws ecs register-task-definition`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-2-task-definition-missing
+implementation_status: playable

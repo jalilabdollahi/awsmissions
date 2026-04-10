@@ -1,0 +1,16 @@
+name: Type Collision
+description: "Parameter declared as `Type: Number` but value passed is a string \u2014\
+  \ validation error"
+objective: Fix parameter type or the value being passed
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- parameter store
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-5-parameter-wrong-type
+implementation_status: playable

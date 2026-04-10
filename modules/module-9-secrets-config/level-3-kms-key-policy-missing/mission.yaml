@@ -1,0 +1,17 @@
+name: No Key Permission
+description: KMS key exists and is enabled but key policy doesn't grant the IAM role
+  permission to use it
+objective: Update the key policy to grant `kms:Encrypt`, `kms:Decrypt` to the role
+xp: 300
+difficulty: advanced
+expected_time: 18m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- policy debugging
+- roles
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-3-kms-key-policy-missing
+implementation_status: playable

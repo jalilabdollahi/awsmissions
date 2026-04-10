@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: ECS service create fails — cluster `mission-cluster` doesn't exist

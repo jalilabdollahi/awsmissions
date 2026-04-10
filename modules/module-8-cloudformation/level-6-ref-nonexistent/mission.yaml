@@ -1,0 +1,16 @@
+name: Missing Reference
+description: '`!Ref MyBucket` references a logical ID `MyBucket` that doesn''t exist
+  in the template'
+objective: Add the missing resource or fix the reference name
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-6-ref-nonexistent
+implementation_status: playable

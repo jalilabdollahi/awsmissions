@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Service A tries to reach Service B via DNS `service-b.local` — no Cloud Map service discovery configured

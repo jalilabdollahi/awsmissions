@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: KMS key rotation was enabled but application has old key ARN hardcoded — decryption fails after rotation

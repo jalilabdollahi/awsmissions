@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Delete and recreate as SecureString: `aws ssm put-parameter --type SecureString`

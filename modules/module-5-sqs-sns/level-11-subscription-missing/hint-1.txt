@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: SNS topic exists but has no subscriptions — published messages go nowhere

@@ -1,0 +1,18 @@
+name: Can't Pull Image
+description: "Task fails to start \u2014 no `executionRoleArn` set, so ECS can't pull\
+  \ the ECR image or write logs"
+objective: Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach
+  it
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- policy debugging
+- roles
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-4-execution-role-missing
+implementation_status: playable

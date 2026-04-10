@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Task starts but application crashes because required env var `APP_MODE` not in task definition

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: API requires AWS_IAM authorization but client expects no auth — all requests 403

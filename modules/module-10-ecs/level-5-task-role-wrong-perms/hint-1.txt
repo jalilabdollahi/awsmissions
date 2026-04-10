@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Task starts but application inside container can't read from S3 — task role has no S3 permission

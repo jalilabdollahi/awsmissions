@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias`

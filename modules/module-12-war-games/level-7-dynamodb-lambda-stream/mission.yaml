@@ -1,0 +1,17 @@
+name: Stream Silence
+description: DynamoDB Streams disabled + Lambda event source mapping wrong stream
+  ARN + Lambda role missing `dynamodb:GetRecords`
+objective: Diagnose and fix the misconfiguration(s) affecting stream silence.
+xp: 475
+difficulty: expert
+expected_time: 30m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- roles
+- lambda functions
+module: module-12-war-games
+module_title: Production War Games
+level: level-7-dynamodb-lambda-stream
+implementation_status: playable

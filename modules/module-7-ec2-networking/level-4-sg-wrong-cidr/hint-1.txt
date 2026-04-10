@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Security group inbound rule has CIDR `0.0.0.0/32` (single IP) instead of `0.0.0.0/0`

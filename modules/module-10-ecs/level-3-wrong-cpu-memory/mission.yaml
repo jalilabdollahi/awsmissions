@@ -1,0 +1,17 @@
+name: Invalid Config
+description: "Fargate task definition has CPU `256` with memory `256` \u2014 Fargate\
+  \ requires memory >= 512MB for 256 CPU units"
+objective: "Fix memory to a valid Fargate combination (256 CPU \u2192 512, 1024, or\
+  \ 2048 MB)"
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-3-wrong-cpu-memory
+implementation_status: playable

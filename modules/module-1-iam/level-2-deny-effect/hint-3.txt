@@ -1,0 +1,1 @@
+Set `Effect` to `Allow`, save the file, then run `aws iam put-role-policy --role-name uploader-role --policy-name uploader-policy --policy-document file://policy.json`.

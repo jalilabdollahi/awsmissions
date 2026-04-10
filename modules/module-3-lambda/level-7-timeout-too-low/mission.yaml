@@ -1,0 +1,17 @@
+name: Three Seconds and Out
+description: "Function needs 30 seconds to process but timeout is 3s \u2014 always\
+  \ times out"
+objective: 'Increase timeout to 60s: `aws lambda update-function-configuration --timeout
+  60`'
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-7-timeout-too-low
+implementation_status: playable

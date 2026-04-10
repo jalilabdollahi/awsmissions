@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Add route: `aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id igw-xxx`

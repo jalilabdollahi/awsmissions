@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Table is in PROVISIONED mode with 1 RCU/WCU — application load causes constant throttling

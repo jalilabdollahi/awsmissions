@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Role has `iam:CreateRole` + `iam:AttachRolePolicy` + `iam:PassRole` — can create admin role and escalate

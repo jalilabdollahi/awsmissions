@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Parameter declared as `Type: Number` but value passed is a string — validation error

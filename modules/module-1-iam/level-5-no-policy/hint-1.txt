@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: IAM role exists and is attached to Lambda but has zero policies — all calls denied

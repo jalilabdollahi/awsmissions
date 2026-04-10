@@ -1,0 +1,15 @@
+name: Rule Is Off
+description: "EventBridge rule exists but its state is `DISABLED` \u2014 no events\
+  \ are delivered"
+objective: 'Enable the rule: `aws events enable-rule`'
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-11-event-rule-disabled
+implementation_status: playable

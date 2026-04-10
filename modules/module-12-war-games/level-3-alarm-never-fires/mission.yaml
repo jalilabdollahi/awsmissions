@@ -1,0 +1,16 @@
+name: The Blind System
+description: Error metric filter uses wrong pattern + alarm threshold inverted + alarm
+  has no SNS action
+objective: Diagnose and fix the misconfiguration(s) affecting the blind system.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- alarms
+module: module-12-war-games
+module_title: Production War Games
+level: level-3-alarm-never-fires
+implementation_status: playable

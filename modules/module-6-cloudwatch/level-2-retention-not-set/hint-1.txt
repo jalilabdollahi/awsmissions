@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Log group exists but retention is set to `Never` — logs accumulate indefinitely

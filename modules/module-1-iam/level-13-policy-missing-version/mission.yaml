@@ -1,0 +1,16 @@
+name: Time Traveler
+description: "IAM policy document missing `\"Version\": \"2012-10-17\"` \u2014 policy\
+  \ variables don't resolve"
+objective: Add the Version field to the policy document
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-13-policy-missing-version
+implementation_status: playable

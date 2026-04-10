@@ -1,0 +1,15 @@
+name: Full Table Scan
+description: "Application uses `Scan` on a large table with a filter \u2014 extremely\
+  \ slow and expensive"
+objective: Identify the proper key schema and rewrite as a `Query` operation
+xp: 300
+difficulty: intermediate
+expected_time: 20m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-15-scan-instead-of-query
+implementation_status: playable

@@ -1,0 +1,17 @@
+name: No Image Found
+description: "Task definition references ECR image that doesn't exist \u2014 task\
+  \ fails to pull"
+objective: 'Push a valid image to ECR: `docker build`, `aws ecr get-login-password`,
+  `docker push`'
+xp: 300
+difficulty: advanced
+expected_time: 20m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-6-ecr-image-missing
+implementation_status: playable

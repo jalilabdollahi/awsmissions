@@ -1,0 +1,14 @@
+name: No Cluster
+description: "ECS service create fails \u2014 cluster `mission-cluster` doesn't exist"
+objective: 'Create cluster: `aws ecs create-cluster --cluster-name mission-cluster`'
+xp: 225
+difficulty: advanced
+expected_time: 12m
+concepts:
+- ECS
+- Fargate
+- task definitions
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-1-cluster-missing
+implementation_status: playable

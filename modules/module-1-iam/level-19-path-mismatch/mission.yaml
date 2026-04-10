@@ -1,0 +1,16 @@
+name: The Wrong Path
+description: "IAM user exists at path `/ops/` but policy ARN references `/dev/` \u2014\
+  \ condition on path fails"
+objective: Fix the role/user path or the policy path condition
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-19-path-mismatch
+implementation_status: playable

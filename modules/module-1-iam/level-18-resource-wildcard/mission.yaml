@@ -1,0 +1,17 @@
+name: Scope Creep
+description: "Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but\
+  \ app accesses multiple objects \u2014 only that file is allowed"
+objective: Change resource to `arn:aws:s3:::bucket/*`
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- buckets
+module: module-1-iam
+module_title: IAM Foundations
+level: level-18-resource-wildcard
+implementation_status: playable

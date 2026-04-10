@@ -1,0 +1,17 @@
+name: API Can't Invoke Lambda
+description: "Integration is correct but API Gateway can't invoke Lambda \u2014 missing\
+  \ resource policy"
+objective: 'Add Lambda permission: `aws lambda add-permission` for `apigateway.amazonaws.com`'
+xp: 300
+difficulty: advanced
+expected_time: 18m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- policy debugging
+- lambda functions
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-6-lambda-permission-missing
+implementation_status: playable

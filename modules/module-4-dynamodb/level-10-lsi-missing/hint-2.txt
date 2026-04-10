@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Delete and recreate table with the LSI included

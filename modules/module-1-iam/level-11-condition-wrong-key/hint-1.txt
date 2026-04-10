@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Policy has a condition block using wrong key: `"aws:sourceIp"` when it should be `"aws:SourceAccount"` — condition never matches

@@ -1,0 +1,16 @@
+name: The Roleless Function
+description: "Function has no execution role set \u2014 invocation rejected"
+objective: Create an IAM role with Lambda trust policy and assign it to the function
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- policy debugging
+- roles
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-4-role-missing
+implementation_status: playable

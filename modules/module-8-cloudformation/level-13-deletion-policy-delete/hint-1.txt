@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: S3 bucket resource has no `DeletionPolicy` (defaults to Delete) — stack deletion will wipe data

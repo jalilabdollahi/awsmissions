@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Internet gateway exists but is not attached to the VPC — no internet access

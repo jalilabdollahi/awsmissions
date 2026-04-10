@@ -1,0 +1,16 @@
+name: Stack Refuses to Update
+description: Stack in ROLLBACK_COMPLETE + export name conflict + deletion policy missing
+  on RDS
+objective: Diagnose and fix the misconfiguration(s) affecting stack refuses to update.
+xp: 475
+difficulty: expert
+expected_time: 35m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+module: module-12-war-games
+module_title: Production War Games
+level: level-8-cfn-stack-broken
+implementation_status: playable

@@ -1,0 +1,16 @@
+name: Path Confusion
+description: Application reads `/production/db/password` but parameter was created
+  at `/prod/db/password`
+objective: Create parameter at the correct path or fix the application path config
+xp: 225
+difficulty: advanced
+expected_time: 12m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- parameter store
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-12-ssm-wrong-path
+implementation_status: playable

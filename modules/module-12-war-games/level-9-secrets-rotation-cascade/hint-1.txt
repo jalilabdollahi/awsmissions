@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Secret ARN changed after rotation + Lambda env var has old ARN + IAM policy uses ARN not name

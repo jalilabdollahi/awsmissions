@@ -1,0 +1,17 @@
+name: SNS Can't Send
+description: "SNS topic configured to deliver to SQS queue but queue policy doesn't\
+  \ allow SNS to send \u2014 messages lost"
+objective: Add queue policy allowing SNS service to `sqs:SendMessage`
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- SQS
+- SNS
+- event delivery
+- policy debugging
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-9-queue-policy-missing
+implementation_status: playable

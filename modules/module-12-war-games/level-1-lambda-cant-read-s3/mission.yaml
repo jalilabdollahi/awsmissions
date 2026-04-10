@@ -1,0 +1,17 @@
+name: The Blocked Pipeline
+description: Lambda role missing `s3:GetObject` AND bucket policy has explicit Deny
+  for Lambda role
+objective: Diagnose and fix the misconfiguration(s) affecting the blocked pipeline.
+xp: 400
+difficulty: expert
+expected_time: 25m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- roles
+module: module-12-war-games
+module_title: Production War Games
+level: level-1-lambda-cant-read-s3
+implementation_status: playable

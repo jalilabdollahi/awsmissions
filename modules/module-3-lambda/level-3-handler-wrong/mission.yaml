@@ -1,0 +1,16 @@
+name: The Missing Door
+description: "Function is deployed but handler is `main.handler` \u2014 file is actually\
+  \ `index.py` with function `lambda_handler`"
+objective: Fix handler to `index.lambda_handler`
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-3-handler-wrong
+implementation_status: playable

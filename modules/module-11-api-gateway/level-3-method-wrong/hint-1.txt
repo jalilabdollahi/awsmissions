@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: `POST /items` resource only has a `GET` method configured — POST returns 405

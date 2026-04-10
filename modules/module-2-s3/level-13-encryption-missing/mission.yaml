@@ -1,0 +1,16 @@
+name: Plaintext Exposure
+description: "Bucket has no default encryption \u2014 objects stored unencrypted"
+objective: 'Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption`'
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- REST APIs
+module: module-2-s3
+module_title: S3 Mastery
+level: level-13-encryption-missing
+implementation_status: playable

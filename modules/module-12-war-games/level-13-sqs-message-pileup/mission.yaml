@@ -1,0 +1,17 @@
+name: Queue Meltdown
+description: DLQ ARN wrong in redrive policy + visibility timeout too low + no alarm
+  on DLQ depth
+objective: Diagnose and fix the misconfiguration(s) affecting queue meltdown.
+xp: 475
+difficulty: expert
+expected_time: 30m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- alarms
+module: module-12-war-games
+module_title: Production War Games
+level: level-13-sqs-message-pileup
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: `!FindInMap [RegionMap, !Ref AWS::Region, AMI]` — the `us-east-1` key is missing from the Mappings section

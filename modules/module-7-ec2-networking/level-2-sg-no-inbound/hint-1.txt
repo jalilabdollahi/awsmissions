@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Security group exists but has no inbound rules — all inbound traffic blocked (port 22, 80, 443)

@@ -1,0 +1,17 @@
+name: Missing Requirement
+description: "`AWS::SQS::Queue` resource is missing required `QueueName` \u2014 wait,\
+  \ QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)"
+objective: Add the missing required property
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- policy debugging
+- roles
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-3-missing-required-property
+implementation_status: playable

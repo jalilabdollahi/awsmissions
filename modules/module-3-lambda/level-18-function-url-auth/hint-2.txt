@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`

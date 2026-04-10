@@ -1,0 +1,11 @@
+name: "No Bucket, No Service"
+description: "The application expects an S3 bucket named mission-bucket, but it does not exist in the local AWS environment."
+objective: "Create the missing S3 bucket so the application can start storing objects."
+xp: 100
+difficulty: "beginner"
+expected_time: "3m"
+concepts:
+  - S3 bucket creation
+  - aws s3 mb
+module: "module-2-s3"
+level: "level-1-bucket-missing"

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Instance launch fails — no security group specified and no default SG exists in VPC

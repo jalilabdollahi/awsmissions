@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Task definition exposes port 8080 but load balancer target group expects port 80

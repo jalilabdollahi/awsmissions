@@ -1,0 +1,15 @@
+name: Too Granular
+description: "Alarm evaluation period is 10s but the metric is published every 5 minutes\
+  \ \u2014 alarm never evaluates"
+objective: Fix period to match metric publish interval (300 seconds)
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-9-alarm-wrong-period
+implementation_status: playable

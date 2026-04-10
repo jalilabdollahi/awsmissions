@@ -1,0 +1,14 @@
+name: Wrong Domain Allowed
+description: CORS is configured but allows `https://wrong-app.com` instead of `https://myapp.com`
+objective: Fix the AllowedOrigins value in the CORS rule
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-8-cors-wrong-origin
+implementation_status: playable

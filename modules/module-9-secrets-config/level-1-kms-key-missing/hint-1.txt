@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application tries to encrypt using KMS key alias `alias/mission-key` — key doesn't exist

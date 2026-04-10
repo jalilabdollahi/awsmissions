@@ -1,0 +1,1 @@
+ALARM(alarm-a) AND ALARM(alarm-b)

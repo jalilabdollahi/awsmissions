@@ -1,0 +1,15 @@
+name: Watching the Wrong Door
+description: S3 trigger is configured but points to `wrong-bucket` instead of `uploads-bucket`
+objective: Fix the event source to point to the correct bucket
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- buckets
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-13-trigger-wrong-bucket
+implementation_status: playable

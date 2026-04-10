@@ -1,0 +1,15 @@
+name: Reserved Words
+description: "Attribute name `status` is a DynamoDB reserved word \u2014 query using\
+  \ it as an expression attribute fails"
+objective: Use Expression Attribute Names (`#s = :val`) in the query
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-14-reserved-word-attr
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda expects raw message body but SNS wraps it in an envelope — JSON parsing fails

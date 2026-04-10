@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: ECS task in private subnet + no NAT route + security group blocks 443 egress + execution role missing ecr permission

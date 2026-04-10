@@ -1,0 +1,15 @@
+name: Zero Tasks
+description: "Service exists but `desiredCount` is 0 \u2014 no tasks running"
+objective: 'Update service: `aws ecs update-service --desired-count 2`'
+xp: 225
+difficulty: advanced
+expected_time: 12m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-8-service-desired-zero
+implementation_status: playable

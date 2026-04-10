@@ -1,0 +1,16 @@
+name: The Mute Alarm
+description: "Alarm fires (changes state to ALARM) but no action is configured \u2014\
+  \ nobody is notified"
+objective: 'Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm`'
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudWatch
+- logs
+- alarms
+- topics
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-7-alarm-no-action
+implementation_status: playable

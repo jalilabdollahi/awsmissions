@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Template has a Parameter with no Default and no value passed at deploy — create fails

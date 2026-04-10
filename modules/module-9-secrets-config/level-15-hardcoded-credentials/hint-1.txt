@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded in environment variables

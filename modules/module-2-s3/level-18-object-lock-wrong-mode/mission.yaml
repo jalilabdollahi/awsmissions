@@ -1,0 +1,15 @@
+name: Too Flexible
+description: Object lock is in `GOVERNANCE` mode but compliance requirements need
+  `COMPLIANCE` mode
+objective: Change retention mode to `COMPLIANCE` on the object
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-18-object-lock-wrong-mode
+implementation_status: playable

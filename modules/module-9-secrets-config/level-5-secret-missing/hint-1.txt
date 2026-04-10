@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application calls `GetSecretValue` for `mission/db-password` — secret doesn't exist

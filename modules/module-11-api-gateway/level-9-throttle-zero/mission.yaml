@@ -1,0 +1,15 @@
+name: All Requests Throttled
+description: "Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` \u2014\
+  \ every request throttled"
+objective: Update stage settings to allow reasonable throttle limits
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-9-throttle-zero
+implementation_status: playable

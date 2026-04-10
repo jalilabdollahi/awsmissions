@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Bucket policy only allows `s3:GetObject` — PutObject is denied

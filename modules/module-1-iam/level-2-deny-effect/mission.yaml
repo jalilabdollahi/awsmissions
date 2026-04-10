@@ -1,0 +1,12 @@
+name: "Wrong Side of the Law"
+description: "The IAM policy for an upload service explicitly denies writes to the mission bucket, so PutObject requests always fail. Edit the local policy file and re-apply it."
+objective: "Change policy.json from Deny to Allow for s3:PutObject on uploads-bucket, then apply it to role uploader-role."
+xp: 100
+difficulty: "beginner"
+expected_time: "5m"
+concepts:
+  - IAM Effect
+  - explicit deny
+  - s3:PutObject
+module: "module-1-iam"
+level: "level-2-deny-effect"

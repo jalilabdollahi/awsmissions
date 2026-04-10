@@ -1,0 +1,16 @@
+name: The Locked Door
+description: "Lambda function URL is configured with `AuthType: AWS_IAM` \u2014 public\
+  \ HTTP requests return 403"
+objective: 'Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`'
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-18-function-url-auth
+implementation_status: playable

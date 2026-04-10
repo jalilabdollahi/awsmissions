@@ -1,0 +1,15 @@
+name: The Overprotective Guard
+description: PutItem has a ConditionExpression `attribute_not_exists(id)` that prevents
+  updating an existing item
+objective: Remove or change the condition expression to allow the update
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-13-condition-blocks-write
+implementation_status: playable

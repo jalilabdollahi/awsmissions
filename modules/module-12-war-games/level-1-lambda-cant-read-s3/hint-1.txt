@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda role missing `s3:GetObject` AND bucket policy has explicit Deny for Lambda role

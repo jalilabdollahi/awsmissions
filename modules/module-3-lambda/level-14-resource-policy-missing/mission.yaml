@@ -1,0 +1,18 @@
+name: Permission Denied by Lambda
+description: S3 configured to invoke Lambda but Lambda resource policy doesn't allow
+  S3 service
+objective: 'Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com`
+  principal'
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- policy debugging
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-14-resource-policy-missing
+implementation_status: playable

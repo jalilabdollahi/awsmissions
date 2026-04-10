@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Function has no execution role set — invocation rejected

@@ -1,0 +1,17 @@
+name: No Path Configured
+description: "API exists but the `/items` resource path doesn't exist \u2014 404 on\
+  \ all requests"
+objective: 'Create the resource: `aws apigateway create-resource` with correct path
+  part'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-2-resource-missing
+implementation_status: playable

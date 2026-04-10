@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Add egress rule allowing all outbound: `0.0.0.0/0`

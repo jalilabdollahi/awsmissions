@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Error metric is being published but no CloudWatch alarm is configured — nobody gets alerted

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda function URL is configured with `AuthType: AWS_IAM` — public HTTP requests return 403

@@ -1,0 +1,17 @@
+name: Access Denied to Secret
+description: Secret exists but IAM role is missing `secretsmanager:GetSecretValue`
+  permission
+objective: Add the required permission to the role policy
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- policy debugging
+- roles
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-7-secret-no-permission
+implementation_status: playable

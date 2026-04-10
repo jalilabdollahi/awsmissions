@@ -1,0 +1,16 @@
+name: No Network
+description: "Application requires a VPC with specific CIDR block \u2014 only the\
+  \ default VPC exists"
+objective: 'Create a new VPC: `aws ec2 create-vpc --cidr-block 10.0.0.0/16`'
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- EC2
+- VPC
+- networking
+- VPCs
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-6-vpc-missing
+implementation_status: playable

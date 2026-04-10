@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: API exists but the `/items` resource path doesn't exist — 404 on all requests

@@ -1,0 +1,16 @@
+name: The Throttled Function
+description: "Function has reserved concurrency set to `0` \u2014 all invocations\
+  \ are throttled immediately"
+objective: 'Remove or increase reserved concurrency: `aws lambda put-function-concurrency`'
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-9-concurrency-zero
+implementation_status: playable

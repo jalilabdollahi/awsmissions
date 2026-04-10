@@ -1,0 +1,16 @@
+name: Internet Gap
+description: "Internet gateway exists but is not attached to the VPC \u2014 no internet\
+  \ access"
+objective: 'Attach the IGW to the VPC: `aws ec2 attach-internet-gateway`'
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- EC2
+- VPC
+- networking
+- VPCs
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-8-igw-not-attached
+implementation_status: playable

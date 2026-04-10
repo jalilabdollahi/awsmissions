@@ -1,0 +1,15 @@
+name: Mismatched Pattern
+description: "EventBridge rule has `\"source\": [\"aws.ec3\"]` (typo) instead of `\"\
+  aws.ec2\"` \u2014 events never match"
+objective: Fix the event pattern
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-13-event-pattern-wrong
+implementation_status: playable

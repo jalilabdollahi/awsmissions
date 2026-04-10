@@ -1,0 +1,17 @@
+name: Policy Lock
+description: "Stack update policy prevents changes to the S3 bucket resource \u2014\
+  \ update fails"
+objective: 'Update or remove the stack policy: `aws cloudformation set-stack-policy`'
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- policy debugging
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-14-stack-policy-blocks
+implementation_status: playable

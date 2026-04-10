@@ -1,0 +1,15 @@
+name: Can't Find Service
+description: "Service A tries to reach Service B via DNS `service-b.local` \u2014\
+  \ no Cloud Map service discovery configured"
+objective: Set up AWS Cloud Map namespace and service, link to ECS service
+xp: 375
+difficulty: advanced
+expected_time: 25m
+concepts:
+- ECS
+- Fargate
+- task definitions
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-15-service-discovery-missing
+implementation_status: playable

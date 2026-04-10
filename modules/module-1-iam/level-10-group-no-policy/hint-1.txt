@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: User is in a group but the group has no policies — all actions denied

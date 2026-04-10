@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Create the REST API: `aws apigateway create-rest-api`

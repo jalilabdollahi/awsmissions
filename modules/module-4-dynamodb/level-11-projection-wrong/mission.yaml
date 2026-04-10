@@ -1,0 +1,15 @@
+name: Half the Picture
+description: 'GSI `category-index` has `ProjectionType: KEYS_ONLY` but application
+  needs all attributes'
+objective: 'Delete the GSI and recreate it with `ProjectionType: ALL`'
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-11-projection-wrong
+implementation_status: playable

@@ -1,0 +1,16 @@
+name: CORS Error
+description: "API works from CLI but web browser gets CORS error \u2014 OPTIONS method\
+  \ and CORS headers not configured"
+objective: Enable CORS on the resource (add OPTIONS method + response headers)
+xp: 325
+difficulty: advanced
+expected_time: 20m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-8-cors-missing
+implementation_status: playable

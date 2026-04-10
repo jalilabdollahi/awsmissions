@@ -1,0 +1,15 @@
+name: Always Firing
+description: "Alarm threshold is `0` \u2014 alarm fires constantly even with zero\
+  \ errors"
+objective: Set a reasonable threshold (e.g., `5`) for the alarm
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-6-alarm-wrong-threshold
+implementation_status: playable

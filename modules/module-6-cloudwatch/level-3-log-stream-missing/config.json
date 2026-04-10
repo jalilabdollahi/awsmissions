@@ -1,0 +1,4 @@
+{
+  "logGroupName": "/aws/lambda/mission-function",
+  "logStreamName": "mission-stream"
+}

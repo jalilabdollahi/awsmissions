@@ -1,0 +1,16 @@
+name: Message Ghost
+description: "Visibility timeout is 5 seconds \u2014 workers take 30s to process,\
+  \ messages become visible again and are re-processed"
+objective: 'Increase visibility timeout to 60s: `aws sqs set-queue-attributes`'
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- SQS
+- SNS
+- event delivery
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-3-visibility-too-low
+implementation_status: playable

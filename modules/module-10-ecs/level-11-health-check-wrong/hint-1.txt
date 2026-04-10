@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Container health check command is `CMD ["curl", "http://localhost/wrong-path"]` — always fails

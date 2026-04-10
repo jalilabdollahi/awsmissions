@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda function should trigger on object upload — S3 event notification not configured

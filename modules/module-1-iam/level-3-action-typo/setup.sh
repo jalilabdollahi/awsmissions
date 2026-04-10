@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source ../../../scripts/aws_helpers.sh
+
+aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
+printf 'classified\n' > /tmp/awsmissions-level3.txt
+aws_local s3 cp /tmp/awsmissions-level3.txt s3://mission-bucket/data.txt >/dev/null
+
+aws_local iam create-role \
+  --role-name object-reader-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
+
+for _ in {1..10}; do
+  if aws_local iam get-role --role-name object-reader-role >/dev/null 2>&1; then
+    break
+  fi
+  sleep 1
+done
+
+aws_local iam put-role-policy \
+  --role-name object-reader-role \
+  --policy-name object-reader-policy \
+  --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+
+echo "Broken IAM role created: object-reader-role"

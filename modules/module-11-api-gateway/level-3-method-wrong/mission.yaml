@@ -1,0 +1,15 @@
+name: Wrong HTTP Method
+description: "`POST /items` resource only has a `GET` method configured \u2014 POST\
+  \ returns 405"
+objective: Add a POST method to the resource
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-3-method-wrong
+implementation_status: playable

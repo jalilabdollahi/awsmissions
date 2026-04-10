@@ -1,0 +1,17 @@
+name: Dangerous Delete
+description: "S3 bucket resource has no `DeletionPolicy` (defaults to Delete) \u2014\
+  \ stack deletion will wipe data"
+objective: 'Add `DeletionPolicy: Retain` to the bucket resource'
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- policy debugging
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-13-deletion-policy-delete
+implementation_status: playable

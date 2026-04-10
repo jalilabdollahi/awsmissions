@@ -1,0 +1,16 @@
+name: Missing Dependency
+description: "Function references a Lambda layer ARN that doesn't exist \u2014 init\
+  \ fails"
+objective: Create the layer and update the function to use the correct ARN
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-11-layer-wrong-arn
+implementation_status: playable

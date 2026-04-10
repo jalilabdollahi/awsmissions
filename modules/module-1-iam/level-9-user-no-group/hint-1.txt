@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: IAM user exists but is in no group and has no policies attached

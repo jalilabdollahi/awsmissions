@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Task fails to start — no `executionRoleArn` set, so ECS can't pull the ECR image or write logs

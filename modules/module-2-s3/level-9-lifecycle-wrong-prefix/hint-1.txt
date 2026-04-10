@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lifecycle rule exists to expire objects after 30 days but prefix is `logs/` while objects are under `app-logs/` — objects never expire

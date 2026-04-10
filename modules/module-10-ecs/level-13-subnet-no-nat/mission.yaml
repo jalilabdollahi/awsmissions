@@ -1,0 +1,18 @@
+name: No Internet in Private
+description: "Fargate task in private subnet with no NAT gateway \u2014 task can't\
+  \ pull image or reach AWS APIs"
+objective: Either move to public subnet or note that NAT gateway is needed (add route
+  via NAT)
+xp: 325
+difficulty: advanced
+expected_time: 20m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- subnets
+- routing
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-13-subnet-no-nat
+implementation_status: playable

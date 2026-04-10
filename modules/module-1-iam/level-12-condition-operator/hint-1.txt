@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Policy condition uses `StringEquals` for a value that requires wildcard matching — use `StringLike`

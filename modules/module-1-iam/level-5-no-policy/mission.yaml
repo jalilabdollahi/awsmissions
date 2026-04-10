@@ -1,0 +1,17 @@
+name: The Bare Role
+description: "IAM role exists and is attached to Lambda but has zero policies \u2014\
+  \ all calls denied"
+objective: Attach a managed policy or put an inline policy granting required permissions
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- lambda functions
+module: module-1-iam
+module_title: IAM Foundations
+level: level-5-no-policy
+implementation_status: playable

@@ -1,0 +1,17 @@
+name: Secret Not Found
+description: "Task definition references Secrets Manager ARN that doesn't exist \u2014\
+  \ task fails to start"
+objective: Fix the ARN in the `secrets` section of the task definition
+xp: 300
+difficulty: advanced
+expected_time: 18m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- secrets
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-10-secrets-wrong-arn
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: ECS task: execution role missing + wrong ECR image ARN + health check command wrong

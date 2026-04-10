@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda alias `production` points to version `5` which was deleted — invocations fail

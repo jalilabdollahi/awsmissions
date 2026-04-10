@@ -1,0 +1,15 @@
+name: Out of Capacity
+description: "Table is in PROVISIONED mode with 1 RCU/WCU \u2014 application load\
+  \ causes constant throttling"
+objective: Increase provisioned capacity or switch to PAY_PER_REQUEST
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-6-capacity-throttle
+implementation_status: playable

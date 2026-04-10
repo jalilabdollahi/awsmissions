@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Change method authorization to `NONE` or provide correct SigV4 headers

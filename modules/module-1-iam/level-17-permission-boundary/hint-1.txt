@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: IAM role has a permission boundary that blocks S3 access even though the identity policy allows it

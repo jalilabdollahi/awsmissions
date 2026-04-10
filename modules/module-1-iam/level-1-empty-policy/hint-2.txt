@@ -1,0 +1,1 @@
+After editing `policy.json`, apply it with `aws iam put-role-policy --role-name report-reader-role --policy-name report-reader-policy --policy-document file://policy.json`.

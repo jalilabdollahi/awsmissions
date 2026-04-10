@@ -1,0 +1,15 @@
+name: Wrong Destination
+description: EventBridge rule has the wrong Lambda ARN as target
+objective: Update the rule target to the correct Lambda ARN
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- CloudWatch
+- logs
+- alarms
+- lambda functions
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-12-event-rule-wrong-target
+implementation_status: playable

@@ -1,0 +1,1 @@
+Use `aws s3 mb` to create `s3://mission-bucket`.

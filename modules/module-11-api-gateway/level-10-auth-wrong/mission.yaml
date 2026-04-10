@@ -1,0 +1,16 @@
+name: Authorization Required
+description: "API requires AWS_IAM authorization but client expects no auth \u2014\
+  \ all requests 403"
+objective: Change method authorization to `NONE` or provide correct SigV4 headers
+xp: 325
+difficulty: advanced
+expected_time: 20m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-10-auth-wrong
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Fargate task in private subnet with no NAT gateway — task can't pull image or reach AWS APIs

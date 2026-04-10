@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: S3 trigger is configured but points to `wrong-bucket` instead of `uploads-bucket`

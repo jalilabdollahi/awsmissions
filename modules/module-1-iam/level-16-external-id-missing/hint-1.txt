@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it — AssumeRole denied

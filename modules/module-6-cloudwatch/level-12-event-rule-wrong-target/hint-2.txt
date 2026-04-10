@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Update the rule target to the correct Lambda ARN

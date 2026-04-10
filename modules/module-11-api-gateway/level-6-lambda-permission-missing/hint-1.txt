@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Integration is correct but API Gateway can't invoke Lambda — missing resource policy

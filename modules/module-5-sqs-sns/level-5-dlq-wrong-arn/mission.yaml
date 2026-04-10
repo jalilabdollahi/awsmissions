@@ -1,0 +1,17 @@
+name: Lost DLQ
+description: "DLQ is configured but the ARN points to a non-existent queue \u2014\
+  \ redrive fails silently"
+objective: Fix the DLQ ARN in the redrive policy
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- SQS
+- SNS
+- event delivery
+- policy debugging
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-5-dlq-wrong-arn
+implementation_status: playable

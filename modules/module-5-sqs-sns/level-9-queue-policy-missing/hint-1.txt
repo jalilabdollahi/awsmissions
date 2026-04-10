@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send — messages lost

@@ -1,0 +1,16 @@
+name: Read-Only Trap
+description: "Bucket policy only allows `s3:GetObject` \u2014 PutObject is denied"
+objective: Add `s3:PutObject` to the bucket policy
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- S3
+- bucket configuration
+- object access
+- policy debugging
+- buckets
+module: module-2-s3
+module_title: S3 Mastery
+level: level-3-access-denied-write
+implementation_status: playable

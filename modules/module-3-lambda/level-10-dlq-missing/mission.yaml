@@ -1,0 +1,16 @@
+name: Lost on Failure
+description: "Async invocation fails silently \u2014 no dead-letter queue configured"
+objective: 'Configure DLQ: `aws lambda update-function-configuration --dead-letter-config`'
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+- queues
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-10-dlq-missing
+implementation_status: playable

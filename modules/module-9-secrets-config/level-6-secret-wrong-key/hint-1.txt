@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Secret exists as JSON `{"password": "abc123"}` but application reads key `db_password`

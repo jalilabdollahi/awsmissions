@@ -1,0 +1,16 @@
+name: No Secret
+description: "Application calls `GetSecretValue` for `mission/db-password` \u2014\
+  \ secret doesn't exist"
+objective: 'Create the secret: `aws secretsmanager create-secret`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- secrets
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-5-secret-missing
+implementation_status: playable

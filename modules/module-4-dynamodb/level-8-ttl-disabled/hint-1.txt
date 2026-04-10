@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application expects expired records to be cleaned up automatically — TTL is not enabled

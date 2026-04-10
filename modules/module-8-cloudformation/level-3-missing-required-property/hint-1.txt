@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: `AWS::SQS::Queue` resource is missing required `QueueName` — wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)

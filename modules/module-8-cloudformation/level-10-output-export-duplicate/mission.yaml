@@ -1,0 +1,16 @@
+name: Name Conflict
+description: "Two stacks both export a value with the same name `SharedBucketName`\
+  \ \u2014 second stack fails"
+objective: Change the export name in one of the stacks to be unique
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-10-output-export-duplicate
+implementation_status: playable

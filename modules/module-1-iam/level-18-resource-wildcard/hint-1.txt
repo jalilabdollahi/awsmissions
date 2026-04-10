@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects — only that file is allowed

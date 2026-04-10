@@ -1,0 +1,16 @@
+name: Where Are My Logs?
+description: "Lambda function writes logs but log group `/aws/lambda/mission-function`\
+  \ doesn't exist \u2014 logs dropped"
+objective: 'Create the log group: `aws logs create-log-group`'
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- CloudWatch
+- logs
+- alarms
+- lambda functions
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-1-log-group-missing
+implementation_status: playable

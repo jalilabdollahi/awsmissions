@@ -1,0 +1,10 @@
+# Solution
+
+```bash
+# Edit the local file first
+$EDITOR trust-policy.json
+# This edited file applies to: --role-name lambda-execution-role
+
+# Then apply it from this level directory
+aws iam update-assume-role-policy   --role-name lambda-execution-role   --policy-document file://trust-policy.json
+```

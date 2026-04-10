@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: SNS→SQS→Lambda pipeline: SQS queue policy missing (SNS can't send) + Lambda concurrency is 0

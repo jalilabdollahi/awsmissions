@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application reads `/production/db/password` but parameter was created at `/prod/db/password`

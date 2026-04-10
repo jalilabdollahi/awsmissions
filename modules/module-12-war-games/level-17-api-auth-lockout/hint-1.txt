@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: API Gateway: IAM auth enabled + Lambda permission missing + usage plan throttle is zero + CORS blocks browser

@@ -1,0 +1,17 @@
+name: Wrong Trust
+description: Execution role exists but trust policy has `ec2.amazonaws.com` instead
+  of `lambda.amazonaws.com`
+objective: Fix the trust relationship on the role
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- policy debugging
+- roles
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-5-role-wrong-service
+implementation_status: playable

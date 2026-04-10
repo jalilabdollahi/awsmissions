@@ -1,0 +1,16 @@
+name: The Bad Condition
+description: "Policy has a condition block using wrong key: `\"aws:sourceIp\"` when\
+  \ it should be `\"aws:SourceAccount\"` \u2014 condition never matches"
+objective: Fix the condition key to the correct one
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-11-condition-wrong-key
+implementation_status: playable

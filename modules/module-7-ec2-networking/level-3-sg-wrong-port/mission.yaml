@@ -1,0 +1,15 @@
+name: Port Mismatch
+description: Security group allows port 8080 inbound but application runs on port
+  80
+objective: Fix the security group inbound rule to allow port 80
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- EC2
+- VPC
+- networking
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-3-sg-wrong-port
+implementation_status: playable

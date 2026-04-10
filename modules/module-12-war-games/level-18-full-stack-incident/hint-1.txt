@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Complete app stack broken: CloudFormation drift + IAM permission removed + S3 bucket policy expired + Lambda concurrency at 0 + CloudWatch alarm silenced

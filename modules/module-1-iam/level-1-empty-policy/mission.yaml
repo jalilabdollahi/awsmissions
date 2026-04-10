@@ -1,0 +1,12 @@
+name: "The Empty Statement"
+description: "An IAM role exists for a reporting app, but its inline policy only allows s3:ListBucket and cannot read any objects. Edit the local policy file, then apply it with the AWS CLI."
+objective: "Update policy.json so it allows s3:GetObject on mission-bucket objects, then apply it to role report-reader-role."
+xp: 100
+difficulty: "beginner"
+expected_time: "5m"
+concepts:
+  - IAM inline policies
+  - s3:GetObject
+  - least privilege
+module: "module-1-iam"
+level: "level-1-empty-policy"

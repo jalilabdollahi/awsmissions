@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach it

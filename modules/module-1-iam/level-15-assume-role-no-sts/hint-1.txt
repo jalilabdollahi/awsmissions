@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: User policy is missing `sts:AssumeRole` — cannot switch to the target role

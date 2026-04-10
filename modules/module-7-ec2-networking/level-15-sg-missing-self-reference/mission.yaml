@@ -1,0 +1,15 @@
+name: Cluster Can't Talk
+description: "Auto Scaling group instances need to communicate with each other \u2014\
+  \ security group missing a self-referencing rule"
+objective: Add an inbound rule referencing the security group ID as source
+xp: 275
+difficulty: intermediate
+expected_time: 18m
+concepts:
+- EC2
+- VPC
+- networking
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-15-sg-missing-self-reference
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: GSI `email-index` exists but is keyed on `username` instead of `email` — queries return nothing

@@ -1,0 +1,16 @@
+name: Unknown Resource
+description: "Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` \u2014\
+  \ CREATE_FAILED"
+objective: Fix the resource type name
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-2-wrong-resource-type
+implementation_status: playable

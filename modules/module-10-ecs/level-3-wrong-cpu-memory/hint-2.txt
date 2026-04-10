@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Fix memory to a valid Fargate combination (256 CPU → 512, 1024, or 2048 MB)

@@ -1,0 +1,16 @@
+name: Double Trouble
+description: "Inline policy grants S3 access but a second inline policy explicitly\
+  \ Denies it \u2014 Deny wins"
+objective: Remove or fix the conflicting Deny policy
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-14-inline-blocks-managed
+implementation_status: playable

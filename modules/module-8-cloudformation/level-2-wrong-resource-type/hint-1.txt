@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` — CREATE_FAILED

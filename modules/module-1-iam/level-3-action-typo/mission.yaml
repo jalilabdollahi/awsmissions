@@ -1,0 +1,16 @@
+name: The Misspelled Gate
+description: "Policy action has typo: `\"s3:GetObjcet\"` \u2014 IAM rejects all GetObject\
+  \ calls"
+objective: Fix the typo to `"s3:GetObject"`
+xp: 100
+difficulty: beginner
+expected_time: 5m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-3-action-typo
+implementation_status: playable

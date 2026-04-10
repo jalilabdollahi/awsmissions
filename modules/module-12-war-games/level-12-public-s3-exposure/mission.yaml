@@ -1,0 +1,17 @@
+name: Data Exposure Incident
+description: S3 bucket has public access block disabled + bucket ACL is public-read
+  + bucket policy allows `*` principal
+objective: Diagnose and fix the misconfiguration(s) affecting data exposure incident.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- buckets
+module: module-12-war-games
+module_title: Production War Games
+level: level-12-public-s3-exposure
+implementation_status: playable

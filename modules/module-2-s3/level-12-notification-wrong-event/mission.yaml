@@ -1,0 +1,15 @@
+name: Wrong Trigger
+description: S3 event notification is configured but targets `s3:ObjectRemoved:*`
+  instead of `s3:ObjectCreated:*`
+objective: Fix the event type in the notification configuration
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-12-notification-wrong-event
+implementation_status: playable

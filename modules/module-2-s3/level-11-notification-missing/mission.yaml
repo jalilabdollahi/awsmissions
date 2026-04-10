@@ -1,0 +1,17 @@
+name: Silent Arrivals
+description: "Lambda function should trigger on object upload \u2014 S3 event notification\
+  \ not configured"
+objective: 'Add event notification: `aws s3api put-bucket-notification-configuration`'
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- lambda functions
+module: module-2-s3
+module_title: S3 Mastery
+level: level-11-notification-missing
+implementation_status: playable

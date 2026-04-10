@@ -1,0 +1,3 @@
+#compdef awsmissions
+
+_arguments '1:command:(check hint reset solution debrief status next quit help)'

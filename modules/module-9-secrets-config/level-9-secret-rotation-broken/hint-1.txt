@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Secret rotation was configured but rotation Lambda ARN is wrong — secret is never rotated

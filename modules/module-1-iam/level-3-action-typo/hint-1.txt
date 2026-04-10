@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Policy action has typo: `"s3:GetObjcet"` — IAM rejects all GetObject calls

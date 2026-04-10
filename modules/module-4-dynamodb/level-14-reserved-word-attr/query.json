@@ -1,0 +1,12 @@
+{
+  "TableName": "MissionTable",
+  "KeyConditionExpression": "#s = :val",
+  "ExpressionAttributeNames": {
+    "#s": "status"
+  },
+  "ExpressionAttributeValues": {
+    ":val": {
+      "S": "OPEN"
+    }
+  }
+}

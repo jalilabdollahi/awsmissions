@@ -1,0 +1,17 @@
+name: SSM Blocked
+description: "ECS task role is missing `ssm:GetParameter` permission \u2014 task crashes\
+  \ at startup"
+objective: Add `ssm:GetParameter` and `ssm:GetParameters` to the task role
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- roles
+- parameter store
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-13-ssm-no-permission
+implementation_status: playable

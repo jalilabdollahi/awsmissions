@@ -1,0 +1,14 @@
+name: No Table, No Data
+description: "Application fails \u2014 DynamoDB table `MissionTable` doesn't exist"
+objective: Create the table with the correct key schema via `aws dynamodb create-table`
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-1-table-missing
+implementation_status: playable

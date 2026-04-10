@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Instance in public subnet but `AssociatePublicIpAddress` is false — no public IP

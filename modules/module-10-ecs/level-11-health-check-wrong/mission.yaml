@@ -1,0 +1,15 @@
+name: Permanently Unhealthy
+description: "Container health check command is `CMD [\"curl\", \"http://localhost/wrong-path\"\
+  ]` \u2014 always fails"
+objective: Fix the health check path to match the actual application health endpoint
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-11-health-check-wrong
+implementation_status: playable

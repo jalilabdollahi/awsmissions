@@ -1,0 +1,15 @@
+name: Expensive Archive
+description: "Frequently accessed objects are set to `GLACIER` storage class \u2014\
+  \ retrieval takes hours"
+objective: Change storage class to `STANDARD` via copy with metadata replacement
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- S3
+- bucket configuration
+- object access
+module: module-2-s3
+module_title: S3 Mastery
+level: level-19-wrong-storage-class
+implementation_status: playable

@@ -1,0 +1,1 @@
+Use command `4` to open `policy.json`, then compare it to what the mission needs.

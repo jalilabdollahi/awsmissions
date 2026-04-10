@@ -1,0 +1,18 @@
+name: No Route to Internet
+description: VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0`
+  via IGW
+objective: 'Add route: `aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id
+  igw-xxx`'
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- EC2
+- VPC
+- networking
+- VPCs
+- subnets
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-9-route-table-missing
+implementation_status: playable

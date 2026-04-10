@@ -1,0 +1,1 @@
+The policy needs `s3:GetObject` and the resource should be `arn:aws:s3:::mission-bucket/*`.

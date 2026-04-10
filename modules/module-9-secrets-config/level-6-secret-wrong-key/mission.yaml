@@ -1,0 +1,16 @@
+name: Wrong Key in JSON
+description: 'Secret exists as JSON `{"password": "abc123"}` but application reads
+  key `db_password`'
+objective: Update the secret value to use the correct JSON key
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- secrets
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-6-secret-wrong-key
+implementation_status: playable

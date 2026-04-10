@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Web application can't fetch objects — CORS configuration is missing entirely

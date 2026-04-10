@@ -1,0 +1,17 @@
+name: The Production Incident
+description: 'Complete app stack broken: CloudFormation drift + IAM permission removed
+  + S3 bucket policy expired + Lambda concurrency at 0 + CloudWatch alarm silenced'
+objective: Diagnose and fix the misconfiguration(s) affecting the production incident.
+xp: 600
+difficulty: expert
+expected_time: 60m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- buckets
+module: module-12-war-games
+module_title: Production War Games
+level: level-18-full-stack-incident
+implementation_status: playable

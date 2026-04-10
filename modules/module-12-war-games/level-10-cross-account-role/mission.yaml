@@ -1,0 +1,17 @@
+name: The Missing Bridge
+description: 'Assume-role fails: wrong Principal in trust policy + missing ExternalId
+  condition + user missing sts:AssumeRole'
+objective: Diagnose and fix the misconfiguration(s) affecting the missing bridge.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- roles
+module: module-12-war-games
+module_title: Production War Games
+level: level-10-cross-account-role
+implementation_status: playable

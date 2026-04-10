@@ -1,0 +1,16 @@
+name: Deprecated Engine
+description: "Function uses runtime `python3.6` (deprecated/unsupported) \u2014 invocation\
+  \ fails"
+objective: 'Update runtime to `python3.11`: `aws lambda update-function-configuration`'
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-2-wrong-runtime
+implementation_status: playable

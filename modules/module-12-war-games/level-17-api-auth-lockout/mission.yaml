@@ -1,0 +1,17 @@
+name: The Auth Maze
+description: 'API Gateway: IAM auth enabled + Lambda permission missing + usage plan
+  throttle is zero + CORS blocks browser'
+objective: Diagnose and fix the misconfiguration(s) affecting the auth maze.
+xp: 575
+difficulty: expert
+expected_time: 45m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- lambda functions
+- REST APIs
+module: module-12-war-games
+module_title: Production War Games
+level: level-17-api-auth-lockout
+implementation_status: playable

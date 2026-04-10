@@ -1,0 +1,4575 @@
+{
+  "generated_at": "2026-04-09T11:37:20.234578+00:00",
+  "level_count": 196,
+  "modules": [
+    {
+      "name": "module-1-iam",
+      "levels": [
+        {
+          "id": "module-1-iam/level-1-empty-policy",
+          "name": "level-1-empty-policy",
+          "path": "modules/module-1-iam/level-1-empty-policy",
+          "mission": {
+            "name": "The Empty Statement",
+            "description": "An IAM role exists for a reporting app, but its inline policy only allows s3:ListBucket \u2014 it cannot read any objects.",
+            "objective": "Update the inline policy on role report-reader-role so it allows s3:GetObject on the mission bucket objects.",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "5m",
+            "concepts": [
+              "IAM inline policies",
+              "s3:GetObject",
+              "least privilege"
+            ],
+            "module": "module-1-iam",
+            "level": "level-1-empty-policy"
+          }
+        },
+        {
+          "id": "module-1-iam/level-2-deny-effect",
+          "name": "level-2-deny-effect",
+          "path": "modules/module-1-iam/level-2-deny-effect",
+          "mission": {
+            "name": "Wrong Side of the Law",
+            "description": "The IAM policy for an upload service explicitly denies writes to the mission bucket, so PutObject requests always fail.",
+            "objective": "Replace the deny statement with an allow statement for s3:PutObject on the uploads bucket.",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "5m",
+            "concepts": [
+              "IAM Effect",
+              "explicit deny",
+              "s3:PutObject"
+            ],
+            "module": "module-1-iam",
+            "level": "level-2-deny-effect"
+          }
+        },
+        {
+          "id": "module-1-iam/level-3-action-typo",
+          "name": "level-3-action-typo",
+          "path": "modules/module-1-iam/level-3-action-typo",
+          "mission": {
+            "name": "The Misspelled Gate",
+            "description": "Policy action has typo: `\"s3:GetObjcet\"` \u2014 IAM rejects all GetObject calls",
+            "objective": "Fix the typo to `\"s3:GetObject\"`",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "5m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-3-action-typo",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-4-wrong-resource",
+          "name": "level-4-wrong-resource",
+          "path": "modules/module-1-iam/level-4-wrong-resource",
+          "mission": {
+            "name": "The Locked Vault",
+            "description": "Policy grants `s3:GetObject` on `arn:aws:s3:::wrong-bucket/*` but app reads from `mission-bucket`",
+            "objective": "Fix the resource ARN to point to the correct bucket",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-4-wrong-resource",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-5-no-policy",
+          "name": "level-5-no-policy",
+          "path": "modules/module-1-iam/level-5-no-policy",
+          "mission": {
+            "name": "The Bare Role",
+            "description": "IAM role exists and is attached to Lambda but has zero policies \u2014 all calls denied",
+            "objective": "Attach a managed policy or put an inline policy granting required permissions",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-5-no-policy",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-6-wrong-principal",
+          "name": "level-6-wrong-principal",
+          "path": "modules/module-1-iam/level-6-wrong-principal",
+          "mission": {
+            "name": "Trust Nobody",
+            "description": "Role trust policy has wrong account ID in Principal \u2014 `sts:AssumeRole` fails",
+            "objective": "Fix the Principal to the correct account ID (`000000000000` in LocalStack)",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-6-wrong-principal",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-7-wrong-service-principal",
+          "name": "level-7-wrong-service-principal",
+          "path": "modules/module-1-iam/level-7-wrong-service-principal",
+          "mission": {
+            "name": "Wrong Service",
+            "description": "Lambda execution role has `\"Service\": \"ec2.amazonaws.com\"` in trust policy \u2014 Lambda can't assume it",
+            "objective": "Change service principal to `\"lambda.amazonaws.com\"`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-7-wrong-service-principal",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-8-missing-passrole",
+          "name": "level-8-missing-passrole",
+          "path": "modules/module-1-iam/level-8-missing-passrole",
+          "mission": {
+            "name": "The Blocked Handoff",
+            "description": "IAM user can create Lambda but can't assign an execution role \u2014 missing `iam:PassRole`",
+            "objective": "Add `iam:PassRole` permission on the target role to the user policy",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-8-missing-passrole",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-9-user-no-group",
+          "name": "level-9-user-no-group",
+          "path": "modules/module-1-iam/level-9-user-no-group",
+          "mission": {
+            "name": "The Orphan User",
+            "description": "IAM user exists but is in no group and has no policies attached",
+            "objective": "Create a group with a policy, add the user to the group",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-9-user-no-group",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-10-group-no-policy",
+          "name": "level-10-group-no-policy",
+          "path": "modules/module-1-iam/level-10-group-no-policy",
+          "mission": {
+            "name": "The Empty Club",
+            "description": "User is in a group but the group has no policies \u2014 all actions denied",
+            "objective": "Attach a policy to the group",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-10-group-no-policy",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-11-condition-wrong-key",
+          "name": "level-11-condition-wrong-key",
+          "path": "modules/module-1-iam/level-11-condition-wrong-key",
+          "mission": {
+            "name": "The Bad Condition",
+            "description": "Policy has a condition block using wrong key: `\"aws:sourceIp\"` when it should be `\"aws:SourceAccount\"` \u2014 condition never matches",
+            "objective": "Fix the condition key to the correct one",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-11-condition-wrong-key",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-12-condition-operator",
+          "name": "level-12-condition-operator",
+          "path": "modules/module-1-iam/level-12-condition-operator",
+          "mission": {
+            "name": "Almost Right",
+            "description": "Policy condition uses `StringEquals` for a value that requires wildcard matching \u2014 use `StringLike`",
+            "objective": "Change condition operator from `StringEquals` to `StringLike`",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-12-condition-operator",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-13-policy-missing-version",
+          "name": "level-13-policy-missing-version",
+          "path": "modules/module-1-iam/level-13-policy-missing-version",
+          "mission": {
+            "name": "Time Traveler",
+            "description": "IAM policy document missing `\"Version\": \"2012-10-17\"` \u2014 policy variables don't resolve",
+            "objective": "Add the Version field to the policy document",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-13-policy-missing-version",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-14-inline-blocks-managed",
+          "name": "level-14-inline-blocks-managed",
+          "path": "modules/module-1-iam/level-14-inline-blocks-managed",
+          "mission": {
+            "name": "Double Trouble",
+            "description": "Inline policy grants S3 access but a second inline policy explicitly Denies it \u2014 Deny wins",
+            "objective": "Remove or fix the conflicting Deny policy",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-14-inline-blocks-managed",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-15-assume-role-no-sts",
+          "name": "level-15-assume-role-no-sts",
+          "path": "modules/module-1-iam/level-15-assume-role-no-sts",
+          "mission": {
+            "name": "Can't Switch Hats",
+            "description": "User policy is missing `sts:AssumeRole` \u2014 cannot switch to the target role",
+            "objective": "Add `sts:AssumeRole` on the target role ARN",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-15-assume-role-no-sts",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-16-external-id-missing",
+          "name": "level-16-external-id-missing",
+          "path": "modules/module-1-iam/level-16-external-id-missing",
+          "mission": {
+            "name": "The Missing Secret Handshake",
+            "description": "Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it \u2014 AssumeRole denied",
+            "objective": "Provide the correct ExternalId when calling `aws sts assume-role`",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "secrets"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-16-external-id-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-17-permission-boundary",
+          "name": "level-17-permission-boundary",
+          "path": "modules/module-1-iam/level-17-permission-boundary",
+          "mission": {
+            "name": "The Invisible Ceiling",
+            "description": "IAM role has a permission boundary that blocks S3 access even though the identity policy allows it",
+            "objective": "Update or remove the permission boundary to allow the required actions",
+            "xp": 225,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-17-permission-boundary",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-18-resource-wildcard",
+          "name": "level-18-resource-wildcard",
+          "path": "modules/module-1-iam/level-18-resource-wildcard",
+          "mission": {
+            "name": "Scope Creep",
+            "description": "Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects \u2014 only that file is allowed",
+            "objective": "Change resource to `arn:aws:s3:::bucket/*`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-18-resource-wildcard",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-19-path-mismatch",
+          "name": "level-19-path-mismatch",
+          "path": "modules/module-1-iam/level-19-path-mismatch",
+          "mission": {
+            "name": "The Wrong Path",
+            "description": "IAM user exists at path `/ops/` but policy ARN references `/dev/` \u2014 condition on path fails",
+            "objective": "Fix the role/user path or the policy path condition",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-19-path-mismatch",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-1-iam/level-20-policy-size",
+          "name": "level-20-policy-size",
+          "path": "modules/module-1-iam/level-20-policy-size",
+          "mission": {
+            "name": "The Bloated Policy",
+            "description": "Inline policy exceeds 2,048 character limit \u2014 IAM rejects the PutRolePolicy call",
+            "objective": "Refactor: extract into a managed policy and attach it",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "IAM",
+              "roles",
+              "policies",
+              "policy debugging"
+            ],
+            "module": "module-1-iam",
+            "module_title": "IAM Foundations",
+            "level": "level-20-policy-size",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-2-s3",
+      "levels": [
+        {
+          "id": "module-2-s3/level-1-bucket-missing",
+          "name": "level-1-bucket-missing",
+          "path": "modules/module-2-s3/level-1-bucket-missing",
+          "mission": {
+            "name": "No Bucket, No Service",
+            "description": "The application expects an S3 bucket named mission-bucket, but it does not exist in the local AWS environment.",
+            "objective": "Create the missing S3 bucket so the application can start storing objects.",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "3m",
+            "concepts": [
+              "S3 bucket creation",
+              "aws s3 mb"
+            ],
+            "module": "module-2-s3",
+            "level": "level-1-bucket-missing"
+          }
+        },
+        {
+          "id": "module-2-s3/level-2-access-denied-read",
+          "name": "level-2-access-denied-read",
+          "path": "modules/module-2-s3/level-2-access-denied-read",
+          "mission": {
+            "name": "Keep Out",
+            "description": "Bucket exists and has an object but GetObject is denied \u2014 bucket policy blocks all access",
+            "objective": "Fix bucket policy to allow `s3:GetObject` for the required principal",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-2-access-denied-read",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-3-access-denied-write",
+          "name": "level-3-access-denied-write",
+          "path": "modules/module-2-s3/level-3-access-denied-write",
+          "mission": {
+            "name": "Read-Only Trap",
+            "description": "Bucket policy only allows `s3:GetObject` \u2014 PutObject is denied",
+            "objective": "Add `s3:PutObject` to the bucket policy",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-3-access-denied-write",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-4-versioning-disabled",
+          "name": "level-4-versioning-disabled",
+          "path": "modules/module-2-s3/level-4-versioning-disabled",
+          "mission": {
+            "name": "Lost History",
+            "description": "Application expects versioned objects but versioning is disabled \u2014 previous versions unreachable",
+            "objective": "Enable versioning: `aws s3api put-bucket-versioning`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-4-versioning-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-5-versioning-suspended",
+          "name": "level-5-versioning-suspended",
+          "path": "modules/module-2-s3/level-5-versioning-suspended",
+          "mission": {
+            "name": "Frozen in Time",
+            "description": "Versioning is Suspended (not Enabled) \u2014 new versions are not created",
+            "objective": "Change versioning status from `Suspended` to `Enabled`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-5-versioning-suspended",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-6-public-access-block",
+          "name": "level-6-public-access-block",
+          "path": "modules/module-2-s3/level-6-public-access-block",
+          "mission": {
+            "name": "The Force Field",
+            "description": "Bucket policy grants public read but `BlockPublicPolicy` is true \u2014 policy silently rejected",
+            "objective": "Disable public access block: `aws s3api put-public-access-block`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-6-public-access-block",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-7-cors-missing",
+          "name": "level-7-cors-missing",
+          "path": "modules/module-2-s3/level-7-cors-missing",
+          "mission": {
+            "name": "The CORS Complaint",
+            "description": "Web application can't fetch objects \u2014 CORS configuration is missing entirely",
+            "objective": "Add a CORS configuration via `aws s3api put-bucket-cors`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-7-cors-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-8-cors-wrong-origin",
+          "name": "level-8-cors-wrong-origin",
+          "path": "modules/module-2-s3/level-8-cors-wrong-origin",
+          "mission": {
+            "name": "Wrong Domain Allowed",
+            "description": "CORS is configured but allows `https://wrong-app.com` instead of `https://myapp.com`",
+            "objective": "Fix the AllowedOrigins value in the CORS rule",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-8-cors-wrong-origin",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-9-lifecycle-wrong-prefix",
+          "name": "level-9-lifecycle-wrong-prefix",
+          "path": "modules/module-2-s3/level-9-lifecycle-wrong-prefix",
+          "mission": {
+            "name": "Eternal Storage",
+            "description": "Lifecycle rule exists to expire objects after 30 days but prefix is `logs/` while objects are under `app-logs/` \u2014 objects never expire",
+            "objective": "Fix the prefix in the lifecycle rule",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-9-lifecycle-wrong-prefix",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-10-lifecycle-missing",
+          "name": "level-10-lifecycle-missing",
+          "path": "modules/module-2-s3/level-10-lifecycle-missing",
+          "mission": {
+            "name": "Incomplete Uploads Pile Up",
+            "description": "Multipart uploads are being abandoned and accumulating cost \u2014 no lifecycle rule to abort them",
+            "objective": "Add lifecycle rule: abort incomplete multipart uploads after 7 days",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-10-lifecycle-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-11-notification-missing",
+          "name": "level-11-notification-missing",
+          "path": "modules/module-2-s3/level-11-notification-missing",
+          "mission": {
+            "name": "Silent Arrivals",
+            "description": "Lambda function should trigger on object upload \u2014 S3 event notification not configured",
+            "objective": "Add event notification: `aws s3api put-bucket-notification-configuration`",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "lambda functions"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-11-notification-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-12-notification-wrong-event",
+          "name": "level-12-notification-wrong-event",
+          "path": "modules/module-2-s3/level-12-notification-wrong-event",
+          "mission": {
+            "name": "Wrong Trigger",
+            "description": "S3 event notification is configured but targets `s3:ObjectRemoved:*` instead of `s3:ObjectCreated:*`",
+            "objective": "Fix the event type in the notification configuration",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-12-notification-wrong-event",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-13-encryption-missing",
+          "name": "level-13-encryption-missing",
+          "path": "modules/module-2-s3/level-13-encryption-missing",
+          "mission": {
+            "name": "Plaintext Exposure",
+            "description": "Bucket has no default encryption \u2014 objects stored unencrypted",
+            "objective": "Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-13-encryption-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-14-bucket-policy-syntax",
+          "name": "level-14-bucket-policy-syntax",
+          "path": "modules/module-2-s3/level-14-bucket-policy-syntax",
+          "mission": {
+            "name": "The Broken Gate",
+            "description": "Bucket policy JSON has a syntax error (missing closing bracket) \u2014 policy rejected",
+            "objective": "Fix the JSON syntax in the bucket policy",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-14-bucket-policy-syntax",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-15-acl-too-open",
+          "name": "level-15-acl-too-open",
+          "path": "modules/module-2-s3/level-15-acl-too-open",
+          "mission": {
+            "name": "Public by Accident",
+            "description": "Bucket ACL is set to `public-read` \u2014 all objects are publicly readable",
+            "objective": "Change ACL to `private`: `aws s3api put-bucket-acl --acl private`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-15-acl-too-open",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-16-static-website-missing",
+          "name": "level-16-static-website-missing",
+          "path": "modules/module-2-s3/level-16-static-website-missing",
+          "mission": {
+            "name": "Silent Website",
+            "description": "Static website hosting is disabled \u2014 requests return `NoSuchWebsiteConfiguration`",
+            "objective": "Enable static website hosting with index.html and error.html",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-16-static-website-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-17-logging-disabled",
+          "name": "level-17-logging-disabled",
+          "path": "modules/module-2-s3/level-17-logging-disabled",
+          "mission": {
+            "name": "No Paper Trail",
+            "description": "S3 server access logging is disabled \u2014 access logs not being collected",
+            "objective": "Enable logging: `aws s3api put-bucket-logging`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-17-logging-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-18-object-lock-wrong-mode",
+          "name": "level-18-object-lock-wrong-mode",
+          "path": "modules/module-2-s3/level-18-object-lock-wrong-mode",
+          "mission": {
+            "name": "Too Flexible",
+            "description": "Object lock is in `GOVERNANCE` mode but compliance requirements need `COMPLIANCE` mode",
+            "objective": "Change retention mode to `COMPLIANCE` on the object",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-18-object-lock-wrong-mode",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-19-wrong-storage-class",
+          "name": "level-19-wrong-storage-class",
+          "path": "modules/module-2-s3/level-19-wrong-storage-class",
+          "mission": {
+            "name": "Expensive Archive",
+            "description": "Frequently accessed objects are set to `GLACIER` storage class \u2014 retrieval takes hours",
+            "objective": "Change storage class to `STANDARD` via copy with metadata replacement",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-19-wrong-storage-class",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-2-s3/level-20-requester-pays-wrong",
+          "name": "level-20-requester-pays-wrong",
+          "path": "modules/module-2-s3/level-20-requester-pays-wrong",
+          "mission": {
+            "name": "Unexpected Bills",
+            "description": "Bucket has `requester-pays` enabled \u2014 callers are being charged unexpectedly",
+            "objective": "Disable requester pays: `aws s3api put-bucket-request-payment --payer BucketOwner`",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "S3",
+              "bucket configuration",
+              "object access",
+              "buckets",
+              "REST APIs"
+            ],
+            "module": "module-2-s3",
+            "module_title": "S3 Mastery",
+            "level": "level-20-requester-pays-wrong",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-3-lambda",
+      "levels": [
+        {
+          "id": "module-3-lambda/level-1-function-missing",
+          "name": "level-1-function-missing",
+          "path": "modules/module-3-lambda/level-1-function-missing",
+          "mission": {
+            "name": "No Function Found",
+            "description": "Invocation fails \u2014 Lambda function `mission-function` doesn't exist",
+            "objective": "Deploy the function using `aws lambda create-function`",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "5m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-1-function-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-2-wrong-runtime",
+          "name": "level-2-wrong-runtime",
+          "path": "modules/module-3-lambda/level-2-wrong-runtime",
+          "mission": {
+            "name": "Deprecated Engine",
+            "description": "Function uses runtime `python3.6` (deprecated/unsupported) \u2014 invocation fails",
+            "objective": "Update runtime to `python3.11`: `aws lambda update-function-configuration`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-2-wrong-runtime",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-3-handler-wrong",
+          "name": "level-3-handler-wrong",
+          "path": "modules/module-3-lambda/level-3-handler-wrong",
+          "mission": {
+            "name": "The Missing Door",
+            "description": "Function is deployed but handler is `main.handler` \u2014 file is actually `index.py` with function `lambda_handler`",
+            "objective": "Fix handler to `index.lambda_handler`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-3-handler-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-4-role-missing",
+          "name": "level-4-role-missing",
+          "path": "modules/module-3-lambda/level-4-role-missing",
+          "mission": {
+            "name": "The Roleless Function",
+            "description": "Function has no execution role set \u2014 invocation rejected",
+            "objective": "Create an IAM role with Lambda trust policy and assign it to the function",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-4-role-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-5-role-wrong-service",
+          "name": "level-5-role-wrong-service",
+          "path": "modules/module-3-lambda/level-5-role-wrong-service",
+          "mission": {
+            "name": "Wrong Trust",
+            "description": "Execution role exists but trust policy has `ec2.amazonaws.com` instead of `lambda.amazonaws.com`",
+            "objective": "Fix the trust relationship on the role",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-5-role-wrong-service",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-6-env-var-missing",
+          "name": "level-6-env-var-missing",
+          "path": "modules/module-3-lambda/level-6-env-var-missing",
+          "mission": {
+            "name": "The Blank Config",
+            "description": "Function code reads `os.environ['DATABASE_URL']` but the env var is not set \u2014 KeyError on invocation",
+            "objective": "Add the environment variable via `aws lambda update-function-configuration --environment`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-6-env-var-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-7-timeout-too-low",
+          "name": "level-7-timeout-too-low",
+          "path": "modules/module-3-lambda/level-7-timeout-too-low",
+          "mission": {
+            "name": "Three Seconds and Out",
+            "description": "Function needs 30 seconds to process but timeout is 3s \u2014 always times out",
+            "objective": "Increase timeout to 60s: `aws lambda update-function-configuration --timeout 60`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-7-timeout-too-low",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-8-memory-too-low",
+          "name": "level-8-memory-too-low",
+          "path": "modules/module-3-lambda/level-8-memory-too-low",
+          "mission": {
+            "name": "Out of Memory",
+            "description": "Function crashes with memory error \u2014 configured at 128MB, needs 512MB",
+            "objective": "Increase memory: `aws lambda update-function-configuration --memory-size 512`",
+            "xp": 125,
+            "difficulty": "beginner",
+            "expected_time": "8m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-8-memory-too-low",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-9-concurrency-zero",
+          "name": "level-9-concurrency-zero",
+          "path": "modules/module-3-lambda/level-9-concurrency-zero",
+          "mission": {
+            "name": "The Throttled Function",
+            "description": "Function has reserved concurrency set to `0` \u2014 all invocations are throttled immediately",
+            "objective": "Remove or increase reserved concurrency: `aws lambda put-function-concurrency`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-9-concurrency-zero",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-10-dlq-missing",
+          "name": "level-10-dlq-missing",
+          "path": "modules/module-3-lambda/level-10-dlq-missing",
+          "mission": {
+            "name": "Lost on Failure",
+            "description": "Async invocation fails silently \u2014 no dead-letter queue configured",
+            "objective": "Configure DLQ: `aws lambda update-function-configuration --dead-letter-config`",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions",
+              "queues"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-10-dlq-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-11-layer-wrong-arn",
+          "name": "level-11-layer-wrong-arn",
+          "path": "modules/module-3-lambda/level-11-layer-wrong-arn",
+          "mission": {
+            "name": "Missing Dependency",
+            "description": "Function references a Lambda layer ARN that doesn't exist \u2014 init fails",
+            "objective": "Create the layer and update the function to use the correct ARN",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-11-layer-wrong-arn",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-12-trigger-missing",
+          "name": "level-12-trigger-missing",
+          "path": "modules/module-3-lambda/level-12-trigger-missing",
+          "mission": {
+            "name": "The Silent Upload",
+            "description": "S3 bucket receives files but Lambda is never triggered \u2014 event source mapping missing",
+            "objective": "Add S3 notification configuration pointing to the Lambda function",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "buckets",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-12-trigger-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-13-trigger-wrong-bucket",
+          "name": "level-13-trigger-wrong-bucket",
+          "path": "modules/module-3-lambda/level-13-trigger-wrong-bucket",
+          "mission": {
+            "name": "Watching the Wrong Door",
+            "description": "S3 trigger is configured but points to `wrong-bucket` instead of `uploads-bucket`",
+            "objective": "Fix the event source to point to the correct bucket",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "buckets"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-13-trigger-wrong-bucket",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-14-resource-policy-missing",
+          "name": "level-14-resource-policy-missing",
+          "path": "modules/module-3-lambda/level-14-resource-policy-missing",
+          "mission": {
+            "name": "Permission Denied by Lambda",
+            "description": "S3 configured to invoke Lambda but Lambda resource policy doesn't allow S3 service",
+            "objective": "Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com` principal",
+            "xp": 200,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-14-resource-policy-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-15-alias-wrong-version",
+          "name": "level-15-alias-wrong-version",
+          "path": "modules/module-3-lambda/level-15-alias-wrong-version",
+          "mission": {
+            "name": "The Ghost Alias",
+            "description": "Lambda alias `production` points to version `5` which was deleted \u2014 invocations fail",
+            "objective": "Update alias to point to an existing version or `$LATEST`",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-15-alias-wrong-version",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-16-vpc-no-subnet",
+          "name": "level-16-vpc-no-subnet",
+          "path": "modules/module-3-lambda/level-16-vpc-no-subnet",
+          "mission": {
+            "name": "Stranded in VPC",
+            "description": "Lambda has VPC config but `SubnetIds` is empty \u2014 deployment fails",
+            "objective": "Add the correct subnet IDs to VPC configuration",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions",
+              "VPCs"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-16-vpc-no-subnet",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-17-vpc-no-sg",
+          "name": "level-17-vpc-no-sg",
+          "path": "modules/module-3-lambda/level-17-vpc-no-sg",
+          "mission": {
+            "name": "Unguarded VPC",
+            "description": "Lambda VPC config has subnets but no security groups \u2014 cannot configure network interface",
+            "objective": "Add at least one security group to the VPC configuration",
+            "xp": 175,
+            "difficulty": "beginner",
+            "expected_time": "12m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions",
+              "VPCs"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-17-vpc-no-sg",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-3-lambda/level-18-function-url-auth",
+          "name": "level-18-function-url-auth",
+          "path": "modules/module-3-lambda/level-18-function-url-auth",
+          "mission": {
+            "name": "The Locked Door",
+            "description": "Lambda function URL is configured with `AuthType: AWS_IAM` \u2014 public HTTP requests return 403",
+            "objective": "Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Lambda",
+              "execution roles",
+              "function configuration",
+              "lambda functions"
+            ],
+            "module": "module-3-lambda",
+            "module_title": "Lambda Functions",
+            "level": "level-18-function-url-auth",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-4-dynamodb",
+      "levels": [
+        {
+          "id": "module-4-dynamodb/level-1-table-missing",
+          "name": "level-1-table-missing",
+          "path": "modules/module-4-dynamodb/level-1-table-missing",
+          "mission": {
+            "name": "No Table, No Data",
+            "description": "Application fails \u2014 DynamoDB table `MissionTable` doesn't exist",
+            "objective": "Create the table with the correct key schema via `aws dynamodb create-table`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-1-table-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-2-wrong-key-type",
+          "name": "level-2-wrong-key-type",
+          "path": "modules/module-4-dynamodb/level-2-wrong-key-type",
+          "mission": {
+            "name": "Type Mismatch",
+            "description": "Table's hash key `userId` is defined as type `N` (Number) but application sends String values \u2014 all writes rejected",
+            "objective": "Delete and recreate table with hash key type `S` (String)",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-2-wrong-key-type",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-3-missing-sort-key",
+          "name": "level-3-missing-sort-key",
+          "path": "modules/module-4-dynamodb/level-3-missing-sort-key",
+          "mission": {
+            "name": "One Key Short",
+            "description": "Table has only a hash key but the application queries with both hash + sort key \u2014 query fails",
+            "objective": "Recreate table with both partition key and sort key",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-3-missing-sort-key",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-4-gsi-missing",
+          "name": "level-4-gsi-missing",
+          "path": "modules/module-4-dynamodb/level-4-gsi-missing",
+          "mission": {
+            "name": "No Index, No Query",
+            "description": "Application queries a GSI named `email-index` but the index doesn't exist on the table",
+            "objective": "Add the GSI via table update: `aws dynamodb update-table`",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-4-gsi-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-5-gsi-wrong-key",
+          "name": "level-5-gsi-wrong-key",
+          "path": "modules/module-4-dynamodb/level-5-gsi-wrong-key",
+          "mission": {
+            "name": "Wrong Index Key",
+            "description": "GSI `email-index` exists but is keyed on `username` instead of `email` \u2014 queries return nothing",
+            "objective": "Delete the wrong GSI and create a new one with the correct key attribute",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-5-gsi-wrong-key",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-6-capacity-throttle",
+          "name": "level-6-capacity-throttle",
+          "path": "modules/module-4-dynamodb/level-6-capacity-throttle",
+          "mission": {
+            "name": "Out of Capacity",
+            "description": "Table is in PROVISIONED mode with 1 RCU/WCU \u2014 application load causes constant throttling",
+            "objective": "Increase provisioned capacity or switch to PAY_PER_REQUEST",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-6-capacity-throttle",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-7-billing-mode-wrong",
+          "name": "level-7-billing-mode-wrong",
+          "path": "modules/module-4-dynamodb/level-7-billing-mode-wrong",
+          "mission": {
+            "name": "Provisionless Pain",
+            "description": "Application has spiky unpredictable traffic but table is in PROVISIONED mode with no auto-scaling",
+            "objective": "Change billing mode to `PAY_PER_REQUEST`",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-7-billing-mode-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-8-ttl-disabled",
+          "name": "level-8-ttl-disabled",
+          "path": "modules/module-4-dynamodb/level-8-ttl-disabled",
+          "mission": {
+            "name": "Eternal Records",
+            "description": "Application expects expired records to be cleaned up automatically \u2014 TTL is not enabled",
+            "objective": "Enable TTL on the `expiresAt` attribute: `aws dynamodb update-time-to-live`",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-8-ttl-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-9-streams-disabled",
+          "name": "level-9-streams-disabled",
+          "path": "modules/module-4-dynamodb/level-9-streams-disabled",
+          "mission": {
+            "name": "The Silent Table",
+            "description": "Lambda should process every table change \u2014 DynamoDB Streams are disabled",
+            "objective": "Enable streams: `aws dynamodb update-table --stream-specification StreamEnabled=true`",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes",
+              "lambda functions",
+              "streams"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-9-streams-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-10-lsi-missing",
+          "name": "level-10-lsi-missing",
+          "path": "modules/module-4-dynamodb/level-10-lsi-missing",
+          "mission": {
+            "name": "Local Index Gap",
+            "description": "Application queries with a Local Secondary Index `status-index` that doesn't exist \u2014 LSI must be created at table creation time",
+            "objective": "Delete and recreate table with the LSI included",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-10-lsi-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-11-projection-wrong",
+          "name": "level-11-projection-wrong",
+          "path": "modules/module-4-dynamodb/level-11-projection-wrong",
+          "mission": {
+            "name": "Half the Picture",
+            "description": "GSI `category-index` has `ProjectionType: KEYS_ONLY` but application needs all attributes",
+            "objective": "Delete the GSI and recreate it with `ProjectionType: ALL`",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-11-projection-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-12-pitr-disabled",
+          "name": "level-12-pitr-disabled",
+          "path": "modules/module-4-dynamodb/level-12-pitr-disabled",
+          "mission": {
+            "name": "No Safety Net",
+            "description": "Compliance requires Point-in-Time Recovery \u2014 it's disabled on the table",
+            "objective": "Enable PITR: `aws dynamodb update-continuous-backups`",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-12-pitr-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-13-condition-blocks-write",
+          "name": "level-13-condition-blocks-write",
+          "path": "modules/module-4-dynamodb/level-13-condition-blocks-write",
+          "mission": {
+            "name": "The Overprotective Guard",
+            "description": "PutItem has a ConditionExpression `attribute_not_exists(id)` that prevents updating an existing item",
+            "objective": "Remove or change the condition expression to allow the update",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-13-condition-blocks-write",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-14-reserved-word-attr",
+          "name": "level-14-reserved-word-attr",
+          "path": "modules/module-4-dynamodb/level-14-reserved-word-attr",
+          "mission": {
+            "name": "Reserved Words",
+            "description": "Attribute name `status` is a DynamoDB reserved word \u2014 query using it as an expression attribute fails",
+            "objective": "Use Expression Attribute Names (`#s = :val`) in the query",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-14-reserved-word-attr",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-4-dynamodb/level-15-scan-instead-of-query",
+          "name": "level-15-scan-instead-of-query",
+          "path": "modules/module-4-dynamodb/level-15-scan-instead-of-query",
+          "mission": {
+            "name": "Full Table Scan",
+            "description": "Application uses `Scan` on a large table with a filter \u2014 extremely slow and expensive",
+            "objective": "Identify the proper key schema and rewrite as a `Query` operation",
+            "xp": 300,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "DynamoDB",
+              "tables",
+              "indexes"
+            ],
+            "module": "module-4-dynamodb",
+            "module_title": "DynamoDB",
+            "level": "level-15-scan-instead-of-query",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-5-sqs-sns",
+      "levels": [
+        {
+          "id": "module-5-sqs-sns/level-1-queue-missing",
+          "name": "level-1-queue-missing",
+          "path": "modules/module-5-sqs-sns/level-1-queue-missing",
+          "mission": {
+            "name": "No Queue",
+            "description": "Application sends messages but queue `mission-queue` doesn't exist",
+            "objective": "Create the SQS queue: `aws sqs create-queue`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-1-queue-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-2-wrong-queue-url",
+          "name": "level-2-wrong-queue-url",
+          "path": "modules/module-5-sqs-sns/level-2-wrong-queue-url",
+          "mission": {
+            "name": "Wrong Address",
+            "description": "Application is configured with an incorrect queue URL \u2014 messages going nowhere",
+            "objective": "Retrieve the correct URL: `aws sqs get-queue-url` and update the config",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-2-wrong-queue-url",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-3-visibility-too-low",
+          "name": "level-3-visibility-too-low",
+          "path": "modules/module-5-sqs-sns/level-3-visibility-too-low",
+          "mission": {
+            "name": "Message Ghost",
+            "description": "Visibility timeout is 5 seconds \u2014 workers take 30s to process, messages become visible again and are re-processed",
+            "objective": "Increase visibility timeout to 60s: `aws sqs set-queue-attributes`",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-3-visibility-too-low",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-4-dlq-missing",
+          "name": "level-4-dlq-missing",
+          "path": "modules/module-5-sqs-sns/level-4-dlq-missing",
+          "mission": {
+            "name": "No Safety Net",
+            "description": "Queue has no Dead Letter Queue \u2014 failed messages disappear after max receive count",
+            "objective": "Create a DLQ and configure redrive policy on the source queue",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "policy debugging",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-4-dlq-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-5-dlq-wrong-arn",
+          "name": "level-5-dlq-wrong-arn",
+          "path": "modules/module-5-sqs-sns/level-5-dlq-wrong-arn",
+          "mission": {
+            "name": "Lost DLQ",
+            "description": "DLQ is configured but the ARN points to a non-existent queue \u2014 redrive fails silently",
+            "objective": "Fix the DLQ ARN in the redrive policy",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "policy debugging",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-5-dlq-wrong-arn",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-6-max-receive-zero",
+          "name": "level-6-max-receive-zero",
+          "path": "modules/module-5-sqs-sns/level-6-max-receive-zero",
+          "mission": {
+            "name": "Zero Tolerance",
+            "description": "`maxReceiveCount` in redrive policy is set to `0` \u2014 messages go to DLQ immediately on first receive",
+            "objective": "Set `maxReceiveCount` to a reasonable value (e.g., 3)",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "policy debugging"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-6-max-receive-zero",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-7-fifo-missing",
+          "name": "level-7-fifo-missing",
+          "path": "modules/module-5-sqs-sns/level-7-fifo-missing",
+          "mission": {
+            "name": "Order Ignored",
+            "description": "Application requires ordered message processing (FIFO) but a Standard queue was created",
+            "objective": "Create a new FIFO queue (`.fifo` suffix) and update application config",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-7-fifo-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-8-fifo-no-deduplication",
+          "name": "level-8-fifo-no-deduplication",
+          "path": "modules/module-5-sqs-sns/level-8-fifo-no-deduplication",
+          "mission": {
+            "name": "Duplicate Messages",
+            "description": "FIFO queue exists but `ContentBasedDeduplication` is disabled and application doesn't provide `MessageDeduplicationId` \u2014 duplicates processed",
+            "objective": "Enable content-based deduplication on the FIFO queue",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-8-fifo-no-deduplication",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-9-queue-policy-missing",
+          "name": "level-9-queue-policy-missing",
+          "path": "modules/module-5-sqs-sns/level-9-queue-policy-missing",
+          "mission": {
+            "name": "SNS Can't Send",
+            "description": "SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send \u2014 messages lost",
+            "objective": "Add queue policy allowing SNS service to `sqs:SendMessage`",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "policy debugging",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-9-queue-policy-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-10-topic-missing",
+          "name": "level-10-topic-missing",
+          "path": "modules/module-5-sqs-sns/level-10-topic-missing",
+          "mission": {
+            "name": "No Topic",
+            "description": "Application publishes to SNS topic `mission-topic` that doesn't exist",
+            "objective": "Create the SNS topic: `aws sns create-topic`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "topics"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-10-topic-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-11-subscription-missing",
+          "name": "level-11-subscription-missing",
+          "path": "modules/module-5-sqs-sns/level-11-subscription-missing",
+          "mission": {
+            "name": "Topic, No Subscribers",
+            "description": "SNS topic exists but has no subscriptions \u2014 published messages go nowhere",
+            "objective": "Subscribe the SQS queue to the topic: `aws sns subscribe`",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues",
+              "topics"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-11-subscription-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-12-subscription-wrong-endpoint",
+          "name": "level-12-subscription-wrong-endpoint",
+          "path": "modules/module-5-sqs-sns/level-12-subscription-wrong-endpoint",
+          "mission": {
+            "name": "Wrong Endpoint",
+            "description": "SNS subscription exists but targets wrong SQS queue ARN",
+            "objective": "Delete and re-create subscription with correct endpoint ARN",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-12-subscription-wrong-endpoint",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-13-filter-policy-blocks-all",
+          "name": "level-13-filter-policy-blocks-all",
+          "path": "modules/module-5-sqs-sns/level-13-filter-policy-blocks-all",
+          "mission": {
+            "name": "The Silence Filter",
+            "description": "SNS subscription has a filter policy `{\"eventType\": [\"nonexistent\"]}` \u2014 no messages pass through",
+            "objective": "Fix or remove the filter policy to allow relevant message attributes",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "policy debugging"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-13-filter-policy-blocks-all",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-14-raw-delivery-missing",
+          "name": "level-14-raw-delivery-missing",
+          "path": "modules/module-5-sqs-sns/level-14-raw-delivery-missing",
+          "mission": {
+            "name": "Double-Wrapped",
+            "description": "Lambda expects raw message body but SNS wraps it in an envelope \u2014 JSON parsing fails",
+            "objective": "Enable `RawMessageDelivery` on the SNS-to-SQS subscription",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "lambda functions"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-14-raw-delivery-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-5-sqs-sns/level-15-message-too-large",
+          "name": "level-15-message-too-large",
+          "path": "modules/module-5-sqs-sns/level-15-message-too-large",
+          "mission": {
+            "name": "Message Size Exceeded",
+            "description": "Application sends 300KB messages \u2014 SQS limit is 256KB \u2014 sends fail",
+            "objective": "Use the SQS Extended Client pattern: store payload in S3, send S3 reference in queue",
+            "xp": 300,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "SQS",
+              "SNS",
+              "event delivery",
+              "queues"
+            ],
+            "module": "module-5-sqs-sns",
+            "module_title": "SQS & SNS",
+            "level": "level-15-message-too-large",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-6-cloudwatch",
+      "levels": [
+        {
+          "id": "module-6-cloudwatch/level-1-log-group-missing",
+          "name": "level-1-log-group-missing",
+          "path": "modules/module-6-cloudwatch/level-1-log-group-missing",
+          "mission": {
+            "name": "Where Are My Logs?",
+            "description": "Lambda function writes logs but log group `/aws/lambda/mission-function` doesn't exist \u2014 logs dropped",
+            "objective": "Create the log group: `aws logs create-log-group`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "lambda functions"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-1-log-group-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-2-retention-not-set",
+          "name": "level-2-retention-not-set",
+          "path": "modules/module-6-cloudwatch/level-2-retention-not-set",
+          "mission": {
+            "name": "Infinite Log Growth",
+            "description": "Log group exists but retention is set to `Never` \u2014 logs accumulate indefinitely",
+            "objective": "Set retention policy to 30 days: `aws logs put-retention-policy`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "policy debugging"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-2-retention-not-set",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-3-log-stream-missing",
+          "name": "level-3-log-stream-missing",
+          "path": "modules/module-6-cloudwatch/level-3-log-stream-missing",
+          "mission": {
+            "name": "Stream Doesn't Exist",
+            "description": "Application tries to write to a specific log stream that doesn't exist",
+            "objective": "Create the log stream: `aws logs create-log-stream`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "streams"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-3-log-stream-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-4-metric-filter-wrong-pattern",
+          "name": "level-4-metric-filter-wrong-pattern",
+          "path": "modules/module-6-cloudwatch/level-4-metric-filter-wrong-pattern",
+          "mission": {
+            "name": "Filter Catches Nothing",
+            "description": "Metric filter exists to count ERROR logs but pattern is `[ERROR]` when logs use `ERROR:` format",
+            "objective": "Fix the filter pattern to match actual log format",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-4-metric-filter-wrong-pattern",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-5-alarm-missing",
+          "name": "level-5-alarm-missing",
+          "path": "modules/module-6-cloudwatch/level-5-alarm-missing",
+          "mission": {
+            "name": "Silent Failure",
+            "description": "Error metric is being published but no CloudWatch alarm is configured \u2014 nobody gets alerted",
+            "objective": "Create a CloudWatch alarm on the error metric",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-5-alarm-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-6-alarm-wrong-threshold",
+          "name": "level-6-alarm-wrong-threshold",
+          "path": "modules/module-6-cloudwatch/level-6-alarm-wrong-threshold",
+          "mission": {
+            "name": "Always Firing",
+            "description": "Alarm threshold is `0` \u2014 alarm fires constantly even with zero errors",
+            "objective": "Set a reasonable threshold (e.g., `5`) for the alarm",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-6-alarm-wrong-threshold",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-7-alarm-no-action",
+          "name": "level-7-alarm-no-action",
+          "path": "modules/module-6-cloudwatch/level-7-alarm-no-action",
+          "mission": {
+            "name": "The Mute Alarm",
+            "description": "Alarm fires (changes state to ALARM) but no action is configured \u2014 nobody is notified",
+            "objective": "Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm`",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "topics"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-7-alarm-no-action",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-8-alarm-wrong-comparison",
+          "name": "level-8-alarm-wrong-comparison",
+          "path": "modules/module-6-cloudwatch/level-8-alarm-wrong-comparison",
+          "mission": {
+            "name": "Backwards Alarm",
+            "description": "Alarm uses `LessThanThreshold` to detect high error counts \u2014 should be `GreaterThanThreshold`",
+            "objective": "Fix the comparison operator on the alarm",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-8-alarm-wrong-comparison",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-9-alarm-wrong-period",
+          "name": "level-9-alarm-wrong-period",
+          "path": "modules/module-6-cloudwatch/level-9-alarm-wrong-period",
+          "mission": {
+            "name": "Too Granular",
+            "description": "Alarm evaluation period is 10s but the metric is published every 5 minutes \u2014 alarm never evaluates",
+            "objective": "Fix period to match metric publish interval (300 seconds)",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-9-alarm-wrong-period",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-10-log-insights-syntax",
+          "name": "level-10-log-insights-syntax",
+          "path": "modules/module-6-cloudwatch/level-10-log-insights-syntax",
+          "mission": {
+            "name": "Query Crash",
+            "description": "CloudWatch Logs Insights query has a syntax error \u2014 query fails to execute",
+            "objective": "Fix the query syntax (check `fields`, `filter`, `stats` commands)",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-10-log-insights-syntax",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-11-event-rule-disabled",
+          "name": "level-11-event-rule-disabled",
+          "path": "modules/module-6-cloudwatch/level-11-event-rule-disabled",
+          "mission": {
+            "name": "Rule Is Off",
+            "description": "EventBridge rule exists but its state is `DISABLED` \u2014 no events are delivered",
+            "objective": "Enable the rule: `aws events enable-rule`",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-11-event-rule-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-12-event-rule-wrong-target",
+          "name": "level-12-event-rule-wrong-target",
+          "path": "modules/module-6-cloudwatch/level-12-event-rule-wrong-target",
+          "mission": {
+            "name": "Wrong Destination",
+            "description": "EventBridge rule has the wrong Lambda ARN as target",
+            "objective": "Update the rule target to the correct Lambda ARN",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "lambda functions"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-12-event-rule-wrong-target",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-13-event-pattern-wrong",
+          "name": "level-13-event-pattern-wrong",
+          "path": "modules/module-6-cloudwatch/level-13-event-pattern-wrong",
+          "mission": {
+            "name": "Mismatched Pattern",
+            "description": "EventBridge rule has `\"source\": [\"aws.ec3\"]` (typo) instead of `\"aws.ec2\"` \u2014 events never match",
+            "objective": "Fix the event pattern",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-13-event-pattern-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-14-composite-alarm-inverted",
+          "name": "level-14-composite-alarm-inverted",
+          "path": "modules/module-6-cloudwatch/level-14-composite-alarm-inverted",
+          "mission": {
+            "name": "Logic Flipped",
+            "description": "Composite alarm uses `ALARM(alarm-a) AND NOT ALARM(alarm-b)` but should trigger when both are in ALARM",
+            "objective": "Fix the composite alarm rule expression",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "18m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-14-composite-alarm-inverted",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-6-cloudwatch/level-15-missing-iam-for-logs",
+          "name": "level-15-missing-iam-for-logs",
+          "path": "modules/module-6-cloudwatch/level-15-missing-iam-for-logs",
+          "mission": {
+            "name": "No Permission to Write",
+            "description": "Lambda execution role is missing `logs:CreateLogStream` and `logs:PutLogEvents` permissions",
+            "objective": "Add CloudWatch Logs permissions to the Lambda execution role",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudWatch",
+              "logs",
+              "alarms",
+              "roles",
+              "lambda functions"
+            ],
+            "module": "module-6-cloudwatch",
+            "module_title": "CloudWatch & Logging",
+            "level": "level-15-missing-iam-for-logs",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-7-ec2-networking",
+      "levels": [
+        {
+          "id": "module-7-ec2-networking/level-1-sg-missing",
+          "name": "level-1-sg-missing",
+          "path": "modules/module-7-ec2-networking/level-1-sg-missing",
+          "mission": {
+            "name": "No Security Group",
+            "description": "Instance launch fails \u2014 no security group specified and no default SG exists in VPC",
+            "objective": "Create a security group and reference it in the instance config",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "VPCs"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-1-sg-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-2-sg-no-inbound",
+          "name": "level-2-sg-no-inbound",
+          "path": "modules/module-7-ec2-networking/level-2-sg-no-inbound",
+          "mission": {
+            "name": "The Closed Door",
+            "description": "Security group exists but has no inbound rules \u2014 all inbound traffic blocked (port 22, 80, 443)",
+            "objective": "Add inbound rules for the required ports",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-2-sg-no-inbound",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-3-sg-wrong-port",
+          "name": "level-3-sg-wrong-port",
+          "path": "modules/module-7-ec2-networking/level-3-sg-wrong-port",
+          "mission": {
+            "name": "Port Mismatch",
+            "description": "Security group allows port 8080 inbound but application runs on port 80",
+            "objective": "Fix the security group inbound rule to allow port 80",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-3-sg-wrong-port",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-4-sg-wrong-cidr",
+          "name": "level-4-sg-wrong-cidr",
+          "path": "modules/module-7-ec2-networking/level-4-sg-wrong-cidr",
+          "mission": {
+            "name": "Too Restrictive CIDR",
+            "description": "Security group inbound rule has CIDR `0.0.0.0/32` (single IP) instead of `0.0.0.0/0`",
+            "objective": "Fix the CIDR block on the inbound rule",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-4-sg-wrong-cidr",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-5-sg-egress-blocked",
+          "name": "level-5-sg-egress-blocked",
+          "path": "modules/module-7-ec2-networking/level-5-sg-egress-blocked",
+          "mission": {
+            "name": "No Way Out",
+            "description": "Security group has a custom outbound rule that blocks all egress \u2014 app can't reach external APIs",
+            "objective": "Remove the blocking egress rule or add an allow-all egress rule",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "REST APIs"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-5-sg-egress-blocked",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-6-vpc-missing",
+          "name": "level-6-vpc-missing",
+          "path": "modules/module-7-ec2-networking/level-6-vpc-missing",
+          "mission": {
+            "name": "No Network",
+            "description": "Application requires a VPC with specific CIDR block \u2014 only the default VPC exists",
+            "objective": "Create a new VPC: `aws ec2 create-vpc --cidr-block 10.0.0.0/16`",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "VPCs"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-6-vpc-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-7-subnet-missing",
+          "name": "level-7-subnet-missing",
+          "path": "modules/module-7-ec2-networking/level-7-subnet-missing",
+          "mission": {
+            "name": "No Subnets",
+            "description": "VPC exists but has no subnets \u2014 instances cannot be launched",
+            "objective": "Create public and private subnets in the VPC",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "VPCs",
+              "subnets"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-7-subnet-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-8-igw-not-attached",
+          "name": "level-8-igw-not-attached",
+          "path": "modules/module-7-ec2-networking/level-8-igw-not-attached",
+          "mission": {
+            "name": "Internet Gap",
+            "description": "Internet gateway exists but is not attached to the VPC \u2014 no internet access",
+            "objective": "Attach the IGW to the VPC: `aws ec2 attach-internet-gateway`",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "VPCs"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-8-igw-not-attached",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-9-route-table-missing",
+          "name": "level-9-route-table-missing",
+          "path": "modules/module-7-ec2-networking/level-9-route-table-missing",
+          "mission": {
+            "name": "No Route to Internet",
+            "description": "VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0` via IGW",
+            "objective": "Add route: `aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id igw-xxx`",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "VPCs",
+              "subnets"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-9-route-table-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-10-subnet-not-associated",
+          "name": "level-10-subnet-not-associated",
+          "path": "modules/module-7-ec2-networking/level-10-subnet-not-associated",
+          "mission": {
+            "name": "Route Table Orphan",
+            "description": "Route table has correct routes but is not associated with the subnet",
+            "objective": "Associate route table with subnet: `aws ec2 associate-route-table`",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "subnets",
+              "routing"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-10-subnet-not-associated",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-11-nacl-blocking-http",
+          "name": "level-11-nacl-blocking-http",
+          "path": "modules/module-7-ec2-networking/level-11-nacl-blocking-http",
+          "mission": {
+            "name": "Firewall in the Way",
+            "description": "Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule \u2014 HTTP blocked",
+            "objective": "Fix NACL rule order (lower rule number = higher priority) or remove the DENY rule",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "18m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-11-nacl-blocking-http",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-12-iam-instance-profile-missing",
+          "name": "level-12-iam-instance-profile-missing",
+          "path": "modules/module-7-ec2-networking/level-12-iam-instance-profile-missing",
+          "mission": {
+            "name": "EC2 Can't Talk to AWS",
+            "description": "Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile",
+            "objective": "Create instance profile with IAM role and associate it with the instance",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "roles",
+              "REST APIs"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-12-iam-instance-profile-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-13-key-pair-missing",
+          "name": "level-13-key-pair-missing",
+          "path": "modules/module-7-ec2-networking/level-13-key-pair-missing",
+          "mission": {
+            "name": "No SSH Key",
+            "description": "Instance launched without a key pair \u2014 SSH access impossible",
+            "objective": "Create a key pair and re-launch instance with it",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-13-key-pair-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-14-public-ip-disabled",
+          "name": "level-14-public-ip-disabled",
+          "path": "modules/module-7-ec2-networking/level-14-public-ip-disabled",
+          "mission": {
+            "name": "Invisible Instance",
+            "description": "Instance in public subnet but `AssociatePublicIpAddress` is false \u2014 no public IP",
+            "objective": "Enable auto-assign public IP on the subnet or allocate an Elastic IP",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking",
+              "subnets"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-14-public-ip-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-7-ec2-networking/level-15-sg-missing-self-reference",
+          "name": "level-15-sg-missing-self-reference",
+          "path": "modules/module-7-ec2-networking/level-15-sg-missing-self-reference",
+          "mission": {
+            "name": "Cluster Can't Talk",
+            "description": "Auto Scaling group instances need to communicate with each other \u2014 security group missing a self-referencing rule",
+            "objective": "Add an inbound rule referencing the security group ID as source",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "18m",
+            "concepts": [
+              "EC2",
+              "VPC",
+              "networking"
+            ],
+            "module": "module-7-ec2-networking",
+            "module_title": "EC2 & Networking",
+            "level": "level-15-sg-missing-self-reference",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-8-cloudformation",
+      "levels": [
+        {
+          "id": "module-8-cloudformation/level-1-yaml-syntax",
+          "name": "level-1-yaml-syntax",
+          "path": "modules/module-8-cloudformation/level-1-yaml-syntax",
+          "mission": {
+            "name": "Parse Error",
+            "description": "CFN template has a YAML indentation error \u2014 stack creation fails immediately",
+            "objective": "Fix the YAML syntax error in the template",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-1-yaml-syntax",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-2-wrong-resource-type",
+          "name": "level-2-wrong-resource-type",
+          "path": "modules/module-8-cloudformation/level-2-wrong-resource-type",
+          "mission": {
+            "name": "Unknown Resource",
+            "description": "Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` \u2014 CREATE_FAILED",
+            "objective": "Fix the resource type name",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "8m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-2-wrong-resource-type",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-3-missing-required-property",
+          "name": "level-3-missing-required-property",
+          "path": "modules/module-8-cloudformation/level-3-missing-required-property",
+          "mission": {
+            "name": "Missing Requirement",
+            "description": "`AWS::SQS::Queue` resource is missing required `QueueName` \u2014 wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)",
+            "objective": "Add the missing required property",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-3-missing-required-property",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-4-parameter-no-default",
+          "name": "level-4-parameter-no-default",
+          "path": "modules/module-8-cloudformation/level-4-parameter-no-default",
+          "mission": {
+            "name": "No Default Value",
+            "description": "Template has a Parameter with no Default and no value passed at deploy \u2014 create fails",
+            "objective": "Either add a Default value or pass the parameter at stack creation",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "parameter store"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-4-parameter-no-default",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-5-parameter-wrong-type",
+          "name": "level-5-parameter-wrong-type",
+          "path": "modules/module-8-cloudformation/level-5-parameter-wrong-type",
+          "mission": {
+            "name": "Type Collision",
+            "description": "Parameter declared as `Type: Number` but value passed is a string \u2014 validation error",
+            "objective": "Fix parameter type or the value being passed",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "parameter store"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-5-parameter-wrong-type",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-6-ref-nonexistent",
+          "name": "level-6-ref-nonexistent",
+          "path": "modules/module-8-cloudformation/level-6-ref-nonexistent",
+          "mission": {
+            "name": "Missing Reference",
+            "description": "`!Ref MyBucket` references a logical ID `MyBucket` that doesn't exist in the template",
+            "objective": "Add the missing resource or fix the reference name",
+            "xp": 175,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-6-ref-nonexistent",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-7-getatt-wrong-attribute",
+          "name": "level-7-getatt-wrong-attribute",
+          "path": "modules/module-8-cloudformation/level-7-getatt-wrong-attribute",
+          "mission": {
+            "name": "Wrong Attribute",
+            "description": "`!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` \u2014 depends on resource type",
+            "objective": "Fix the attribute name in the GetAtt reference",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-7-getatt-wrong-attribute",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-8-circular-dependency",
+          "name": "level-8-circular-dependency",
+          "path": "modules/module-8-cloudformation/level-8-circular-dependency",
+          "mission": {
+            "name": "Going in Circles",
+            "description": "Resource A has `DependsOn: B` and B has `DependsOn: A` \u2014 circular dependency error",
+            "objective": "Break the circular dependency by removing one DependsOn or restructuring resources",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "18m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-8-circular-dependency",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-9-rollback-complete",
+          "name": "level-9-rollback-complete",
+          "path": "modules/module-8-cloudformation/level-9-rollback-complete",
+          "mission": {
+            "name": "Stack Stuck",
+            "description": "Stack is in `ROLLBACK_COMPLETE` state from a previous failed create \u2014 cannot update",
+            "objective": "Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be updated)",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-9-rollback-complete",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-10-output-export-duplicate",
+          "name": "level-10-output-export-duplicate",
+          "path": "modules/module-8-cloudformation/level-10-output-export-duplicate",
+          "mission": {
+            "name": "Name Conflict",
+            "description": "Two stacks both export a value with the same name `SharedBucketName` \u2014 second stack fails",
+            "objective": "Change the export name in one of the stacks to be unique",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-10-output-export-duplicate",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-11-importvalue-wrong-name",
+          "name": "level-11-importvalue-wrong-name",
+          "path": "modules/module-8-cloudformation/level-11-importvalue-wrong-name",
+          "mission": {
+            "name": "Broken Cross-Stack Link",
+            "description": "`!ImportValue SharedBucketName` \u2014 but the export is actually named `mission-SharedBucketName`",
+            "objective": "Fix the ImportValue key to match the exact export name",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-11-importvalue-wrong-name",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-12-condition-inverted",
+          "name": "level-12-condition-inverted",
+          "path": "modules/module-8-cloudformation/level-12-condition-inverted",
+          "mission": {
+            "name": "Wrong Condition Logic",
+            "description": "Condition `IsProduction: !Equals [!Ref Env, dev]` \u2014 logic is inverted (true when env is dev, not prod)",
+            "objective": "Fix the condition expression",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-12-condition-inverted",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-13-deletion-policy-delete",
+          "name": "level-13-deletion-policy-delete",
+          "path": "modules/module-8-cloudformation/level-13-deletion-policy-delete",
+          "mission": {
+            "name": "Dangerous Delete",
+            "description": "S3 bucket resource has no `DeletionPolicy` (defaults to Delete) \u2014 stack deletion will wipe data",
+            "objective": "Add `DeletionPolicy: Retain` to the bucket resource",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-13-deletion-policy-delete",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-14-stack-policy-blocks",
+          "name": "level-14-stack-policy-blocks",
+          "path": "modules/module-8-cloudformation/level-14-stack-policy-blocks",
+          "mission": {
+            "name": "Policy Lock",
+            "description": "Stack update policy prevents changes to the S3 bucket resource \u2014 update fails",
+            "objective": "Update or remove the stack policy: `aws cloudformation set-stack-policy`",
+            "xp": 250,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-14-stack-policy-blocks",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-15-mapping-wrong-key",
+          "name": "level-15-mapping-wrong-key",
+          "path": "modules/module-8-cloudformation/level-15-mapping-wrong-key",
+          "mission": {
+            "name": "Missing Map Entry",
+            "description": "`!FindInMap [RegionMap, !Ref AWS::Region, AMI]` \u2014 the `us-east-1` key is missing from the Mappings section",
+            "objective": "Add the missing key to the Mappings section",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "12m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-15-mapping-wrong-key",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-16-transform-missing",
+          "name": "level-16-transform-missing",
+          "path": "modules/module-8-cloudformation/level-16-transform-missing",
+          "mission": {
+            "name": "SAM Template Rejected",
+            "description": "Template uses `AWS::Serverless::Function` but is missing `Transform: AWS::Serverless-2016-10-31`",
+            "objective": "Add the Transform declaration at the template root",
+            "xp": 225,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-16-transform-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-17-stack-drift",
+          "name": "level-17-stack-drift",
+          "path": "modules/module-8-cloudformation/level-17-stack-drift",
+          "mission": {
+            "name": "Reality Diverged",
+            "description": "Stack resources were manually modified outside CFN \u2014 stack has drifted",
+            "objective": "Detect drift: `aws cloudformation detect-stack-drift`, then reconcile by updating the stack",
+            "xp": 300,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-17-stack-drift",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-8-cloudformation/level-18-nested-stack-wrong-url",
+          "name": "level-18-nested-stack-wrong-url",
+          "path": "modules/module-8-cloudformation/level-18-nested-stack-wrong-url",
+          "mission": {
+            "name": "Nested Stack 404",
+            "description": "Nested stack references a template URL in S3 that doesn't exist or has wrong path",
+            "objective": "Upload the template to S3 and fix the TemplateURL property",
+            "xp": 275,
+            "difficulty": "intermediate",
+            "expected_time": "18m",
+            "concepts": [
+              "CloudFormation",
+              "stacks",
+              "templates"
+            ],
+            "module": "module-8-cloudformation",
+            "module_title": "CloudFormation",
+            "level": "level-18-nested-stack-wrong-url",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-9-secrets-config",
+      "levels": [
+        {
+          "id": "module-9-secrets-config/level-1-kms-key-missing",
+          "name": "level-1-kms-key-missing",
+          "path": "modules/module-9-secrets-config/level-1-kms-key-missing",
+          "mission": {
+            "name": "No Key",
+            "description": "Application tries to encrypt using KMS key alias `alias/mission-key` \u2014 key doesn't exist",
+            "objective": "Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-1-kms-key-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-2-kms-key-disabled",
+          "name": "level-2-kms-key-disabled",
+          "path": "modules/module-9-secrets-config/level-2-kms-key-disabled",
+          "mission": {
+            "name": "Disabled Key",
+            "description": "KMS key exists but is disabled \u2014 encrypt/decrypt operations fail with `DisabledException`",
+            "objective": "Enable the key: `aws kms enable-key`",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-2-kms-key-disabled",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-3-kms-key-policy-missing",
+          "name": "level-3-kms-key-policy-missing",
+          "path": "modules/module-9-secrets-config/level-3-kms-key-policy-missing",
+          "mission": {
+            "name": "No Key Permission",
+            "description": "KMS key exists and is enabled but key policy doesn't grant the IAM role permission to use it",
+            "objective": "Update the key policy to grant `kms:Encrypt`, `kms:Decrypt` to the role",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "18m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-3-kms-key-policy-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-4-kms-wrong-alias",
+          "name": "level-4-kms-wrong-alias",
+          "path": "modules/module-9-secrets-config/level-4-kms-wrong-alias",
+          "mission": {
+            "name": "Wrong Key Name",
+            "description": "Application uses `alias/production-key` but key was created with alias `alias/prod-key`",
+            "objective": "Create the correct alias or update application config",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-4-kms-wrong-alias",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-5-secret-missing",
+          "name": "level-5-secret-missing",
+          "path": "modules/module-9-secrets-config/level-5-secret-missing",
+          "mission": {
+            "name": "No Secret",
+            "description": "Application calls `GetSecretValue` for `mission/db-password` \u2014 secret doesn't exist",
+            "objective": "Create the secret: `aws secretsmanager create-secret`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "secrets"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-5-secret-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-6-secret-wrong-key",
+          "name": "level-6-secret-wrong-key",
+          "path": "modules/module-9-secrets-config/level-6-secret-wrong-key",
+          "mission": {
+            "name": "Wrong Key in JSON",
+            "description": "Secret exists as JSON `{\"password\": \"abc123\"}` but application reads key `db_password`",
+            "objective": "Update the secret value to use the correct JSON key",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "secrets"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-6-secret-wrong-key",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-7-secret-no-permission",
+          "name": "level-7-secret-no-permission",
+          "path": "modules/module-9-secrets-config/level-7-secret-no-permission",
+          "mission": {
+            "name": "Access Denied to Secret",
+            "description": "Secret exists but IAM role is missing `secretsmanager:GetSecretValue` permission",
+            "objective": "Add the required permission to the role policy",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-7-secret-no-permission",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-8-secret-wrong-version",
+          "name": "level-8-secret-wrong-version",
+          "path": "modules/module-9-secrets-config/level-8-secret-wrong-version",
+          "mission": {
+            "name": "Wrong Version",
+            "description": "Application pinned to a specific secret version that no longer exists (was rotated)",
+            "objective": "Update application to use `AWSCURRENT` stage or fix the version reference",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "18m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "secrets"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-8-secret-wrong-version",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-9-secret-rotation-broken",
+          "name": "level-9-secret-rotation-broken",
+          "path": "modules/module-9-secrets-config/level-9-secret-rotation-broken",
+          "mission": {
+            "name": "Stale Credentials",
+            "description": "Secret rotation was configured but rotation Lambda ARN is wrong \u2014 secret is never rotated",
+            "objective": "Fix the rotation Lambda ARN: `aws secretsmanager rotate-secret` with correct config",
+            "xp": 325,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "lambda functions",
+              "secrets"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-9-secret-rotation-broken",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-10-ssm-parameter-missing",
+          "name": "level-10-ssm-parameter-missing",
+          "path": "modules/module-9-secrets-config/level-10-ssm-parameter-missing",
+          "mission": {
+            "name": "Missing Config",
+            "description": "Application reads SSM parameter `/mission/config/db-host` \u2014 parameter doesn't exist",
+            "objective": "Create the parameter: `aws ssm put-parameter`",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "parameter store"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-10-ssm-parameter-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-11-ssm-wrong-type",
+          "name": "level-11-ssm-wrong-type",
+          "path": "modules/module-9-secrets-config/level-11-ssm-wrong-type",
+          "mission": {
+            "name": "Plaintext Secret",
+            "description": "SSM parameter `/mission/config/api-key` is stored as `String` type \u2014 should be `SecureString` (encrypted)",
+            "objective": "Delete and recreate as SecureString: `aws ssm put-parameter --type SecureString`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "secrets",
+              "parameter store"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-11-ssm-wrong-type",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-12-ssm-wrong-path",
+          "name": "level-12-ssm-wrong-path",
+          "path": "modules/module-9-secrets-config/level-12-ssm-wrong-path",
+          "mission": {
+            "name": "Path Confusion",
+            "description": "Application reads `/production/db/password` but parameter was created at `/prod/db/password`",
+            "objective": "Create parameter at the correct path or fix the application path config",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "parameter store"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-12-ssm-wrong-path",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-13-ssm-no-permission",
+          "name": "level-13-ssm-no-permission",
+          "path": "modules/module-9-secrets-config/level-13-ssm-no-permission",
+          "mission": {
+            "name": "SSM Blocked",
+            "description": "ECS task role is missing `ssm:GetParameter` permission \u2014 task crashes at startup",
+            "objective": "Add `ssm:GetParameter` and `ssm:GetParameters` to the task role",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "roles",
+              "parameter store"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-13-ssm-no-permission",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-14-kms-key-rotation",
+          "name": "level-14-kms-key-rotation",
+          "path": "modules/module-9-secrets-config/level-14-kms-key-rotation",
+          "mission": {
+            "name": "Rotation Breaks Decrypt",
+            "description": "KMS key rotation was enabled but application has old key ARN hardcoded \u2014 decryption fails after rotation",
+            "objective": "Update application to use key alias instead of key ARN (aliases track rotation automatically)",
+            "xp": 350,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-14-kms-key-rotation",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-9-secrets-config/level-15-hardcoded-credentials",
+          "name": "level-15-hardcoded-credentials",
+          "path": "modules/module-9-secrets-config/level-15-hardcoded-credentials",
+          "mission": {
+            "name": "Credentials in Code",
+            "description": "Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded in environment variables",
+            "objective": "Remove hardcoded credentials, create proper IAM execution role with required permissions",
+            "xp": 375,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "Secrets Manager",
+              "SSM",
+              "KMS",
+              "roles",
+              "lambda functions"
+            ],
+            "module": "module-9-secrets-config",
+            "module_title": "Secrets & Config",
+            "level": "level-15-hardcoded-credentials",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-10-ecs",
+      "levels": [
+        {
+          "id": "module-10-ecs/level-1-cluster-missing",
+          "name": "level-1-cluster-missing",
+          "path": "modules/module-10-ecs/level-1-cluster-missing",
+          "mission": {
+            "name": "No Cluster",
+            "description": "ECS service create fails \u2014 cluster `mission-cluster` doesn't exist",
+            "objective": "Create cluster: `aws ecs create-cluster --cluster-name mission-cluster`",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-1-cluster-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-2-task-definition-missing",
+          "name": "level-2-task-definition-missing",
+          "path": "modules/module-10-ecs/level-2-task-definition-missing",
+          "mission": {
+            "name": "No Task Definition",
+            "description": "Service references task definition `mission-task` with no revision registered",
+            "objective": "Register the task definition: `aws ecs register-task-definition`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-2-task-definition-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-3-wrong-cpu-memory",
+          "name": "level-3-wrong-cpu-memory",
+          "path": "modules/module-10-ecs/level-3-wrong-cpu-memory",
+          "mission": {
+            "name": "Invalid Config",
+            "description": "Fargate task definition has CPU `256` with memory `256` \u2014 Fargate requires memory >= 512MB for 256 CPU units",
+            "objective": "Fix memory to a valid Fargate combination (256 CPU \u2192 512, 1024, or 2048 MB)",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-3-wrong-cpu-memory",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-4-execution-role-missing",
+          "name": "level-4-execution-role-missing",
+          "path": "modules/module-10-ecs/level-4-execution-role-missing",
+          "mission": {
+            "name": "Can't Pull Image",
+            "description": "Task fails to start \u2014 no `executionRoleArn` set, so ECS can't pull the ECR image or write logs",
+            "objective": "Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach it",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-4-execution-role-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-5-task-role-wrong-perms",
+          "name": "level-5-task-role-wrong-perms",
+          "path": "modules/module-10-ecs/level-5-task-role-wrong-perms",
+          "mission": {
+            "name": "App Can't Access AWS",
+            "description": "Task starts but application inside container can't read from S3 \u2014 task role has no S3 permission",
+            "objective": "Add S3 read permissions to the task IAM role",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "roles",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-5-task-role-wrong-perms",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-6-ecr-image-missing",
+          "name": "level-6-ecr-image-missing",
+          "path": "modules/module-10-ecs/level-6-ecr-image-missing",
+          "mission": {
+            "name": "No Image Found",
+            "description": "Task definition references ECR image that doesn't exist \u2014 task fails to pull",
+            "objective": "Push a valid image to ECR: `docker build`, `aws ecr get-login-password`, `docker push`",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-6-ecr-image-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-7-container-port-wrong",
+          "name": "level-7-container-port-wrong",
+          "path": "modules/module-10-ecs/level-7-container-port-wrong",
+          "mission": {
+            "name": "Port Mismatch",
+            "description": "Task definition exposes port 8080 but load balancer target group expects port 80",
+            "objective": "Fix containerPort in task definition or update target group",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-7-container-port-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-8-service-desired-zero",
+          "name": "level-8-service-desired-zero",
+          "path": "modules/module-10-ecs/level-8-service-desired-zero",
+          "mission": {
+            "name": "Zero Tasks",
+            "description": "Service exists but `desiredCount` is 0 \u2014 no tasks running",
+            "objective": "Update service: `aws ecs update-service --desired-count 2`",
+            "xp": 225,
+            "difficulty": "advanced",
+            "expected_time": "12m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-8-service-desired-zero",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-9-env-var-missing",
+          "name": "level-9-env-var-missing",
+          "path": "modules/module-10-ecs/level-9-env-var-missing",
+          "mission": {
+            "name": "App Crash at Startup",
+            "description": "Task starts but application crashes because required env var `APP_MODE` not in task definition",
+            "objective": "Add the environment variable to the task definition container config",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-9-env-var-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-10-secrets-wrong-arn",
+          "name": "level-10-secrets-wrong-arn",
+          "path": "modules/module-10-ecs/level-10-secrets-wrong-arn",
+          "mission": {
+            "name": "Secret Not Found",
+            "description": "Task definition references Secrets Manager ARN that doesn't exist \u2014 task fails to start",
+            "objective": "Fix the ARN in the `secrets` section of the task definition",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "18m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "secrets",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-10-secrets-wrong-arn",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-11-health-check-wrong",
+          "name": "level-11-health-check-wrong",
+          "path": "modules/module-10-ecs/level-11-health-check-wrong",
+          "mission": {
+            "name": "Permanently Unhealthy",
+            "description": "Container health check command is `CMD [\"curl\", \"http://localhost/wrong-path\"]` \u2014 always fails",
+            "objective": "Fix the health check path to match the actual application health endpoint",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-11-health-check-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-12-log-driver-wrong",
+          "name": "level-12-log-driver-wrong",
+          "path": "modules/module-10-ecs/level-12-log-driver-wrong",
+          "mission": {
+            "name": "No Logs",
+            "description": "Task definition uses `journald` log driver \u2014 ECS Fargate only supports `awslogs`",
+            "objective": "Change `logDriver` to `awslogs` and configure the `awslogs-group` option",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-12-log-driver-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-13-subnet-no-nat",
+          "name": "level-13-subnet-no-nat",
+          "path": "modules/module-10-ecs/level-13-subnet-no-nat",
+          "mission": {
+            "name": "No Internet in Private",
+            "description": "Fargate task in private subnet with no NAT gateway \u2014 task can't pull image or reach AWS APIs",
+            "objective": "Either move to public subnet or note that NAT gateway is needed (add route via NAT)",
+            "xp": 325,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "subnets",
+              "routing"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-13-subnet-no-nat",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-14-sg-no-outbound",
+          "name": "level-14-sg-no-outbound",
+          "path": "modules/module-10-ecs/level-14-sg-no-outbound",
+          "mission": {
+            "name": "Locked Container",
+            "description": "Security group has no outbound rules \u2014 task can't pull image or call AWS services",
+            "objective": "Add egress rule allowing all outbound: `0.0.0.0/0`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions",
+              "tasks"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-14-sg-no-outbound",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-10-ecs/level-15-service-discovery-missing",
+          "name": "level-15-service-discovery-missing",
+          "path": "modules/module-10-ecs/level-15-service-discovery-missing",
+          "mission": {
+            "name": "Can't Find Service",
+            "description": "Service A tries to reach Service B via DNS `service-b.local` \u2014 no Cloud Map service discovery configured",
+            "objective": "Set up AWS Cloud Map namespace and service, link to ECS service",
+            "xp": 375,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "ECS",
+              "Fargate",
+              "task definitions"
+            ],
+            "module": "module-10-ecs",
+            "module_title": "ECS & Containers",
+            "level": "level-15-service-discovery-missing",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-11-api-gateway",
+      "levels": [
+        {
+          "id": "module-11-api-gateway/level-1-api-missing",
+          "name": "level-1-api-missing",
+          "path": "modules/module-11-api-gateway/level-1-api-missing",
+          "mission": {
+            "name": "No API Exists",
+            "description": "REST API `mission-api` doesn't exist \u2014 client gets connection refused",
+            "objective": "Create the REST API: `aws apigateway create-rest-api`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-1-api-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-2-resource-missing",
+          "name": "level-2-resource-missing",
+          "path": "modules/module-11-api-gateway/level-2-resource-missing",
+          "mission": {
+            "name": "No Path Configured",
+            "description": "API exists but the `/items` resource path doesn't exist \u2014 404 on all requests",
+            "objective": "Create the resource: `aws apigateway create-resource` with correct path part",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-2-resource-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-3-method-wrong",
+          "name": "level-3-method-wrong",
+          "path": "modules/module-11-api-gateway/level-3-method-wrong",
+          "mission": {
+            "name": "Wrong HTTP Method",
+            "description": "`POST /items` resource only has a `GET` method configured \u2014 POST returns 405",
+            "objective": "Add a POST method to the resource",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-3-method-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-4-integration-missing",
+          "name": "level-4-integration-missing",
+          "path": "modules/module-11-api-gateway/level-4-integration-missing",
+          "mission": {
+            "name": "No Backend",
+            "description": "Method exists but has no integration \u2014 request returns empty 200",
+            "objective": "Add Lambda proxy integration: `aws apigateway put-integration`",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "18m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "lambda functions",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-4-integration-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-5-integration-wrong-arn",
+          "name": "level-5-integration-wrong-arn",
+          "path": "modules/module-11-api-gateway/level-5-integration-wrong-arn",
+          "mission": {
+            "name": "Wrong Lambda",
+            "description": "Integration exists but Lambda ARN points to non-existent function",
+            "objective": "Fix the URI in the integration to use the correct Lambda ARN",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "lambda functions"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-5-integration-wrong-arn",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-6-lambda-permission-missing",
+          "name": "level-6-lambda-permission-missing",
+          "path": "modules/module-11-api-gateway/level-6-lambda-permission-missing",
+          "mission": {
+            "name": "API Can't Invoke Lambda",
+            "description": "Integration is correct but API Gateway can't invoke Lambda \u2014 missing resource policy",
+            "objective": "Add Lambda permission: `aws lambda add-permission` for `apigateway.amazonaws.com`",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "18m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-6-lambda-permission-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-7-not-deployed",
+          "name": "level-7-not-deployed",
+          "path": "modules/module-11-api-gateway/level-7-not-deployed",
+          "mission": {
+            "name": "API Not Live",
+            "description": "API is fully configured but never deployed to a stage \u2014 all requests fail",
+            "objective": "Deploy the API: `aws apigateway create-deployment --stage-name prod`",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-7-not-deployed",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-8-cors-missing",
+          "name": "level-8-cors-missing",
+          "path": "modules/module-11-api-gateway/level-8-cors-missing",
+          "mission": {
+            "name": "CORS Error",
+            "description": "API works from CLI but web browser gets CORS error \u2014 OPTIONS method and CORS headers not configured",
+            "objective": "Enable CORS on the resource (add OPTIONS method + response headers)",
+            "xp": 325,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-8-cors-missing",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-9-throttle-zero",
+          "name": "level-9-throttle-zero",
+          "path": "modules/module-11-api-gateway/level-9-throttle-zero",
+          "mission": {
+            "name": "All Requests Throttled",
+            "description": "Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` \u2014 every request throttled",
+            "objective": "Update stage settings to allow reasonable throttle limits",
+            "xp": 275,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-9-throttle-zero",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-10-auth-wrong",
+          "name": "level-10-auth-wrong",
+          "path": "modules/module-11-api-gateway/level-10-auth-wrong",
+          "mission": {
+            "name": "Authorization Required",
+            "description": "API requires AWS_IAM authorization but client expects no auth \u2014 all requests 403",
+            "objective": "Change method authorization to `NONE` or provide correct SigV4 headers",
+            "xp": 325,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-10-auth-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-11-mapping-template-wrong",
+          "name": "level-11-mapping-template-wrong",
+          "path": "modules/module-11-api-gateway/level-11-mapping-template-wrong",
+          "mission": {
+            "name": "Garbled Request",
+            "description": "Mapping template transforms request body but uses wrong field name \u2014 Lambda receives null values",
+            "objective": "Fix the VTL mapping template to correctly map request fields",
+            "xp": 375,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "lambda functions",
+              "templates"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-11-mapping-template-wrong",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-11-api-gateway/level-12-api-key-no-plan",
+          "name": "level-12-api-key-no-plan",
+          "path": "modules/module-11-api-gateway/level-12-api-key-no-plan",
+          "mission": {
+            "name": "API Key Rejected",
+            "description": "API requires API key but no usage plan exists associating the key to the stage",
+            "objective": "Create usage plan, associate API stage, and link API key to usage plan",
+            "xp": 375,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "API Gateway",
+              "Lambda integration",
+              "stages",
+              "REST APIs"
+            ],
+            "module": "module-11-api-gateway",
+            "module_title": "API Gateway",
+            "level": "level-12-api-key-no-plan",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-12-war-games",
+      "levels": [
+        {
+          "id": "module-12-war-games/level-1-lambda-cant-read-s3",
+          "name": "level-1-lambda-cant-read-s3",
+          "path": "modules/module-12-war-games/level-1-lambda-cant-read-s3",
+          "mission": {
+            "name": "The Blocked Pipeline",
+            "description": "Lambda role missing `s3:GetObject` AND bucket policy has explicit Deny for Lambda role",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the blocked pipeline.",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "25m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-1-lambda-cant-read-s3",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-2-sns-sqs-lambda-broken",
+          "name": "level-2-sns-sqs-lambda-broken",
+          "path": "modules/module-12-war-games/level-2-sns-sqs-lambda-broken",
+          "mission": {
+            "name": "The Silent Chain",
+            "description": "SNS\u2192SQS\u2192Lambda pipeline: SQS queue policy missing (SNS can't send) + Lambda concurrency is 0",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the silent chain.",
+            "xp": 450,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-2-sns-sqs-lambda-broken",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-3-alarm-never-fires",
+          "name": "level-3-alarm-never-fires",
+          "path": "modules/module-12-war-games/level-3-alarm-never-fires",
+          "mission": {
+            "name": "The Blind System",
+            "description": "Error metric filter uses wrong pattern + alarm threshold inverted + alarm has no SNS action",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the blind system.",
+            "xp": 450,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "alarms"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-3-alarm-never-fires",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-4-s3-trigger-broken",
+          "name": "level-4-s3-trigger-broken",
+          "path": "modules/module-12-war-games/level-4-s3-trigger-broken",
+          "mission": {
+            "name": "Upload Goes Nowhere",
+            "description": "S3 event notification on wrong bucket + Lambda resource policy missing principal + DLQ not configured",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting upload goes nowhere.",
+            "xp": 450,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-4-s3-trigger-broken",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-5-api-gateway-full-break",
+          "name": "level-5-api-gateway-full-break",
+          "path": "modules/module-12-war-games/level-5-api-gateway-full-break",
+          "mission": {
+            "name": "The Dead API",
+            "description": "API deployed to wrong stage + Lambda ARN wrong + CORS missing + throttle is zero",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the dead api.",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "lambda functions",
+              "REST APIs"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-5-api-gateway-full-break",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-6-ecs-wont-start",
+          "name": "level-6-ecs-wont-start",
+          "path": "modules/module-12-war-games/level-6-ecs-wont-start",
+          "mission": {
+            "name": "Container Chaos",
+            "description": "ECS task: execution role missing + wrong ECR image ARN + health check command wrong",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting container chaos.",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "roles",
+              "tasks"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-6-ecs-wont-start",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-7-dynamodb-lambda-stream",
+          "name": "level-7-dynamodb-lambda-stream",
+          "path": "modules/module-12-war-games/level-7-dynamodb-lambda-stream",
+          "mission": {
+            "name": "Stream Silence",
+            "description": "DynamoDB Streams disabled + Lambda event source mapping wrong stream ARN + Lambda role missing `dynamodb:GetRecords`",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting stream silence.",
+            "xp": 475,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "roles",
+              "lambda functions"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-7-dynamodb-lambda-stream",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-8-cfn-stack-broken",
+          "name": "level-8-cfn-stack-broken",
+          "path": "modules/module-12-war-games/level-8-cfn-stack-broken",
+          "mission": {
+            "name": "Stack Refuses to Update",
+            "description": "Stack in ROLLBACK_COMPLETE + export name conflict + deletion policy missing on RDS",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting stack refuses to update.",
+            "xp": 475,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-8-cfn-stack-broken",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-9-secrets-rotation-cascade",
+          "name": "level-9-secrets-rotation-cascade",
+          "path": "modules/module-12-war-games/level-9-secrets-rotation-cascade",
+          "mission": {
+            "name": "The Credential Crisis",
+            "description": "Secret ARN changed after rotation + Lambda env var has old ARN + IAM policy uses ARN not name",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the credential crisis.",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "lambda functions"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-9-secrets-rotation-cascade",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-10-cross-account-role",
+          "name": "level-10-cross-account-role",
+          "path": "modules/module-12-war-games/level-10-cross-account-role",
+          "mission": {
+            "name": "The Missing Bridge",
+            "description": "Assume-role fails: wrong Principal in trust policy + missing ExternalId condition + user missing sts:AssumeRole",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the missing bridge.",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-10-cross-account-role",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-11-iam-privilege-escalation",
+          "name": "level-11-iam-privilege-escalation",
+          "path": "modules/module-12-war-games/level-11-iam-privilege-escalation",
+          "mission": {
+            "name": "Security Audit",
+            "description": "Role has `iam:CreateRole` + `iam:AttachRolePolicy` + `iam:PassRole` \u2014 can create admin role and escalate",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting security audit.",
+            "xp": 550,
+            "difficulty": "expert",
+            "expected_time": "40m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-11-iam-privilege-escalation",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-12-public-s3-exposure",
+          "name": "level-12-public-s3-exposure",
+          "path": "modules/module-12-war-games/level-12-public-s3-exposure",
+          "mission": {
+            "name": "Data Exposure Incident",
+            "description": "S3 bucket has public access block disabled + bucket ACL is public-read + bucket policy allows `*` principal",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting data exposure incident.",
+            "xp": 550,
+            "difficulty": "expert",
+            "expected_time": "40m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-12-public-s3-exposure",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-13-sqs-message-pileup",
+          "name": "level-13-sqs-message-pileup",
+          "path": "modules/module-12-war-games/level-13-sqs-message-pileup",
+          "mission": {
+            "name": "Queue Meltdown",
+            "description": "DLQ ARN wrong in redrive policy + visibility timeout too low + no alarm on DLQ depth",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting queue meltdown.",
+            "xp": 475,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "alarms"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-13-sqs-message-pileup",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-14-cloudwatch-observability-gap",
+          "name": "level-14-cloudwatch-observability-gap",
+          "path": "modules/module-12-war-games/level-14-cloudwatch-observability-gap",
+          "mission": {
+            "name": "Flying Blind",
+            "description": "Lambda has no log group + metric filter on wrong log group + alarm period mismatch + no SNS action",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting flying blind.",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "lambda functions",
+              "alarms"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-14-cloudwatch-observability-gap",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-15-ecs-networking-labyrinth",
+          "name": "level-15-ecs-networking-labyrinth",
+          "path": "modules/module-12-war-games/level-15-ecs-networking-labyrinth",
+          "mission": {
+            "name": "The Unreachable Service",
+            "description": "ECS task in private subnet + no NAT route + security group blocks 443 egress + execution role missing ecr permission",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the unreachable service.",
+            "xp": 550,
+            "difficulty": "expert",
+            "expected_time": "40m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "roles",
+              "subnets"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-15-ecs-networking-labyrinth",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-16-kms-breaks-everything",
+          "name": "level-16-kms-breaks-everything",
+          "path": "modules/module-12-war-games/level-16-kms-breaks-everything",
+          "mission": {
+            "name": "Encryption Lockout",
+            "description": "KMS key disabled + key policy missing IAM role + Lambda uses hardcoded key ARN (not alias) after rotation",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting encryption lockout.",
+            "xp": 550,
+            "difficulty": "expert",
+            "expected_time": "40m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "roles"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-16-kms-breaks-everything",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-17-api-auth-lockout",
+          "name": "level-17-api-auth-lockout",
+          "path": "modules/module-12-war-games/level-17-api-auth-lockout",
+          "mission": {
+            "name": "The Auth Maze",
+            "description": "API Gateway: IAM auth enabled + Lambda permission missing + usage plan throttle is zero + CORS blocks browser",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the auth maze.",
+            "xp": 575,
+            "difficulty": "expert",
+            "expected_time": "45m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "lambda functions",
+              "REST APIs"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-17-api-auth-lockout",
+            "implementation_status": "playable"
+          }
+        },
+        {
+          "id": "module-12-war-games/level-18-full-stack-incident",
+          "name": "level-18-full-stack-incident",
+          "path": "modules/module-12-war-games/level-18-full-stack-incident",
+          "mission": {
+            "name": "The Production Incident",
+            "description": "Complete app stack broken: CloudFormation drift + IAM permission removed + S3 bucket policy expired + Lambda concurrency at 0 + CloudWatch alarm silenced",
+            "objective": "Diagnose and fix the misconfiguration(s) affecting the production incident.",
+            "xp": 600,
+            "difficulty": "expert",
+            "expected_time": "60m",
+            "concepts": [
+              "incident response",
+              "multi-service debugging",
+              "production troubleshooting",
+              "policy debugging",
+              "buckets"
+            ],
+            "module": "module-12-war-games",
+            "module_title": "Production War Games",
+            "level": "level-18-full-stack-incident",
+            "implementation_status": "playable"
+          }
+        }
+      ]
+    }
+  ]
+}

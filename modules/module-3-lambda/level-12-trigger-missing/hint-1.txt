@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: S3 bucket receives files but Lambda is never triggered — event source mapping missing

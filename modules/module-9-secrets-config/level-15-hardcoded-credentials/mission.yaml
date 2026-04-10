@@ -1,0 +1,18 @@
+name: Credentials in Code
+description: Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded
+  in environment variables
+objective: Remove hardcoded credentials, create proper IAM execution role with required
+  permissions
+xp: 375
+difficulty: advanced
+expected_time: 25m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- roles
+- lambda functions
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-15-hardcoded-credentials
+implementation_status: playable

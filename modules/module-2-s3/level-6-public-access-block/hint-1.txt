@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Bucket policy grants public read but `BlockPublicPolicy` is true — policy silently rejected

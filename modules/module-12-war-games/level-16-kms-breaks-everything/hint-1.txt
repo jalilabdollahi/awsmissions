@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: KMS key disabled + key policy missing IAM role + Lambda uses hardcoded key ARN (not alias) after rotation

@@ -1,0 +1,8 @@
+{
+  "environment": [
+    {
+      "name": "APP_MODE",
+      "value": "production"
+    }
+  ]
+}

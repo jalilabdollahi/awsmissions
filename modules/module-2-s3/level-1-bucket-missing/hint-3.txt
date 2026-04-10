@@ -1,0 +1,1 @@
+With LocalStack, the same command works as AWS as long as your endpoint environment variables are set.

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule — HTTP blocked

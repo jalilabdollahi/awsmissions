@@ -1,0 +1,13 @@
+# No Security Group
+
+## Why This Matters
+This mission practices a real troubleshooting pattern in EC2 & Networking: Instance launch fails — no security group specified and no default SG exists in VPC
+
+## Production Lesson
+In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+
+## Key Concepts
+- EC2
+- VPC
+- networking
+- VPCs

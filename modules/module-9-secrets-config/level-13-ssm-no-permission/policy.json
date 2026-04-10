@@ -1,0 +1,6 @@
+{
+  "allow": [
+    "ssm:GetParameter",
+    "ssm:GetParameters"
+  ]
+}

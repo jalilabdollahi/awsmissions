@@ -1,0 +1,17 @@
+name: The Blank Config
+description: "Function code reads `os.environ['DATABASE_URL']` but the env var is\
+  \ not set \u2014 KeyError on invocation"
+objective: Add the environment variable via `aws lambda update-function-configuration
+  --environment`
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-6-env-var-missing
+implementation_status: playable

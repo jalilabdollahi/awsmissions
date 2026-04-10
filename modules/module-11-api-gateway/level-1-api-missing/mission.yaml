@@ -1,0 +1,15 @@
+name: No API Exists
+description: "REST API `mission-api` doesn't exist \u2014 client gets connection refused"
+objective: 'Create the REST API: `aws apigateway create-rest-api`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-1-api-missing
+implementation_status: playable

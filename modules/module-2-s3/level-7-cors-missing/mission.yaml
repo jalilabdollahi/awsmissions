@@ -1,0 +1,17 @@
+name: The CORS Complaint
+description: "Web application can't fetch objects \u2014 CORS configuration is missing\
+  \ entirely"
+objective: Add a CORS configuration via `aws s3api put-bucket-cors`
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- REST APIs
+module: module-2-s3
+module_title: S3 Mastery
+level: level-7-cors-missing
+implementation_status: playable

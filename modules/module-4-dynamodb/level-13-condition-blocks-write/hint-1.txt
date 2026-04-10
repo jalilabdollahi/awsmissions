@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: PutItem has a ConditionExpression `attribute_not_exists(id)` that prevents updating an existing item

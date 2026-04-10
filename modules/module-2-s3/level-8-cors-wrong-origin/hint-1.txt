@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: CORS is configured but allows `https://wrong-app.com` instead of `https://myapp.com`

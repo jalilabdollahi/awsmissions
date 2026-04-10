@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: EventBridge rule has `"source": ["aws.ec3"]` (typo) instead of `"aws.ec2"` — events never match

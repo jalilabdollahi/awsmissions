@@ -1,0 +1,17 @@
+name: The Locked Vault
+description: Policy grants `s3:GetObject` on `arn:aws:s3:::wrong-bucket/*` but app
+  reads from `mission-bucket`
+objective: Fix the resource ARN to point to the correct bucket
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- buckets
+module: module-1-iam
+module_title: IAM Foundations
+level: level-4-wrong-resource
+implementation_status: playable

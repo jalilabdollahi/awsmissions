@@ -1,0 +1,15 @@
+name: Filter Catches Nothing
+description: Metric filter exists to count ERROR logs but pattern is `[ERROR]` when
+  logs use `ERROR:` format
+objective: Fix the filter pattern to match actual log format
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-4-metric-filter-wrong-pattern
+implementation_status: playable

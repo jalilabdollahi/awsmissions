@@ -1,0 +1,17 @@
+name: The Blocked Handoff
+description: "IAM user can create Lambda but can't assign an execution role \u2014\
+  \ missing `iam:PassRole`"
+objective: Add `iam:PassRole` permission on the target role to the user policy
+xp: 175
+difficulty: beginner
+expected_time: 10m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- lambda functions
+module: module-1-iam
+module_title: IAM Foundations
+level: level-8-missing-passrole
+implementation_status: playable

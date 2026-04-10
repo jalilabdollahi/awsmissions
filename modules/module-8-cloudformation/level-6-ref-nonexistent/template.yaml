@@ -1,0 +1,6 @@
+Resources:
+  MyQueue:
+    Type: AWS::SQS::Queue
+Outputs:
+  BucketName:
+    Value: REF MyBucket

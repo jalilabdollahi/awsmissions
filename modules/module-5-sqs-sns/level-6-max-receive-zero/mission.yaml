@@ -1,0 +1,16 @@
+name: Zero Tolerance
+description: "`maxReceiveCount` in redrive policy is set to `0` \u2014 messages go\
+  \ to DLQ immediately on first receive"
+objective: Set `maxReceiveCount` to a reasonable value (e.g., 3)
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- SQS
+- SNS
+- event delivery
+- policy debugging
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-6-max-receive-zero
+implementation_status: playable

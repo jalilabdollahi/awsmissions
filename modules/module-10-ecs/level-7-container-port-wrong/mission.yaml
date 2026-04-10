@@ -1,0 +1,16 @@
+name: Port Mismatch
+description: Task definition exposes port 8080 but load balancer target group expects
+  port 80
+objective: Fix containerPort in task definition or update target group
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-7-container-port-wrong
+implementation_status: playable

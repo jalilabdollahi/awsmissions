@@ -1,0 +1,1 @@
+The action and resource are already close. Edit the JSON and then apply it with `file://policy.json`.

@@ -1,0 +1,15 @@
+name: One Key Short
+description: "Table has only a hash key but the application queries with both hash\
+  \ + sort key \u2014 query fails"
+objective: Recreate table with both partition key and sort key
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-3-missing-sort-key
+implementation_status: playable

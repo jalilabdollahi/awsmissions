@@ -1,0 +1,15 @@
+name: No Index, No Query
+description: Application queries a GSI named `email-index` but the index doesn't exist
+  on the table
+objective: 'Add the GSI via table update: `aws dynamodb update-table`'
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- DynamoDB
+- tables
+- indexes
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-4-gsi-missing
+implementation_status: playable

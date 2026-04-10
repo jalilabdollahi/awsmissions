@@ -1,0 +1,16 @@
+name: Public by Accident
+description: "Bucket ACL is set to `public-read` \u2014 all objects are publicly readable"
+objective: 'Change ACL to `private`: `aws s3api put-bucket-acl --acl private`'
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+- S3
+- bucket configuration
+- object access
+- buckets
+- REST APIs
+module: module-2-s3
+module_title: S3 Mastery
+level: level-15-acl-too-open
+implementation_status: playable

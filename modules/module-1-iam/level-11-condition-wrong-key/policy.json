@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "arn:aws:iam::000000000000:role/target-role",
+      "Condition": {
+        "StringEquals": {
+          "aws:sourceIp": "000000000000"
+        }
+      }
+    }
+  ]
+}

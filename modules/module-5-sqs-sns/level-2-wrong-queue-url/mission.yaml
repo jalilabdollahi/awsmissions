@@ -1,0 +1,16 @@
+name: Wrong Address
+description: "Application is configured with an incorrect queue URL \u2014 messages\
+  \ going nowhere"
+objective: 'Retrieve the correct URL: `aws sqs get-queue-url` and update the config'
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- SQS
+- SNS
+- event delivery
+- queues
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-2-wrong-queue-url
+implementation_status: playable

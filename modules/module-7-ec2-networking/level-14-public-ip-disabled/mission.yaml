@@ -1,0 +1,16 @@
+name: Invisible Instance
+description: "Instance in public subnet but `AssociatePublicIpAddress` is false \u2014\
+  \ no public IP"
+objective: Enable auto-assign public IP on the subnet or allocate an Elastic IP
+xp: 250
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- EC2
+- VPC
+- networking
+- subnets
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-14-public-ip-disabled
+implementation_status: playable

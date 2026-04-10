@@ -1,0 +1,16 @@
+name: Rotation Breaks Decrypt
+description: "KMS key rotation was enabled but application has old key ARN hardcoded\
+  \ \u2014 decryption fails after rotation"
+objective: Update application to use key alias instead of key ARN (aliases track rotation
+  automatically)
+xp: 350
+difficulty: advanced
+expected_time: 20m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-14-kms-key-rotation
+implementation_status: playable

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Visibility timeout is 5 seconds — workers take 30s to process, messages become visible again and are re-processed

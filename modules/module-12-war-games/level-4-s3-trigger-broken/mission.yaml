@@ -1,0 +1,17 @@
+name: Upload Goes Nowhere
+description: S3 event notification on wrong bucket + Lambda resource policy missing
+  principal + DLQ not configured
+objective: Diagnose and fix the misconfiguration(s) affecting upload goes nowhere.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- policy debugging
+- buckets
+module: module-12-war-games
+module_title: Production War Games
+level: level-4-s3-trigger-broken
+implementation_status: playable

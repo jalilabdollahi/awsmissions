@@ -1,0 +1,17 @@
+name: Plaintext Secret
+description: "SSM parameter `/mission/config/api-key` is stored as `String` type \u2014\
+  \ should be `SecureString` (encrypted)"
+objective: 'Delete and recreate as SecureString: `aws ssm put-parameter --type SecureString`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- secrets
+- parameter store
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-11-ssm-wrong-type
+implementation_status: playable

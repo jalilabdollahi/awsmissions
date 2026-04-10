@@ -1,0 +1,17 @@
+name: The Silent Table
+description: "Lambda should process every table change \u2014 DynamoDB Streams are\
+  \ disabled"
+objective: 'Enable streams: `aws dynamodb update-table --stream-specification StreamEnabled=true`'
+xp: 225
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- DynamoDB
+- tables
+- indexes
+- lambda functions
+- streams
+module: module-4-dynamodb
+module_title: DynamoDB
+level: level-9-streams-disabled
+implementation_status: playable

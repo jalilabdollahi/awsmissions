@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Template uses `AWS::Serverless::Function` but is missing `Transform: AWS::Serverless-2016-10-31`

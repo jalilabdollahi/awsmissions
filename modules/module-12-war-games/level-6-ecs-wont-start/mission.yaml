@@ -1,0 +1,17 @@
+name: Container Chaos
+description: 'ECS task: execution role missing + wrong ECR image ARN + health check
+  command wrong'
+objective: Diagnose and fix the misconfiguration(s) affecting container chaos.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+- incident response
+- multi-service debugging
+- production troubleshooting
+- roles
+- tasks
+module: module-12-war-games
+module_title: Production War Games
+level: level-6-ecs-wont-start
+implementation_status: playable

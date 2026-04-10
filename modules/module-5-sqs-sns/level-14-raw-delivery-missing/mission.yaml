@@ -1,0 +1,16 @@
+name: Double-Wrapped
+description: "Lambda expects raw message body but SNS wraps it in an envelope \u2014\
+  \ JSON parsing fails"
+objective: Enable `RawMessageDelivery` on the SNS-to-SQS subscription
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- SQS
+- SNS
+- event delivery
+- lambda functions
+module: module-5-sqs-sns
+module_title: SQS & SNS
+level: level-14-raw-delivery-missing
+implementation_status: playable

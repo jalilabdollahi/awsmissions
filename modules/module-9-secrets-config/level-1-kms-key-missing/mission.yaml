@@ -1,0 +1,15 @@
+name: No Key
+description: "Application tries to encrypt using KMS key alias `alias/mission-key`\
+  \ \u2014 key doesn't exist"
+objective: 'Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-1-kms-key-missing
+implementation_status: playable

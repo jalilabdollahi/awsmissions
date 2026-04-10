@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Disable requester pays: `aws s3api put-bucket-request-payment --payer BucketOwner`

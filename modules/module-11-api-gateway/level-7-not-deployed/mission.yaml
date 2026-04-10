@@ -1,0 +1,16 @@
+name: API Not Live
+description: "API is fully configured but never deployed to a stage \u2014 all requests\
+  \ fail"
+objective: 'Deploy the API: `aws apigateway create-deployment --stage-name prod`'
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- API Gateway
+- Lambda integration
+- stages
+- REST APIs
+module: module-11-api-gateway
+module_title: API Gateway
+level: level-7-not-deployed
+implementation_status: playable

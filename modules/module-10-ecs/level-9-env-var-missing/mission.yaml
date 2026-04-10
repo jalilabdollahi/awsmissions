@@ -1,0 +1,16 @@
+name: App Crash at Startup
+description: Task starts but application crashes because required env var `APP_MODE`
+  not in task definition
+objective: Add the environment variable to the task definition container config
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-9-env-var-missing
+implementation_status: playable

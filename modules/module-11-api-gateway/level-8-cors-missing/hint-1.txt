@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: API works from CLI but web browser gets CORS error — OPTIONS method and CORS headers not configured

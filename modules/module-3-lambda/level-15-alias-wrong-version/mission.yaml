@@ -1,0 +1,16 @@
+name: The Ghost Alias
+description: "Lambda alias `production` points to version `5` which was deleted \u2014\
+  \ invocations fail"
+objective: Update alias to point to an existing version or `$LATEST`
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-15-alias-wrong-version
+implementation_status: playable

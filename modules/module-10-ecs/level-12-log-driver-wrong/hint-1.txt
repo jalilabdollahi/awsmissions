@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Task definition uses `journald` log driver — ECS Fargate only supports `awslogs`

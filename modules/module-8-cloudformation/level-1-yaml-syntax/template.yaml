@@ -1,0 +1,3 @@
+Resources:
+MissionBucket:
+    Type: AWS::S3::Bucket

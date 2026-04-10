@@ -1,0 +1,16 @@
+name: The Invisible Ceiling
+description: IAM role has a permission boundary that blocks S3 access even though
+  the identity policy allows it
+objective: Update or remove the permission boundary to allow the required actions
+xp: 225
+difficulty: beginner
+expected_time: 15m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-17-permission-boundary
+implementation_status: playable

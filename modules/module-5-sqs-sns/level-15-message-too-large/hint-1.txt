@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application sends 300KB messages — SQS limit is 256KB — sends fail

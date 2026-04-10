@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: CloudWatch Logs Insights query has a syntax error — query fails to execute

@@ -1,0 +1,16 @@
+name: Route Table Orphan
+description: Route table has correct routes but is not associated with the subnet
+objective: 'Associate route table with subnet: `aws ec2 associate-route-table`'
+xp: 225
+difficulty: intermediate
+expected_time: 15m
+concepts:
+- EC2
+- VPC
+- networking
+- subnets
+- routing
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-10-subnet-not-associated
+implementation_status: playable

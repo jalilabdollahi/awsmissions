@@ -1,0 +1,16 @@
+name: No Security Group
+description: "Instance launch fails \u2014 no security group specified and no default\
+  \ SG exists in VPC"
+objective: Create a security group and reference it in the instance config
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- EC2
+- VPC
+- networking
+- VPCs
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-1-sg-missing
+implementation_status: playable

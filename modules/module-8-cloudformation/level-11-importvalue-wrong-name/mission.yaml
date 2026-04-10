@@ -1,0 +1,16 @@
+name: Broken Cross-Stack Link
+description: "`!ImportValue SharedBucketName` \u2014 but the export is actually named\
+  \ `mission-SharedBucketName`"
+objective: Fix the ImportValue key to match the exact export name
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudFormation
+- stacks
+- templates
+- buckets
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-11-importvalue-wrong-name
+implementation_status: playable

@@ -1,0 +1,15 @@
+name: Wrong Attribute
+description: "`!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn`\
+  \ \u2014 depends on resource type"
+objective: Fix the attribute name in the GetAtt reference
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudFormation
+- stacks
+- templates
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-7-getatt-wrong-attribute
+implementation_status: playable

@@ -1,0 +1,16 @@
+name: Wrong Version
+description: Application pinned to a specific secret version that no longer exists
+  (was rotated)
+objective: Update application to use `AWSCURRENT` stage or fix the version reference
+xp: 300
+difficulty: advanced
+expected_time: 18m
+concepts:
+- Secrets Manager
+- SSM
+- KMS
+- secrets
+module: module-9-secrets-config
+module_title: Secrets & Config
+level: level-8-secret-wrong-version
+implementation_status: playable

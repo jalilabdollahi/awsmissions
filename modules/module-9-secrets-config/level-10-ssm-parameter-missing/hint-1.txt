@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application reads SSM parameter `/mission/config/db-host` — parameter doesn't exist

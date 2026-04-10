@@ -1,0 +1,15 @@
+name: The Closed Door
+description: "Security group exists but has no inbound rules \u2014 all inbound traffic\
+  \ blocked (port 22, 80, 443)"
+objective: Add inbound rules for the required ports
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+- EC2
+- VPC
+- networking
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-2-sg-no-inbound
+implementation_status: playable

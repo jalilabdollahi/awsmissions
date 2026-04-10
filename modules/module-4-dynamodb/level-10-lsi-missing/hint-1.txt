@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application queries with a Local Secondary Index `status-index` that doesn't exist — LSI must be created at table creation time

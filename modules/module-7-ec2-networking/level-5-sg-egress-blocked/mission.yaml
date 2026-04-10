@@ -1,0 +1,16 @@
+name: No Way Out
+description: "Security group has a custom outbound rule that blocks all egress \u2014\
+  \ app can't reach external APIs"
+objective: Remove the blocking egress rule or add an allow-all egress rule
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- EC2
+- VPC
+- networking
+- REST APIs
+module: module-7-ec2-networking
+module_title: EC2 & Networking
+level: level-5-sg-egress-blocked
+implementation_status: playable

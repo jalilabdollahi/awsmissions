@@ -1,0 +1,15 @@
+name: No Function Found
+description: "Invocation fails \u2014 Lambda function `mission-function` doesn't exist"
+objective: Deploy the function using `aws lambda create-function`
+xp: 100
+difficulty: beginner
+expected_time: 5m
+concepts:
+- Lambda
+- execution roles
+- function configuration
+- lambda functions
+module: module-3-lambda
+module_title: Lambda Functions
+level: level-1-function-missing
+implementation_status: playable

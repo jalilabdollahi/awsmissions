@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: `!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` — depends on resource type

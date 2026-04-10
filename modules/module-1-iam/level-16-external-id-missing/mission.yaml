@@ -1,0 +1,17 @@
+name: The Missing Secret Handshake
+description: "Role trust policy requires `sts:ExternalId` condition but caller doesn't\
+  \ provide it \u2014 AssumeRole denied"
+objective: Provide the correct ExternalId when calling `aws sts assume-role`
+xp: 200
+difficulty: beginner
+expected_time: 15m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+- secrets
+module: module-1-iam
+module_title: IAM Foundations
+level: level-16-external-id-missing
+implementation_status: playable

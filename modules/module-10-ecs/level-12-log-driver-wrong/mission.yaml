@@ -1,0 +1,16 @@
+name: No Logs
+description: "Task definition uses `journald` log driver \u2014 ECS Fargate only supports\
+  \ `awslogs`"
+objective: Change `logDriver` to `awslogs` and configure the `awslogs-group` option
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+- ECS
+- Fargate
+- task definitions
+- tasks
+module: module-10-ecs
+module_title: ECS & Containers
+level: level-12-log-driver-wrong
+implementation_status: playable

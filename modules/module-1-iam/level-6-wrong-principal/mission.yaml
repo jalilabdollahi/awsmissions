@@ -1,0 +1,16 @@
+name: Trust Nobody
+description: "Role trust policy has wrong account ID in Principal \u2014 `sts:AssumeRole`\
+  \ fails"
+objective: Fix the Principal to the correct account ID (`000000000000` in LocalStack)
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-6-wrong-principal
+implementation_status: playable

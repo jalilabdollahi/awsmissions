@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Lambda should process every table change — DynamoDB Streams are disabled

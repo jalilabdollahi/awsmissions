@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Push a valid image to ECR: `docker build`, `aws ecr get-login-password`, `docker push`

@@ -1,0 +1,1 @@
+Open `policy.json` with command `4` and look closely at the `Effect` field.

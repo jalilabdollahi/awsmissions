@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Add CloudWatch Logs permissions to the Lambda execution role

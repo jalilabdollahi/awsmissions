@@ -1,0 +1,15 @@
+name: Logic Flipped
+description: Composite alarm uses `ALARM(alarm-a) AND NOT ALARM(alarm-b)` but should
+  trigger when both are in ALARM
+objective: Fix the composite alarm rule expression
+xp: 275
+difficulty: intermediate
+expected_time: 18m
+concepts:
+- CloudWatch
+- logs
+- alarms
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-14-composite-alarm-inverted
+implementation_status: playable

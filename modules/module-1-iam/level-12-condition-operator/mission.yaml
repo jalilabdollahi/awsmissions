@@ -1,0 +1,16 @@
+name: Almost Right
+description: "Policy condition uses `StringEquals` for a value that requires wildcard\
+  \ matching \u2014 use `StringLike`"
+objective: Change condition operator from `StringEquals` to `StringLike`
+xp: 175
+difficulty: beginner
+expected_time: 12m
+concepts:
+- IAM
+- roles
+- policies
+- policy debugging
+module: module-1-iam
+module_title: IAM Foundations
+level: level-12-condition-operator
+implementation_status: playable

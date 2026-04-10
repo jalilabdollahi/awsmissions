@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Frequently accessed objects are set to `GLACIER` storage class — retrieval takes hours

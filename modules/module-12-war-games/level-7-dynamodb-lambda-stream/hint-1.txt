@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: DynamoDB Streams disabled + Lambda event source mapping wrong stream ARN + Lambda role missing `dynamodb:GetRecords`

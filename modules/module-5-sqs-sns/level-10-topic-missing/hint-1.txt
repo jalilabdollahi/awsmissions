@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Application publishes to SNS topic `mission-topic` that doesn't exist

@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Fargate task definition has CPU `256` with memory `256` — Fargate requires memory >= 512MB for 256 CPU units

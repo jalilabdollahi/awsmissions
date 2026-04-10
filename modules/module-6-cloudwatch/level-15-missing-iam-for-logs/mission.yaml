@@ -1,0 +1,17 @@
+name: No Permission to Write
+description: Lambda execution role is missing `logs:CreateLogStream` and `logs:PutLogEvents`
+  permissions
+objective: Add CloudWatch Logs permissions to the Lambda execution role
+xp: 225
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudWatch
+- logs
+- alarms
+- roles
+- lambda functions
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-15-missing-iam-for-logs
+implementation_status: playable

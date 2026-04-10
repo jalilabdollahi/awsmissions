@@ -1,0 +1,16 @@
+name: Infinite Log Growth
+description: "Log group exists but retention is set to `Never` \u2014 logs accumulate\
+  \ indefinitely"
+objective: 'Set retention policy to 30 days: `aws logs put-retention-policy`'
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+- CloudWatch
+- logs
+- alarms
+- policy debugging
+module: module-6-cloudwatch
+module_title: CloudWatch & Logging
+level: level-2-retention-not-set
+implementation_status: playable

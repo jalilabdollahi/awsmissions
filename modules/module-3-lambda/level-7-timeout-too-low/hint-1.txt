@@ -1,0 +1,1 @@
+Start by inspecting the resources involved in this mission: Function needs 30 seconds to process but timeout is 3s — always times out

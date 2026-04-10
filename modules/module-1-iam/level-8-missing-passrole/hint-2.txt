@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Add `iam:PassRole` permission on the target role to the user policy

@@ -1,0 +1,1 @@
+Focus on the specific mismatch described in the objective: Use the SQS Extended Client pattern: store payload in S3, send S3 reference in queue

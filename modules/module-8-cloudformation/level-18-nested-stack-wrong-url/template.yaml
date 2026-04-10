@@ -1,0 +1,5 @@
+Resources:
+  Nested:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/wrong-bucket/missing-template.yaml

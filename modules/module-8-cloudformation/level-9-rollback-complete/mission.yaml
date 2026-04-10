@@ -1,0 +1,16 @@
+name: Stack Stuck
+description: "Stack is in `ROLLBACK_COMPLETE` state from a previous failed create\
+  \ \u2014 cannot update"
+objective: Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be
+  updated)
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+- CloudFormation
+- stacks
+- templates
+module: module-8-cloudformation
+module_title: CloudFormation
+level: level-9-rollback-complete
+implementation_status: playable
