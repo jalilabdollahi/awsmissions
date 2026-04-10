@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Role trust policy has wrong account ID in Principal — `sts:AssumeRole` fails
+Start by asking STS which account you are acting as: `aws sts get-caller-identity --query Account --output text`
