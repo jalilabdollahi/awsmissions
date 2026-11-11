@@ -1,17 +1,21 @@
-name: Secret Not Found
-description: "Task definition references Secrets Manager ARN that doesn't exist \u2014\
-  \ task fails to start"
-objective: Fix the ARN in the `secrets` section of the task definition
-xp: 300
-difficulty: advanced
-expected_time: 18m
+name: "Secret Handshake Failed"
+description: >-
+  Cedar Bank's ledger-sync service pulls its database credentials from Secrets
+  Manager at start-up. After a secret was renamed during a tidy-up, new tasks of
+  ledger-sync never start: ECS marks them stopped within seconds, before the
+  application code runs. Nobody remembers the exact new ARN, and the person who
+  edited task-definition.json typed it from memory.
+objective: >-
+  Make ledger-sync run again with the container receiving DB_USER and DB_PASSWORD
+  from the secret cedar/db-credentials (keys username and password): register a
+  corrected task definition and roll the service onto it.
+xp: 225
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- secrets
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-10-secrets-wrong-arn
-implementation_status: playable
+  - ECS secrets
+  - Secrets Manager ARNs
+  - JSON key references
+services:
+  - ecs
+  - secretsmanager

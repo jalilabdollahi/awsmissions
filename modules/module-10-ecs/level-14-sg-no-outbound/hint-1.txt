@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Security group has no outbound rules — task can't pull image or call AWS services
+There are two security groups in the story. Look at the outbound rules of one and the inbound rules of the other:
+
+  aws ec2 describe-security-groups --filters Name=group-name,Values=slate-task-sg,slate-vpce-sg \
+    --query 'SecurityGroups[].[GroupName,IpPermissions,IpPermissionsEgress]'

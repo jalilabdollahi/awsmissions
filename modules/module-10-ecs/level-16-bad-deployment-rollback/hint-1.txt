@@ -1,0 +1,4 @@
+See what the service is running and why its tasks die:
+
+  aws ecs describe-services --cluster tidepool --services tidepool-web --query 'services[0].[taskDefinition,deployments,events[:3].message]'
+  aws ecs list-task-definitions --family-prefix tidepool-web

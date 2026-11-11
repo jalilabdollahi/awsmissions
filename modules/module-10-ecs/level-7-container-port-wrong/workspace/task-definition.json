@@ -1,0 +1,16 @@
+{
+  "family": "invoice-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "python:3.12-alpine",
+      "essential": true,
+      "command": ["sh", "-c", "mkdir -p /srv && echo ok > /srv/health && cd /srv && python -m http.server 3000 --bind 0.0.0.0"],
+      "portMappings": [{ "containerPort": 8080, "protocol": "tcp" }]
+    }
+  ]
+}

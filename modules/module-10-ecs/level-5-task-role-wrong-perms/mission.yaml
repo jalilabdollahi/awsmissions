@@ -1,17 +1,23 @@
-name: App Can't Access AWS
-description: "Task starts but application inside container can't read from S3 \u2014\
-  \ task role has no S3 permission"
-objective: Add S3 read permissions to the task IAM role
-xp: 275
-difficulty: advanced
-expected_time: 15m
+name: "Access Denied at the Bucket"
+description: >-
+  Pixelmill's resizer service reads uploaded photos from pixelmill-uploads and
+  writes thumbnails to pixelmill-thumbs. Its ECS task role, pixelmill-task-role,
+  has a policy that "mentions the right buckets", yet the application logs
+  AccessDenied on every GetObject and PutObject. Pixelmill also stores invoices in
+  pixelmill-billing, which the resizer must never touch.
+objective: >-
+  Fix the permissions of pixelmill-task-role so the resizer can read objects from
+  pixelmill-uploads, list that bucket and write objects to pixelmill-thumbs,
+  with nothing else allowed (no writes to uploads, no deletes, no other buckets).
+  The resizer service must keep running with that role.
+xp: 225
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- roles
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-5-task-role-wrong-perms
-implementation_status: playable
+  - ECS task role
+  - S3 bucket vs object ARNs
+  - least privilege
+services:
+  - ecs
+  - iam
+  - s3

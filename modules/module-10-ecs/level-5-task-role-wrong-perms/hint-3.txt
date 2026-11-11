@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  ListBucket  -> arn:aws:s3:::pixelmill-uploads
+  GetObject   -> arn:aws:s3:::pixelmill-uploads/*
+  PutObject   -> arn:aws:s3:::pixelmill-thumbs/*
+
+  aws iam put-role-policy --role-name pixelmill-task-role --policy-name resizer-s3 --policy-document file://task-role-policy.json

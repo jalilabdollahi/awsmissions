@@ -1,10 +1,10 @@
 # Solution
 
-```bash
-# Edit the local mission artifact first
-$EDITOR service.json
-# This edited file applies to: --cluster mission-cluster, --service mission-service
+The service is healthy by its own definition: it wants zero tasks and has zero. Scale it back up:
 
-# Then apply the fix
-aws ecs update-service --cluster mission-cluster --service mission-service --desired-count 2
+```bash
+aws ecs describe-services --cluster sundial --services sundial-api --query 'services[0].[desiredCount,runningCount]'
+aws ecs update-service --cluster sundial --service sundial-api --desired-count 2
 ```
+
+Check `runningCount` until it reaches 2.

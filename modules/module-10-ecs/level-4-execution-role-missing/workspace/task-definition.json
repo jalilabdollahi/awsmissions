@@ -1,0 +1,26 @@
+{
+  "family": "payroll-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "alpine:3.21",
+      "essential": true,
+      "command": ["sh", "-c", "echo payroll-api up; sleep 3600"],
+      "secrets": [
+        { "name": "DB_PASSWORD", "valueFrom": "__SECRET_ARN__" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/payroll-api",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "api"
+        }
+      }
+    }
+  ]
+}

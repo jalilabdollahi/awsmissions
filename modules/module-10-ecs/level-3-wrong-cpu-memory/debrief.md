@@ -1,13 +1,12 @@
-# Invalid Config
+# Debrief: Fargate sizes are a menu, not free-form
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in ECS & Containers: Fargate task definition has CPU `256` with memory `256` — Fargate requires memory >= 512MB for 256 CPU units
+On Fargate you pay for the task's vCPU and memory, and AWS only sells specific combinations (for example 0.25 vCPU with 0.5-2 GB, 0.5 vCPU with 1-4 GB, 1 vCPU with 2-8 GB). Anything else is rejected at registration with "No Fargate configuration exists for given values".
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+Two levels of memory settings are easy to confuse:
+- **Task-level** `memory` (and `cpu`): the size of the whole task. Required on Fargate.
+- **Container-level** `memory` (hard limit, kills the container) and `memoryReservation` (soft limit). The sum must fit inside the task memory.
 
-## Key Concepts
-- ECS
-- Fargate
-- task definitions
-- tasks
+Real-world tips:
+- Start small, watch CloudWatch `MemoryUtilization`/`CpuUtilization` and adjust. Over-sizing is the default way to overspend on Fargate.
+- A container hitting its hard limit exits with code 137 (OOM) and `OutOfMemoryError: Container killed due to memory usage`.
+- Larger sizes need larger platform support (>16 vCPU, ephemeral storage), so check the current limits in the docs.

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix containerPort in task definition or update target group
+ECS registers the service's loadBalancers containerPort (8080) with the target group, but the application listens on 3000. The task definition's portMappings repeats the wrong number. You must fix both places (a new task definition revision and the service's load-balancer mapping); the target group is right.

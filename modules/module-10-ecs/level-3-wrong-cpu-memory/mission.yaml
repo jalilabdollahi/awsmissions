@@ -1,17 +1,20 @@
-name: Invalid Config
-description: "Fargate task definition has CPU `256` with memory `256` \u2014 Fargate\
-  \ requires memory >= 512MB for 256 CPU units"
-objective: "Fix memory to a valid Fargate combination (256 CPU \u2192 512, 1024, or\
-  \ 2048 MB)"
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Sizing the Thumbnailer"
+description: >-
+  Snapwell's image thumbnailer is a memory-hungry Fargate task: its container
+  needs a hard limit of 1536 MiB. The engineer who wrote task-definition.json
+  guessed the sizes and now registering it fails with "No Fargate configuration
+  exists for given values". Fargate only offers specific CPU and memory pairs, and
+  finance does not want anything bigger than necessary.
+objective: >-
+  Register a task definition for the family thumbnailer that is a valid Fargate
+  size, has enough task memory for the container's 1536 MiB hard limit, and does
+  not exceed 1 vCPU or 4 GiB. A task from it must actually start.
+xp: 125
+difficulty: beginner
+expected_time: 8m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-3-wrong-cpu-memory
-implementation_status: playable
+  - Fargate CPU and memory combinations
+  - container memory limits
+  - right-sizing
+services:
+  - ecs

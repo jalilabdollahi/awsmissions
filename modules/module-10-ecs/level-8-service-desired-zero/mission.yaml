@@ -1,15 +1,19 @@
-name: Zero Tasks
-description: "Service exists but `desiredCount` is 0 \u2014 no tasks running"
-objective: 'Update service: `aws ecs update-service --desired-count 2`'
-xp: 225
-difficulty: advanced
-expected_time: 12m
+name: "Paused for Maintenance, Never Resumed"
+description: >-
+  Sundial Scheduling's booking API is the ECS service sundial-api in the sundial
+  cluster. Last Friday an engineer scaled it to zero for a database maintenance
+  window and went on holiday. The service shows ACTIVE and green in the console,
+  yet customers get 503 from the load balancer. The runbook says production
+  keeps two tasks, so a rolling deploy never drops to zero capacity.
+objective: >-
+  Bring sundial-api back with two running tasks (desired = running = 2) serving
+  HTTP on port 80, without changing its task definition.
+xp: 75
+difficulty: beginner
+expected_time: 5m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-8-service-desired-zero
-implementation_status: playable
+  - desiredCount
+  - ECS services
+  - capacity
+services:
+  - ecs

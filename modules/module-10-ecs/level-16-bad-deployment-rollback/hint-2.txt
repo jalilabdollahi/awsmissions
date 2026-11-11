@@ -1,0 +1,1 @@
+The service is on revision 2, whose container exits with an error right after it starts. Revisions are immutable and the previous one still exists and worked. Recover by moving the service back to a good revision. Afterwards, the service needs a deployment configuration that rolls back by itself (circuit breaker).

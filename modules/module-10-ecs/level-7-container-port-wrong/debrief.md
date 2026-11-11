@@ -1,13 +1,14 @@
-# Port Mismatch
+# Debrief: three ports that must agree
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in ECS & Containers: Task definition exposes port 8080 but load balancer target group expects port 80
+A load-balanced container involves three port settings:
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+1. The port the **application listens on** (here 3000, from its own config).
+2. The **containerPort** in the task definition's `portMappings` and in the service's `loadBalancers` entry: this is the port ECS registers as the target.
+3. The target group's **port and health-check port**.
 
-## Key Concepts
-- ECS
-- Fargate
-- task definitions
-- tasks
+If the ECS side registers 8080, the load balancer dutifully health-checks `ip:8080`, finds nothing listening, and marks the target unhealthy (`Target.FailedHealthChecks`). Nothing is "down": the traffic is simply being sent to the wrong door.
+
+Real-world tips:
+- `awsvpc` tasks have their own ENI, so `hostPort` equals `containerPort`; there is no dynamic port mapping as with bridge mode.
+- Copy-pasting task definitions between services is a common source of this. Template the port from one variable.
+- Use `describe-target-health`: its `Reason` (`FailedHealthChecks`, `ResponseCodeMismatch`, `Timeout`) tells you whether it is the port, the path or a security group.

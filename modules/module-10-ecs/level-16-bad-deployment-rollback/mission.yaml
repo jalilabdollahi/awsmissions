@@ -1,0 +1,22 @@
+name: "Friday Deploy Gone Wrong"
+description: >-
+  Tidepool Travel deployed revision 2 of its web service at 16:45 on a Friday.
+  Revision 1 served customers fine. Revision 2 crashes during start-up (its new
+  database migration step fails and exits), and because the deploy had no
+  protection the service replaced healthy capacity with tasks that die. The
+  page is down and the rollout is stuck. The team also wants this never to happen
+  silently again.
+objective: >-
+  Restore service quickly: tidepool-web must run two healthy tasks on the last
+  good revision (revision 1, or a newer revision that really works) answering
+  HTTP on port 80. Then protect future deployments by enabling the ECS
+  deployment circuit breaker with automatic rollback on the service.
+xp: 450
+difficulty: expert
+expected_time: 15m
+concepts:
+  - task definition revisions
+  - rollbacks
+  - deployment circuit breaker
+services:
+  - ecs

@@ -1,14 +1,13 @@
-# No Internet in Private
+# Debrief: NAT is a one-way door
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in ECS & Containers: Fargate task in private subnet with no NAT gateway — task can't pull image or reach AWS APIs
+A private subnet has no route to an internet gateway, so its resources have no path out and no one has a path in. A **NAT gateway** adds the missing outbound path: tasks send traffic to it, it forwards from its Elastic IP, and replies are translated back. Nothing on the internet can start a connection to the tasks.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+The details that decide whether it works:
+- The NAT gateway lives in a **public** subnet (one whose route table has an IGW route) and needs an Elastic IP. A NAT in a private subnet is a dead end.
+- The private route table then sends `0.0.0.0/0` to the NAT gateway.
+- Fargate tasks in private subnets need egress to pull images (ECR/Docker Hub), fetch secrets and ship logs. Without NAT or VPC endpoints they fail at start-up with `CannotPullContainerError` or `ResourceInitializationError`.
 
-## Key Concepts
-- ECS
-- Fargate
-- task definitions
-- subnets
-- routing
+Real-world tips:
+- A NAT gateway is zonal and costs per hour plus per GB. Use one per AZ for resilience, or fewer for non-production.
+- For AWS services, gateway endpoints (S3, DynamoDB) and interface endpoints (ECR, Logs, Secrets Manager) avoid NAT traffic charges and keep the data on the AWS network.
+- Do not "just give the task a public IP" in a private design; the subnet's route table, not the task flag, decides reachability.

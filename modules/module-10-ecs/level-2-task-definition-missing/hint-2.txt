@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Register the task definition: `aws ecs register-task-definition`
+The service refers to harbor-web:1, but no task definition has ever been registered in this account. The container spec exists only as a JSON file in your working directory. It has to be registered before a service can use it.

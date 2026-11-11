@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Valid pairs: 256 -> 512-2048 MiB, 512 -> 1024-4096 MiB, 1024 -> 2048-8192 MiB.
+Edit "cpu" and "memory" (strings) in task-definition.json, then register it again.

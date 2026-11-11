@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ecs register-task-definition --cli-input-json file://harbor-web.json
+  bash deploy.sh

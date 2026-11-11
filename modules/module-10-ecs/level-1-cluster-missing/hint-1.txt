@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: ECS service create fails — cluster `mission-cluster` doesn't exist
+Run the launcher and read the error, then list what clusters exist:
+
+  bash run-report.sh
+  aws ecs list-clusters

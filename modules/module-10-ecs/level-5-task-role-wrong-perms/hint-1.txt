@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Task starts but application inside container can't read from S3 — task role has no S3 permission
+Read the policy the task role carries and compare each Resource with what the action works on:
+
+  aws iam get-role-policy --role-name pixelmill-task-role --policy-name resizer-s3
+
+The same document is in your working directory as task-role-policy.json.

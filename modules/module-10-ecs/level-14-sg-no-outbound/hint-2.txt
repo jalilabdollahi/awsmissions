@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add egress rule allowing all outbound: `0.0.0.0/0`
+A new connection must be allowed twice: by the sender's egress rules and by the receiver's ingress rules. The task group sends nothing (no egress), and the endpoint group only trusts a CIDR of a subnet that is gone. Fix both sides, using the other group as the source/destination instead of an address range, and remove the stale rule.

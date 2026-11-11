@@ -1,15 +1,22 @@
-name: Permanently Unhealthy
-description: "Container health check command is `CMD [\"curl\", \"http://localhost/wrong-path\"\
-  ]` \u2014 always fails"
-objective: Fix the health check path to match the actual application health endpoint
-xp: 275
-difficulty: advanced
-expected_time: 15m
+name: "Permanently Unhealthy"
+description: >-
+  Tidewater Pay's gateway service runs on Fargate behind the target group
+  gateway-tg. The tasks start and stay running, the port is right, but the load
+  balancer marks every target unhealthy and would take the whole service out of
+  rotation. The gateway answers 200 on its own readiness endpoint /health; every
+  other path, including /, is not part of the API contract.
+objective: >-
+  Make gateway-tg report the gateway's targets healthy by fixing the target
+  group's health check to probe the real endpoint with the strict success code
+  200. Do not widen the accepted response codes, and do not change the
+  application.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- ECS
-- Fargate
-- task definitions
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-11-health-check-wrong
-implementation_status: playable
+  - target group health checks
+  - response code matcher
+  - load balancer reasons
+services:
+  - ecs
+  - elbv2

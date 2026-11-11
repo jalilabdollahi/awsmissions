@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create cluster: `aws ecs create-cluster --cluster-name mission-cluster`
+The error names a cluster that does not exist. The only one present is ledgerly-staging, which is not what the job uses. The task definition is untouched, so you only need the cluster back under the exact name in the script.

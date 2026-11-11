@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the health check path to match the actual application health endpoint
+The reason is a response-code mismatch: the probe reaches the app, but the path it asks for does not exist, so it gets a 404. The application's readiness endpoint is named in the briefing. Fix the path on the target group; loosening the accepted codes or probing "/" would hide problems rather than fix them.

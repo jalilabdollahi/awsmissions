@@ -1,17 +1,20 @@
-name: No Image Found
-description: "Task definition references ECR image that doesn't exist \u2014 task\
-  \ fails to pull"
-objective: 'Push a valid image to ECR: `docker build`, `aws ecr get-login-password`,
-  `docker push`'
-xp: 300
-difficulty: advanced
-expected_time: 20m
+name: "The Image That Wasn't There"
+description: >-
+  Hearthstone Pantry's storefront task stops within a second of being launched by
+  deploy.sh; the container never starts. The release pipeline publishes the
+  approved image reference for the storefront into Parameter Store at
+  /hearth/web/approved-image after every build, but task-definition.json was last
+  edited by hand during an incident.
+objective: >-
+  Get a hearth-web task running that uses exactly the image the release pipeline
+  approved (the value of /hearth/web/approved-image), and serving HTTP on port 80.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-6-ecr-image-missing
-implementation_status: playable
+  - image references
+  - stoppedReason
+  - registry pulls
+services:
+  - ecs
+  - ssm

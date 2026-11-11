@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws iam create-role --role-name <name> --assume-role-policy-document file://trust.json
+  aws iam attach-role-policy --role-name <name> --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+  aws iam put-role-policy --role-name <name> --policy-name <p> --policy-document file://secret-policy.json
+  (add executionRoleArn to task-definition.json)
+  aws ecs register-task-definition --cli-input-json file://task-definition.json
+  aws ecs update-service --cluster payroll --service payroll-api --task-definition payroll-api:<new revision>

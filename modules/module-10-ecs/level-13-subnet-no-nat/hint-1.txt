@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Fargate task in private subnet with no NAT gateway — task can't pull image or reach AWS APIs
+Look at the private subnet's route table, and at what already exists for internet access:
+
+  aws ec2 describe-route-tables --filters Name=tag:Name,Values=lantern-private-rt
+  aws ec2 describe-nat-gateways

@@ -1,0 +1,25 @@
+{
+  "family": "ledger-sync",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "sync",
+      "image": "alpine:3.21",
+      "essential": true,
+      "command": ["sh", "-c", "echo ledger-sync connecting as $DB_USER; sleep 3600"],
+      "secrets": [
+        {
+          "name": "DB_USER",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:cedar/db-credentails-Zq81Xa:username::"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:cedar/db-credentails-Zq81Xa:password::"
+        }
+      ]
+    }
+  ]
+}

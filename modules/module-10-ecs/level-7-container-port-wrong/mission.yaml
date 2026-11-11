@@ -1,16 +1,22 @@
-name: Port Mismatch
-description: Task definition exposes port 8080 but load balancer target group expects
-  port 80
-objective: Fix containerPort in task definition or update target group
-xp: 275
-difficulty: advanced
-expected_time: 15m
+name: "Knocking on the Wrong Door"
+description: >-
+  Invoicely's invoice-api runs on Fargate behind the target group invoice-tg (port
+  3000, health check GET /health). Every target stays unhealthy and the load
+  balancer returns errors. The application team swears the service listens on
+  port 3000, but the task definition they copied from another service declares
+  container port 8080, and the ECS service registers that port with the target
+  group.
+objective: >-
+  Get invoice-api's targets healthy in invoice-tg: the task definition and the
+  service's load-balancer mapping must use the port the application actually
+  listens on. Keep the target group as it is.
+xp: 225
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-7-container-port-wrong
-implementation_status: playable
+  - containerPort
+  - target groups
+  - ECS load balancer mapping
+services:
+  - ecs
+  - elbv2

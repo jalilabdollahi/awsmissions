@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Set up AWS Cloud Map namespace and service, link to ECS service
+Nothing exists yet: no namespace, no discovery service, and the ECS service has no serviceRegistries. You need all three links: a private DNS namespace for shop.local, a Cloud Map service called inventory with A records (awsvpc tasks are discovered by IPv4 address), and the ECS service pointed at that Cloud Map service. Namespace creation is asynchronous, so wait for it to appear.

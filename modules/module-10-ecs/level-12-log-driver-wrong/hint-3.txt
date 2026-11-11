@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  "logConfiguration": { "logDriver": "awslogs", "options": {
+      "awslogs-group": "<existing group>", "awslogs-region": "us-east-1", "awslogs-stream-prefix": "<prefix>" } }
+
+  aws ecs register-task-definition --cli-input-json file://task-definition.json
+  aws ecs update-service --cluster marigold --service checkout-worker --task-definition checkout-worker:<new revision>

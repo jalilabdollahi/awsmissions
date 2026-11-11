@@ -1,12 +1,10 @@
-# No Cluster
+# Debrief: a cluster is just a namespace, but you must create it
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in ECS & Containers: ECS service create fails — cluster `mission-cluster` doesn't exist
+An ECS cluster is a logical grouping of tasks and services. With Fargate there are no servers behind it, so creating one is instant and free; it is only the name that services and `run-task` calls refer to. If it is missing you get `ClusterNotFoundException` and nothing is scheduled.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+Task definitions are independent of clusters: they are versioned (`family:revision`) and can run anywhere. That is why recreating the cluster is enough here.
 
-## Key Concepts
-- ECS
-- Fargate
-- task definitions
+Real-world tips:
+- Cleanup scripts that delete "empty" clusters will happily delete the one a cron job needs at 02:00. Tag clusters with an owner and add alarms on failed `RunTask` events.
+- Define clusters in infrastructure as code so they come back with a single apply.
+- Do not confuse similarly named clusters (`ledgerly-staging` here): the name in the job is what counts.

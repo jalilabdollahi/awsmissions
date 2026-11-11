@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Service A tries to reach Service B via DNS `service-b.local` — no Cloud Map service discovery configured
+Check what service discovery exists and what the ECS service knows about it:
+
+  aws servicediscovery list-namespaces
+  aws ecs describe-services --cluster shop --services inventory --query 'services[0].serviceRegistries'

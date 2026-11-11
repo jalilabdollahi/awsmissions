@@ -1,0 +1,15 @@
+{
+  "family": "hearth-web",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx:1.29.99-alpine",
+      "essential": true,
+      "portMappings": [{ "containerPort": 80 }]
+    }
+  ]
+}

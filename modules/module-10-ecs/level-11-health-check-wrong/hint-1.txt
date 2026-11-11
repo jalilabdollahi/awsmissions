@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Container health check command is `CMD ["curl", "http://localhost/wrong-path"]` — always fails
+The tasks are running, so ask the load balancer what it sees:
+
+  aws elbv2 describe-target-health --target-group-arn <gateway-tg arn>
+  aws elbv2 describe-target-groups --names gateway-tg
+
+Read the Reason and the HealthCheckPath.

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change `logDriver` to `awslogs` and configure the `awslogs-group` option
+journald is a host-level Docker driver, and Fargate gives you no host: nothing leaves the container. The supported route to CloudWatch is the awslogs driver, which needs the group, the region and a stream prefix. Task definitions are immutable, so you need a new revision and a service update. Keep using the existing log group.
