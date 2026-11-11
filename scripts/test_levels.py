@@ -163,6 +163,7 @@ def main() -> int:
     parser.add_argument("--static-only", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args()
+    sys.stdout.reconfigure(line_buffering=True)
 
     levels = expand(args.targets)
     if not levels:

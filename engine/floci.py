@@ -106,6 +106,20 @@ def ensure_running(p: int | None = None) -> None:
     start(p)
 
 
+def _leftover_stacks(p: int) -> bool:
+    """Floci 2.4.0's reset endpoint keeps CloudFormation stacks and exports."""
+    env = {**os.environ, "AWS_ACCESS_KEY_ID": "test", "AWS_SECRET_ACCESS_KEY": "test",
+           "AWS_DEFAULT_REGION": "us-east-1", "AWS_PAGER": ""}
+    for key in ("AWS_PROFILE", "AWS_SESSION_TOKEN"):
+        env.pop(key, None)
+    result = subprocess.run(
+        ["aws", f"--endpoint-url={endpoint(p)}", "cloudformation", "describe-stacks",
+         "--query", "length(Stacks)", "--output", "text"],
+        capture_output=True, text=True, env=env, check=False, timeout=60,
+    )
+    return result.returncode != 0 or result.stdout.strip() not in ("0", "")
+
+
 def reset_state(p: int | None = None) -> None:
     """Wipe every service's state. Falls back to a container restart."""
     p = p or port()
@@ -115,8 +129,10 @@ def reset_state(p: int | None = None) -> None:
             request = urllib.request.Request(f"{endpoint(p)}/_floci/state/reset", data=b"", method="POST")
             with urllib.request.urlopen(request, timeout=30) as response:
                 if json.loads(response.read().decode("utf-8")).get("status") == "OK":
+                    if _leftover_stacks(p):
+                        break  # only a fresh container clears CloudFormation
                     return
-        except (urllib.error.URLError, json.JSONDecodeError, TimeoutError, OSError):
+        except (urllib.error.URLError, json.JSONDecodeError, TimeoutError, OSError, subprocess.TimeoutExpired):
             pass
         time.sleep(1)
     start(p)
