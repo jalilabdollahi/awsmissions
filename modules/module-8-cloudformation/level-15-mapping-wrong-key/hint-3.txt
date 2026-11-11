@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+The first region key is "us-east1", missing a dash. Rename it to "us-east-1" in template.yaml, remove the rolled-back stack and deploy again:
+
+  aws cloudformation delete-stack --stack-name cobalt-reminders
+  aws cloudformation wait stack-delete-complete --stack-name cobalt-reminders
+  aws cloudformation create-stack --stack-name cobalt-reminders --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name cobalt-reminders

@@ -1,15 +1,22 @@
-name: Parse Error
-description: "CFN template has a YAML indentation error \u2014 stack creation fails\
-  \ immediately"
-objective: Fix the YAML syntax error in the template
-xp: 150
-difficulty: intermediate
-expected_time: 8m
+name: "Parse Error"
+description: >-
+  Harbor Lights Ferry is moving its passenger-info plumbing into CloudFormation.
+  Priya, the new platform engineer, wrote template.yaml for the timetable
+  bucket and the delay-alert topic, but the very first deploy dies before a
+  single resource is created. The CLI only prints a terse "Template format
+  error" and Priya has already stared at the file for an hour.
+objective: >-
+  Deploy template.yaml as a stack named harborlights-core and get it to
+  CREATE_COMPLETE, with the versioned timetable bucket and the delay-alert
+  topic both really present.
+xp: 75
+difficulty: beginner
+expected_time: 6m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-1-yaml-syntax
-implementation_status: playable
+  - CloudFormation template format
+  - YAML indentation
+  - create-stack
+services:
+  - cloudformation
+  - s3
+  - sns

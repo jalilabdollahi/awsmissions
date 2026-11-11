@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Three edits in template.yaml: use the real key from the listing in TemplateURL (the object is under shared/alerting/), pass the parameter under the name the child declares (TeamName), and read the child's output by its declared name (AlertTopicArn). Then:
+
+  aws cloudformation delete-stack --stack-name crescent-platform
+  aws cloudformation wait stack-delete-complete --stack-name crescent-platform
+  aws cloudformation create-stack --stack-name crescent-platform --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name crescent-platform

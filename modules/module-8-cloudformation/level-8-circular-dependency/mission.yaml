@@ -1,16 +1,25 @@
-name: Going in Circles
-description: "Resource A has `DependsOn: B` and B has `DependsOn: A` \u2014 circular\
-  \ dependency error"
-objective: Break the circular dependency by removing one DependsOn or restructuring
-  resources
-xp: 275
+name: "Chicken, Egg, Bucket"
+description: >-
+  Granite Peak Media wants every file dropped into its upload bucket to
+  announce itself on an SNS topic. The topic needs a policy that lets only that
+  bucket publish, and S3 insists the policy exist before the bucket's
+  notification is wired up. The platform engineer encoded exactly that in
+  template.yaml, but create-stack refuses to start and complains about a
+  circular dependency.
+objective: >-
+  Deploy the template as the stack granitepeak-intake so that a file uploaded
+  to granitepeak-uploads produces a notification on the topic
+  granitepeak-upload-events, and the topic's publish permission is still
+  restricted to that bucket.
+xp: 200
 difficulty: intermediate
-expected_time: 18m
+expected_time: 15m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-8-circular-dependency
-implementation_status: playable
+  - circular dependencies
+  - DependsOn
+  - implicit dependencies via GetAtt and Ref
+services:
+  - cloudformation
+  - s3
+  - sns
+  - sqs

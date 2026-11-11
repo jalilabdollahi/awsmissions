@@ -1,15 +1,25 @@
-name: Nested Stack 404
-description: Nested stack references a template URL in S3 that doesn't exist or has
-  wrong path
-objective: Upload the template to S3 and fix the TemplateURL property
-xp: 275
-difficulty: intermediate
-expected_time: 18m
+name: "Nested Stack 404"
+description: >-
+  Crescent Payments splits its platform into a parent stack and reusable child
+  templates stored in the S3 bucket crescent-templates. The parent stack
+  crescent-platform nests an "alerts" child that creates the billing team's
+  alert topic and hands its ARN back to the parent as an output, which the
+  on-call dashboard reads. The pipeline's first run left crescent-platform in
+  a failed state with an S3 "does not exist" complaint. The author suspects
+  the URL is not the only thing wrong with the parent.
+objective: >-
+  Get crescent-platform to CREATE_COMPLETE with the child stack really created
+  from the template stored in crescent-templates, and make the parent's
+  AlertsTopicArn output carry the ARN of the topic the child created.
+xp: 400
+difficulty: expert
+expected_time: 25m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-18-nested-stack-wrong-url
-implementation_status: playable
+  - nested stacks
+  - TemplateURL
+  - child stack parameters and outputs
+  - Fn::GetAtt on stack outputs
+services:
+  - cloudformation
+  - s3
+  - sns

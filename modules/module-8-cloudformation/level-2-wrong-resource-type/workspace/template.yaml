@@ -1,3 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Brightwater Dental new-patient intake
 Resources:
-  MissionBucket:
+  ScannedForms:
     Type: AWS::S3::Bukcet
+    Properties:
+      BucketName: brightwater-scans
+      Tags:
+        - Key: team
+          Value: front-desk
+  ReminderTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: brightwater-reminders

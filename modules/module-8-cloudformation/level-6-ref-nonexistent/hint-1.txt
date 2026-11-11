@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: `!Ref MyBucket` references a logical ID `MyBucket` that doesn't exist in the template
+Do what the dispatch app does. Read the parameter and see what it contains:
+
+  aws ssm get-parameter --name /tidewater/manifest-bucket --query Parameter.Value
+  aws s3 ls
+
+Then find the line in template.yaml that produces this value.

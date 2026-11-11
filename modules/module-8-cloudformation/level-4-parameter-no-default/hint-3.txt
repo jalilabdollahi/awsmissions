@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Pass the branch code on the command line with --parameters:
+
+  aws cloudformation create-stack --stack-name fernwood-orders --template-body file://template.yaml --parameters ParameterKey=BranchCode,ParameterValue=dub
+  aws cloudformation wait stack-create-complete --stack-name fernwood-orders

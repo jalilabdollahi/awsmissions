@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Change IsProduction to compare against "prod": !Equals [!Ref Environment, prod]. Then roll the fix out while keeping the production parameter:
+
+  aws cloudformation update-stack --stack-name marlow-catalog --template-body file://template.yaml --parameters ParameterKey=Environment,UsePreviousValue=true
+  aws cloudformation wait stack-update-complete --stack-name marlow-catalog

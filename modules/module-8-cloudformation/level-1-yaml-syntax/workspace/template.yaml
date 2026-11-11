@@ -1,3 +1,13 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Harbor Lights Ferry - timetable storage and delay alerts
 Resources:
-MissionBucket:
+  TimetableBucket:
     Type: AWS::S3::Bucket
+    Properties:
+      BucketName: harborlights-timetables
+      VersioningConfiguration:
+        Status: Enabled
+   DelayTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: harborlights-delay-alerts

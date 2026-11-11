@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+"DelayTopic:" is indented three spaces; its sibling "TimetableBucket:" uses two. Remove one space so that both resources sit directly under "Resources:", then deploy:
+
+  aws cloudformation create-stack --stack-name harborlights-core --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name harborlights-core

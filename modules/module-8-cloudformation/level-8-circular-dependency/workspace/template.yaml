@@ -1,7 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Granite Peak Media upload announcements
 Resources:
-  A:
+  UploadsBucket:
     Type: AWS::S3::Bucket
-    DependsOn: B
-  B:
-    Type: AWS::S3::Bucket
-    DependsOn: A
+    DependsOn: AnnouncePolicy
+    Properties:
+      BucketName: granitepeak-uploads
+      NotificationConfiguration:
+        TopicConfigurations:
+          - Event: "s3:ObjectCreated:*"
+            Topic: !Ref AnnounceTopic
+  AnnounceTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: granitepeak-upload-events
+  AnnouncePolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref AnnounceTopic
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sns:Publish
+            Resource: !Ref AnnounceTopic
+            Condition:
+              ArnLike:
+                "aws:SourceArn": !GetAtt UploadsBucket.Arn

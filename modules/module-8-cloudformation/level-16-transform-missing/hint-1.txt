@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Template uses `AWS::Serverless::Function` but is missing `Transform: AWS::Serverless-2016-10-31`
+Deploy the template, then look at what the stack really contains compared with what exists:
+
+  aws cloudformation create-stack --stack-name parcelhub-notifier --template-body file://template.yaml
+  aws cloudformation describe-stack-resources --stack-name parcelhub-notifier
+  aws lambda list-functions
+
+Read the ResourceType of the notifier resource and the stack events for it.

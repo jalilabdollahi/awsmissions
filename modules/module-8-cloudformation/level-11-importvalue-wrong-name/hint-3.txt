@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+The production exports are ledgerline-prod-audit-topic-arn and ledgerline-prod-audit-bucket-name. Update both !ImportValue lines in template.yaml, delete the rolled-back stack and deploy again:
+
+  aws cloudformation delete-stack --stack-name ledgerline-auditor
+  aws cloudformation wait stack-delete-complete --stack-name ledgerline-auditor
+  aws cloudformation create-stack --stack-name ledgerline-auditor --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name ledgerline-auditor

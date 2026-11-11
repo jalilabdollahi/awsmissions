@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Change TimeoutSeconds to 45 in params.json (just the number, no unit). Then:
+
+  aws cloudformation delete-stack --stack-name quarry-resizer
+  aws cloudformation wait stack-delete-complete --stack-name quarry-resizer
+  aws cloudformation create-stack --stack-name quarry-resizer --template-body file://template.yaml --parameters file://params.json
+  aws cloudformation wait stack-create-complete --stack-name quarry-resizer

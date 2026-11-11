@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+The template says "!Ref ManifestBuket" but the resource is called "ManifestBucket". Fix the spelling in template.yaml and update the stack:
+
+  aws cloudformation update-stack --stack-name tidewater-manifests --template-body file://template.yaml
+  aws cloudformation wait stack-update-complete --stack-name tidewater-manifests

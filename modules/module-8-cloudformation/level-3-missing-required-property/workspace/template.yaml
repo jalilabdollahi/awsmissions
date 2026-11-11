@@ -1,5 +1,19 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lumen Labs nightly results export
 Resources:
-  MissionRole:
+  ExportBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: lumen-lab-exports
+  ExporterRole:
     Type: AWS::IAM::Role
     Properties:
-      AssumeRolePolicyDocument: {}
+      RoleName: lumen-exporter
+      Policies:
+        - PolicyName: write-exports
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub "${ExportBucket.Arn}/*"

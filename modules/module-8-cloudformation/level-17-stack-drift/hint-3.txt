@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+In template.json set the function's Timeout to 30 and MemorySize to 512, make the Environment variables match the live function exactly (BATCH_SIZE and REGION_TAG, with the live values), and add a VersioningConfiguration with Status "Enabled" to the bucket. Then:
+
+  aws cloudformation update-stack --stack-name tern-ingest --template-body file://template.json
+  aws cloudformation wait stack-update-complete --stack-name tern-ingest

@@ -1,3 +1,32 @@
-Outputs:
-  FunctionArn:
-    Value: GETATT MyFunction Arn
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Orchard Analytics reporting, release 2
+Resources:
+  ReportsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: orchard-reports
+  ArchiveBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: orchard-archive
+  ReporterRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: orchard-reporter
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:user/report-bot"
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: upload-reports
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource:
+                  - !Join ["/", [!GetAtt ReportsBucket.Arn, "*"]]
+                  - !Join ["/", [!GetAtt ArchiveBucket.BucketArn, "*"]]

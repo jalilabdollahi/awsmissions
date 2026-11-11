@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: CFN template has a YAML indentation error — stack creation fails immediately
+Try the deploy yourself and read the error text:
+
+  aws cloudformation create-stack --stack-name harborlights-core --template-body file://template.yaml
+
+The error includes a line and a column. Open the file (type `edit`) and look at exactly that spot, then at the lines just above it.

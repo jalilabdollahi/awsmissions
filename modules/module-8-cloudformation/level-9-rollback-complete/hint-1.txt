@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Stack is in `ROLLBACK_COMPLETE` state from a previous failed create — cannot update
+Look at both stacks and at why the api stack failed in the first place:
+
+  aws cloudformation describe-stacks --query 'Stacks[].[StackName,StackStatus]'
+  aws cloudformation describe-stack-events --stack-name saltmarsh-api
+  aws cloudformation list-exports
+
+Then try the "obvious" thing, update-stack with the same template, and read the refusal.

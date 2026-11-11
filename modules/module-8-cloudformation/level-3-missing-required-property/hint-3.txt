@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Add an AssumeRolePolicyDocument to ExporterRole that allows sts:AssumeRole for the principal arn:aws:iam::000000000000:user/export-runner (use !Sub with ${AWS::AccountId} if you like). Do not use "*" as the principal. Then:
+
+  aws cloudformation update-stack --stack-name lumen-export --template-body file://template.yaml --capabilities CAPABILITY_NAMED_IAM
+  aws cloudformation wait stack-update-complete --stack-name lumen-export

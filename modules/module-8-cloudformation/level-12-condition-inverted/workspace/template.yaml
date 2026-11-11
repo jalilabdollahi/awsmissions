@@ -1,2 +1,26 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Marlow Books catalog storage and alerting
+Parameters:
+  Environment:
+    Type: String
+    Description: prod or dev
 Conditions:
-  IsProduction: Env == dev
+  IsProduction: !Equals [!Ref Environment, dev]
+  IsSandbox: !Not [!Condition IsProduction]
+Resources:
+  CatalogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "marlow-${Environment}-catalog"
+      VersioningConfiguration:
+        Status: !If [IsProduction, Enabled, Suspended]
+  PagerTopic:
+    Type: AWS::SNS::Topic
+    Condition: IsProduction
+    Properties:
+      TopicName: !Sub "marlow-${Environment}-pager"
+  DebugTopic:
+    Type: AWS::SNS::Topic
+    Condition: IsSandbox
+    Properties:
+      TopicName: !Sub "marlow-${Environment}-debug"

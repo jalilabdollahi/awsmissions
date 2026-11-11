@@ -1,16 +1,23 @@
-name: No Default Value
-description: "Template has a Parameter with no Default and no value passed at deploy\
-  \ \u2014 create fails"
-objective: Either add a Default value or pass the parameter at stack creation
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "Who Fills the Blank?"
+description: >-
+  Fernwood Bakery's online-order system keeps each shop's orders in its own
+  bucket, named after the shop's branch code. The platform team's template
+  takes the branch code as a parameter, and the intern's deploy script simply
+  runs create-stack with the template and nothing else. The command is
+  rejected before anything is created, and the error mentions "must have
+  values".
+objective: >-
+  Deploy the template as a stack named fernwood-orders for the branch code
+  "dub" so that the orders bucket exists and is named for the branch, with a
+  non-empty branch code (an anonymous bucket named only "fernwood-orders-" is
+  not acceptable).
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- parameter store
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-4-parameter-no-default
-implementation_status: playable
+  - CloudFormation parameters
+  - Default values
+  - create-stack --parameters
+services:
+  - cloudformation
+  - s3

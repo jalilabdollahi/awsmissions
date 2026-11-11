@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the ImportValue key to match the exact export name
+Fn::ImportValue looks up an export by its exact, case-sensitive name. There is no fuzzy matching and no default: an unknown name makes the resource fail, which fails the create and leaves the stack in ROLLBACK_COMPLETE. The first failure only reports one bad name, so after fixing it a second might appear.
+
+Remember there are production and staging exports side by side; the mission asks for production. Use list-exports as the source of truth for names, and the Value column to be sure which environment you are pointing at.

@@ -1,16 +1,23 @@
-name: Missing Reference
-description: '`!Ref MyBucket` references a logical ID `MyBucket` that doesn''t exist
-  in the template'
-objective: Add the missing resource or fix the reference name
-xp: 175
+name: "Ref to Nowhere"
+description: >-
+  Tidewater Logistics' dispatch app does not hard-code bucket names. It reads
+  the SSM parameter /tidewater/manifest-bucket at startup and writes the daily
+  shipping manifests into whatever bucket that parameter names. Since the
+  tidewater-manifests stack was deployed, the dispatch app has been failing
+  with NoSuchBucket, even though the stack is CREATE_COMPLETE and the
+  manifest bucket is sitting right there.
+objective: >-
+  Fix the tidewater-manifests stack so that the app's parameter
+  /tidewater/manifest-bucket names the stack's real manifest bucket, and a
+  manifest can be written to the bucket that the parameter points at.
+xp: 150
 difficulty: intermediate
 expected_time: 10m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-6-ref-nonexistent
-implementation_status: playable
+  - Ref intrinsic function
+  - logical IDs
+  - SSM parameters from CloudFormation
+services:
+  - cloudformation
+  - ssm
+  - s3

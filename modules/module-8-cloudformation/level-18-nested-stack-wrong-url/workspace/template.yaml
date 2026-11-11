@@ -1,5 +1,13 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Crescent Payments platform parent stack
 Resources:
-  Nested:
+  Alerts:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/wrong-bucket/missing-template.yaml
+      TemplateURL: https://s3.amazonaws.com/crescent-templates/templates/alerts.yaml
+      Parameters:
+        Team: billing
+Outputs:
+  AlertsTopicArn:
+    Description: Alert topic created by the nested stack
+    Value: !GetAtt Alerts.Outputs.Arn

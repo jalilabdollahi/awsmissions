@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add `DeletionPolicy: Retain` to the bucket resource
+Each resource has a DeletionPolicy attribute (Delete is the default, Retain and Snapshot are the others). On stack deletion CloudFormation obeys the policy stored with the stack, so it has to be set on the stack first: edit the template, update the stack, and only then delete it. Deleting first and hoping is how tables get lost; emptying the bucket "to make the delete work" is data loss too.
+
+Protect only the resources whose contents matter. The events topic is meant to disappear.

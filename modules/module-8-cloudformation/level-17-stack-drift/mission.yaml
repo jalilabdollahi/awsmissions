@@ -1,16 +1,27 @@
-name: Reality Diverged
-description: "Stack resources were manually modified outside CFN \u2014 stack has\
-  \ drifted"
-objective: 'Detect drift: `aws cloudformation detect-stack-drift`, then reconcile
-  by updating the stack'
-xp: 300
-difficulty: intermediate
+name: "Reality Diverged"
+description: >-
+  At 2 a.m. the on-call engineer at Tern Streaming rescued a flooded ingest
+  pipeline by hand: she raised the Lambda tern-ingest-fn from 128 MB / 3 s to
+  512 MB / 30 s, tripled its batch size, and switched on versioning on the
+  landing bucket. It worked, nobody touched CloudFormation, and the incident
+  was closed. The tern-ingest stack's template still describes the old
+  settings, so the next routine deploy could quietly undo the fix.
+  This emulator has no drift-detection API, so you will have to compare
+  reality and the template yourself.
+objective: >-
+  Bring the tern-ingest stack's template in line with what is really running
+  (template.json in your workspace is the stack's current template), without
+  reverting any of the on-call engineer's changes. Afterwards no property in
+  the stack's template may disagree with the live Lambda function and bucket.
+xp: 450
+difficulty: expert
 expected_time: 20m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-17-stack-drift
-implementation_status: playable
+  - configuration drift
+  - get-template
+  - update-stack
+  - infrastructure as code discipline
+services:
+  - cloudformation
+  - lambda
+  - s3

@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Parameter declared as `Type: Number` but value passed is a string — validation error
+Ask the stack why it rolled back; the failing resource and CloudFormation's own words are in the events:
+
+  aws cloudformation describe-stack-events --stack-name quarry-resizer --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`]'
+
+Then compare the value in params.json with the declared Type of that parameter in template.yaml.

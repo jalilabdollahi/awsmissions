@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the resource type name
+Every resource in a template has a Type of the form AWS::Service::Resource, and CloudFormation can only provision types it knows. A misspelled type is not the same thing as a misspelled property, and a tolerant engine may report success while skipping the resource. Real AWS would refuse such a template outright; here the stack stays "green" but nothing is created.
+
+Compare the Type of ScannedForms with the documented S3 bucket type, letter by letter.

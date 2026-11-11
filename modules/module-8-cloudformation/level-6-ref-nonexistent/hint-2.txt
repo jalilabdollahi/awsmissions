@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the missing resource or fix the reference name
+!Ref with a resource's logical ID returns that resource's physical name (for an S3 bucket, the bucket name). The logical ID has to match a key under Resources exactly, including spelling and case. Real CloudFormation refuses a template with a dangling reference; this emulator quietly substitutes the text you typed, so the parameter ends up holding a made-up name that no bucket has.
+
+Compare the identifier after !Ref with the name of the bucket resource.

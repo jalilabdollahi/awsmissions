@@ -1,16 +1,22 @@
-name: Unknown Resource
-description: "Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` \u2014\
-  \ CREATE_FAILED"
-objective: Fix the resource type name
-xp: 150
-difficulty: intermediate
+name: "Green Stack, Missing Bucket"
+description: >-
+  Brightwater Dental scans every new-patient form into a bucket that the
+  brightwater-intake stack is supposed to own. The deploy pipeline reports a
+  green CREATE_COMPLETE and the reminder topic is there, yet the front-desk app
+  fails every upload with NoSuchBucket. Somebody hand-typed the intake
+  template last Friday.
+objective: >-
+  Repair the brightwater-intake stack so that the scanned-forms bucket
+  brightwater-scans really exists and accepts uploads, while the stack stays
+  healthy and keeps its reminder topic.
+xp: 100
+difficulty: beginner
 expected_time: 8m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-2-wrong-resource-type
-implementation_status: playable
+  - CloudFormation resource types
+  - update-stack
+  - describe-stack-resources
+services:
+  - cloudformation
+  - s3
+  - sns

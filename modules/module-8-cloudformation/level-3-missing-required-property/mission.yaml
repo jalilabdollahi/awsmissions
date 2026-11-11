@@ -1,17 +1,24 @@
-name: Missing Requirement
-description: "`AWS::SQS::Queue` resource is missing required `QueueName` \u2014 wait,\
-  \ QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)"
-objective: Add the missing required property
-xp: 175
-difficulty: intermediate
+name: "Nobody Can Wear This Role"
+description: >-
+  Lumen Labs' nightly job exports lab results by signing in as the IAM user
+  export-runner and assuming the role lumen-exporter, which is created by the
+  lumen-export stack. The stack deployed without a single error, but every
+  night the job dies on its very first call with an AccessDenied from
+  sts:AssumeRole. The permissions on the role look fine.
+objective: >-
+  Fix the lumen-export stack so that export-runner can assume lumen-exporter
+  and upload results to the lumen-lab-exports bucket. No other principal may be
+  able to assume the role, and the role must still be unable to write to
+  anything but that bucket.
+xp: 125
+difficulty: beginner
 expected_time: 10m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- policy debugging
-- roles
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-3-missing-required-property
-implementation_status: playable
+  - AWS::IAM::Role
+  - AssumeRolePolicyDocument
+  - required properties
+services:
+  - cloudformation
+  - iam
+  - sts
+  - s3

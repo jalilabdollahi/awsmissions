@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: S3 bucket resource has no `DeletionPolicy` (defaults to Delete) — stack deletion will wipe data
+Before touching anything, find out what deleting this stack would do to each resource and what protects them:
+
+  aws cloudformation describe-stack-resources --stack-name nightjar-archive
+  aws cloudformation get-template --stack-name nightjar-archive
+
+Look in the template for a setting that controls what happens to a resource when its stack is deleted. Notice which resources have it.

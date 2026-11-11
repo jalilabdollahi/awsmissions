@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: `!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` — depends on resource type
+Try the release yourself and then read the stack events from the newest entry:
+
+  aws cloudformation update-stack --stack-name orchard-reporting --template-body file://template.yaml --capabilities CAPABILITY_NAMED_IAM
+  aws cloudformation describe-stack-events --stack-name orchard-reporting
+
+Find the row with UPDATE_FAILED and read its reason.

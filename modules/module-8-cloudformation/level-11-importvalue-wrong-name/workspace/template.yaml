@@ -1,1 +1,15 @@
-OutputImport: SharedBucketName
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Ledgerline compliance auditor registry
+Resources:
+  AuditTopicParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /ledgerline/audit/topic-arn
+      Type: String
+      Value: !ImportValue ledgerline-audit-topic-arn
+  AuditBucketParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /ledgerline/audit/bucket
+      Type: String
+      Value: !ImportValue ledgerline-prod-audit-bucket

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the condition expression
+A condition is just a named boolean computed from the parameters; resources and property values switch on it. Here the condition called IsProduction compares the Environment parameter with the wrong value, so it is true in dev and false in prod, and everything built on it (versioning, the pager, and IsSandbox, which is its negation) is upside-down.
+
+Fix the expression, not the parameter or each resource. Remember that update-stack needs a value for a parameter that has no Default; you can reuse the previous one.

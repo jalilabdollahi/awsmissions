@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the missing required property
+An IAM role has two independent documents: the permissions policy (what the role may do) and the trust policy (who may become the role). AWS::IAM::Role lists AssumeRolePolicyDocument as a required property; this template never sets it, so the role was created with an empty trust policy and nobody, not even export-runner, can assume it.
+
+The fix belongs in the template (so the stack stays the source of truth), then push it with update-stack. Trust only the principal that really needs the role.

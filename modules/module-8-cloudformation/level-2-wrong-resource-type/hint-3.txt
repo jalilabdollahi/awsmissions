@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+The type is spelled "AWS::S3::Bukcet". Correct it to "AWS::S3::Bucket" in template.yaml and push the change to the existing stack:
+
+  aws cloudformation update-stack --stack-name brightwater-intake --template-body file://template.yaml
+  aws cloudformation wait stack-update-complete --stack-name brightwater-intake

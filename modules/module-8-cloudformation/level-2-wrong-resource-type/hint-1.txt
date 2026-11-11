@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` — CREATE_FAILED
+The stack says it is healthy, so compare what it claims to own with what exists:
+
+  aws cloudformation describe-stack-resources --stack-name brightwater-intake
+  aws s3 ls
+
+Read the ResourceType column carefully, and check the stack events for a note on the bucket resource.

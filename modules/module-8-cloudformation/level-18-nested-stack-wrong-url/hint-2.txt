@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Upload the template to S3 and fix the TemplateURL property
+A nested stack is a resource of type AWS::CloudFormation::Stack. Its TemplateURL must be an S3 URL whose bucket and key really exist, in the form https://s3.amazonaws.com/<bucket>/<key>. Once the child loads, two more contracts apply: the parent's Parameters block may only contain names the child template declares (and must supply every parameter without a default), and !GetAtt Child.Outputs.<Name> must use the output name the child declares.
+
+Expect to find problems one at a time, and remember that a stack that failed on create is final: delete it before each retry.

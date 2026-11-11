@@ -1,1 +1,8 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+In AnnouncePolicy, replace the GetAtt with the literal bucket ARN (or build it with !Sub). Keep the bucket's DependsOn:
+
+  "aws:SourceArn": "arn:aws:s3:::granitepeak-uploads"
+
+Then deploy:
+
+  aws cloudformation create-stack --stack-name granitepeak-intake --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name granitepeak-intake

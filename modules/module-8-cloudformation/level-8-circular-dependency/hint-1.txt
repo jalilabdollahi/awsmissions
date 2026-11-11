@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Resource A has `DependsOn: B` and B has `DependsOn: A` — circular dependency error
+Run the deploy and read the whole error; it lists the resources that depend on each other:
+
+  aws cloudformation create-stack --stack-name granitepeak-intake --template-body file://template.yaml
+
+Then, in template.yaml, follow each resource's DependsOn, Ref and GetAtt lines and write down who needs whom.

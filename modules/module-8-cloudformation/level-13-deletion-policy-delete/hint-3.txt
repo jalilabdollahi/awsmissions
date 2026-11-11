@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Add "DeletionPolicy: Retain" to LedgerArchive and LedgerIndex in template.yaml (same indentation level as Type). Push it to the stack, then delete the stack:
+
+  aws cloudformation update-stack --stack-name nightjar-archive --template-body file://template.yaml
+  aws cloudformation wait stack-update-complete --stack-name nightjar-archive
+  aws cloudformation delete-stack --stack-name nightjar-archive
+  aws cloudformation wait stack-delete-complete --stack-name nightjar-archive

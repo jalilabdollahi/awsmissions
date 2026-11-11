@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+For AWS::S3::Bucket the ARN attribute is "Arn", not "BucketArn". Change !GetAtt ArchiveBucket.BucketArn to !GetAtt ArchiveBucket.Arn in template.yaml, then roll the release out again (the stack is updatable after a rolled-back update):
+
+  aws cloudformation update-stack --stack-name orchard-reporting --template-body file://template.yaml --capabilities CAPABILITY_NAMED_IAM
+  aws cloudformation wait stack-update-complete --stack-name orchard-reporting
