@@ -1,0 +1,21 @@
+name: "Storm Warning, No Station"
+description: >-
+  Lighthouse Weather's forecasting engine publishes severe-weather bulletins to
+  the SNS topic lighthouse-storm-warnings. Since the stack was rolled back after
+  a failed deploy, every publish fails with NotFound: the topic was deleted
+  together with everything attached to it. The harbour-radio gateway still
+  reads from its queue harbor-radio-feed, but the queue no longer receives
+  anything.
+objective: >-
+  Bring the bulletin path back: the topic lighthouse-storm-warnings must exist
+  and a bulletin published to it must reach the queue harbor-radio-feed.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - SNS topics
+  - subscriptions die with their topic
+  - SNS to SQS fan-out
+services:
+  - sns
+  - sqs

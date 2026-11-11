@@ -1,0 +1,1 @@
+Two strings in the statement are wrong, and both are matched literally: the action name (check it against the API call SendMessage) and the Resource ARN (which queue is it?). Fix them without widening the permission: no sqs:*, no Resource "*", and no receive or purge rights for a producer.

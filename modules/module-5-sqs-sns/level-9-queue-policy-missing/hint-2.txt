@@ -1,0 +1,1 @@
+SNS is its own principal (sns.amazonaws.com), and only the queue's resource policy can allow it to call sqs:SendMessage. Be careful: allowing the service principal alone would let any topic in any account write here. A condition on the aws:SourceArn key restricts the permission to one topic.

@@ -1,0 +1,23 @@
+name: "Gift Wrap"
+description: >-
+  Delta Cart publishes cart events to the SNS topic delta-cart-events. The web
+  analytics collector reads them from the queue delta-web-analytics, whose
+  subscription already filters on channel = web. The collector's parser
+  expects the body of every queue message to be the cart event itself, e.g.
+  {"sku":"A-100","qty":2}, but it crashes on every message: the body it gets is
+  a bigger JSON document that starts with "Type":"Notification" and has the
+  cart event buried inside as an escaped string.
+objective: >-
+  Make the collector receive the bare cart event as the message body, without
+  the SNS envelope. The queue must still receive only events published with
+  the attribute channel = web.
+xp: 250
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - SNS message envelope
+  - RawMessageDelivery
+  - subscription filter policy
+services:
+  - sns
+  - sqs

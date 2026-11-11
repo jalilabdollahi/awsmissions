@@ -1,0 +1,3 @@
+Start a message move task from the DLQ to the main queue (use the queue ARNs, not URLs):
+
+  aws sqs start-message-move-task --source-arn <ARN of crescent-invoices-dlq> --destination-arn <ARN of crescent-invoices>

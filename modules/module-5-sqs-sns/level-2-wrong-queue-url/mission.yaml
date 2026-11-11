@@ -1,0 +1,23 @@
+name: "Staging Is Not Production"
+description: >-
+  TicketDesk's support-ticket API reads the address of its queue from the
+  Parameter Store entry /ticketdesk/prod/support-queue-url. Since Tuesday's
+  promotion from staging, customers' tickets are accepted by the API but the
+  support agents' worker, which consumes the production queue
+  ticketdesk-support, never sees them. The API does not report errors: the
+  sends are succeeding, just somewhere else.
+objective: >-
+  Make the production API deliver tickets to the production queue
+  ticketdesk-support. The API gets the queue address only from the parameter
+  /ticketdesk/prod/support-queue-url, so fix the configuration rather than the
+  queues. Staging must stop receiving production tickets.
+xp: 100
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - SQS queue URL
+  - get-queue-url
+  - Parameter Store configuration
+services:
+  - sqs
+  - ssm

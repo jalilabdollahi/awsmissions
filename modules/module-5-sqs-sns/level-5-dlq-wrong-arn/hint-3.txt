@@ -1,0 +1,4 @@
+Get the real DLQ ARN, put it into the deadLetterTargetArn field of redrive.json, and apply the file to mailroom-outbound:
+
+  aws sqs get-queue-attributes --queue-url <url of mailroom-outbound-dlq> --attribute-names QueueArn
+  aws sqs set-queue-attributes --queue-url <url of mailroom-outbound> --attributes file://redrive.json

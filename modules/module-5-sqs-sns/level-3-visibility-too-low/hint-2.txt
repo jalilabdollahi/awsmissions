@@ -1,0 +1,3 @@
+After a worker receives a message SQS hides it only for the queue's visibility timeout. If the worker has not deleted the message by then, the message reappears and another worker picks it up. Compare the queue's value with how long rendering takes (up to 8 seconds).
+
+Do not go to the other extreme: a crashed worker also holds its job for the full timeout.

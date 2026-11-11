@@ -1,0 +1,8 @@
+In policy.json set Resource to the queue ARN and add:
+
+  "Condition": { "ArnEquals": { "aws:SourceArn": "<ember-alerts topic ARN>" } }
+
+The Policy attribute must be passed as a string inside a JSON map. Wrap the file, then apply it:
+
+  python3 -c 'import json; print(json.dumps({"Policy": open("policy.json").read()}))' > attributes.json
+  aws sqs set-queue-attributes --queue-url <url> --attributes file://attributes.json

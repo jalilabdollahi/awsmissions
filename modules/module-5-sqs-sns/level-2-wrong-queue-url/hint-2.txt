@@ -1,0 +1,3 @@
+The parameter contains the URL of ticketdesk-support-staging. A queue URL ends with the queue name, and SendMessage will happily deliver to whichever queue the URL names. The promotion copied the staging value into production.
+
+SQS can tell you the correct URL for a queue name: aws sqs get-queue-url.

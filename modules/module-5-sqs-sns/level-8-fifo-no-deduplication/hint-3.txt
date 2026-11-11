@@ -1,0 +1,3 @@
+Enable content-based deduplication on the live queue:
+
+  aws sqs set-queue-attributes --queue-url <url of tidewater-payments.fifo> --attributes ContentBasedDeduplication=true

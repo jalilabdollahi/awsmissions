@@ -1,0 +1,1 @@
+No queue setting can raise the limit above 1 MiB, so the document cannot travel through the queue. Keep SQS for a small notification and use S3 for the data: upload the file to the bucket, then send a message that says where it is (bucket and key).

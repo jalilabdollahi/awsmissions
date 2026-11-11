@@ -1,0 +1,20 @@
+name: "The Label That Printed Twice"
+description: >-
+  ParcelPilot's label renderer pulls jobs from the queue labelforge-jobs.
+  Rendering one shipping label takes up to 8 seconds, but customers keep
+  complaining that parcels arrive with two or even three identical labels.
+  The renderer logs show the same job ID being handed out again while the first
+  worker is still busy with it, and no worker has crashed.
+objective: >-
+  Stop jobs from being handed to a second worker while the first one is still
+  rendering (up to 8 seconds). A worker that crashes must not hold a job
+  hostage for long either: a job must be retried within 2 minutes.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - visibility timeout
+  - at-least-once delivery
+  - SQS queue attributes
+services:
+  - sqs

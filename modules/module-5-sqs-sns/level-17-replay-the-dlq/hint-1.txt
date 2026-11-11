@@ -1,0 +1,5 @@
+Look at what is waiting in the DLQ and how many messages there are:
+
+  aws sqs get-queue-attributes --queue-url <url of crescent-invoices-dlq> --attribute-names ApproximateNumberOfMessages
+
+Then look through `aws sqs help` for anything with "move" in its name.

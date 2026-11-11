@@ -1,0 +1,5 @@
+The service reports that the queue does not exist, yet a queue was created during the deploy. Compare what exists with what the service asks for:
+
+  aws sqs list-queues
+
+Read the two names character by character.

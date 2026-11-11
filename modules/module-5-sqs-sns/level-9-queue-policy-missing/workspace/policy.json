@@ -2,12 +2,11 @@
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "AllowSnsDelivery",
       "Effect": "Allow",
-      "Principal": {
-        "Service": "sns.amazonaws.com"
-      },
+      "Principal": { "Service": "sns.amazonaws.com" },
       "Action": "sqs:SendMessage",
-      "Resource": "arn:aws:sqs:us-east-1:000000000000:mission-queue"
+      "Resource": "FILL_IN_QUEUE_ARN"
     }
   ]
 }

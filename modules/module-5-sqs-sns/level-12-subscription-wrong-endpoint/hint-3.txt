@@ -1,0 +1,4 @@
+Delete the wrong subscription and create a correct one:
+
+  aws sns unsubscribe --subscription-arn <the staging subscription's ARN>
+  aws sns subscribe --topic-arn <topic arn> --protocol sqs --notification-endpoint <ARN of quartz-invoices-prod>

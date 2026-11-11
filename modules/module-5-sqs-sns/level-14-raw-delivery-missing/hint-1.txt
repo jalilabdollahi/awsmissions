@@ -1,0 +1,7 @@
+Receive one message from the queue and read its body:
+
+  aws sqs receive-message --queue-url <url of delta-web-analytics>
+
+Then list what is configured on the subscription:
+
+  aws sns get-subscription-attributes --subscription-arn <SubscriptionArn>

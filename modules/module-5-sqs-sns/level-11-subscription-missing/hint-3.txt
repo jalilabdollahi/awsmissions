@@ -1,0 +1,5 @@
+Add a second subscription for the loyalty queue:
+
+  aws sns subscribe --topic-arn <topic arn> --protocol sqs --notification-endpoint <ARN of bluebird-loyalty>
+
+Get the queue ARN with: aws sqs get-queue-attributes --queue-url <url> --attribute-names QueueArn

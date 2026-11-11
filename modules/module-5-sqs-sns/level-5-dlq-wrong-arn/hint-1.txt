@@ -1,0 +1,4 @@
+Failed jobs vanish, so look at where the queue is told to send them. Read the redrive policy and list the queues that exist:
+
+  aws sqs get-queue-attributes --queue-url <url of mailroom-outbound> --attribute-names RedrivePolicy
+  aws sqs list-queues

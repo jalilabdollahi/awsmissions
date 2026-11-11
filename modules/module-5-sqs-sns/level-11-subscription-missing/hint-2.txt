@@ -1,0 +1,1 @@
+A topic only forwards to its subscriptions, and the loyalty queue has none. Messages published earlier will not be replayed, so test with a new publish after fixing it. When subscribing an SQS queue, the endpoint is the queue's ARN (not the URL).

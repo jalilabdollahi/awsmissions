@@ -1,0 +1,4 @@
+Upload the file, then send a message that names the bucket and key:
+
+  aws s3api put-object --bucket quill-manifest-offload --key <some key> --body payload/manifest.json
+  aws sqs send-message --queue-url <url> --message-body '{"bucket":"quill-manifest-offload","key":"<the same key>"}'

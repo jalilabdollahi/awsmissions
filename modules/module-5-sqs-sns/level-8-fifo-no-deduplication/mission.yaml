@@ -1,0 +1,22 @@
+name: "Twice Charged"
+description: >-
+  Tidewater Pay moved its payment-capture jobs to the FIFO queue
+  tidewater-payments.fifo. The webhook receiver cannot be changed this week: it
+  forwards each gateway callback unchanged and does not generate any
+  MessageDeduplicationId. Since the cut-over, every callback fails with
+  InvalidParameterValue, and during the first hour of the cut-over some
+  customers were charged twice when the gateway re-delivered a callback.
+objective: >-
+  Make the existing queue tidewater-payments.fifo accept sends that carry no
+  MessageDeduplicationId, and make it drop a repeated identical callback
+  instead of enqueuing it twice. Do not recreate the queue: the job that is
+  already waiting in it must survive.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - FIFO deduplication
+  - ContentBasedDeduplication
+  - exactly-once processing
+services:
+  - sqs

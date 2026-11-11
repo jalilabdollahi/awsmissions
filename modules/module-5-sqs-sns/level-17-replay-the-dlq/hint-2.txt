@@ -1,0 +1,1 @@
+SQS has a managed way to move messages out of a dead-letter queue: a message move task, which takes the DLQ's ARN as its source. It moves rather than copies, so nothing ends up in both queues. You can optionally name a destination queue.

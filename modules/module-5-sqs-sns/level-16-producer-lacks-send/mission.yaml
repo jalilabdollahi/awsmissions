@@ -1,0 +1,22 @@
+name: "Mail Without a Stamp"
+description: >-
+  Gatehouse Security's visitor-registration API runs as the IAM user
+  gatehouse-api and must drop each registration into the queue
+  gatehouse-intake. Since the access review, every registration fails with
+  AccessDenied, while the compliance team insists that the policy "was written
+  for exactly this". The user's inline policy lives in policy.json. The same
+  account also has a queue gatehouse-audit that the API must never write to.
+objective: >-
+  Let gatehouse-api send messages to the queue gatehouse-intake, and nothing
+  more: it must not be able to read or purge that queue, and it must not be
+  able to write to gatehouse-audit.
+xp: 250
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - IAM identity policy for SQS
+  - least privilege
+  - queue ARN
+services:
+  - sqs
+  - iam

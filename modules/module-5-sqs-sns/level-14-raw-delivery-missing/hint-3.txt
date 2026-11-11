@@ -1,0 +1,3 @@
+Enable raw message delivery on the existing subscription:
+
+  aws sns set-subscription-attributes --subscription-arn <SubscriptionArn> --attribute-name RawMessageDelivery --attribute-value true

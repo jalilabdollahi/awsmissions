@@ -1,0 +1,25 @@
+name: "Locked Mailbox"
+description: >-
+  Ember Retail's monitoring pipeline publishes alerts to the SNS topic
+  ember-alerts, and the on-call pager service reads them from the queue
+  ember-pager-intake, which is already subscribed to the topic. The security
+  review last week removed the queue's open access policy, and the new, tighter
+  policy was never written. In a real account, SNS would now get AccessDenied
+  when delivering to the queue and every alert would disappear silently. The
+  draft in policy.json is what the team started with before the meeting
+  ended.
+objective: >-
+  Give ember-pager-intake a queue policy that lets the SNS service deliver
+  messages to this queue, but only on behalf of the topic ember-alerts. No
+  other topic, account or principal may be allowed to send to it.
+xp: 225
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - SQS queue policy
+  - service principal
+  - aws:SourceArn condition
+  - confused deputy
+services:
+  - sqs
+  - sns

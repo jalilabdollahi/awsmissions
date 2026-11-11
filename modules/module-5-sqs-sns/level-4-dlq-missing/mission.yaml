@@ -1,0 +1,23 @@
+name: "Poison Pill"
+description: >-
+  LedgerLink settles card payments from the queue ledgerlink-settlements. Last
+  night one malformed settlement file crashed the worker over and over: the
+  message kept returning, the worker kept dying, and the whole shift's backlog
+  stood behind it. Engineering wants such messages parked somewhere safe for
+  inspection after a few failed attempts. At the moment the queue has no
+  parking place at all.
+objective: >-
+  Give ledgerlink-settlements a dead-letter queue. A message that has been
+  received and not deleted several times (at least 2, at most 10 attempts)
+  must be moved to it, and the dead-letter queue must keep parked messages for
+  14 days, longer than the source queue does.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - dead-letter queues
+  - redrive policy
+  - maxReceiveCount
+  - message retention
+services:
+  - sqs

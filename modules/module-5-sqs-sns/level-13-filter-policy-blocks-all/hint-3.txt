@@ -1,0 +1,3 @@
+Set the filter policy scope on the existing subscription (no need to recreate it):
+
+  aws sns set-subscription-attributes --subscription-arn <SubscriptionArn> --attribute-name FilterPolicyScope --attribute-value MessageBody

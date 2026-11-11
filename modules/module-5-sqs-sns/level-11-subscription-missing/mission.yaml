@@ -1,0 +1,21 @@
+name: "Nobody Told Loyalty"
+description: >-
+  Bluebird Market publishes every completed checkout to the SNS topic
+  bluebird-checkout-events. The fulfilment team's queue bluebird-fulfilment
+  receives them fine. The loyalty team launched their new points service this
+  week and reads from the queue bluebird-loyalty, but customers are not
+  getting any points: that queue has stayed empty since launch day.
+objective: >-
+  Make every event published to bluebird-checkout-events reach both
+  bluebird-fulfilment and bluebird-loyalty, without disturbing the fulfilment
+  team's existing subscription.
+xp: 125
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - SNS subscriptions
+  - fan-out
+  - subscription ARN vs endpoint
+services:
+  - sns
+  - sqs

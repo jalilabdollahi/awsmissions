@@ -1,0 +1,23 @@
+name: "Out of Order"
+description: >-
+  Ironwood Bank posts account events (deposit, withdrawal, fee) to the queue
+  ironwood-ledger-events. Account balances keep coming out wrong: a withdrawal
+  is sometimes processed before the deposit that funded it, and customers get
+  overdraft fees. The ledger consumer handles messages one at a time, so the
+  fault is not in the consumer. Engineering already knows that events for the
+  same account must be processed in the order they were sent, while different
+  accounts may be processed independently.
+objective: >-
+  Provide a queue named ironwood-ledger-events.fifo that preserves the order of
+  events within a message group, so the producer can use one group per account.
+  The existing standard queue may stay in place until the producer is switched
+  over.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - FIFO queues
+  - message groups
+  - ordering guarantees
+services:
+  - sqs

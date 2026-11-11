@@ -1,0 +1,20 @@
+name: "The Dead Letter Gets Lost"
+description: >-
+  Foxglove Mailroom sends customer e-mails from the queue mailroom-outbound.
+  Support noticed that bounced-address jobs vanish: they are retried three
+  times, then disappear, and the dead-letter queue mailroom-outbound-dlq is
+  not growing. A redrive policy is configured on the queue and nobody sees an
+  error, which is exactly why nobody looked at it.
+objective: >-
+  Make failed jobs from mailroom-outbound actually arrive in
+  mailroom-outbound-dlq after their retries. Keep the existing DLQ and the
+  jobs already parked in it.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - dead-letter queues
+  - redrive policy
+  - queue ARN
+services:
+  - sqs

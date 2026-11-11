@@ -1,0 +1,22 @@
+name: "Second Chance for Six Invoices"
+description: >-
+  Crescent Billing's invoice worker had a bug last Friday, and six invoices
+  ended up in the dead-letter queue crescent-invoices-dlq after their retries
+  ran out. The bug is fixed and deployed. Finance now wants those six invoices
+  processed, which means they have to go back to the main queue
+  crescent-invoices. A junior engineer proposes writing a script that receives,
+  sends and deletes them one by one.
+objective: >-
+  Return the six parked invoices to crescent-invoices, each exactly once and
+  unchanged, so that crescent-invoices-dlq is empty afterwards. Use the
+  queue's built-in redrive capability rather than losing or duplicating
+  messages.
+xp: 300
+difficulty: advanced
+expected_time: 10m
+concepts:
+  - DLQ redrive
+  - StartMessageMoveTask
+  - operational recovery
+services:
+  - sqs

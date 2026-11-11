@@ -1,0 +1,3 @@
+Change "maxReceiveCount" in redrive.json to a number between 3 and 10 (for example "5"; the value stays a string) and apply the file:
+
+  aws sqs set-queue-attributes --queue-url <url of pinecrest-sms> --attributes file://redrive.json

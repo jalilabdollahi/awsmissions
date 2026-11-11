@@ -1,0 +1,1 @@
+SNS does not deliver your message as-is by default: it wraps it in a notification envelope, and your event ends up as an escaped string inside the "Message" field. A subscription attribute switches this off. Change the existing subscription instead of recreating it, or you will lose the filter.
