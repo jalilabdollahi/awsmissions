@@ -36,7 +36,6 @@ MODULE_TITLES = {
     "module-13-cognito": "Cognito",
     "module-14-load-balancing": "Load Balancing & Auto Scaling",
     "module-15-kinesis": "Kinesis & Firehose",
-    "module-12-war-games": "Production War Games",
     "module-16-war-games": "Production War Games",
 }
 REQUIRED_KEYS = ("name", "description", "objective", "xp", "difficulty", "expected_time", "concepts")
