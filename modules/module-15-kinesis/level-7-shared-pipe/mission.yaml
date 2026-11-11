@@ -1,0 +1,25 @@
+name: "Sharing the Pipe"
+description: >-
+  Rivermill Exchange publishes every executed trade to the Kinesis stream
+  trade-ticks. Two Lambdas consume it through event source mappings: ledger-writer
+  books each trade in the ledger, and risk-scorer scores it for the risk
+  desk. A third consumer, an old reporting app, also reads the stream. All of
+  them split the same 2 MB/s of read capacity per shard, and during the opening
+  auction the risk desk's scores fall minutes behind the market. The ledger is
+  fine as it is. Only the risk-scorer needs to stop competing with the others.
+objective: >-
+  Make risk-scorer read trade-ticks with read throughput that is dedicated to it
+  instead of shared with the other consumers. Every trade must still be scored
+  exactly once, and ledger-writer must keep working as it does today.
+xp: 200
+difficulty: intermediate
+expected_time: 18m
+concepts:
+  - enhanced fan-out
+  - stream consumers
+  - event source mappings
+services:
+  - kinesis
+  - lambda
+  - dynamodb
+  - iam

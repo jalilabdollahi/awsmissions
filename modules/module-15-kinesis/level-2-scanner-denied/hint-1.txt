@@ -1,0 +1,6 @@
+Look at what scan-gateway is allowed to do, and compare it with what the gateway actually calls:
+
+  aws iam list-user-policies --user-name scan-gateway
+  aws iam get-user-policy --user-name scan-gateway --policy-name depot-publish
+
+Read the Action and the Resource of the only statement very carefully.

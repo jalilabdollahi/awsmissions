@@ -1,0 +1,5 @@
+Look at the delivery stream's S3 destination settings and compare them with the complaints:
+
+  aws firehose describe-delivery-stream --delivery-stream-name fraud-signals-to-s3
+
+Find the settings that control how long Firehose holds records before writing an object, and the one that controls how the object is stored.

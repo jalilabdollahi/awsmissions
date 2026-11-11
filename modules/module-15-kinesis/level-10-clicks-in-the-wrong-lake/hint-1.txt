@@ -1,0 +1,6 @@
+See where the delivery stream actually writes, and what exists in the account:
+
+  aws firehose describe-delivery-stream --delivery-stream-name clickstream-to-lake
+  aws s3 ls
+
+Compare the bucket and the prefix of the destination with what the briefing says the Athena table reads.

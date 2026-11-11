@@ -1,0 +1,27 @@
+name: "Fifteen Minutes Too Late"
+description: >-
+  Aldermoor Bank's payment gateways send fraud signals to the Firehose delivery
+  stream fraud-signals-to-s3, which lands them in s3://aldermoor-fraud-landing
+  under signals/, where the fraud-analysis jobs pick them up. The analysts
+  complain that signals arrive in the bucket about a quarter of an hour after
+  the payment, far too late to stop a card. The storage team adds a second
+  complaint: the landing bucket is growing quickly because the files are stored
+  as plain text. Prefix, bucket and role are all correct; the delivery stream
+  has simply never been tuned.
+objective: >-
+  Make a fraud signal show up in aldermoor-fraud-landing under signals/ within
+  about 30 seconds of being sent, stored gzip-compressed. Do not make Firehose
+  write a new object more often than every few seconds: the analysis jobs
+  struggle with swarms of tiny files.
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - Firehose buffering hints
+  - buffer size vs interval
+  - compression
+  - small-files problem
+services:
+  - firehose
+  - s3
+  - iam

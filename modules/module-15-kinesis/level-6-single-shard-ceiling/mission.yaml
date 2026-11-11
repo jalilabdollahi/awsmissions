@@ -1,0 +1,22 @@
+name: "Ceiling at One Megabyte"
+description: >-
+  Voltus runs a network of EV chargers. Every charger sends a heartbeat every
+  few seconds into the one-shard stream charger-heartbeats. The roll-out of
+  2,000 new chargers next month will push the peak to about 3 MB per second,
+  and the capacity planning review states a shard accepts 1 MB/s of writes.
+  Heartbeats already in the stream must not be lost, and the finance team will
+  not sign off on more than six shards.
+objective: >-
+  Give charger-heartbeats enough write capacity for a 3 MB/s peak (at 1 MB/s per
+  shard) with no more than six shards, keeping the existing stream and every
+  record already in it. Heartbeats from different chargers must be accepted
+  across the stream's shards.
+xp: 175
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - shard capacity
+  - resharding
+  - UpdateShardCount
+services:
+  - kinesis

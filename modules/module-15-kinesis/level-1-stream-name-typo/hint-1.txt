@@ -1,0 +1,6 @@
+Invoke the function yourself with a test reading and read the error it returns:
+
+  aws lambda invoke --function-name thermo-ingest --cli-binary-format raw-in-base64-out --payload '{"device_id":"t-1","temp_c":21.5}' out.json
+  cat out.json
+
+Then list the streams that really exist in the account and compare names letter by letter.

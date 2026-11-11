@@ -1,0 +1,3 @@
+In policy.json list both write actions ("kinesis:PutRecord" and "kinesis:PutRecords") and set Resource to the ARN of the parcel-scans stream only (arn:aws:kinesis:us-east-1:000000000000:stream/parcel-scans). Do not add read actions or wildcards. Then:
+
+  aws iam put-user-policy --user-name scan-gateway --policy-name depot-publish --policy-document file://policy.json

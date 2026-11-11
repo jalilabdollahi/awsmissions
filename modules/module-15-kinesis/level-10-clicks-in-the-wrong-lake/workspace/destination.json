@@ -1,0 +1,11 @@
+{
+  "RoleARN": "arn:aws:iam::000000000000:role/clickstream-firehose-role",
+  "BucketARN": "arn:aws:s3:::harborview-data-lake",
+  "Prefix": "events/",
+  "ErrorOutputPrefix": "delivery-errors/!{firehose:error-output-type}/",
+  "BufferingHints": {
+    "SizeInMBs": 1,
+    "IntervalInSeconds": 5
+  },
+  "CompressionFormat": "UNCOMPRESSED"
+}

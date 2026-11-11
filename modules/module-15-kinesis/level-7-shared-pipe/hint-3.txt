@@ -1,0 +1,5 @@
+Register a consumer, wait for it to be ACTIVE, point a new mapping at the consumer ARN, then remove the old mapping:
+
+  aws kinesis register-stream-consumer --stream-arn arn:aws:kinesis:us-east-1:000000000000:stream/trade-ticks --consumer-name <name>
+  aws lambda create-event-source-mapping --function-name risk-scorer --event-source-arn <ConsumerARN> --starting-position LATEST
+  aws lambda delete-event-source-mapping --uuid <UUID of the old risk-scorer mapping>

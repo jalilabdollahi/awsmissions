@@ -1,0 +1,1 @@
+Classic consumers all read from the same per-shard allowance. A consumer registered on the stream (enhanced fan-out) gets its own allowance, and a Lambda mapping uses it when its event source is that consumer's ARN rather than the stream's ARN. A mapping's source cannot be edited, so you will end up with a new mapping; think about what happens to the old one.

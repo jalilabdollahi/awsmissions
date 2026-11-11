@@ -1,0 +1,29 @@
+name: "Poison Pill in the Pipe"
+description: >-
+  Marlow Health streams patient-monitor readings into the Kinesis stream
+  vitals. The Lambda vitals-alerter consumes it through an event source mapping
+  and records every valid reading in the table vitals-processed. This morning
+  one monitor with a firmware bug published a reading that is not valid JSON.
+  Since then the alerts for that shard have been frozen: the function fails on
+  the broken reading, is invoked with the same batch again and again, and the
+  readings stored behind it are never processed. Clinical engineering wants the
+  broken reading kept for analysis, but not in the way of everyone else.
+objective: >-
+  Make the vitals-alerter mapping survive a malformed reading: valid readings
+  in the same batch as a bad one, and those that arrive after it, must be
+  processed, and the broken reading itself must be kept in the SQS queue
+  vitals-dead-letters for later analysis.
+xp: 225
+difficulty: intermediate
+expected_time: 18m
+concepts:
+  - event source mapping error handling
+  - bisect batch on function error
+  - maximum retry attempts
+  - on-failure destination
+services:
+  - kinesis
+  - lambda
+  - sqs
+  - dynamodb
+  - iam

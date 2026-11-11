@@ -1,0 +1,3 @@
+Two details are off. The gateway sends *batches* (the PutRecords API), and IAM treats PutRecord and PutRecords as two separate actions. Also check which stream's ARN the Resource names: the policy was copied from staging.
+
+policy.json in your workspace is a copy of the policy: type `edit` to open it.

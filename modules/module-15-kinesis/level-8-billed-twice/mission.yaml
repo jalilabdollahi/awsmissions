@@ -1,0 +1,27 @@
+name: "Billed Twice at the Seam"
+description: >-
+  Brightline, a mobile operator, bills usage events from the Kinesis stream
+  usage-events. A Lambda, billing-resume, runs every few minutes: it reads the
+  checkpoint it stored in the SSM parameter /brightline/billing/checkpoint (the
+  sequence number of the last event it billed), continues from there, writes
+  one invoice line per event into the DynamoDB table invoice-lines, and saves
+  the new checkpoint. Customer support keeps receiving the same complaint: the
+  last usage event of the previous run shows up on the invoice twice. The
+  function never fails and never skips an event.
+objective: >-
+  Make billing-resume continue exactly where the previous run stopped: the event
+  named by the checkpoint must not be billed again, every later event must be
+  billed once, and the checkpoint must advance to the last event billed.
+xp: 175
+difficulty: intermediate
+expected_time: 15m
+concepts:
+  - AT_SEQUENCE_NUMBER vs AFTER_SEQUENCE_NUMBER
+  - consumer checkpoints
+  - at-least-once processing
+services:
+  - kinesis
+  - lambda
+  - dynamodb
+  - ssm
+  - iam

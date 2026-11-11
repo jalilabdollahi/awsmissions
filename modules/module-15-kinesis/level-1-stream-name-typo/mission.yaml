@@ -1,0 +1,23 @@
+name: "Wrong Stream, Right Thermostat"
+description: >-
+  Thermowave sells smart thermostats. Every thermostat posts its temperature to
+  an ingest function, thermo-ingest, which forwards each reading into the
+  Kinesis stream that feeds the energy-saving model. Since Monday's release the
+  model has seen no new data, and the function's error count in the dashboard
+  is climbing. Nobody touched the stream and the function's IAM role is
+  unchanged; the release only touched the function's configuration.
+objective: >-
+  Make thermo-ingest deliver readings into the existing Thermowave stream again.
+  Do not create extra streams, and keep every other setting of the function
+  (firmware channel included) as it was.
+xp: 75
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - Kinesis stream names
+  - Lambda environment variables
+  - ResourceNotFoundException
+services:
+  - kinesis
+  - lambda
+  - iam

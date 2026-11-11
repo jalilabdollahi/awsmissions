@@ -1,0 +1,6 @@
+Find out what Firehose does with your events: look at everything the delivery stream has written, then read what the failure files say.
+
+  aws s3 ls s3://swiftcab-lake/ --recursive
+  aws s3 cp s3://swiftcab-lake/<a key under ride-rejects/> -
+
+Each failure line has an errorCode and errorMessage. You can also call the function yourself with a Firehose-style event, {"records":[{"recordId":"1","data":"<base64 of a ride>"}]}, and read what it returns.

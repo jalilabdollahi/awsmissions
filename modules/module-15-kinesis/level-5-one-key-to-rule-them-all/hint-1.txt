@@ -1,0 +1,5 @@
+Publish a handful of test events yourself and look at which shard each one reports:
+
+  aws kinesis put-record --stream-name order-events --partition-key order-service --data eA== --query ShardId
+
+Then read how order-publisher builds the records (`edit` opens publisher.py in your workspace). What does each record carry besides its data?

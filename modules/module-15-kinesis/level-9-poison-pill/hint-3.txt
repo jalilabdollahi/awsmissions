@@ -1,0 +1,5 @@
+Update the existing mapping (find its UUID with list-event-source-mappings):
+
+  aws lambda update-event-source-mapping --uuid <UUID> --maximum-retry-attempts 2 --bisect-batch-on-function-error --destination-config '{"OnFailure":{"Destination":"arn:aws:sqs:us-east-1:000000000000:vitals-dead-letters"}}'
+
+Give it up to a minute: the stuck batch is picked up on the mapping's next poll.

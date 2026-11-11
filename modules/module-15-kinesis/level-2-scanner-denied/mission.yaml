@@ -1,0 +1,23 @@
+name: "Scan and Deliver Denied"
+description: >-
+  Parcelhop's depot scanners send each batch of parcel scans through a gateway
+  that signs in as the IAM user scan-gateway and calls PutRecords on the Kinesis
+  stream parcel-scans. This morning the new Hamburg depot went live and every
+  single batch comes back AccessDenied. The inline policy was copied from the
+  staging environment by a colleague who has since gone on holiday. A second
+  stream, parcel-billing, carries invoices and must stay off-limits to the
+  scanners; scanners also have no business reading the stream back.
+objective: >-
+  Let the user scan-gateway write batches of scans to the stream parcel-scans,
+  and nothing more: no access to parcel-billing and no read access to
+  parcel-scans.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Kinesis IAM actions
+  - stream ARNs
+  - least privilege
+services:
+  - kinesis
+  - iam

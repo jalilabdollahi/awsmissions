@@ -1,0 +1,3 @@
+Set BucketARN to arn:aws:s3:::harborview-datalake and Prefix to clicks/dt=!{timestamp:yyyy-MM-dd}/ in destination.json, then:
+
+  aws firehose update-destination --delivery-stream-name clickstream-to-lake --current-delivery-stream-version-id <VersionId> --destination-id <DestinationId> --extended-s3-destination-update file://destination.json

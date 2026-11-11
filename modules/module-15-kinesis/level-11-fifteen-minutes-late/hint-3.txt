@@ -1,0 +1,3 @@
+In buffering.json set IntervalInSeconds to something like 20 and add a top-level "CompressionFormat": "GZIP". Then:
+
+  aws firehose update-destination --delivery-stream-name fraud-signals-to-s3 --current-delivery-stream-version-id <VersionId> --destination-id <DestinationId> --extended-s3-destination-update file://buffering.json

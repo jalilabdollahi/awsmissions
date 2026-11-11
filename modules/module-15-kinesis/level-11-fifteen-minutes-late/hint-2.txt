@@ -1,0 +1,3 @@
+Firehose writes an object when its buffer reaches a size OR an age, whichever comes first. With few records the size is never reached, so the age (the interval) is the delay. There is also a compression setting on the destination, currently off. Pick an interval that meets the 30-second goal without going tiny.
+
+buffering.json in your workspace holds the buffering section; update-destination needs the version id and destination id of the delivery stream.

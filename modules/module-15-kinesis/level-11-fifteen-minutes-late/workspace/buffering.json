@@ -1,0 +1,6 @@
+{
+  "BufferingHints": {
+    "SizeInMBs": 128,
+    "IntervalInSeconds": 900
+  }
+}

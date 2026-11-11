@@ -1,0 +1,4 @@
+For every record: reuse rec["recordId"], use "Ok" with data = base64(json + "\n") on success, and wrap the per-record work in try/except returning {"recordId": ..., "result": "ProcessingFailed", "data": rec["data"]} for bad input. Then deploy:
+
+  zip shaper.zip shaper.py
+  aws lambda update-function-code --function-name ride-event-shaper --zip-file fileb://shaper.zip

@@ -1,0 +1,6 @@
+Look at how the mapping between the stream and the function is configured, and at what the function does with the stored readings:
+
+  aws lambda list-event-source-mappings --function-name vitals-alerter
+  aws dynamodb scan --table-name vitals-processed
+
+Which of the five readings in the stream have been processed? Compare with the order in which they were published.
