@@ -1,17 +1,23 @@
-name: The Blank Config
-description: "Function code reads `os.environ['DATABASE_URL']` but the env var is\
-  \ not set \u2014 KeyError on invocation"
-objective: Add the environment variable via `aws lambda update-function-configuration
-  --environment`
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "The Blank Config"
+description: >-
+  Maple Treasury's invoicing service converts foreign-currency invoices through
+  a Lambda function called fx-rate-lookup. After a re-deploy the function
+  crashes on every call with a KeyError, and invoices are piling up unpriced.
+  The code is unchanged and was written to read its settings from environment
+  variables, one of which still has to be provided. Finance also insists that
+  results keep four decimal places; that setting is already on the function.
+objective: >-
+  Make fx-rate-lookup return production EUR/USD conversions again with the four
+  decimal places finance expects. It must read the production rates table.
+xp: 150
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-6-env-var-missing
-implementation_status: playable
+  - Lambda environment variables
+  - update-function-configuration
+  - DynamoDB
+  - execution role permissions
+services:
+  - lambda
+  - dynamodb
+  - iam

@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ssm get-parameter --name /hearth/web/approved-image
+  (set "image" in task-definition.json to that value)
+  aws ecs register-task-definition --cli-input-json file://task-definition.json
+  bash deploy.sh

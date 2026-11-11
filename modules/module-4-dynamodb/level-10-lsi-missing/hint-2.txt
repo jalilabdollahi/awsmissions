@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Delete and recreate table with the LSI included
+Unlike a global secondary index, a local secondary index can only be created together with the table. So the table needs to be rebuilt: save the four items first (scan to a file), delete and recreate the table with LocalSecondaryIndexes and the extra key attribute (severity, N) in AttributeDefinitions, then write the items back. Choose a projection that includes reason.

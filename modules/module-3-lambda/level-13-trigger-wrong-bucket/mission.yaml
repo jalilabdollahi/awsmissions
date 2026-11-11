@@ -1,15 +1,24 @@
-name: Watching the Wrong Door
-description: S3 trigger is configured but points to `wrong-bucket` instead of `uploads-bucket`
-objective: Fix the event source to point to the correct bucket
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "Watching the Wrong Door"
+description: >-
+  Marlowe Freight registers every invoice PDF in a billing ledger through the
+  Lambda function invoice-extractor. Since the staging environment was cloned
+  last month, the finance team sees a strange picture: test invoices from
+  marlowe-invoices-staging show up in the real ledger, while the real invoices
+  uploaded to marlowe-invoices-prod are never registered at all. Someone wired
+  the trigger to the wrong bucket during the clone.
+objective: >-
+  Have PDF invoices uploaded to marlowe-invoices-prod registered in the ledger,
+  while nothing uploaded to marlowe-invoices-staging reaches the ledger any
+  more. Only .pdf files may trigger the function.
+xp: 250
+difficulty: advanced
+expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- buckets
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-13-trigger-wrong-bucket
-implementation_status: playable
+  - S3 event notifications
+  - environment separation
+  - Lambda triggers
+services:
+  - s3
+  - lambda
+  - dynamodb
+  - iam

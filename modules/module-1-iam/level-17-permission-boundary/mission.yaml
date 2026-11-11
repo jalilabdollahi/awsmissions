@@ -1,16 +1,22 @@
-name: The Invisible Ceiling
-description: IAM role has a permission boundary that blocks S3 access even though
-  the identity policy allows it
-objective: Update or remove the permission boundary to allow the required actions
-xp: 225
-difficulty: beginner
+name: "The Invisible Ceiling"
+description: >-
+  Skyhook Robotics onboarded an intern, skyhook-intern, and the team lead gave
+  the user a broad S3 identity policy so nobody has to keep adjusting it. The
+  platform team added a permission boundary, intern-boundary, as a safety net.
+  The intern's first task is to upload test recordings into the sandbox bucket
+  skyhook-sandbox-recordings, and every upload fails with AccessDenied. The
+  identity policy was checked three times and clearly allows s3 actions.
+objective: >-
+  Let skyhook-intern upload to skyhook-sandbox-recordings while the intern
+  stays boxed in: no write access to skyhook-prod-telemetry, and the boundary
+  must stay attached to the user.
+xp: 325
+difficulty: advanced
 expected_time: 15m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-17-permission-boundary
-implementation_status: playable
+  - permissions boundaries
+  - effective permissions (intersection)
+  - managed policy versions
+services:
+  - iam
+  - s3

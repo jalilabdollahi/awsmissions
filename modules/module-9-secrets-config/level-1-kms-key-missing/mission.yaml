@@ -1,15 +1,22 @@
-name: No Key
-description: "Application tries to encrypt using KMS key alias `alias/mission-key`\
-  \ \u2014 key doesn't exist"
-objective: 'Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias`'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "No Key"
+description: >-
+  Lanternfish Labs' document vault seals every uploaded contract with KMS
+  before storing it. The vault is configured to use the key alias
+  alias/lanternfish-vault, which was supposed to be created by the platform
+  team during the migration but never was. Since go-live every upload fails
+  with a NotFoundException saying the alias is not found. Security has added
+  one requirement: the key must rotate automatically every year.
+objective: >-
+  Provide the vault with what it expects: a customer-managed symmetric
+  encryption key reachable as alias/lanternfish-vault, enabled, with automatic
+  key rotation turned on, so that data can be encrypted and decrypted through
+  the alias.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-1-kms-key-missing
-implementation_status: playable
+  - KMS keys
+  - key aliases
+  - automatic key rotation
+services:
+  - kms

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the attribute name in the GetAtt reference
+!GetAtt returns an attribute of a resource, and every resource type exposes only a fixed list of attributes (the "Fn::GetAtt" section of its documentation page). Asking for one that does not exist gives CloudFormation nothing to substitute. Here the value would go into an IAM policy, so the update is refused rather than storing a policy that silently matches nothing.
+
+The reason names the attribute it could not resolve. Check how the first bucket's ARN is requested, and compare with the second.

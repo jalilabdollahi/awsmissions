@@ -1,0 +1,24 @@
+name: "Check Your Inbox"
+description: >-
+  Kestrel Fitness lets members register in its app against the user pool
+  kestrel-members. Kai signed up yesterday with the password
+  Sprint-Interval-9! and has been trying to sign in ever since, getting
+  "User is not confirmed". Cognito emailed a six-digit verification code to
+  kai@example.com, but Kai says it never arrived. In this lab all outgoing mail
+  is captured by the emulator and can be read at the emulator's endpoint URL
+  followed by /_aws/ses. The product owner also wants the member's email to end
+  up verified, because password resets are sent to it.
+objective: >-
+  Make kai able to sign in to the app client kestrel-ios with the password
+  chosen at sign-up, with the email address marked as verified so that the
+  "forgot password" flow works for Kai as well.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - sign-up confirmation
+  - UNCONFIRMED users
+  - email verification
+services:
+  - cognito-idp
+  - ses

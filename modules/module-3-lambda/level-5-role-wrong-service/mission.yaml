@@ -1,17 +1,23 @@
-name: Wrong Trust
-description: Execution role exists but trust policy has `ec2.amazonaws.com` instead
-  of `lambda.amazonaws.com`
-objective: Fix the trust relationship on the role
-xp: 150
+name: "Borrowed Badge"
+description: >-
+  Lumen Photo Co's thumbnail scanner function was moved onto a role that was
+  originally written for the render farm's EC2 box. A new security scanner now
+  flags the role as "cannot be assumed by the service that uses it", and the
+  platform lead wants it fixed before the audit on Friday. The CI user also
+  assumes this role for dry-runs and must keep doing so, and the role's
+  permissions have been hand-tuned over a year, so nobody wants to recreate it.
+objective: >-
+  Make the role lumen-thumb-scanner assumable by the Lambda service, remove the
+  EC2 service from its trust, and keep the CI deployer's access and the role's
+  existing permissions intact.
+xp: 125
 difficulty: beginner
 expected_time: 10m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- policy debugging
-- roles
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-5-role-wrong-service
-implementation_status: playable
+  - IAM trust policy
+  - service principals
+  - update-assume-role-policy
+services:
+  - lambda
+  - iam
+  - s3

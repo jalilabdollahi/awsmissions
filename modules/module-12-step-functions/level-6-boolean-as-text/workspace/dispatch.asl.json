@@ -1,0 +1,35 @@
+{
+  "Comment": "Quillon Courier: choose a delivery lane for a new parcel",
+  "StartAt": "PickLane",
+  "States": {
+    "PickLane": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.express",
+          "StringEquals": "true",
+          "Next": "ExpressLane"
+        }
+      ],
+      "Default": "StandardLane"
+    },
+    "ExpressLane": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/quillon-express-lane",
+        "MessageBody.$": "States.JsonToString($)"
+      },
+      "End": true
+    },
+    "StandardLane": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/quillon-standard-lane",
+        "MessageBody.$": "States.JsonToString($)"
+      },
+      "End": true
+    }
+  }
+}

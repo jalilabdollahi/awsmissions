@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Application uses `Scan` on a large table with a filter — extremely slow and expensive
+Compare what the report wants (region + time window) with the table's key and indexes: aws dynamodb describe-table --table-name orbit-shipments. Also read the user's policy: aws iam get-user-policy --user-name orbit-report-svc --policy-name report-reads.

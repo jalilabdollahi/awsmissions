@@ -1,0 +1,20 @@
+{
+  "Comment": "Halcyon CRM: remind a trial user shortly before their trial ends",
+  "StartAt": "WaitForReminderTime",
+  "States": {
+    "WaitForReminderTime": {
+      "Type": "Wait",
+      "Seconds": 604800,
+      "Next": "SendReminder"
+    },
+    "SendReminder": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/halcyon-reminders",
+        "MessageBody.$": "States.Format('Your Halcyon trial for account {} ends soon.', $.accountId)"
+      },
+      "End": true
+    }
+  }
+}

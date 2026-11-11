@@ -1,0 +1,5 @@
+Follow the data. Each state's input and output are recorded in the execution history. Find where the order fields stop being there:
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>
+
+Compare the TaskStateEntered and TaskStateExited events of ScoreOrder.

@@ -1,0 +1,7 @@
+  aws iam get-role-policy --role-name hv-indexer-role --policy-name indexer-runtime
+  aws s3api get-bucket-policy --bucket hv-manifests --query Policy --output text
+  aws lambda get-function-configuration --function-name hv-manifest-indexer --query Environment
+
+1. Add s3:GetObject on arn:aws:s3:::hv-manifests/incoming/* to the role policy (put-role-policy replaces the whole document).
+2. Remove only the FreezeOldIndexer statement from the bucket policy and put it back. Keep ContractorsNotRestricted.
+3. aws lambda update-function-configuration --function-name hv-manifest-indexer --environment 'Variables={MANIFEST_BUCKET=<the real bucket name>,INDEX_TABLE=hv-manifest-index}'

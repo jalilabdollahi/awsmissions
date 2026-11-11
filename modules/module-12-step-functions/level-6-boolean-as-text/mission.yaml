@@ -1,0 +1,25 @@
+name: "Truthy Parcels"
+description: >-
+  Quillon Courier lets shippers pay extra for express delivery. The booking
+  API puts "express": true on a parcel, and the state machine
+  quillon-dispatch is supposed to drop those parcels on the express lane.
+  Support is flooded: express customers say their parcels sit in the standard
+  lane, and ops adds that older partner integrations, which do not send the
+  field at all, have started to bring executions down. No executions fail for
+  the new web app, they just go to the wrong lane.
+objective: >-
+  Make quillon-dispatch send parcels with "express": true to
+  quillon-express-lane, and every other parcel (express false, or no express
+  field at all) to quillon-standard-lane, without any execution failing.
+xp: 160
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - Choice state
+  - BooleanEquals
+  - IsPresent
+  - JSON types
+services:
+  - stepfunctions
+  - sqs
+  - iam

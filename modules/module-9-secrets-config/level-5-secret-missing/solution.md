@@ -1,10 +1,10 @@
 # Solution
 
-```bash
-# Edit the local mission artifact first
-$EDITOR config.json
-# This edited file applies to: --name mission/db-password
+The secret was not lost, only scheduled for deletion with a 14 day recovery window. While a deletion is pending, `GetSecretValue` fails with `InvalidRequestException: You can't perform this operation on the secret because it was marked for deletion`.
 
-# Then apply the fix
-aws secretsmanager create-secret --name mission/db-password --secret-string "abc123"
+```bash
+aws secretsmanager describe-secret --secret-id wyvern/matchmaker/db-credentials   # DeletedDate is set
+aws secretsmanager restore-secret --secret-id wyvern/matchmaker/db-credentials
 ```
+
+`check` confirms the `DeletedDate` is gone and that the secret still holds the original username, password and host.

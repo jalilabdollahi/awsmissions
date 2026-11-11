@@ -1,1 +1,3 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+In policy.json the two actions should read s3:GetObject and s3:PutObject. Keep the Resource lines as they are, then re-apply:
+
+  aws iam put-user-policy --user-name lantern-thumbs --policy-name thumbnailer --policy-document file://policy.json

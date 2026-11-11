@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change retention mode to `COMPLIANCE` on the object
+Retention belongs to individual object versions, and the bucket's default retention only applies to future uploads, so there are two places to change: every existing version, and the default rule. GOVERNANCE can be raised to COMPLIANCE, but a COMPLIANCE lock can never be lowered or changed back, so keep the retain-until date at least as far out as it is today.

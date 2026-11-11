@@ -1,0 +1,23 @@
+name: "Short Memory"
+description: >-
+  Tidewater Energy streams smart-meter reads into the Kinesis stream
+  meter-reads, where the billing system consumes them. Billing is being
+  migrated to a new platform next weekend and will be offline for up to three
+  days, during which reads keep arriving. The platform team must be able to
+  replay everything from the start of the outage once billing is back, with a
+  day of safety margin. Right now the stream only remembers its default window,
+  and finance has noted that data kept beyond a week is billed as long-term
+  retention they do not want to pay for.
+objective: >-
+  Make meter-reads keep its data long enough to survive a three-day billing
+  outage with a day to spare, but no longer than seven days. Do not recreate
+  the stream: the reads already in it must stay.
+xp: 100
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - stream retention period
+  - replay
+  - Kinesis cost model
+services:
+  - kinesis

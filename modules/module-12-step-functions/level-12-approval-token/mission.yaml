@@ -1,0 +1,31 @@
+name: "The Approver Never Called Back"
+description: >-
+  Brightline Procurement holds every purchase order until a manager approves
+  it. The state machine brightline-po-approval posts a request on the
+  brightline-approvals queue and then waits for the manager's tool to call
+  back. Managers say they get the request but approving does nothing, and the
+  executions pile up in RUNNING until they time out three days later. The
+  finance director also wants rejections handled: a rejected order must tell
+  the requester why. Those executions currently end as FAILED and the
+  requester hears nothing.
+objective: >-
+  Make the approval round trip work end to end. When a manager approves a
+  request with the callback they receive (aws stepfunctions send-task-success)
+  the order must be published on brightline-issued with its poId. When a manager
+  rejects it (send-task-failure with error "Rejected" and a cause), the
+  requester must receive a message with the poId and the cause on
+  brightline-requester-notices, the execution must end SUCCEEDED (a rejected
+  order is a normal business outcome, not a system failure) and no order may
+  be issued.
+xp: 330
+difficulty: advanced
+expected_time: 20m
+concepts:
+  - waitForTaskToken
+  - send-task-success / send-task-failure
+  - callback pattern
+  - Catch
+services:
+  - stepfunctions
+  - sqs
+  - iam

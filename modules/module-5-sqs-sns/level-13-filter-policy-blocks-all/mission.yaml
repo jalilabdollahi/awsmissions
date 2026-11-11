@@ -1,16 +1,24 @@
-name: The Silence Filter
-description: "SNS subscription has a filter policy `{\"eventType\": [\"nonexistent\"\
-  ]}` \u2014 no messages pass through"
-objective: Fix or remove the filter policy to allow relevant message attributes
+name: "The Silent Refund Worker"
+description: >-
+  Cobalt Outfitters publishes every order lifecycle event to the SNS topic
+  cobalt-order-events as a JSON document, for example
+  {"eventType":"order_cancelled","orderId":"..."}. The refund service reads the
+  queue cobalt-refund-worker, whose subscription has a filter policy so that
+  only cancellations and refunds arrive. Since the subscription was created the
+  queue has been completely empty, even though customers cancel orders all day.
+  The publisher is a vendor product and cannot be changed.
+objective: >-
+  Make cancellations and refunds (eventType order_cancelled and order_refunded)
+  reach cobalt-refund-worker while every other event type, such as
+  order_created, stays out. Keep filtering on eventType: removing the filter is
+  not acceptable.
 xp: 250
-difficulty: intermediate
-expected_time: 15m
+difficulty: advanced
+expected_time: 12m
 concepts:
-- SQS
-- SNS
-- event delivery
-- policy debugging
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-13-filter-policy-blocks-all
-implementation_status: playable
+  - SNS filter policies
+  - FilterPolicyScope
+  - message attributes vs message body
+services:
+  - sns
+  - sqs

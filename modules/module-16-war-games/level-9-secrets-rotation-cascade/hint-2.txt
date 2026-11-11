@@ -1,0 +1,7 @@
+Three links in the chain are broken, one in each service:
+
+- IAM: the role's policy names the old secret by its exact ARN; a re-created secret gets a new random suffix, so the old Allow matches nothing
+- Lambda: the function's configuration holds that same stale identifier
+- Secrets Manager: the version that applications read (AWSCURRENT) still has the old password; the rotated one is sitting under a different staging label
+
+Fix the policy by scoping to the secret's name, not by opening up all secrets.

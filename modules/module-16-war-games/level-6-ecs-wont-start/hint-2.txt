@@ -1,0 +1,7 @@
+Three separate problems stack up:
+
+- the task definition's image comes from a registry that cannot be reached right now (the ticket tells you what to use instead)
+- even with a working image, the container's startup wrapper exits with code 3 because of how the environment is configured
+- the service itself is scaled down from the rollback drill, and still points at the broken revision
+
+Task definition revisions are immutable: you cannot edit revision 1, you register revision 2.

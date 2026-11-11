@@ -1,26 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-printf 'classified\n' > /tmp/awsmissions-level3.txt
-aws_local s3 cp /tmp/awsmissions-level3.txt s3://mission-bucket/data.txt >/dev/null
-
-aws_local iam create-role \
-  --role-name object-reader-role \
-  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-
-for _ in {1..10}; do
-  if aws_local iam get-role --role-name object-reader-role >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
+for b in lantern-originals lantern-thumbnails; do
+  aws_local s3 mb "s3://$b" >/dev/null
 done
+seed="$(mktemp)"
+trap 'rm -f "$seed"' EXIT
+printf 'not-really-a-jpeg' > "$seed"
+aws_local s3api put-object --bucket lantern-originals --key 2025/10/portrait-0042.jpg --body "$seed" >/dev/null
+aws_local s3api put-object --bucket lantern-thumbnails --key 2025/10/portrait-0001.jpg --body "$seed" >/dev/null
 
-aws_local iam put-role-policy \
-  --role-name object-reader-role \
-  --policy-name object-reader-policy \
-  --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+aws_local iam create-user --user-name lantern-thumbs >/dev/null
+aws_local iam put-user-policy --user-name lantern-thumbs --policy-name thumbnailer \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
 
-echo "Broken IAM role created: object-reader-role"
+echo "lantern-thumbs is deployed. Every resize job dies with AccessDenied."

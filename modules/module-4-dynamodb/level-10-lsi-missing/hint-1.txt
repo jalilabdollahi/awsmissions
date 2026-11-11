@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Application queries with a Local Secondary Index `status-index` that doesn't exist — LSI must be created at table creation time
+Look at the table with aws dynamodb describe-table --table-name clinic-appointments. Then try to find any update-table option that adds a local secondary index; compare with what the docs say about when an LSI can be defined.

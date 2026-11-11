@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Object lock is in `GOVERNANCE` mode but compliance requirements need `COMPLIANCE` mode
+Look at the lock on the bucket and on each stored version:
+
+  aws s3api get-object-lock-configuration --bucket fennel-ledger-archive
+  aws s3api list-object-versions --bucket fennel-ledger-archive --prefix ledger/
+  aws s3api get-object-retention --bucket fennel-ledger-archive --key <key> --version-id <id>

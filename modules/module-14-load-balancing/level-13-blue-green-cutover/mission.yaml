@@ -1,0 +1,26 @@
+name: "Cutover Night"
+description: >-
+  Saffron Street's checkout service is mid blue/green migration. The blue fleet
+  (release 1, two instances in the group saffron-blue-asg) serves everyone; the
+  green fleet (release 2, group saffron-green-asg) has been deployed but still
+  receives no traffic because the weighted forward action on saffron-alb sends
+  100 percent to blue. Tonight is the cutover. The runbook says: all traffic to
+  green, blue stays registered with weight 0 for one hour as an instant
+  rollback, and never shift traffic to a fleet smaller than the one it replaces.
+  The green group currently runs a single instance.
+objective: >-
+  Complete the cutover on saffron-alb: every request is answered by release 2,
+  the green fleet has at least as many healthy instances as blue, and blue
+  remains attached to the listener with weight 0 (with its instances still
+  healthy) so rollback is one command away.
+xp: 480
+difficulty: expert
+expected_time: 18m
+concepts:
+  - weighted target groups
+  - blue/green deployment
+  - capacity before traffic
+services:
+  - elbv2
+  - autoscaling
+  - ec2

@@ -1,15 +1,23 @@
-name: Logic Flipped
-description: Composite alarm uses `ALARM(alarm-a) AND NOT ALARM(alarm-b)` but should
-  trigger when both are in ALARM
-objective: Fix the composite alarm rule expression
-xp: 275
-difficulty: intermediate
-expected_time: 18m
+name: "Paging When Everything Is Fine"
+description: >-
+  Strata Cloud's on-call engineers get a single page per incident from the
+  composite alarm strata-api-unhealthy, which combines two simple alarms:
+  strata-api-errors (too many 5xx responses) and strata-api-latency (responses
+  too slow). Since the composite was introduced the engineers are paged the
+  moment all is well and, according to the post-mortem, were not paged
+  during Saturday's slowdown. The composite's rule text is in alarm-rule.txt.
+objective: >-
+  Make strata-api-unhealthy go to ALARM when at least one of the two child
+  alarms is in ALARM, and stay OK while both are healthy. Both child alarms
+  must remain part of the rule, and the composite must keep notifying the
+  topic strata-oncall.
+xp: 300
+difficulty: advanced
+expected_time: 15m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-14-composite-alarm-inverted
-implementation_status: playable
+  - composite alarms
+  - alarm rule expressions
+  - boolean logic
+services:
+  - cloudwatch
+  - sns

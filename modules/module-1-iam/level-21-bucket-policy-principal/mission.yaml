@@ -1,0 +1,22 @@
+name: "Guest List Gone Wrong"
+description: >-
+  Harbor Print shares customer proofs with a partner studio through the S3
+  bucket harborprint-proofs. The partner's reviewer signs in as the IAM user
+  proofreader, which has no IAM permissions of its own: access is granted by
+  the bucket policy, which was rewritten by hand yesterday. Today the reviewer
+  can neither list the bucket nor open a proof. A second partner account,
+  proof-intern, must stay locked out of the bucket.
+objective: >-
+  Repair the bucket policy so that proofreader can list the bucket and download
+  proofs from proofs/. Nobody else, including proof-intern, may gain access,
+  and the reviewer must not be able to upload or delete.
+xp: 275
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - resource-based policies
+  - S3 bucket policies
+  - principals in bucket policies
+services:
+  - s3
+  - iam

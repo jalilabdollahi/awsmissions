@@ -1,0 +1,3 @@
+Cognito expects a trigger to return the event it was given (with response filled in). One branch of the function returns nothing at all. That explains the "invalid Lambda response".
+
+There is a second problem hiding in how the domain is compared: try signing up with Partner.Example.COM once the first bug is fixed.

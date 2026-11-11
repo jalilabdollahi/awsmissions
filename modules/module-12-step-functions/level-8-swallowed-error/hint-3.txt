@@ -1,0 +1,3 @@
+Change the Catch to add "ResultPath": "$.error" and point "Next" at a new Task state that sends the whole document (States.JsonToString($)) to the pinecrest-declined queue; that Task's Next is a new Fail state with an Error name and a Cause. Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:pinecrest-checkout --definition file://checkout.asl.json

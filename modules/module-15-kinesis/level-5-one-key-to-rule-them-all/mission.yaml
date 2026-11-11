@@ -1,0 +1,24 @@
+name: "One Key to Rule Them All"
+description: >-
+  Quillbox, an online stationery shop, publishes order events (created, paid,
+  shipped) into the four-shard stream order-events through a Lambda called
+  order-publisher. Its dashboard shows one shard pinned at its write limit while
+  the other three are almost idle, and the warehouse consumer, which has to see
+  each order's events in the order they happened, lags more every week. The
+  stream was sized correctly: four shards are plenty for Quillbox's traffic.
+  The problem is in how the publisher hands records to Kinesis.
+objective: >-
+  Make order-publisher spread its events across the shards of order-events
+  while every event of the same order still lands on the same shard, so the
+  warehouse keeps seeing each order's events in order.
+xp: 150
+difficulty: intermediate
+expected_time: 15m
+concepts:
+  - partition keys
+  - hot shards
+  - ordering within a shard
+services:
+  - kinesis
+  - lambda
+  - iam

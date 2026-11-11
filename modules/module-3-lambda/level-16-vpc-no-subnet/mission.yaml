@@ -1,16 +1,24 @@
-name: Stranded in VPC
-description: "Lambda has VPC config but `SubnetIds` is empty \u2014 deployment fails"
-objective: Add the correct subnet IDs to VPC configuration
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Stranded in VPC"
+description: >-
+  Orbit Retail's order-sync function must write into the orders database, which
+  lives in a private subnet of the VPC named orders-vpc. After last week's
+  network refactoring the function is "in a VPC" on paper: it carries the right
+  security group, but connection attempts to the database time out. Inspecting
+  the function's network settings shows no subnets at all. Security has two
+  rules: the function must survive the loss of one availability zone, and it
+  must never sit in a public subnet (no route to an internet gateway).
+objective: >-
+  Place order-sync into orders-vpc using its existing security group and
+  private subnets spread over at least two availability zones. Do not use any
+  public subnet and do not leave orders-vpc.
+xp: 325
+difficulty: advanced
+expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-- VPCs
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-16-vpc-no-subnet
-implementation_status: playable
+  - Lambda VPC configuration
+  - private vs public subnets
+  - availability zones
+services:
+  - lambda
+  - ec2
+  - iam

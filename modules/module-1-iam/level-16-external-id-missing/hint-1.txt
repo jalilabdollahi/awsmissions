@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it — AssumeRole denied
+Authentication and the vendor's permission to call AssumeRole are fine; the role's trust policy is what turns the call down. Read it:
+
+  aws iam get-role --role-name metricwave-reader --query Role.AssumeRolePolicyDocument
+
+Compare each part of the Condition with what the vendor's sheet says.

@@ -1,0 +1,8 @@
+Four deviations from the design, in three services' worth of settings:
+
+- the ECS service still uses the old placement: a public subnet and public IPs
+- the private subnet's route table has no way out (it needs a default route, via the right kind of gateway for a private subnet)
+- the tasks' security group lost its HTTPS egress when someone "tightened" it
+- the tasks' security group has no inbound rule for the load balancer on the application port, and it must be written in terms of the load balancer's security group, not an IP range
+
+Do not take the shortcut of routing the private subnet to the internet gateway or opening port 8080 to the world.

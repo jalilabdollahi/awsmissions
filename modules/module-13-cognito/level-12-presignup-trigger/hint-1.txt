@@ -1,0 +1,6 @@
+Reproduce the failure with a partner address and read the exact error name:
+
+  aws cognito-idp sign-up --client-id <client-id> --username test1 --password 'Onboard-Me-2024!' \
+    --user-attributes Name=email,Value=test1@partner.example.com
+
+The error is raised by the trigger. Open presignup.py in your workspace (`edit`) and read what each branch hands back.

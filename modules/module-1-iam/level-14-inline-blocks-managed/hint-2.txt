@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Remove or fix the conflicting Deny policy
+A single explicit Deny beats any number of Allows. At least one inline policy contains a Deny that is wider than it should be, while another Deny does a legitimate job (look at what resource each one covers and what its Sid says). Remove only the one that no longer has a reason to exist.

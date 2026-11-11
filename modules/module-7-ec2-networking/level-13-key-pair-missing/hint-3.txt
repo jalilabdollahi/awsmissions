@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 run-instances --image-id ami-alpine --instance-type t3.micro --subnet-id <atlas-public> \
+    --security-group-ids <atlas-bastion-sg> --key-name platform-ops \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=atlas-bastion}]'
+  aws ec2 terminate-instances --instance-ids <old id>

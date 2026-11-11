@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: GSI `email-index` exists but is keyed on `username` instead of `email` — queries return nothing
+Compare what the picker app asks for (a SKU) with what the index is built on. aws dynamodb describe-table --table-name stockroom-bins shows the index's KeySchema.

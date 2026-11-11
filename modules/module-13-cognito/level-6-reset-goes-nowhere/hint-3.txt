@@ -1,0 +1,4 @@
+Fix both attributes in one call:
+
+  aws cognito-idp admin-update-user-attributes --user-pool-id <pool-id> --username omar \
+    --user-attributes Name=email,Value=omar@example.com Name=email_verified,Value=true

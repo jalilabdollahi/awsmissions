@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ManageOwnKeys",
+      "Effect": "Allow",
+      "Action": [
+        "iam:ListAccessKeys",
+        "iam:GetUser"
+      ],
+      "Resource": "arn:aws:iam::000000000000:user/${aws:username}"
+    }
+  ]
+}

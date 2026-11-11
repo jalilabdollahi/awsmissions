@@ -1,16 +1,24 @@
-name: The Locked Door
-description: "Lambda function URL is configured with `AuthType: AWS_IAM` \u2014 public\
-  \ HTTP requests return 403"
-objective: 'Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`'
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "The Locked Door"
+description: >-
+  Pebble Studio collects beta sign-ups on a public page whose JavaScript posts
+  the visitor's email straight to the HTTPS URL of the Lambda function
+  invite-landing. Launch day is here and visitors only see an error. The URL
+  was created by a template that defaults to the safest authentication setting,
+  and that same template already restricts browsers (CORS) to the sign-up page
+  at https://pebblestudio.example. The team also runs invite-admin, an internal
+  function with its own URL, which must stay private.
+objective: >-
+  Make the invite-landing function URL accept unauthenticated requests from the
+  public while keeping its CORS restriction to the sign-up origin, and keep the
+  invite-admin URL IAM-protected.
+xp: 350
+difficulty: advanced
+expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-18-function-url-auth
-implementation_status: playable
+  - Lambda function URLs
+  - AuthType NONE
+  - resource-based policy
+  - CORS
+services:
+  - lambda
+  - iam

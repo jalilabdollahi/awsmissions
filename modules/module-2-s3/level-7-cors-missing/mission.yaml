@@ -1,17 +1,24 @@
-name: The CORS Complaint
-description: "Web application can't fetch objects \u2014 CORS configuration is missing\
-  \ entirely"
-objective: Add a CORS configuration via `aws s3api put-bucket-cors`
-xp: 150
+name: "The CORS Complaint"
+description: >-
+  Tidewater Logistics' shipment dashboard, served from
+  https://dashboard.tidewater.example, lets staff drag proof-of-delivery photos
+  straight into the bucket tidewater-pod-photos and then displays them. Uploads
+  die in the browser with "blocked by CORS policy: No
+  'Access-Control-Allow-Origin' header", although the same requests work from
+  curl. The frontend sends a Content-Type header on its PUT requests and reads
+  the ETag response header to confirm each upload.
+objective: >-
+  Make the browser preflight succeed for the dashboard origin so it can GET and
+  PUT objects with a Content-Type header and read ETag from responses. Other
+  origins must stay blocked, and the dashboard must not get methods it does not
+  use (it never deletes).
+xp: 125
 difficulty: beginner
 expected_time: 10m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-7-cors-missing
-implementation_status: playable
+  - CORS
+  - preflight requests
+  - AllowedOrigins
+  - ExposeHeaders
+services:
+  - s3

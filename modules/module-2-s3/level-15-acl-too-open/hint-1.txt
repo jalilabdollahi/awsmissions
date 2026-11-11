@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Bucket ACL is set to `public-read` — all objects are publicly readable
+Check who has access through ACLs, on the bucket and on individual objects:
+
+  aws s3api get-bucket-acl --bucket sunrise-photos
+  aws s3api list-objects-v2 --bucket sunrise-photos
+  aws s3api get-object-acl --bucket sunrise-photos --key <one of the keys>

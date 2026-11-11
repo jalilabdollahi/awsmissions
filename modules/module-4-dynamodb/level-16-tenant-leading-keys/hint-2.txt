@@ -1,0 +1,1 @@
+The Resource only names the whole table, so any row qualifies. IAM can look into DynamoDB requests with condition keys; one of them is dynamodb:LeadingKeys, the partition key value(s) a request touches. With a ForAllValues operator you list the values allowed. Be careful with actions that do not carry a partition key at all, such as one that walks the entire table.

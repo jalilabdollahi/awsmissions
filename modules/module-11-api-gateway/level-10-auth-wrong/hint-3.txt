@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+aws apigateway update-authorizer --rest-api-id <id> --authorizer-id <id> --patch-operations 'op=replace,path=/identitySource,value=method.request.header.X-Vaultline-Token'
+aws apigateway create-deployment --rest-api-id <id> --stage-name partner

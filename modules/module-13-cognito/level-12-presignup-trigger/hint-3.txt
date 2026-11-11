@@ -1,0 +1,6 @@
+In presignup.py: lower-case the domain (email.split("@")[1].lower()) and make the partner branch end with "return event" instead of a bare "return". Then deploy:
+
+  zip function.zip presignup.py
+  aws lambda update-function-code --function-name brightpath-presignup --zip-file fileb://function.zip
+
+Keep the domain list as it is. Do not make every sign-up auto-confirm.

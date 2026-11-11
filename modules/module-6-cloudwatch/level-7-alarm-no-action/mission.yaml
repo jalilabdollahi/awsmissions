@@ -1,16 +1,24 @@
-name: The Mute Alarm
-description: "Alarm fires (changes state to ALARM) but no action is configured \u2014\
-  \ nobody is notified"
-objective: 'Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm`'
-xp: 200
+name: "The Pager That Never Rang"
+description: >-
+  Halcyon's primary database ran out of connections on Saturday night. The
+  alarm halcyon-db-connections-high did turn red in the console, exactly as
+  designed, but nobody was woken up. The on-call engineers receive pages
+  through the SNS topic halcyon-oncall (their pager app reads the queue
+  behind it). During a maintenance window last month somebody switched the
+  alarm's notifications off, and while they were at it they also pointed the
+  action at an old topic, halcyon-oncall-legacy, that nobody listens to any
+  more. The alarm definition is in alarm.json.
+objective: >-
+  Make halcyon-db-connections-high notify the on-call topic halcyon-oncall
+  whenever it goes to ALARM. Do not change what it measures or when it fires
+  (OpenConnections above 150).
+xp: 175
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- CloudWatch
-- logs
-- alarms
-- topics
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-7-alarm-no-action
-implementation_status: playable
+  - alarm actions
+  - ActionsEnabled
+  - SNS topic subscriptions
+services:
+  - cloudwatch
+  - sns

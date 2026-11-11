@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix parameter type or the value being passed
+A parameter of Type Number must receive something that parses as a number. CloudFormation substitutes the value into the property, and Lambda's Timeout property is an integer of seconds, so "45s" cannot be turned into one and the resource fails to create. When a create fails, CloudFormation rolls everything back and leaves the stack in ROLLBACK_COMPLETE.
+
+That state is terminal for the stack: you cannot update it. Fix the input, then remove the dead stack and create it again.

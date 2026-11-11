@@ -1,0 +1,12 @@
+{
+  "AlarmName": "talon-order-errors-high",
+  "Namespace": "Talon/Order",
+  "MetricName": "OrderErrors",
+  "Statistic": "Sum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 3,
+  "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+  "TreatMissingData": "notBreaching",
+  "AlarmActions": ["arn:aws:sns:us-east-1:000000000000:talon-oncall"]
+}

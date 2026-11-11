@@ -1,0 +1,18 @@
+{
+  "CORSRules": [
+    {
+      "ID": "storefront-readonly",
+      "AllowedOrigins": ["https://shop.brightcart.example"],
+      "AllowedMethods": ["GET", "HEAD"],
+      "AllowedHeaders": ["*"],
+      "MaxAgeSeconds": 600
+    },
+    {
+      "ID": "admin-editor",
+      "AllowedOrigins": ["https://admin.brightcart.example/"],
+      "AllowedMethods": ["GET"],
+      "AllowedHeaders": ["*"],
+      "MaxAgeSeconds": 600
+    }
+  ]
+}

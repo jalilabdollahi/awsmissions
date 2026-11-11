@@ -1,0 +1,3 @@
+Raise the retention period (a value from 96 up to 168 hours works):
+
+  aws kinesis increase-stream-retention-period --stream-name meter-reads --retention-period-hours <hours>

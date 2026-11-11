@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Change service principal to `"lambda.amazonaws.com"`
+Trust policies name the kind of caller they accept: an AWS service, an IAM user or role, or a federated identity. This one names a kind of principal that can never be a person with an IAM user.
+
+Change it in trust-policy.json (`edit`), but only trust the user who actually needs the role.

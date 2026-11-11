@@ -1,18 +1,23 @@
-name: No Internet in Private
-description: "Fargate task in private subnet with no NAT gateway \u2014 task can't\
-  \ pull image or reach AWS APIs"
-objective: Either move to public subnet or note that NAT gateway is needed (add route
-  via NAT)
-xp: 325
+name: "Private but Stranded"
+description: >-
+  Lantern Analytics runs its lantern-sync Fargate service in a private subnet
+  (lantern-private) so that it is never reachable from the internet. The service
+  must call a partner's HTTPS API, and pulls images from a public registry. Since
+  the move into the private subnet the task cannot reach anything outside the VPC
+  (image pulls and API calls time out). The VPC has a public subnet
+  (lantern-public) with an internet gateway, and nothing else.
+objective: >-
+  Give lantern-private outbound-only internet access: create a NAT gateway in the
+  public subnet with an Elastic IP and route the private subnet's default route
+  to it. The private subnet must still have no direct route to the internet
+  gateway.
+xp: 300
 difficulty: advanced
-expected_time: 20m
+expected_time: 15m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- subnets
-- routing
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-13-subnet-no-nat
-implementation_status: playable
+  - NAT gateway
+  - private subnets
+  - egress-only access
+services:
+  - ecs
+  - ec2

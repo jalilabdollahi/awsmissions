@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add event notification: `aws s3api put-bucket-notification-configuration`
+A bucket emits events only for the notification configuration stored on it, and this one has none. A queue destination needs the queue's ARN, the event type to react to (object creation), and filters so that only the right keys match: one for the folder and one for the file extension. Your workspace has a skeleton: type `edit` to open notification.json.

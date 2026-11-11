@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Create the DLQ (retention 14 days = 1209600 seconds), read its QueueArn, fill both blanks in redrive.json, then apply the file to the source queue:
+
+  aws sqs create-queue --queue-name <dlq name> --attributes MessageRetentionPeriod=1209600
+  aws sqs get-queue-attributes --queue-url <dlq url> --attribute-names QueueArn
+  aws sqs set-queue-attributes --queue-url <source url> --attributes file://redrive.json

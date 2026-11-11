@@ -1,0 +1,3 @@
+A Task state calling Lambda is performed by the state machine's execution role (see 'describe-state-machine' for roleArn). That role's inline policy decides what the workflow may do. Compare the action named in the error with what the policy allows.
+
+Your workspace has a copy of the role's policy: type `edit` and open role-policy.json.

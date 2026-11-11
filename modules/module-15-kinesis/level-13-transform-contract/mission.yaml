@@ -1,0 +1,31 @@
+name: "Breaking the Transform Contract"
+description: >-
+  SwiftCab streams ride events into the data lake through the Firehose delivery
+  stream ride-events-to-lake. A Lambda, ride-event-shaper, is attached to it as a
+  transformation: it turns each raw ride event (cents, rider phone number and
+  all) into a clean analytics line with the fare in dollars and without
+  personal data. Since the function was rewritten last week the lake receives
+  nothing useful: everything lands in the error folder ride-rejects/, including
+  perfectly healthy events. Firehose and the bucket work, and the function runs
+  without crashing on good input. A ride event that lacks a fare must not be
+  loaded, but it should not take other events down with it either; those go to
+  ride-rejects/ for the data team to inspect.
+objective: >-
+  Make ride-event-shaper honour Firehose's transformation contract so valid ride
+  events reach the lake under rides/ as one JSON document per line (ride_id,
+  fare_usd, currency and pickup, no rider phone), while an event without a fare
+  is rejected on its own into ride-rejects/ and other events in the same batch
+  are unaffected.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+  - Firehose data transformation
+  - recordId, result and data contract
+  - base64 payloads
+  - processing-failed records
+services:
+  - firehose
+  - lambda
+  - s3
+  - iam

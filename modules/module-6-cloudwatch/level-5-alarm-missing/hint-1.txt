@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Error metric is being published but no CloudWatch alarm is configured — nobody gets alerted
+Check what already watches this metric and what the topic is for:
+
+  aws cloudwatch describe-alarms --query "MetricAlarms[?Namespace==`Meridian/Checkout`]"
+  aws sns list-topics
+
+Then open alarm.json.

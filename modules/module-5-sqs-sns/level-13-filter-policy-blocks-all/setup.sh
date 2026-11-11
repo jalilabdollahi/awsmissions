@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local sns create-topic --name mission-topic >/dev/null 2>&1 || true
-aws_local sqs create-queue --queue-name mission-queue >/dev/null 2>&1 || true
-sub_arn="$(aws_local sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:mission-topic --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:mission-queue --query SubscriptionArn --output text)"
-aws_local sns set-subscription-attributes --subscription-arn "$sub_arn" --attribute-name FilterPolicy --attribute-value '{"eventType":["nonexistent"]}' >/dev/null
-echo "Broken subscription created: filter policy blocks all relevant messages"
+topic="$(aws_local sns create-topic --name cobalt-order-events --query TopicArn --output text)"
+aws_local sqs create-queue --queue-name cobalt-refund-worker >/dev/null
+
+# The filter as the refund team wrote it (see workspace/filter.json).
+attrs="$(mktemp)"
+python3 -c 'import json,sys; print(json.dumps({"FilterPolicy": json.dumps(json.load(open(sys.argv[1])))}))' \
+  "$MISSION_DIR/workspace/filter.json" > "$attrs"
+aws_local sns subscribe --topic-arn "$topic" --protocol sqs \
+  --notification-endpoint "arn:aws:sqs:us-east-1:${ACCOUNT_ID}:cobalt-refund-worker" \
+  --attributes "file://$attrs" >/dev/null
+rm -f "$attrs"
+
+echo "cobalt-refund-worker is subscribed with a filter on eventType, and gets nothing."

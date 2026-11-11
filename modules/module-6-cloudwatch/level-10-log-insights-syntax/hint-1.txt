@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: CloudWatch Logs Insights query has a syntax error — query fails to execute
+Run the widget's query yourself and see what it returns. First read what the dashboard contains:
+
+  aws cloudwatch get-dashboard --dashboard-name rivergate-payments
+
+Then compare the log group and field names in the query with the real ones: aws logs describe-log-groups, and a sample line from the group.

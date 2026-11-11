@@ -1,0 +1,7 @@
+There are four problems, spread across three services:
+
+- SNS: the subscription's filter policy still names the old event, and the subscription wraps each message in the SNS notification envelope while the fulfiller expects the bare checkout JSON
+- Lambda event source mapping: someone switched it off
+- Lambda concurrency: a reserved concurrency setting of the wrong value starves the function
+
+Remember the refund requirement: the filter has to change, not disappear.

@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Application sends 300KB messages — SQS limit is 256KB — sends fail
+Check how big the document is and what SQS says when you try to send it:
+
+  ls -l payload/manifest.json
+  aws sqs get-queue-attributes --queue-url <url of quill-manifest-jobs> --attribute-names MaximumMessageSize
+
+Compare the two numbers.

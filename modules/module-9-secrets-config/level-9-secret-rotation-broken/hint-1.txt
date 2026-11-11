@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Secret rotation was configured but rotation Lambda ARN is wrong — secret is never rotated
+Compare what the secret is configured to use with what actually exists:
+
+  aws secretsmanager describe-secret --secret-id pelican/orders-db/password
+  aws lambda list-functions --query 'Functions[].FunctionName'
+
+Look at RotationLambdaARN and RotationRules in the first output.

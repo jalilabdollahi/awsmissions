@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Easiest: keep the draft and publish it as a managed policy, then attach it to the user:
+
+  aws iam create-policy --policy-name fleet-telemetry-read --policy-document file://policy.json
+  aws iam attach-user-policy --user-name fleet-ops --policy-arn arn:aws:iam::000000000000:policy/fleet-telemetry-read
+
+(Alternative: rewrite policy.json into two statements using the pattern fleet-*-telemetry.)

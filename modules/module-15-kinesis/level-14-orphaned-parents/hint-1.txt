@@ -1,0 +1,6 @@
+Compare what the function reports with what is in the stream's shards, parents included:
+
+  aws kinesis list-shards --stream-name ledger-entries --query 'Shards[].[ShardId,ParentShardId,SequenceNumberRange.EndingSequenceNumber]' --output table
+  aws lambda invoke --function-name ledger-export --cli-binary-format raw-in-base64-out --payload '{}' out.json && jq .count out.json
+
+Which shards does export.py (`edit`) read, and which shards are open?

@@ -1,0 +1,14 @@
+{
+  "QueueConfigurations": [
+    {
+      "Id": "",
+      "QueueArn": "",
+      "Events": [],
+      "Filter": {
+        "Key": {
+          "FilterRules": []
+        }
+      }
+    }
+  ]
+}

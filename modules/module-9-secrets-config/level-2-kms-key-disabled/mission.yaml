@@ -1,15 +1,22 @@
-name: Disabled Key
-description: "KMS key exists but is disabled \u2014 encrypt/decrypt operations fail\
-  \ with `DisabledException`"
-objective: 'Enable the key: `aws kms enable-key`'
-xp: 225
-difficulty: advanced
-expected_time: 12m
+name: "Disabled Key"
+description: >-
+  Marigold Pay tokenises card numbers: the token service stores each token as
+  KMS ciphertext in SSM parameters under /marigold/tokens/ and decrypts it on
+  demand through the alias alias/marigold-tokens. Overnight a "key hygiene"
+  script flagged the key as unused and switched it off. Since the morning rush
+  every checkout fails with a DisabledException. Re-encrypting the tokens with
+  a different key is not possible: the original card data is not stored
+  anywhere.
+objective: >-
+  Make the stored tokens under /marigold/tokens/ decryptable again, so that
+  the token service gets the original token values back through KMS.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-2-kms-key-disabled
-implementation_status: playable
+  - KMS key states
+  - DisabledException
+  - alias to key mapping
+services:
+  - kms
+  - ssm

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Secret exists but IAM role is missing `secretsmanager:GetSecretValue` permission
+Read exactly what permission the role has today, and compare it with the secret's real ARN:
+
+  aws iam get-role-policy --role-name quokka-api --policy-name quokka-secrets
+  aws secretsmanager describe-secret --secret-id quokka/prod/payments-api --query ARN

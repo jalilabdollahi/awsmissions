@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-aws_local iam create-role   --role-name prefix-reader-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name prefix-reader-role   --policy-name prefix-reader-policy   --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+aws_local s3 mb s3://ashgrove-case-files >/dev/null
+seed="$(mktemp)"
+trap 'rm -f "$seed"' EXIT
+echo 'privileged' > "$seed"
+for key in matters/2025/smith-v-jones/complaint.txt matters/2025/okafor-estate/will.txt matters/2024/archive/closed.txt; do
+  aws_local s3api put-object --bucket ashgrove-case-files --key "$key" --body "$seed" >/dev/null
+done
 
-echo "Broken IAM role created: prefix-reader-role"
+aws_local iam create-user --user-name ashgrove-clerk >/dev/null
+aws_local iam put-user-policy --user-name ashgrove-clerk --policy-name clerk-browse \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
+
+echo "ashgrove-clerk has a prefix-restricted policy that matches nothing."

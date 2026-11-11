@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 disassociate-route-table --association-id <rtbassoc-... linking fh-data>
+  aws ec2 associate-route-table --route-table-id <fernhill-public> --subnet-id <fh-app subnet>

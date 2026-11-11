@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Application sends messages but queue `mission-queue` doesn't exist
+The service reports that the queue does not exist, yet a queue was created during the deploy. Compare what exists with what the service asks for:
+
+  aws sqs list-queues
+
+Read the two names character by character.

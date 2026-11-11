@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Function crashes with memory error — configured at 128MB, needs 512MB
+Look at both the failing call and the function's resource settings:
+
+  aws lambda invoke --function-name tile-stitcher --cli-binary-format raw-in-base64-out --payload '{"tiles_per_side":16}' out.json; cat out.json
+  aws lambda get-function-configuration --function-name tile-stitcher --query MemorySize

@@ -1,17 +1,20 @@
-name: Lost DLQ
-description: "DLQ is configured but the ARN points to a non-existent queue \u2014\
-  \ redrive fails silently"
-objective: Fix the DLQ ARN in the redrive policy
-xp: 200
+name: "The Dead Letter Gets Lost"
+description: >-
+  Foxglove Mailroom sends customer e-mails from the queue mailroom-outbound.
+  Support noticed that bounced-address jobs vanish: they are retried three
+  times, then disappear, and the dead-letter queue mailroom-outbound-dlq is
+  not growing. A redrive policy is configured on the queue and nobody sees an
+  error, which is exactly why nobody looked at it.
+objective: >-
+  Make failed jobs from mailroom-outbound actually arrive in
+  mailroom-outbound-dlq after their retries. Keep the existing DLQ and the
+  jobs already parked in it.
+xp: 150
 difficulty: intermediate
-expected_time: 12m
+expected_time: 10m
 concepts:
-- SQS
-- SNS
-- event delivery
-- policy debugging
-- queues
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-5-dlq-wrong-arn
-implementation_status: playable
+  - dead-letter queues
+  - redrive policy
+  - queue ARN
+services:
+  - sqs

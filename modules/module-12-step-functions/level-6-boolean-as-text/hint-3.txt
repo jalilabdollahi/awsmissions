@@ -1,0 +1,3 @@
+Use BooleanEquals instead of StringEquals, and protect it with an And rule whose first condition is {"Variable": "$.express", "IsPresent": true}. Parcels that do not match still fall through to Default. Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:quillon-dispatch --definition file://dispatch.asl.json

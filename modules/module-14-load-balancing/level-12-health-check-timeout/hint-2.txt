@@ -1,0 +1,3 @@
+"Target.Timeout" means the response did not arrive within HealthCheckTimeoutSeconds. The deep /health endpoint takes about 7 seconds and the timeout is 5, so every check fails even though the answer would have been fine.
+
+You can change what the check asks (a cheaper endpoint) or how long it waits (a larger timeout, which must stay shorter than the interval, without making outage detection take forever).

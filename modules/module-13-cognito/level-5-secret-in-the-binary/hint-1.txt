@@ -1,0 +1,6 @@
+Compare the two things in the pool: the client the backend uses and what the mobile app is supposed to use.
+
+  aws cognito-idp list-user-pool-clients --user-pool-id <pool-id>
+  aws cognito-idp describe-user-pool-client --user-pool-id <pool-id> --client-id <client-id>
+
+Look for a field in the client's configuration that explains the error message about SECRET_HASH.

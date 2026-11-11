@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SqsOnlyInTheEU",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueUrl"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:Region": "eu-west-1"
+        }
+      }
+    }
+  ]
+}

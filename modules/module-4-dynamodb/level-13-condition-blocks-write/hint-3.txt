@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+In ship-orders.sh replace the condition with:   --condition-expression "#s = :packed"
+and add  ,\":packed\":{\"S\":\"PACKED\"}  to the --expression-attribute-values string. Run ./ship-orders.sh again; ord-1043 should report "not shipped" and stay as it was.

@@ -1,0 +1,3 @@
+Kinesis hashes the partition key to choose the shard; identical keys always land on the same shard, however many shards the stream has. The publisher uses one fixed key for every event.
+
+A good key has many different values, but all events that must stay in order (the events of one order) need to share one value.

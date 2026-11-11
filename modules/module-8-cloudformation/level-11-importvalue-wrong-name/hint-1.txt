@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: `!ImportValue SharedBucketName` — but the export is actually named `mission-SharedBucketName`
+Deploy it and read why it rolled back, then list every export the account really has:
+
+  aws cloudformation create-stack --stack-name ledgerline-auditor --template-body file://template.yaml
+  aws cloudformation describe-stack-events --stack-name ledgerline-auditor
+  aws cloudformation list-exports
+
+Compare the names in the template with the Name column, character by character.

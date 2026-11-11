@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Application expects expired records to be cleaned up automatically — TTL is not enabled
+TTL answers to one question: which attribute? Compare aws dynamodb describe-time-to-live --table-name loginly-sessions with the attributes a stored session actually has (aws dynamodb scan --table-name loginly-sessions).

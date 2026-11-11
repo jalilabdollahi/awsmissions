@@ -1,0 +1,3 @@
+Accounts created by an administrator begin in the status FORCE_CHANGE_PASSWORD. In that state sign-in returns a challenge (NEW_PASSWORD_REQUIRED) instead of tokens until a permanent password is set.
+
+You can set one on her behalf with an admin command, or answer the challenge yourself.

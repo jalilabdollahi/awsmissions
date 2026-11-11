@@ -1,0 +1,8 @@
+Start with the stack's own account of what went wrong, before anyone deletes anything:
+
+  aws cloudformation describe-stacks --stack-name cobalt-orders --query 'Stacks[0].[StackStatus,StackStatusReason]'
+  aws cloudformation describe-stack-events --stack-name cobalt-orders --query 'StackEvents[].[LogicalResourceId,ResourceStatus,ResourceStatusReason]'
+  aws cloudformation list-exports
+  aws dynamodb scan --table-name cobalt-ledger
+
+The table already contains real data. Think about what "delete the stack" does to it. Then invoke the function and read its error.

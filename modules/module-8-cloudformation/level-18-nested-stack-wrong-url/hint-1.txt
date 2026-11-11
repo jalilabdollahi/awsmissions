@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Nested stack references a template URL in S3 that doesn't exist or has wrong path
+Start with the failed stack's events, then look at what is actually stored in the template bucket:
+
+  aws cloudformation describe-stack-events --stack-name crescent-platform
+  aws s3 ls s3://crescent-templates --recursive
+
+Compare the key in the error with the keys in the listing. Then download the child template (aws s3 cp s3://crescent-templates/<key> -) and read it: the parent has to speak the child's language.

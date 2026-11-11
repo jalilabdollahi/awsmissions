@@ -1,0 +1,27 @@
+name: "The Unreachable Service"
+description: >-
+  Meridian Transit moved its mt-gateway ECS service into a new VPC as part
+  of a "private subnets only" security programme. ECS reports the service
+  running, but the load balancer health checks fail and the tasks cannot
+  reach the internet for image pulls. The network design signed off by
+  security, and the shortcuts taken during the migration, are in the
+  incident file (INC-5561) in your workspace. The lab has no packet flow, so
+  the fix is judged by task placement and by the route and security-group
+  rules.
+objective: >-
+  Make mt-gateway run only in the private subnet without public IPs, give
+  that subnet an outbound route through the NAT gateway (not the internet
+  gateway), allow HTTPS egress from the service's security group, and allow
+  port 8080 inbound from the load balancer's security group only, never from
+  the internet.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - private subnets and NAT gateways
+  - route tables
+  - security group ingress and egress
+  - ECS awsvpc networking
+services:
+  - ecs
+  - ec2

@@ -1,16 +1,27 @@
-name: CORS Error
-description: "API works from CLI but web browser gets CORS error \u2014 OPTIONS method\
-  \ and CORS headers not configured"
-objective: Enable CORS on the resource (add OPTIONS method + response headers)
-xp: 325
-difficulty: advanced
+name: "The Browser Says No"
+description: >-
+  Zestlist is a to-do web app served from https://app.zestlist.example. It
+  loads tasks with fetch("/tasks", {credentials: "include"}) from the REST API
+  zestlist-api (stage web). curl works perfectly, but in the browser the
+  console shows "blocked by CORS policy: Response to preflight request doesn't
+  pass access control check". The GET /tasks method is wired to the Lambda
+  zestlist-tasks with a non-proxy integration, so the function itself knows
+  nothing about CORS and API Gateway has to supply the headers. The app sends
+  an Authorization header and a JSON content type, and may later use POST.
+objective: >-
+  Make /tasks on stage web browser-friendly for the origin
+  https://app.zestlist.example: the preflight (OPTIONS) request must be answered
+  with that exact origin, the methods GET and POST and the headers
+  Content-Type and Authorization, and the real GET response must carry the same
+  Access-Control-Allow-Origin header. A wildcard origin is not acceptable,
+  because the app sends credentials.
+xp: 225
+difficulty: intermediate
 expected_time: 20m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-8-cors-missing
-implementation_status: playable
+  - CORS preflight
+  - MOCK integration
+  - integration response header mapping
+services:
+  - apigateway
+  - lambda

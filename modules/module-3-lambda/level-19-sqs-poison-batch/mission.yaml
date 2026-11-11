@@ -1,0 +1,26 @@
+name: "Bad Apple in the Batch"
+description: >-
+  Kestrel Ticketing processes ticket events from an SQS queue with the Lambda
+  function ticket-processor. Twice a week one malformed event slips into the
+  queue, and each time the on-call engineer finds the same mess in the ledger:
+  perfectly good tickets in the same batch were processed three times, and then
+  all of them, good ones included, ended up in the dead-letter queue. The queue
+  is already wired to a dead-letter queue after 3 receives. The source of the
+  malformed events is being tracked down separately.
+objective: >-
+  Make one bad event in a batch affect only itself: the good events of the same
+  batch must be processed exactly once and be gone from the queues, while the
+  malformed event must still end up in ticket-events-dlq (not silently dropped).
+xp: 450
+difficulty: expert
+expected_time: 25m
+concepts:
+  - SQS event source mapping
+  - partial batch response
+  - dead-letter queues
+  - idempotency
+services:
+  - lambda
+  - sqs
+  - dynamodb
+  - iam

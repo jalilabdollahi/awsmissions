@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Metric filter exists to count ERROR logs but pattern is `[ERROR]` when logs use `ERROR:` format
+Compare what the filter looks for with what the logs contain:
+
+  aws logs describe-metric-filters --log-group-name /ledgerbox/payments
+
+The payment service writes lines like "2026-11-11T10:02:11Z ERROR gateway timeout order=88123".

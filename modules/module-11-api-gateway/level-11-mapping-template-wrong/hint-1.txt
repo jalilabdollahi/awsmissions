@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Mapping template transforms request body but uses wrong field name — Lambda receives null values
+The 400 message comes from the function. Compare what a partner sends with what the template builds: aws apigateway get-integration --rest-api-id <id> --resource-id <id> --http-method POST (see requestTemplates).

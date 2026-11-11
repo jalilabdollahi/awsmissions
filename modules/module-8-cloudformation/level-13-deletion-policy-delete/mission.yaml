@@ -1,17 +1,25 @@
-name: Dangerous Delete
-description: "S3 bucket resource has no `DeletionPolicy` (defaults to Delete) \u2014\
-  \ stack deletion will wipe data"
-objective: 'Add `DeletionPolicy: Retain` to the bucket resource'
-xp: 200
-difficulty: intermediate
-expected_time: 12m
+name: "Handle With Care"
+description: >-
+  Nightjar Finance is retiring the nightjar-archive stack: it was a pilot, and
+  the team wants CloudFormation out of the picture. The stack, however, owns
+  the ledger archive bucket and the ledger index table, both full of records
+  the auditors will ask for next year. Only the small events topic is
+  disposable. A colleague once ran delete-stack on a sibling stack "to see
+  what happens" and the table went with it.
+objective: >-
+  Retire the nightjar-archive stack completely (it must be gone, and the events
+  topic with it) while the ledger archive bucket and the ledger index table
+  survive with every record intact.
+xp: 300
+difficulty: advanced
+expected_time: 15m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- policy debugging
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-13-deletion-policy-delete
-implementation_status: playable
+  - DeletionPolicy
+  - Retain
+  - stack deletion
+  - data safety
+services:
+  - cloudformation
+  - s3
+  - dynamodb
+  - sns

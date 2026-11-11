@@ -1,16 +1,24 @@
-name: Lost on Failure
-description: "Async invocation fails silently \u2014 no dead-letter queue configured"
-objective: 'Configure DLQ: `aws lambda update-function-configuration --dead-letter-config`'
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Lost on Failure"
+description: >-
+  Relaycast's order service sends text messages by invoking the Lambda function
+  sms-notifier asynchronously and never looks at the result. Customer support
+  keeps hearing "I never got my delivery text", and nobody can say how many
+  messages are failing, because failed events simply disappear. The team has
+  already created the SQS queue sms-failed-deliveries for investigation, and
+  the function's role is allowed to write to it. Sending a text twice is
+  worse than not sending it, so retries are switched off on purpose.
+objective: >-
+  Make every asynchronous invocation of sms-notifier that fails land in the
+  queue sms-failed-deliveries together with the error details, while keeping
+  retries disabled and leaving successful invocations out of the queue.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-- queues
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-10-dlq-missing
-implementation_status: playable
+  - asynchronous invocation
+  - on-failure destinations
+  - event invoke config
+services:
+  - lambda
+  - sqs
+  - iam

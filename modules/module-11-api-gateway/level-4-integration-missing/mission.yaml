@@ -1,16 +1,23 @@
-name: No Backend
-description: "Method exists but has no integration \u2014 request returns empty 200"
-objective: 'Add Lambda proxy integration: `aws apigateway put-integration`'
-xp: 300
-difficulty: advanced
-expected_time: 18m
+name: "A Door Into an Empty Room"
+description: >-
+  Brewbook is a coffee-roaster catalogue. The search box calls
+  GET /brews?roast=dark on the REST API brewbook-api (stage test). The route
+  exists, the method is open, and the request is accepted, but nothing useful
+  ever comes back: the app shows an empty page or an error. The search logic
+  lives in the Lambda function brewbook-search, which reads the roast from the
+  query string and returns the matching brews as JSON. Someone built the API
+  method by hand and called it a day.
+objective: >-
+  Connect GET /brews on stage test of brewbook-api to the brewbook-search
+  function so that /brews?roast=dark returns the dark roasts and
+  /brews?roast=light the light ones.
+xp: 120
+difficulty: beginner
+expected_time: 10m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- lambda functions
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-4-integration-missing
-implementation_status: playable
+  - method vs integration
+  - Lambda proxy integration
+  - query string parameters
+services:
+  - apigateway
+  - lambda

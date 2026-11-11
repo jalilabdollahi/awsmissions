@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Configure DLQ: `aws lambda update-function-configuration --dead-letter-config`
+Lambda can send the outcome of an asynchronous invocation to a destination: for failures an "OnFailure" destination such as an SQS queue, which receives the event together with the error details. Careful: one of the two CLI commands that edit this setting replaces the whole config (including the retry count that is deliberately 0), the other merges.

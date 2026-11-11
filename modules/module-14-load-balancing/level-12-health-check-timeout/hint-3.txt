@@ -1,0 +1,9 @@
+Simplest sane fix, keeping everything else as is:
+
+  aws elbv2 modify-target-group --target-group-arn <arn> --health-check-path /livez
+
+Alternative if you keep /health: set a timeout comfortably above 7 seconds AND an interval above the timeout, for example:
+
+  aws elbv2 modify-target-group --target-group-arn <arn> --health-check-timeout-seconds 10 --health-check-interval-seconds 20
+
+Leave the success code at 200.

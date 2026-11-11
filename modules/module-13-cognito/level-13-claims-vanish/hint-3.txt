@@ -1,0 +1,10 @@
+1. In claims.py read the custom attribute as custom:tenant, then:
+
+  zip claims.zip claims.py
+  aws lambda update-function-code --function-name cobalt-claims --zip-file fileb://claims.zip
+
+2. Attach both triggers in one call (get the ARNs with aws lambda get-function-configuration):
+
+  aws cognito-idp update-user-pool --user-pool-id <pool-id> \
+    --policies 'PasswordPolicy={MinimumLength=10,RequireUppercase=true,RequireLowercase=true,RequireNumbers=true,RequireSymbols=false}' \
+    --lambda-config PreTokenGeneration=<claims-arn>,PostConfirmation=<welcome-arn>

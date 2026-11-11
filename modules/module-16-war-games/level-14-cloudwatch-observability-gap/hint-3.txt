@@ -1,0 +1,6 @@
+  aws logs put-metric-filter --log-group-name /aws/lambda/tf-checkout-fn --filter-name checkout-errors \
+    --filter-pattern '{ $.<the field the function logs> = "ERROR" }' \
+    --metric-transformations metricName=CheckoutFailures,metricNamespace=<same namespace the alarm uses>,metricValue=1
+  aws cloudwatch put-metric-alarm ... --alarm-actions arn:aws:sns:us-east-1:000000000000:tf-oncall
+      (put-metric-alarm replaces the alarm: repeat its other settings, namely namespace TF/Checkout, metric CheckoutFailures,
+       Sum, period 10, 1 evaluation period, threshold 5, GreaterThanOrEqualToThreshold)

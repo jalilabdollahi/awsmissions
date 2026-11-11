@@ -1,15 +1,19 @@
-name: No Task Definition
-description: Service references task definition `mission-task` with no revision registered
-objective: 'Register the task definition: `aws ecs register-task-definition`'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Deployed Nothing"
+description: >-
+  Harbor Freight Tracker's web frontend is deployed with deploy.sh, which creates
+  the ECS service harbor-web in the harbor cluster from task definition
+  harbor-web:1. Since the account was reorganised the script fails right away.
+  The container spec is kept in harbor-web.json in the repo, but nobody is sure
+  it was ever registered in this account.
+objective: >-
+  Get the harbor-web service running with two healthy tasks (desired = running = 2)
+  that answer HTTP on port 80.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-2-task-definition-missing
-implementation_status: playable
+  - task definitions
+  - register-task-definition
+  - ECS services
+services:
+  - ecs

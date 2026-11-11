@@ -1,0 +1,31 @@
+name: "Four Dominoes"
+description: >-
+  Cedarpoint Retail's shop publishes an OrderPlaced event on the default event
+  bus whenever a customer pays. An EventBridge rule, cedarpoint-order-placed,
+  is meant to start the state machine cedarpoint-fulfilment, which allocates
+  stock through a Lambda function and records the fulfilment in the DynamoDB
+  table cedarpoint-fulfilments. Nothing has been recorded since the weekend's
+  migration: the warehouse team prints orders by hand. Several people have
+  "fixed one thing" each and nothing changed, because more than one link in
+  the chain is broken, and every link hides the next one.
+objective: >-
+  Make a real OrderPlaced event from source cedarpoint.shop (detail with
+  orderId and items) end up as a fulfilment row in cedarpoint-fulfilments,
+  by way of the event bus rule, the cedarpoint-fulfilment state machine and
+  its Lambda. Events from other sources or of other types (such as
+  OrderCancelled) must not start the workflow.
+xp: 560
+difficulty: expert
+expected_time: 30m
+concepts:
+  - EventBridge rules
+  - event patterns
+  - Step Functions as a rule target
+  - input path
+  - execution role
+services:
+  - stepfunctions
+  - events
+  - lambda
+  - dynamodb
+  - iam

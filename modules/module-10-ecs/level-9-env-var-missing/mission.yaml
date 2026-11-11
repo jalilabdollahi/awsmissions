@@ -1,16 +1,21 @@
-name: App Crash at Startup
-description: Task starts but application crashes because required env var `APP_MODE`
-  not in task definition
-objective: Add the environment variable to the task definition container config
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Crash on Arrival"
+description: >-
+  Pulse Metrics' ingest worker (ECS service pulse-ingest, a queue consumer, not an
+  HTTP API) keeps starting and dying. The service always shows desired 1, running
+  0, and a growing list of stopped tasks. The container exits within a second of
+  starting. The application's start-up script validates its environment; its
+  output goes to the CloudWatch log group /ecs/pulse-ingest.
+objective: >-
+  Make pulse-ingest stay up: find out why the container exits, fix the
+  configuration in a new task definition revision, and roll the service onto it.
+  The worker must run in the mode that fits a queue consumer.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-9-env-var-missing
-implementation_status: playable
+  - container environment variables
+  - task logs
+  - exit codes
+services:
+  - ecs
+  - logs

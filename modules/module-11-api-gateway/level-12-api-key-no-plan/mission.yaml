@@ -1,16 +1,26 @@
-name: API Key Rejected
-description: API requires API key but no usage plan exists associating the key to
-  the stage
-objective: Create usage plan, associate API stage, and link API key to usage plan
-xp: 375
+name: "A Key to Nowhere"
+description: >-
+  Trailmix publishes hiking-trail data to partner apps through GET /trails on
+  the REST API trailmix-api (stage v1). The method requires an API key. Account
+  management issued two keys: trailmix-partner-key for the paying partner
+  WanderPath and trailmix-trial-key for a prospect who has not signed yet. The
+  partner reports "Forbidden" on every call even though they send their key in
+  the x-api-key header. The contract with WanderPath is a usage plan of at most
+  20 requests per second (burst 40) and 10,000 requests per day. The prospect
+  must stay locked out until the contract is signed.
+objective: >-
+  Make GET /trails on trailmix-api stage v1 work for the partner key under a
+  usage plan matching the contract (rate 20, burst 40, quota 10,000 per DAY),
+  while requests without a key and requests with the trial key keep being
+  refused.
+xp: 325
 difficulty: advanced
-expected_time: 25m
+expected_time: 20m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-12-api-key-no-plan
-implementation_status: playable
+  - API keys
+  - usage plans
+  - stage association
+  - quota and throttle
+services:
+  - apigateway
+  - lambda

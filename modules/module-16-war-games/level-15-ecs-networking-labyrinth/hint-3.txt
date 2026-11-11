@@ -1,0 +1,5 @@
+  aws ecs update-service --cluster mt-prod --service mt-gateway --force-new-deployment \
+    --network-configuration 'awsvpcConfiguration={subnets=[<private subnet>],securityGroups=[<mt-gateway-sg>],assignPublicIp=DISABLED}'
+  aws ec2 create-route --route-table-id <private route table> --destination-cidr-block 0.0.0.0/0 --nat-gateway-id <nat id>
+  aws ec2 authorize-security-group-egress --group-id <mt-gateway-sg> --ip-permissions 'IpProtocol=tcp,FromPort=443,ToPort=443,IpRanges=[{CidrIp=0.0.0.0/0}]'
+  aws ec2 authorize-security-group-ingress --group-id <mt-gateway-sg> --ip-permissions 'IpProtocol=tcp,FromPort=8080,ToPort=8080,UserIdGroupPairs=[{GroupId=<mt-alb-sg>}]'

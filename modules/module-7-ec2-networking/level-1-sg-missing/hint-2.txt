@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create a security group and reference it in the instance config
+The group id hard-coded in launch-web.sh was deleted during the cleanup. A security group lives inside one VPC, and the surviving "tindle-web" group is in the default VPC, which is not where this instance must go. You need a new group created in the tindle-prod VPC with a rule for HTTPS.

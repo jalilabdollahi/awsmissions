@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create the SNS topic: `aws sns create-topic`
+The topic is gone, and so are the subscriptions that were attached to it. A new topic starts with no subscribers. You need both pieces: the topic with the original name, and a subscription that connects it to the queue harbor-radio-feed (protocol sqs, endpoint = the queue's ARN, not its URL).

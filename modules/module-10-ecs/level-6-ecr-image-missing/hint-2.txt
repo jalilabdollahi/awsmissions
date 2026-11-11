@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Push a valid image to ECR: `docker build`, `aws ecr get-login-password`, `docker push`
+The registry says the image tag does not exist; the hand-edited tag in task-definition.json is invented. The pipeline publishes the real, approved reference in Parameter Store (see the briefing). Task definitions are immutable, so a fix means registering a new revision and launching from it.

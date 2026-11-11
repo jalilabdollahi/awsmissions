@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: S3 configured to invoke Lambda but Lambda resource policy doesn't allow S3 service
+Check who is currently allowed to invoke the function:
+
+  aws lambda get-policy --function-name rate-quote-engine
+  aws iam list-attached-user-policies --user-name partner-shipright

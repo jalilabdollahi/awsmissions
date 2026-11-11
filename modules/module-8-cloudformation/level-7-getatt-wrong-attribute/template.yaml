@@ -1,3 +1,0 @@
-Outputs:
-  FunctionArn:
-    Value: GETATT MyFunction Arn

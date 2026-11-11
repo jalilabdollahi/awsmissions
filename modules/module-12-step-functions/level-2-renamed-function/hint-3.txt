@@ -1,0 +1,3 @@
+Put the production function's ARN in CheckEligibility.Resource (open refill-flow.asl.json with `edit`), then update the state machine:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:harborview-refill-flow --definition file://refill-flow.asl.json

@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: EventBridge rule exists but its state is `DISABLED` — no events are delivered
+Ask EventBridge about the rule itself, not just its pattern:
+
+  aws events describe-rule --name skyline-ticket-sold
+
+Read every field in the output.

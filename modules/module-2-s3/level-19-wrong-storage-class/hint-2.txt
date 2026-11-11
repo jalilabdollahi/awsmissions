@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change storage class to `STANDARD` via copy with metadata replacement
+There are two causes to deal with: the objects are in the wrong class now, and a lifecycle rule will push them back. A storage class is rewritten by copying an object onto itself with a new class; be careful with the metadata directive, because REPLACE drops anything you do not restate. Of the two lifecycle rules, only one targets data that is meant to be archived. Type `edit` to open lifecycle.json.

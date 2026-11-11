@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add the GSI via table update: `aws dynamodb update-table`
+Only memberId is a key on the base table, so email lookups need a different access path: a global secondary index named email-index with email as its partition key. You can create one on a live table without losing items; the key attribute has to be declared in --attribute-definitions too. The index takes a moment to backfill and become ACTIVE.

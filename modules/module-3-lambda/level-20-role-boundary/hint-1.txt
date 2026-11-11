@@ -1,0 +1,4 @@
+The role policy looks right, so look at everything else attached to the role:
+
+  aws iam get-role --role-name key-audit-role
+  aws iam get-role-policy --role-name key-audit-role --policy-name audit-job

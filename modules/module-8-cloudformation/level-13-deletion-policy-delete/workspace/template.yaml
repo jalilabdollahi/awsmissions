@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Nightjar Finance ledger archive pilot
+Resources:
+  LedgerArchive:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: nightjar-ledger-archive
+      VersioningConfiguration:
+        Status: Enabled
+  LedgerIndex:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: nightjar-ledger-index
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: entry
+          AttributeType: S
+      KeySchema:
+        - AttributeName: entry
+          KeyType: HASH
+  ArchiveEvents:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: nightjar-archive-events

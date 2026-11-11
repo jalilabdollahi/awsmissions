@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the security group inbound rule to allow port 80
+The rule allows 8080, but the parameter holds a different port, so the ALB's health checks hit a closed door. A correct rule uses the real port and a *source security group* (the ALB's group) rather than an IP range; the 8080 rule should then go.

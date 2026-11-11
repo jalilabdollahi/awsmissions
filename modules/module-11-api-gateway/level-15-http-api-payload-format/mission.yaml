@@ -1,0 +1,25 @@
+name: "Two Dialects of the Same Event"
+description: >-
+  Fernwood Freight quotes shipping prices through an HTTP API (API Gateway v2),
+  fernwood-quotes, stage prod, route GET /quotes/{zone}. The Lambda
+  fernwood-pricing was ported from a code sample for the "2.0" event format: it
+  reads requestContext.http.method and rawPath, takes the zone from the path and
+  the weight from the query string, and simply returns a dictionary, relying on
+  API Gateway to wrap it into an HTTP response. The route was created through
+  the console wizard of an older tutorial. Every request now ends with 500
+  Internal Server Error, while invoking the function directly with the sample
+  event works perfectly. The function must not be modified.
+objective: >-
+  Make GET /quotes/eu?weight=12 on fernwood-quotes stage prod return the quote
+  from fernwood-pricing, with the zone, weight and HTTP method echoed correctly,
+  by correcting the API-side configuration.
+xp: 250
+difficulty: advanced
+expected_time: 18m
+concepts:
+  - HTTP API payload format version
+  - event shape 1.0 vs 2.0
+  - automatic response formatting
+services:
+  - apigatewayv2
+  - lambda

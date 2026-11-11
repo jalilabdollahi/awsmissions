@@ -1,0 +1,24 @@
+name: "The Blind System"
+description: >-
+  Kestrel Payments lost four hours of settlement capacity on Saturday night
+  and the on-call engineer was never paged. The monitoring chain looks
+  complete on paper: log group, metric filter, alarm, SNS topic, pager queue.
+  Yet when the API logs errors, nothing happens. The draft postmortem (in
+  your workspace) describes what the monitoring was supposed to do.
+objective: >-
+  Make a burst of ERROR lines in /kp/settlement-api put kp-settlement-errors
+  into ALARM and deliver a notification to the pager queue, while ordinary
+  INFO lines still produce no metric data.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+  - CloudWatch Logs metric filters
+  - alarm comparison operators
+  - alarm actions
+  - SNS to SQS paging
+services:
+  - logs
+  - cloudwatch
+  - sns
+  - sqs

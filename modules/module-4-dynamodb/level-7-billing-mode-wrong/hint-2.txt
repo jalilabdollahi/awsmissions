@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change billing mode to `PAY_PER_REQUEST`
+The billing mode of an existing table can be changed with update-table, you don't need to recreate anything, and the index follows the table. On-demand tables have no capacity numbers, so the auto scaling registration for this table is now meaningless; scalable targets are not deleted automatically.

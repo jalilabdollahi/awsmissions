@@ -1,0 +1,25 @@
+name: "One Setting for the Whole Browser"
+description: >-
+  Mapleboard is a team planning tool at https://boards.maple.example. Its new
+  backend is an HTTP API (API Gateway v2) called mapleboard-http, stage prod,
+  with GET /boards and POST /boards served by the Lambda mapleboard-boards. The
+  front end sends cookies (credentials: "include") and a JSON content type. The
+  first deploy to staging worked in curl, but in the browser every request dies
+  with a CORS error, even though the team has read that HTTP APIs can do CORS
+  "with one setting". Nobody has made that setting yet, and a colleague's
+  attempt with a wildcard origin was rejected in code review.
+objective: >-
+  Configure CORS on the HTTP API mapleboard-http so that the preflight from the
+  origin https://boards.maple.example is approved for GET and POST with the
+  Content-Type header and credentials, actual responses carry the matching
+  origin headers, and other origins are not approved.
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - HTTP API (v2)
+  - CorsConfiguration
+  - credentials and wildcard origins
+services:
+  - apigatewayv2
+  - lambda

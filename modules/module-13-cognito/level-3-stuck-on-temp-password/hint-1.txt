@@ -1,0 +1,6 @@
+Tomas signs in and Ines does not, so compare the two accounts. Try Ines's sign-in by hand and look at the whole response, not only whether the command failed:
+
+  aws cognito-idp initiate-auth --client-id <client-id> --auth-flow USER_PASSWORD_AUTH \
+    --auth-parameters USERNAME=ines,PASSWORD=...
+
+Then check her account with admin-get-user.

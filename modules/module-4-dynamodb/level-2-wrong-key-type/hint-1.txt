@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Table's hash key `userId` is defined as type `N` (Number) but application sends String values — all writes rejected
+Look at what the table expects: aws dynamodb describe-table --table-name postbox-prefs. Compare the key's declared type with the recipientId values the service sends.

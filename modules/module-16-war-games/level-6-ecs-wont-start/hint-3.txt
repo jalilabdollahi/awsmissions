@@ -1,0 +1,5 @@
+  aws ecs describe-task-definition --task-definition ledger-web:1 --query taskDefinition > td.json
+  # edit td.json: new image, environment name DB_HOST (value ledger-db.internal);
+  # keep only family, networkMode, requiresCompatibilities, cpu, memory, executionRoleArn, containerDefinitions
+  aws ecs register-task-definition --cli-input-json file://td.json
+  aws ecs update-service --cluster ledger-prod --service ledger-web --task-definition ledger-web:2 --desired-count 2

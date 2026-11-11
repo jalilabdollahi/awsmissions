@@ -1,37 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-tmpdir="$(mktemp -d)"
-cleanup() {
-  rm -rf "$tmpdir"
-}
-trap cleanup EXIT
+workdir="$(mktemp -d)"
+trap 'rm -rf "$workdir"' EXIT
 
-cat > "$tmpdir/index.py" <<'EOF'
-import json
-import os
+cat > "$workdir/trust.json" <<'JSON'
+{"Version": "2012-10-17",
+ "Statement": [{"Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}
+JSON
+aws_local iam create-role --role-name tile-stitcher-role \
+  --assume-role-policy-document "file://$workdir/trust.json" >/dev/null
 
+cp "$MISSION_DIR/workspace/stitch.mjs" "$workdir/"
+zip -qj "$workdir/package.zip" "$workdir/stitch.mjs"
 
-def lambda_handler(event, context):
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "ok",
-            "database_url": os.environ.get("DATABASE_URL", "missing")
-        })
-    }
-EOF
-(
-  cd "$tmpdir"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-EOF
-)
-aws_local iam create-role   --role-name mission-lambda-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name mission-lambda-role   --policy-name mission-lambda-logs   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}' >/dev/null 2>&1 || true
-aws_local lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --memory-size 128   --zip-file fileb://"$tmpdir/function.zip" >/dev/null 2>&1 || true
+jq -n --arg role "arn:aws:iam::${ACCOUNT_ID}:role/tile-stitcher-role" '{
+  FunctionName: "tile-stitcher",
+  Runtime: "nodejs20.x",
+  Handler: "stitch.handler",
+  Role: $role,
+  MemorySize: 128,
+  Timeout: 20
+}' > "$workdir/function.json"
+aws_local lambda create-function --cli-input-json "file://$workdir/function.json" \
+  --zip-file "fileb://$workdir/package.zip" >/dev/null
 
-echo "Broken function created: memory size is 128 MB"
+echo "tile-stitcher is deployed with 128 MB of memory."

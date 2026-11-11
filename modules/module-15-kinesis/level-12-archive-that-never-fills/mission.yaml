@@ -1,0 +1,26 @@
+name: "The Archive That Never Fills"
+description: >-
+  Pinecrest Media's apps publish page-view events into the Kinesis stream
+  pageviews, where two real-time dashboards read them. Compliance also requires
+  every event to be archived to S3, so a Firehose delivery stream,
+  pageview-archive, was created to copy the stream into s3://pinecrest-archive
+  under raw/. Months later an auditor opens the bucket: it is empty. The
+  delivery stream is ACTIVE, shows no errors, and its role can write to the
+  bucket. The apps must not be changed, and the real-time dashboards must keep
+  reading pageviews exactly as they do today.
+objective: >-
+  Make every event published to the Kinesis stream pageviews end up in the
+  archive bucket under raw/ through the delivery stream named pageview-archive,
+  without changing the pageviews stream or the way apps publish to it.
+xp: 325
+difficulty: advanced
+expected_time: 20m
+concepts:
+  - Firehose sources
+  - KinesisStreamAsSource
+  - immutable delivery stream type
+services:
+  - firehose
+  - kinesis
+  - s3
+  - iam

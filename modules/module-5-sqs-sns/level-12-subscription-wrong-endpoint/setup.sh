@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local sns create-topic --name mission-topic >/dev/null 2>&1 || true
-aws_local sqs create-queue --queue-name mission-queue >/dev/null 2>&1 || true
-aws_local sqs create-queue --queue-name wrong-queue >/dev/null 2>&1 || true
-aws_local sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:mission-topic --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:wrong-queue >/dev/null 2>&1 || true
-echo "Broken subscription created: points to wrong-queue"
+topic="$(aws_local sns create-topic --name quartz-invoice-events --query TopicArn --output text)"
+aws_local sqs create-queue --queue-name quartz-invoices-prod >/dev/null
+aws_local sqs create-queue --queue-name quartz-invoices-staging >/dev/null
+
+# Copy-paste from the staging runbook.
+aws_local sns subscribe --topic-arn "$topic" --protocol sqs \
+  --notification-endpoint "arn:aws:sqs:us-east-1:${ACCOUNT_ID}:quartz-invoices-staging" >/dev/null
+
+echo "quartz-invoice-events delivers to quartz-invoices-staging."

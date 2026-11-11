@@ -1,15 +1,23 @@
-name: Expensive Archive
-description: "Frequently accessed objects are set to `GLACIER` storage class \u2014\
-  \ retrieval takes hours"
-objective: Change storage class to `STANDARD` via copy with metadata replacement
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Expensive Archive"
+description: >-
+  Hotline Media's web team reports that the autumn campaign banner and the
+  site stylesheet in the bucket hotline-media load for hours, or not at all: both
+  objects under live/ are stored in the GLACIER class. Someone wrote a lifecycle
+  rule "age-out-media" meant for old campaigns, but it names the wrong prefix,
+  so it keeps pushing live files into Glacier a day after they are touched. The
+  lifecycle rule for old campaigns under archive/ is correct and those objects
+  belong in Glacier. The live objects carry a Content-Type and custom metadata
+  that the site depends on.
+objective: >-
+  Put the objects under live/ back in the STANDARD storage class without
+  losing their content, Content-Type or user metadata, stop the lifecycle from
+  archiving them again, and leave the archive/ objects and their rule alone.
+xp: 250
+difficulty: advanced
+expected_time: 16m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-19-wrong-storage-class
-implementation_status: playable
+  - storage classes
+  - lifecycle transitions
+  - copy-object metadata directive
+services:
+  - s3

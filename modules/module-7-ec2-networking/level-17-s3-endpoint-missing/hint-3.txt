@@ -1,0 +1,5 @@
+  aws ec2 create-vpc-endpoint --vpc-id <vpc> --vpc-endpoint-type Gateway \
+    --service-name com.amazonaws.us-east-1.s3 --route-table-ids <private rtb> \
+    --policy-document file://endpoint-policy.json
+
+The policy needs both arn:aws:s3:::quartz-exports and arn:aws:s3:::quartz-exports/* as resources.

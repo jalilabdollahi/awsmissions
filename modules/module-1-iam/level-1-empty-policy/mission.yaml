@@ -1,12 +1,22 @@
-name: "The Empty Statement"
-description: "An IAM role exists for a reporting app, but its inline policy only allows s3:ListBucket and cannot read any objects. Edit the local policy file, then apply it with the AWS CLI."
-objective: "Update policy.json so it allows s3:GetObject on mission-bucket objects, then apply it to role report-reader-role."
+name: "The Half-Open Door"
+description: >-
+  Harborline Logistics gave its finance dashboard a dedicated IAM user,
+  ledgerlens-report. The dashboard can see the file list of the
+  harborline-reports bucket, but every attempt to open or download a report
+  fails with AccessDenied. The user has a single inline policy called
+  report-access, and the finance team is waiting on the Q3 numbers.
+objective: >-
+  Let ledgerlens-report download objects from the reports/ folder of
+  harborline-reports. The dashboard must stay read-only and must not be able
+  to reach any other bucket.
 xp: 100
-difficulty: "beginner"
-expected_time: "5m"
+difficulty: beginner
+expected_time: 5m
 concepts:
   - IAM inline policies
   - s3:GetObject
+  - bucket vs object ARNs
   - least privilege
-module: "module-1-iam"
-level: "level-1-empty-policy"
+services:
+  - iam
+  - s3

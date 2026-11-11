@@ -1,1 +1,3 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Three statements are enough: s3:ListBucket on arn:aws:s3:::bluefin-invoices, s3:GetObject on arn:aws:s3:::bluefin-invoices/*, and s3:PutObject on arn:aws:s3:::bluefin-digests/*. Then:
+
+  aws iam put-role-policy --role-name invoice-digest-role --policy-name digest-s3-access --policy-document file://policy.json

@@ -1,15 +1,22 @@
-name: No Index, No Query
-description: Application queries a GSI named `email-index` but the index doesn't exist
-  on the table
-objective: 'Add the GSI via table update: `aws dynamodb update-table`'
-xp: 250
+name: "Login by Email"
+description: >-
+  Cartwheel is a bike-share membership service. Riders log in with their email
+  address, and the login endpoint looks the member up through a global secondary
+  index called email-index on the table cartwheel-members. After the weekend
+  migration the endpoint returns a 500 for everybody: the table moved over with
+  its four members, but the index did not. Members are identified by memberId;
+  the login code reads the email, memberId and plan of the member it finds.
+objective: >-
+  Make it possible to look a Cartwheel member up by email address through an
+  index named email-index, including for members who sign up after the fix. All
+  existing members must stay in the table, so it must not be dropped and
+  rebuilt.
+xp: 150
 difficulty: intermediate
-expected_time: 15m
+expected_time: 10m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-4-gsi-missing
-implementation_status: playable
+  - global secondary index
+  - alternate access patterns
+  - index backfill
+services:
+  - dynamodb

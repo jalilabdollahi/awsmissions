@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update the secret value to use the correct JSON key
+A JSON secret is just a string; Secrets Manager does not know or care about field names, so the consumer and the secret must agree on them. Renaming the fields would fix the dashboard and break the billing job, which reads the old names. The way out is to publish both spellings in one secret.
+
+To change a secret's value, write a *new version* with put-secret-value (not create-secret, not delete-secret): the previous version is automatically relabelled AWSPREVIOUS, which keeps a rollback path.

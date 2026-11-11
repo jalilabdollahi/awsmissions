@@ -1,0 +1,3 @@
+The health check sends GET to its path and only HTTP 200 counts as healthy. The group still has the default path "/", and this API returns 404 for it, so every check fails, even though the service is fine.
+
+The API exposes a dedicated liveness route. Try the likely names with bash probe.sh <path> until you find one that returns 200 with a short body. Widening the success codes would make the dashboard green but would also accept real errors, so fix the path, not the matcher.

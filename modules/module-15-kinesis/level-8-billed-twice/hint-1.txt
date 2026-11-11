@@ -1,0 +1,6 @@
+Compare what the checkpoint says with what the ledger says, without running the function (running it would bill the event again):
+
+  aws ssm get-parameter --name /brightline/billing/checkpoint
+  aws dynamodb scan --table-name invoice-lines
+
+Which event does the checkpoint point to, and what is its times_billed? Then read how billing.py turns the checkpoint into an iterator (`edit` opens it).

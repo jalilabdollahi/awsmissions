@@ -1,0 +1,6 @@
+Remove the registration that has the wrong port (you must name the port, because it is part of the target's identity), then register the instance again so it uses the group's default port:
+
+  aws elbv2 deregister-targets --target-group-arn <arn> --targets Id=<instance-id>,Port=<wrong port>
+  aws elbv2 register-targets   --target-group-arn <arn> --targets Id=<instance-id>
+
+Wait about ten seconds for the health checks, then run check.

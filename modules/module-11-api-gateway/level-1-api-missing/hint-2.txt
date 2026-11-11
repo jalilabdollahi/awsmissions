@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create the REST API: `aws apigateway create-rest-api`
+Nothing exists between the browser and the function. You need, in this order: the REST API, a /status resource under the root resource, a GET method on it, an AWS_PROXY integration to the Lambda (integration-http-method is POST, uri is arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/<function ARN>/invocations), and finally a deployment to a stage named live.

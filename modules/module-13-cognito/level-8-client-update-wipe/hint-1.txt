@@ -1,0 +1,6 @@
+Compare what the client has now with the contract in the briefing:
+
+  aws cognito-idp list-user-pools --max-results 10
+  aws cognito-idp describe-user-pool-client --user-pool-id <pool-id> --client-id <client-id>
+
+Check ExplicitAuthFlows and the three validity values with their units. Then try a sign-in with initiate-auth and decode the tokens to measure their real lifetime (exp minus iat).

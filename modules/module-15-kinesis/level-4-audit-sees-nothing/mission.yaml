@@ -1,0 +1,22 @@
+name: "The Auditor Sees Nothing"
+description: >-
+  Sablecart's fraud team runs a nightly Lambda, swipe-audit, that walks the
+  card-swipes stream and totals what it finds. Today six card swipes are sitting
+  in the stream (you can see them yourself), yet the audit reports "0 swipes
+  audited" and the totals are zero. The function runs without any error, its
+  IAM role is fine, and the stream has plenty of retention left. Whoever wrote
+  the reader says it "reads the shard from the top".
+objective: >-
+  Make swipe-audit report every swipe that is currently retained in card-swipes,
+  including swipes that arrive between now and the next run.
+xp: 125
+difficulty: beginner
+expected_time: 10m
+concepts:
+  - shard iterator types
+  - TRIM_HORIZON vs LATEST
+  - GetRecords
+services:
+  - kinesis
+  - lambda
+  - iam

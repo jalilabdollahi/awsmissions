@@ -1,0 +1,3 @@
+Update the function's environment with the real stream name. Careful: --environment replaces ALL variables, so list the other one again:
+
+  aws lambda update-function-configuration --function-name thermo-ingest --environment 'Variables={STREAM_NAME=<real stream name>,FIRMWARE_CHANNEL=stable}'

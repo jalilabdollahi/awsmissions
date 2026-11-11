@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Update stage settings to allow reasonable throttle limits
+Throttling is a token bucket: rate = refill per second, burst = bucket size. 0/0 never lets anything through. Stage-wide defaults live under the path /*/*/throttling/... in update-stage patch operations, and a single method has its own path built from the resource path (slashes written as ~1) plus the verb, for example /~1orders/GET/throttling/rateLimit. Checkout needs a lower limit than the default.

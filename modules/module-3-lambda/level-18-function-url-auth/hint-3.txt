@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws lambda update-function-url-config --function-name invite-landing --auth-type NONE
+  aws lambda add-permission --function-name invite-landing --statement-id public-url-access --action lambda:InvokeFunctionUrl --principal '*' --function-url-auth-type NONE

@@ -1,23 +1,29 @@
 # Solution
 
+The function simply does not exist, so there is nothing to invoke. Create it from the code in your workspace.
+
+1. Package the source. The zip must have `label_builder.py` at its root:
+
 ```bash
-TMPDIR="$(mktemp -d)"
-cat > "$TMPDIR/index.py" <<'EOF'
-import json
+zip label_builder.zip label_builder.py
+```
 
-def lambda_handler(event, context):
-    return {"statusCode": 200, "body": json.dumps("ok")}
-EOF
-(
-  cd "$TMPDIR"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-EOF
-)
+2. Create the function. The handler is `<file name without .py>.<function name>`, so `label_builder.build_label`. Reuse the role that is already there:
 
-aws lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --zip-file fileb://"$TMPDIR/function.zip"
+```bash
+aws lambda create-function \
+  --function-name parcel-label-formatter \
+  --runtime python3.12 \
+  --handler label_builder.build_label \
+  --role arn:aws:iam::000000000000:role/parcel-label-role \
+  --zip-file fileb://label_builder.zip
+```
 
-rm -rf "$TMPDIR"
+3. Test it the way the dispatch job does:
+
+```bash
+aws lambda invoke --function-name parcel-label-formatter \
+  --cli-binary-format raw-in-base64-out \
+  --payload '{"city":"Tacoma","state":"wa","zip":"98402","weight_kg":2.5}' out.json
+cat out.json
 ```

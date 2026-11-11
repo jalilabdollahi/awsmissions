@@ -1,18 +1,23 @@
-name: Permission Denied by Lambda
-description: S3 configured to invoke Lambda but Lambda resource policy doesn't allow
-  S3 service
-objective: 'Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com`
-  principal'
-xp: 200
-difficulty: beginner
-expected_time: 15m
+name: "Permission Denied by Lambda"
+description: >-
+  Cartwheel Logistics lets a few carrier partners call its rate quote function,
+  rate-quote-engine, directly with their own IAM identities. The new partner
+  ShipRight signed last week and their integration user partner-shipright gets
+  AccessDeniedException on every call. IAM looks fine on their side: nobody
+  wants to hand a partner permissions inside Cartwheel's own IAM, so the
+  contract says access is granted on the function itself. FastLane, a former
+  partner whose contract ended, must keep being locked out.
+objective: >-
+  Allow the IAM user partner-shipright, and only that user, to invoke
+  rate-quote-engine. Grant nothing beyond invoking the function.
+xp: 275
+difficulty: advanced
+expected_time: 12m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- policy debugging
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-14-resource-policy-missing
-implementation_status: playable
+  - Lambda resource-based policy
+  - add-permission
+  - cross-principal access
+services:
+  - lambda
+  - iam
+  - sts

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: CORS is configured but allows `https://wrong-app.com` instead of `https://myapp.com`
+Compare what the admin app really sends with what the rule expects:
+
+  aws s3api get-bucket-cors --bucket brightcart-media
+  curl -i -X OPTIONS -H "Origin: https://admin.brightcart.example" -H "Access-Control-Request-Method: PUT" $AWS_ENDPOINT_URL/brightcart-media/banners/hero.jpg

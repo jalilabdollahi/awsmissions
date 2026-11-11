@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Tidewater Logistics daily shipping manifests
+Resources:
+  ManifestBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: tidewater-manifests-archive
+  ManifestBucketParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /tidewater/manifest-bucket
+      Type: String
+      Description: Bucket the dispatch app writes manifests to
+      Value: !Ref ManifestBuket

@@ -1,0 +1,8 @@
+Four independent mistakes, two on hop 1 and one on each later hop:
+
+- the auditor's own policy names the bridge role incorrectly, so the auditor is not allowed to try
+- the bridge role's trust policy requires an ExternalId, but not the one agreed for this engagement
+- the ledger-reader role still trusts the bridge role's previous name
+- the ledger-reader role's S3 permission points at a bucket that does not exist
+
+Keep the ExternalId requirement (do not delete the condition) and do not open the auditor to every role.

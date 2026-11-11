@@ -1,15 +1,23 @@
-name: Silent Failure
-description: "Error metric is being published but no CloudWatch alarm is configured\
-  \ \u2014 nobody gets alerted"
-objective: Create a CloudWatch alarm on the error metric
-xp: 200
+name: "Nobody Is Watching Checkout"
+description: >-
+  Meridian's checkout service publishes its 99th-percentile latency to the
+  custom metric Meridian/Checkout P99LatencyMs. During last night's incident
+  the metric climbed past 2 seconds for an hour and nobody was paged, because
+  no alarm exists for it. The on-call rotation is notified through the SNS
+  topic meridian-oncall. The file alarm.json in your workspace is a half-filled
+  template from the post-mortem.
+objective: >-
+  Create an alarm on Meridian/Checkout P99LatencyMs that goes to ALARM when
+  the latency is above 800 ms and publishes to the topic meridian-oncall when
+  it does. It must stay OK for normal values. For this lab the alarm should
+  evaluate a single 10-second period using the Maximum statistic.
+xp: 150
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-5-alarm-missing
-implementation_status: playable
+  - CloudWatch alarms
+  - alarm actions
+  - SNS notifications
+services:
+  - cloudwatch
+  - sns

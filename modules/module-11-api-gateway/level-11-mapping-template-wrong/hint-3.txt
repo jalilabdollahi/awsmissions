@@ -1,1 +1,7 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Template body:
+{
+  "sku": "$input.path('$.productCode')",
+  "qty": $input.path('$.quantity'),
+  "note": "$util.escapeJavaScript($input.path('$.note'))"
+}
+Save it into request-template.json as {"application/json": "<template text>"} (keep the JSON string escaped), re-run put-integration with the same --type, --uri and --passthrough-behavior (see get-integration) plus --request-templates file://request-template.json, then aws apigateway create-deployment --rest-api-id <id> --stage-name live.

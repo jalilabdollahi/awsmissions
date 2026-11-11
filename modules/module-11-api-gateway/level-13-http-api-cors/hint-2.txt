@@ -1,0 +1,1 @@
+HTTP APIs have an API-level CorsConfiguration that API Gateway applies to every route, for preflights and for real responses; no OPTIONS routes are needed. You need to specify the exact origin, the methods, the allowed headers, and that credentials are allowed (which rules out a wildcard origin). It is set with update-api.

@@ -3,31 +3,39 @@
 ![platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS-blue)
 ![shell](https://img.shields.io/badge/shell-bash-brightgreen)
 ![aws](https://img.shields.io/badge/aws-learning-orange)
+![emulator](https://img.shields.io/badge/emulator-Floci-9cf)
 
 > **Learn AWS by fixing it locally.**
 
-AWSMissions is a fully local, terminal-based AWS training game powered by LocalStack. Each mission drops you into a deliberately broken cloud environment. Your job is to investigate what is wrong, repair it with real `aws` CLI commands, and validate the fix.
+AWSMissions is a terminal game that teaches AWS through troubleshooting. Each
+mission drops you into a deliberately broken AWS environment running on your
+own machine. You investigate what is wrong, repair it with real `aws` CLI
+commands, and type `check`. The validator then tests the result the way
+production would: it uploads as the role, invokes the function, sends the
+message or calls the API.
 
-**196 progressive missions across 12 modules.**  
-No AWS account. No cloud bill. No waiting on real infrastructure.
+**268 missions across 16 modules.**
+You don't need an AWS account, there is no cloud bill, and no real
+infrastructure to wait on.
 
-Design and implementation by: Jalil Abdollahi  
-Email: `jalil.abdollahi@gmail.com`
+The emulator is [Floci](https://github.com/floci-io/floci), a free, open-source,
+LocalStack-compatible AWS emulator with real IAM policy evaluation. Lambda
+functions, ECS tasks and EC2 instances run as real containers.
+
+Design and implementation by: Jalil Abdollahi
 
 ---
 
 ## Features
 
-- **196 missions** across 12 AWS-focused modules
-- **Fully local gameplay** using LocalStack and Docker
-- **Real AWS CLI workflow** instead of fake game commands
-- **Rich terminal interface** powered by Python and Rich
-- **Progressive hints** when you get stuck
-- **Reference solutions** for every level
-- **Debriefs** to explain what broke and why the fix works
-- **Editable helper artifacts** like `policy.json`, `config.json`, `template.yaml`, and `task-definition.json`
-- **XP tracking and progression** across the full curriculum
-- **Resettable levels** so you can replay and practice
+- **268 hand-written missions.** Each one has its own story, broken environment, validator, hints and debrief. None are generated from templates.
+- **Behaviour checks.** IAM is enforced, so a fix is proven by acting as the affected principal, not by reading a JSON field. Over-broad fixes such as `"Action": "*"` or `0.0.0.0/0` are rejected with an explanation.
+- **Real AWS CLI workflow.** You type the same commands you would use against AWS.
+- **Safe by design.** In-game commands use isolated credentials and an explicit local endpoint, so they can never reach your real AWS account.
+- **Progressive hints:** where to look, then the concept, then the command shape.
+- **Debriefs** explain how AWS evaluates what you just fixed, plus real-world tips.
+- **XP, ranks and module certificates.**
+- **Fast resets.** The emulator state is wiped in about a second between missions.
 
 ---
 
@@ -41,12 +49,13 @@ cd awsmissions
 
 What `install.sh` does:
 
-- checks Python, Docker, AWS CLI, `jq`, and `zip`
-- creates the local virtual environment
-- installs Python dependencies
-- installs `awscli-local`
-- pulls the LocalStack Docker image
-- builds the level registry
+- checks Python 3.9+, Docker, AWS CLI v2, `jq` and `zip` (and installs what it can)
+- creates or repairs the local virtual environment and installs Python dependencies
+- pulls the pinned Floci image (`floci/floci:2.4.0`)
+- builds the level registry (`levels.json`, `MODULES.md`)
+
+`./play.sh` starts the emulator container (`awsmissions-floci`, port 4566) on
+first use and keeps it running between sessions. `./play.sh --stop` stops it.
 
 ---
 
@@ -55,60 +64,47 @@ What `install.sh` does:
 | Tool | Notes |
 |------|-------|
 | Docker | Must be installed and running |
-| AWS CLI v2 | Used for all mission fixes |
-| Python 3.9+ | Required for the game engine |
-| `jq` | Used by some validators and helper scripts |
-| `zip` | Used by Lambda-related levels |
-
-Optional but recommended:
-
-- `awslocal` via `awscli-local`
+| AWS CLI v2 | Used for all mission fixes (2.13+ recommended) |
+| Python 3.9+ | Runs the game engine |
+| `jq`, `zip` | Used by some missions (Lambda packaging, JSON edits) |
 
 ---
 
 ## How To Play
 
-1. Run `./play.sh`
-2. Keep that terminal open for the game loop
-3. Use the same terminal or a second terminal to run `aws` commands
-4. Read the mission briefing and hints
-5. Repair the broken AWS resource locally
-6. Run `check` to validate your fix
-7. Earn XP and move to the next level
+1. Run `./play.sh` and read the mission briefing.
+2. Investigate with `aws ...` commands typed straight at the game prompt.
+3. Edit helper files with `edit` if the mission provides them, then apply them with `file://name`.
+4. Type `check`. If the fix is right you earn XP and move on; if not, the validator tells you what is still wrong.
 
-The engine exports the LocalStack endpoint for the mission environment, so the player should not need to manually pass endpoint flags during normal play.
+### Commands
 
----
+| Command | Key | Description |
+|---------|-----|-------------|
+| `check` | `1` | Run the validator |
+| `hint` | `2` | Show the next hint |
+| `reset` | `3` | Rebuild the broken environment and restore the workspace files |
+| `edit [file]` | `4` | Open a workspace file in `$EDITOR` |
+| `solution` | `5` | Show the reference solution |
+| `debrief` | `6` | Show the lesson summary |
+| `status` | `7` | Show progress across all missions |
+| `next` | `8` | Skip to the next mission |
+| `help` | `9` | Show the command list |
+| `quit` | `0` | Exit the game |
+| `aws ...` | | Run an AWS CLI command against the emulator |
+| `files` | | List the mission's workspace files |
+| `shell` | | Open a mission shell (the AWS CLI is pre-wired to the emulator); `exit` returns to the game |
+| `!cmd` | | Run one shell command in the workspace, e.g. `!zip function.zip app.py` |
 
-## Commands
+### Using a second terminal
 
-| Command | Description |
-|---------|-------------|
-| `check` | Run the validator |
-| `hint` | Show the next hint |
-| `reset` | Rebuild the AWS environment for the current level |
-| `edit` | Open the helper file for the level |
-| `solution` | Show the reference solution |
-| `debrief` | Show the lesson summary |
-| `status` | Show mission progress |
-| `next` | Skip to the next mission |
-| `aws ...` | Run an AWS CLI command directly |
-| `quit` | Exit the game |
+A plain terminal uses **your real AWS credentials**. Point it at the emulator first:
 
-Shortcuts inside the game:
+```bash
+eval "$(./play.sh --env)"
+```
 
-| Key | Command |
-|-----|---------|
-| `1` | `check` |
-| `2` | `hint` |
-| `3` | `reset` |
-| `4` | `edit` |
-| `5` | `solution` |
-| `6` | `debrief` |
-| `7` | `status` |
-| `8` | `next` |
-| `9` | `help` |
-| `0` | `quit` |
+This hides `~/.aws` profiles, sets the local endpoint and test credentials, and prefixes your prompt with `(awsmissions)`.
 
 ---
 
@@ -116,65 +112,78 @@ Shortcuts inside the game:
 
 | # | Module | Levels | Focus |
 |---|--------|--------|-------|
-| 1 | IAM Foundations | 20 | policies, roles, trust relationships, permission debugging |
-| 2 | S3 Mastery | 20 | buckets, policies, versioning, notifications, encryption |
-| 3 | Lambda Functions | 18 | runtimes, handlers, permissions, triggers, function config |
-| 4 | DynamoDB | 15 | tables, keys, GSIs, LSIs, TTL, PITR, streams |
-| 5 | SQS & SNS | 15 | queues, topics, subscriptions, DLQs, delivery patterns |
-| 6 | CloudWatch & Logging | 15 | logs, metrics, alarms, EventBridge |
-| 7 | EC2 & Networking | 15 | VPCs, subnets, route tables, security groups, NACLs |
-| 8 | CloudFormation | 18 | templates, stack lifecycle, mappings, parameters, drift |
-| 9 | Secrets & Config | 15 | KMS, Secrets Manager, SSM Parameter Store |
-| 10 | ECS & Containers | 15 | clusters, task definitions, roles, networking, service discovery |
-| 11 | API Gateway | 12 | APIs, resources, methods, integrations, deployment, CORS |
-| 12 | War Games | 18 | multi-failure incident response across services |
+| 1 | IAM Foundations | 21 | policies, roles, trust, boundaries, conditions, resource policies |
+| 2 | S3 Mastery | 20 | bucket and object access, versioning, CORS, lifecycle, events, encryption |
+| 3 | Lambda Functions | 20 | runtimes, handlers, roles, limits, destinations, layers, triggers, URLs |
+| 4 | DynamoDB | 16 | keys, indexes, TTL, streams, capacity, conditional writes, tenant isolation |
+| 5 | SQS & SNS | 17 | queues, DLQs and redrive, FIFO, fan-out, filter policies, message size |
+| 6 | CloudWatch & Logging | 17 | metrics, alarms, logs, metric filters, dashboards, EventBridge |
+| 7 | EC2 & Networking | 17 | VPCs, subnets, routes, gateways, security groups, NACLs, peering, endpoints |
+| 8 | CloudFormation | 18 | templates, parameters, intrinsics, exports, policies, nested stacks, drift |
+| 9 | Secrets & Config | 15 | KMS, Secrets Manager, SSM Parameter Store, rotation, leaked credentials |
+| 10 | ECS & Containers | 16 | clusters, task definitions, roles, logging, networking, services, deployments |
+| 11 | API Gateway | 15 | REST and HTTP APIs, integrations, stages, authorizers, CORS, usage plans |
+| 12 | Step Functions | 14 | execution roles, Choice, paths, Retry/Catch, Map/Parallel, callbacks |
+| 13 | Cognito | 14 | user pools, auth flows, tokens and claims, triggers, hosted UI, recovery |
+| 14 | Load Balancing & Auto Scaling | 14 | ALB routing, target health, redirects, stickiness, Auto Scaling, blue/green |
+| 15 | Kinesis & Firehose | 14 | shards, partition keys, iterators, consumers, Firehose delivery and transforms |
+| 16 | Production War Games | 20 | multi-fault production incidents across services |
 
 For the full level-by-level breakdown, see [MODULES.md](MODULES.md).
 
 ---
 
-## How Missions Are Structured
+## How Missions Are Built
 
-Each level lives in its own directory under `modules/` and typically includes:
+Each level lives in `modules/module-N-topic/level-M-slug/`:
 
-- `mission.yaml` for briefing and metadata
-- `setup.sh` to create the broken state
-- `validate.sh` to verify the repair
-- `hint-1.txt`, `hint-2.txt`, `hint-3.txt`
-- `solution.md`
-- `debrief.md`
+| File | Purpose |
+|------|---------|
+| `mission.yaml` | Briefing, objective, XP, difficulty, concepts, services |
+| `setup.sh` | Builds the broken environment in a freshly reset emulator |
+| `validate.sh` | Checks real emulator behaviour and explains what is still wrong |
+| `solution.sh` | Automated reference fix, used by the test harness |
+| `hint-1..3.txt`, `solution.md`, `debrief.md` | Player-facing guidance |
+| `workspace/` | Files the player edits; copied fresh on every (re)start |
 
-Some levels also include editable helper files such as:
+The full contract for contributors is in [LEVEL_SPEC.md](LEVEL_SPEC.md).
 
-- `policy.json`
-- `trust-policy.json`
-- `config.json`
-- `bucket-policy.json`
-- `task-definition.json`
-- `template.yaml`
-- `notification.json`
+### Testing missions
 
-These editable files are intentional. They make it easier to teach the shape of AWS configurations without forcing the player to write long JSON or YAML blobs from scratch every time.
+```bash
+# setup → validate must FAIL → solution → validate must PASS → setup repeatable
+.venv/bin/python scripts/test_levels.py modules/module-1-iam
+.venv/bin/python scripts/test_levels.py modules/module-3-lambda/level-7-*
+
+# run on a separate emulator so it doesn't disturb a game in progress
+AWSMISSIONS_PORT=4601 .venv/bin/python scripts/test_levels.py modules/module-2-s3
+
+# flag levels that look template-generated
+.venv/bin/python scripts/check_uniqueness.py
+
+# rebuild levels.json and MODULES.md after adding or renaming levels
+.venv/bin/python scripts/build_levels.py
+```
 
 ---
 
 ## Progression
 
-XP is global across the full game, not tied to a single module.
+XP is global across the whole game. Each completed level awards the XP in its
+`mission.yaml`, and finishing every level of a module saves a certificate to
+`certificates/`. Progress is keyed by level directory, so adding new levels
+never disturbs saved progress.
 
-- each completed level awards the XP listed in its `mission.yaml`
-- rank progress is based on total XP
-- a module can span multiple ranks
-- the header progress bar shows progress toward the next rank threshold
+| XP | Rank |
+|----|------|
+| 0–199 | Cloud Recruit |
+| 200–499 | Cloud Operator |
+| 500–999 | Cloud Engineer |
+| 1000–1999 | Cloud Architect |
+| 2000–3999 | Cloud Commander |
+| 4000+ | Cloud Legend |
 
-Current rank thresholds:
-
-- `0-199`: Cloud Recruit
-- `200-499`: Cloud Operator
-- `500-999`: Cloud Engineer
-- `1000-1999`: Cloud Architect
-- `2000-3999`: Cloud Commander
-- `4000+`: Cloud Legend
+To reset progress: `./play.sh --reset-progress`. To replay a level, use `reset` inside the game.
 
 ---
 
@@ -182,24 +191,23 @@ Current rank thresholds:
 
 ```text
 awsmissions/
-├── play.sh
+├── play.sh                 # start the game (--env, --stop, --reset-progress)
 ├── install.sh
-├── requirements.txt
-├── README.md
-├── MODULES.md
-├── PLAN.md
-├── progress.json
+├── LEVEL_SPEC.md           # how to write a mission
+├── MODULES.md              # generated curriculum
+├── levels.json             # generated registry
 ├── engine/
-│   ├── engine.py
+│   ├── engine.py           # game loop and commands
+│   ├── floci.py            # emulator lifecycle and state reset
+│   ├── reset.py            # isolated mission environment, setup/validate
+│   ├── player.py           # progress
 │   ├── ui.py
-│   ├── player.py
-│   ├── reset.py
-│   ├── localstack.py
 │   └── certificate.py
 ├── scripts/
-│   ├── aws_helpers.sh
-│   ├── build_levels.py
-│   └── mission_runtime.py
+│   ├── aws_helpers.sh      # aws_local, aws_as_user, aws_as_role, wait_for
+│   ├── test_levels.py      # end-to-end mission tests
+│   ├── check_uniqueness.py
+│   └── build_levels.py
 └── modules/
     ├── module-1-iam/
     ├── module-2-s3/
@@ -212,49 +220,31 @@ awsmissions/
     ├── module-9-secrets-config/
     ├── module-10-ecs/
     ├── module-11-api-gateway/
-    └── module-12-war-games/
+    ├── module-12-step-functions/
+    ├── module-13-cognito/
+    ├── module-14-load-balancing/
+    ├── module-15-kinesis/
+    └── module-16-war-games/
 ```
 
 ---
 
-## Resetting Progress
+## Emulator notes
 
-To reset only player progress:
+Floci is a very capable emulator, but it is not AWS. A few behaviours differ
+(for example, some CloudFormation template errors are accepted, and some
+service-to-service resource policies are not enforced). Every mission was
+built and tested against the pinned Floci version, and debriefs say so where
+the emulator differs from real AWS.
 
-```bash
-./play.sh --reset-progress
-```
-
-To replay a level, use `reset` inside the game.
-
----
-
-## Philosophy
-
-AWSMissions is built around a simple idea:
-
-- reading cloud docs is useful
-- watching tutorials is useful
-- but troubleshooting broken infrastructure yourself is where the lessons stick
-
-The project is designed to help learners build practical AWS debugging instincts:
-
-- what resource is actually broken
-- where permissions really fail
-- what exact AWS CLI command fixes the issue
-- how to read policies, configs, and service metadata under pressure
-
----
-
-## Notes
-
-- Everything runs locally through LocalStack.
-- You do not need an AWS account to play.
-- Some advanced services are represented with helper artifacts to keep the missions local, fast, and teachable.
-- Solutions and hints now explicitly tell the player which named resource a file applies to whenever possible.
+- Floci's state reset keeps CloudFormation stacks and some ECS task state, so
+  the engine restarts the container after levels that use those services. This
+  takes a few seconds.
+- The first Lambda invoke of a runtime pulls and starts a container, which can
+  take about 10 seconds.
 
 ---
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License.

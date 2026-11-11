@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local sqs create-queue --queue-name mission-queue >/dev/null 2>&1 || true
-aws_local sqs create-queue --queue-name mission-dlq >/dev/null 2>&1 || true
-url="$(aws_local sqs get-queue-url --queue-name mission-queue --query QueueUrl --output text)"
-aws_local sqs set-queue-attributes --queue-url "$url" --attributes RedrivePolicy='{"deadLetterTargetArn":"arn:aws:sqs:us-east-1:000000000000:wrong-dlq","maxReceiveCount":"3"}' >/dev/null
-echo "Broken queue created: redrive policy points to wrong-dlq"
+dlq="$(aws_local sqs create-queue --queue-name mailroom-outbound-dlq --query QueueUrl --output text)"
+out="$(aws_local sqs create-queue --queue-name mailroom-outbound \
+  --attributes VisibilityTimeout=1 --query QueueUrl --output text)"
+
+# Two jobs that were parked before the policy was edited by hand.
+for who in anna@example.test ben@example.test; do
+  aws_local sqs send-message --queue-url "$dlq" --message-body "{\"to\":\"$who\",\"status\":\"bounced\"}" >/dev/null
+done
+
+# The configuration as the player's workspace file describes it.
+aws_local sqs set-queue-attributes --queue-url "$out" --attributes "file://$MISSION_DIR/workspace/redrive.json"
+
+echo "mailroom-outbound has a redrive policy. Failed jobs still vanish."

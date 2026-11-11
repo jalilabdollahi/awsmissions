@@ -1,0 +1,9 @@
+Read the error the job gets, then read the policy that is supposed to allow it:
+
+  aws iam list-user-policies --user-name fernwood-provisioner
+  aws iam get-user-policy --user-name fernwood-provisioner --policy-name onboarding
+
+Compare its Action list with the four calls the job makes, and its Resource with the real pool:
+
+  aws cognito-idp list-user-pools --max-results 10
+  aws cognito-idp describe-user-pool --user-pool-id <pool-id> --query UserPool.Arn

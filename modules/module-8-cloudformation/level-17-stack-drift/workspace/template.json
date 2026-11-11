@@ -1,0 +1,31 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Tern Streaming ingest pipeline",
+  "Resources": {
+    "IngestFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": "tern-ingest-fn",
+        "Runtime": "python3.12",
+        "Handler": "index.handler",
+        "Role": "arn:aws:iam::000000000000:role/tern-ingest-exec",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "Environment": {
+          "Variables": {
+            "BATCH_SIZE": "50"
+          }
+        },
+        "Code": {
+          "ZipFile": "def handler(event, context):\n    return {\"ingested\": True}\n"
+        }
+      }
+    },
+    "LandingBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "tern-ingest-landing"
+      }
+    }
+  }
+}

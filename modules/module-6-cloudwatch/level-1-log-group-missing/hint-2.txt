@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create the log group: `aws logs create-log-group`
+The checkout API's log group is gone, and the log driver is configured to create streams but never groups, so every flush fails. A log group has to exist, with exactly the name the driver uses (including the leading slash), before any stream can be created in it.

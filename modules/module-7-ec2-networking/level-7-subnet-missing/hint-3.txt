@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 create-subnet --vpc-id <vpc> --cidr-block 10.70.<n>.0/24 --availability-zone <az> \
+    --tag-specifications 'ResourceType=subnet,Tags=[{Key=Tier,Value=public}]'
+
+Run it twice with different <n> and different <az>.

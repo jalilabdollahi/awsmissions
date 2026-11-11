@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add at least one security group to the VPC configuration
+The database's group allows port 5432 only from another security group (look at UserIdGroupPairs in the rule), not from an IP range. The function has no group, so no rule matches it. List the VPC's groups (`aws ec2 describe-security-groups`) and pick the one the database trusts; keep `--vpc-config`'s subnets when you update, because it replaces the whole block.

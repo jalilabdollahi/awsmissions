@@ -1,0 +1,8 @@
+Four separate problems, one per layer:
+
+- the key itself: the sweep put it into a state from which it will be destroyed, and a key in that state cannot be used (undoing it takes more than one call)
+- compliance: the rotation setting the control requires is off
+- the function's configuration names an alias that does not exist (a one-character slip)
+- the role's KMS permission is for last year's key, and only covers one of the two operations the function performs
+
+The notes are encrypted under the existing key, so creating a new key is not a fix.

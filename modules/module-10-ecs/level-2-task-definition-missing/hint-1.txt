@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Service references task definition `mission-task` with no revision registered
+Run the deploy script and read its error, then see what is registered:
+
+  bash deploy.sh
+  aws ecs list-task-definitions

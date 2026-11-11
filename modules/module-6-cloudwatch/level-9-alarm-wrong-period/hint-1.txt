@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Alarm evaluation period is 10s but the metric is published every 5 minutes — alarm never evaluates
+The rule itself is right, so look at the timing. Read how the alarm slices time:
+
+  aws cloudwatch describe-alarms --alarm-names brightside-bounce-spike \
+    --query 'MetricAlarms[0].[Period,EvaluationPeriods,Statistic,Threshold]'

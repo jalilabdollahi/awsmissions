@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Create a DLQ and configure redrive policy on the source queue
+SQS can move a message that was received too many times into a second queue, the dead-letter queue. It needs two things: a queue to act as the DLQ, and a RedrivePolicy attribute on the source queue holding the DLQ's ARN and maxReceiveCount.
+
+The DLQ also has its own MessageRetentionPeriod. Remember that the age of a moved message is not reset.

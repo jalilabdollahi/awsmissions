@@ -1,7 +1,0 @@
-Resources:
-  A:
-    Type: AWS::S3::Bucket
-    DependsOn: B
-  B:
-    Type: AWS::S3::Bucket
-    DependsOn: A

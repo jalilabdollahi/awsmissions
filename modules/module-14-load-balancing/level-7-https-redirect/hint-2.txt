@@ -1,0 +1,3 @@
+The listener's default action is a redirect, and three settings in its RedirectConfig are off: StatusCode (temporary vs permanent), Port (not the standard TLS port), and Path (a fixed value throws the visitor's page away).
+
+The load balancer can copy parts of the request into the target with placeholders: #{host}, #{path}, #{query}. Parts you do not mention keep their original value.

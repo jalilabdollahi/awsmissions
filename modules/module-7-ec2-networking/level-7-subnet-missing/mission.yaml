@@ -1,16 +1,21 @@
-name: No Subnets
-description: "VPC exists but has no subnets \u2014 instances cannot be launched"
-objective: Create public and private subnets in the VPC
-xp: 225
-difficulty: intermediate
-expected_time: 15m
+name: "An ALB With Nowhere to Land"
+description: >-
+  Brightwave Media's platform team created the brightwave-prod VPC (10.70.0.0/16)
+  and handed it to the web team, who immediately tried to create an Application
+  Load Balancer in it. The VPC has no subnets yet, and Brightwave requires every
+  public load balancer to survive the loss of an availability zone.
+objective: >-
+  Build the public tier: at least two subnets in brightwave-prod, each in a
+  different availability zone, each tagged Tier=public, with non-overlapping CIDRs
+  inside the VPC range, no smaller than a /26 each. An Application Load Balancer
+  must be creatable across them.
+xp: 125
+difficulty: beginner
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-- VPCs
-- subnets
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-7-subnet-missing
-implementation_status: playable
+  - subnets
+  - availability zones
+  - multi-AZ load balancers
+services:
+  - ec2
+  - elbv2

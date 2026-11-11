@@ -1,0 +1,6 @@
+Four jobs, and the order matters:
+
+- recovery first: create a new key for cg-build-bot and store it where the pipeline reads it, so tonight's release is not blocked
+- containment: make the leaked key stop working (keep the forensic record of it)
+- eradication: remove the user and the role the attacker created, including their keys and attached policies (IAM refuses to delete a user or role that still has them)
+- hardening: the build identity was far too powerful, which is how the attacker could create those identities; reduce it to what uploads need

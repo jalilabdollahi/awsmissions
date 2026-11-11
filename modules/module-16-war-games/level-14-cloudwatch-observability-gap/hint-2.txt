@@ -1,0 +1,8 @@
+Four breaks, one for each hand-off:
+
+- the metric filter is attached to a log group the function no longer writes to (it was renamed)
+- its JSON pattern refers to a field name that the shipped log format does not use
+- the metric namespace the filter produces is not the one the alarm watches
+- the alarm's action points at a topic with no path to the on-call queue
+
+When you fix the filter, remove the stale one so nobody trips over it later.

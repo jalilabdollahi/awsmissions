@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: User is in a group but the group has no policies — all actions denied
+The group has members, so check what the group itself carries:
+
+  aws iam list-attached-group-policies --group-name helpdesk-agents
+  aws iam list-group-policies --group-name helpdesk-agents
+
+Then look at what customer-managed policies already exist: aws iam list-policies --scope Local

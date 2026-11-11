@@ -1,16 +1,22 @@
-name: Double Trouble
-description: "Inline policy grants S3 access but a second inline policy explicitly\
-  \ Denies it \u2014 Deny wins"
-objective: Remove or fix the conflicting Deny policy
-xp: 200
-difficulty: beginner
-expected_time: 15m
+name: "Frozen in Time"
+description: >-
+  Forgepoint Software deploys build artifacts with the IAM user forge-deployer.
+  The user has the AWS managed policy AmazonS3FullAccess, so S3 should not be a
+  problem, but uploads and deletes in the artifacts bucket now fail with
+  AccessDenied. Over the years the user collected a few inline policies: some
+  from past incidents, one that protects the production ledger bucket on
+  purpose, and the ledger bucket must stay write-protected.
+objective: >-
+  Restore forge-deployer's ability to upload and delete objects in
+  forge-artifacts. Keep the intentional protection on forge-ledger-prod: the
+  user must still be unable to write to it. Do not remove the managed policy.
+xp: 250
+difficulty: advanced
+expected_time: 12m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-14-inline-blocks-managed
-implementation_status: playable
+  - explicit Deny
+  - inline vs managed policies
+  - policy evaluation logic
+services:
+  - iam
+  - s3

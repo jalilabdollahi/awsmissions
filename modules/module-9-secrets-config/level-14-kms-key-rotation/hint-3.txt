@@ -1,1 +1,8 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Outline (repeat the middle steps for record-1, 2 and 3):
+
+  aws kms enable-key --key-id <old KeyId>
+  # decode the stored base64 value into a file, then:
+  aws kms re-encrypt --ciphertext-blob fileb://record.bin --source-encryption-context dataset=atlas-archive --destination-key-id alias/atlas-data --destination-encryption-context dataset=atlas-archive --query CiphertextBlob --output text
+  aws ssm put-parameter --name /atlas/archive/record-1 --type String --value <new base64> --overwrite
+  aws kms disable-key --key-id <old KeyId>
+  aws kms enable-key-rotation --key-id <current KeyId>   # the key behind alias/atlas-data; this call does not accept aliases

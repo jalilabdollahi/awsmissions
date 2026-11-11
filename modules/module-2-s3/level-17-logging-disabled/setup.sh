@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-aws_local s3 mb s3://logs-bucket >/dev/null 2>&1 || true
-echo "Broken bucket created: mission-bucket (server access logging disabled)"
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
+
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+
+aws_local s3 mb s3://corvid-storefront-assets >/dev/null
+echo "price list 2026" > "$work/prices.csv"
+aws_local s3 cp "$work/prices.csv" s3://corvid-storefront-assets/downloads/price-list.csv >/dev/null
+
+# Deliberately: no logging configuration and no log bucket.
+echo "No access logs exist for corvid-storefront-assets."

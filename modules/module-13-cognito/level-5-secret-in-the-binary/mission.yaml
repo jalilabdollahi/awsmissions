@@ -1,0 +1,23 @@
+name: "Never Ship a Secret"
+description: >-
+  Quill, a note-taking app, keeps accounts in the user pool quill-accounts. Its
+  backend signs users in through the app client quill-web, which has a client
+  secret and works fine. For the new mobile app the developers copied that
+  client's ID into the code, and since the release every sign-in from a phone
+  fails with an error about a missing SECRET_HASH. Embedding the secret in an app
+  that anyone can download and unpack was rejected by the security team in
+  review. User mira (password Margin-Notes-55!) is the test account.
+objective: >-
+  Give the mobile app its own app client named quill-mobile, one that it can use
+  with just a username and password (no client secret) and that also supports
+  refreshing sessions. Mira must be able to sign in and refresh through it. The
+  backend's quill-web client must keep working unchanged, with its secret.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - client secret
+  - SECRET_HASH
+  - public vs confidential clients
+services:
+  - cognito-idp

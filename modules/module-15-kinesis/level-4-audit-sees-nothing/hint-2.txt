@@ -1,0 +1,1 @@
+Every read of a shard starts from a shard iterator, and the iterator type chooses the starting point. The audit's type means "only records that arrive after this call", which at night is nothing. The other types are TRIM_HORIZON, AT_TIMESTAMP, AT_SEQUENCE_NUMBER and AFTER_SEQUENCE_NUMBER: pick the one that starts at the oldest retained record.

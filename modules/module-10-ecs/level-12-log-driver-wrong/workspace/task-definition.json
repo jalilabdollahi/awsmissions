@@ -1,0 +1,18 @@
+{
+  "family": "checkout-worker",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "worker",
+      "image": "alpine:3.21",
+      "essential": true,
+      "command": ["sh", "-c", "while true; do echo \"checkout-worker ready, processed batch\"; sleep 5; done"],
+      "logConfiguration": {
+        "logDriver": "journald"
+      }
+    }
+  ]
+}

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the Transform declaration at the template root
+AWS::Serverless::Function is not a native CloudFormation resource. It is shorthand defined by the AWS::Serverless-2016-10-31 transform (a macro): when the template declares that transform, CloudFormation first rewrites the SAM resources into real ones (an AWS::Lambda::Function and an AWS::IAM::Role) and then deploys the result. Without the declaration the shorthand is never expanded, so nothing real is created.
+
+The transform is declared at the top level of the template, next to AWSTemplateFormatVersion. Also note that expansion happens when a stack is first created from the template, so a stack already deployed from the old template has to be recreated.

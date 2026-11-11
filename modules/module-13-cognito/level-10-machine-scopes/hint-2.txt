@@ -1,0 +1,3 @@
+A scope has to pass two checks: it must be defined on the resource server, and the client must be allowed to request it. The wording of invalid_scope tells you which check failed ("is invalid" versus "is not allowed for this client"). Expect to fix both, one after the other.
+
+Both update calls replace what they are given instead of adding to it, so repeat everything that should stay (the existing scopes, the grant type, the identity provider).

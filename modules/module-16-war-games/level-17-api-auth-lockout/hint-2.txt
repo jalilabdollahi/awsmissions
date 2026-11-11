@@ -1,0 +1,8 @@
+Four faults, one per gate the request passes through:
+
+- the method's authorization type is not the one the contract promises
+- the authorizer reads the token from a header partners never send
+- the authorizer function's role cannot read the parameter holding the expected token
+- the backend function's role cannot do the DynamoDB operation its code uses
+
+After the API definition changes, the stage still serves the old snapshot until you deploy again. Authentication must stay on and the authorizer cache TTL must stay 0.

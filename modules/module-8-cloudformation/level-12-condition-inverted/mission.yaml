@@ -1,15 +1,25 @@
-name: Wrong Condition Logic
-description: "Condition `IsProduction: !Equals [!Ref Env, dev]` \u2014 logic is inverted\
-  \ (true when env is dev, not prod)"
-objective: Fix the condition expression
-xp: 225
-difficulty: intermediate
+name: "Upside-Down Production"
+description: >-
+  Marlow Books runs one catalog template for every environment. After last
+  week's refactor the production catalog bucket stopped keeping object
+  versions, the on-call pager topic is missing from production, and a noisy
+  debug topic meant for developer sandboxes has shown up there instead. The
+  production stack marlow-catalog was deployed with Environment=prod and the
+  parameters look right.
+objective: >-
+  Repair the marlow-catalog stack (keeping Environment=prod) so production has
+  a versioned catalog bucket and the pager topic and no debug topic, while the
+  same template still behaves as a developer sandbox when deployed with
+  Environment=dev (debug topic, no pager).
+xp: 275
+difficulty: advanced
 expected_time: 15m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-12-condition-inverted
-implementation_status: playable
+  - Conditions
+  - Fn::If
+  - Fn::Equals
+  - UsePreviousValue
+services:
+  - cloudformation
+  - s3
+  - sns

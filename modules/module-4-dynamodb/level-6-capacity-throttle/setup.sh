@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local dynamodb create-table   --table-name MissionTable   --attribute-definitions AttributeName=id,AttributeType=S   --key-schema AttributeName=id,KeyType=HASH   --billing-mode PROVISIONED   --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 >/dev/null 2>&1 || true
-echo "Broken table created: provisioned capacity is 1/1"
+aws_local dynamodb create-table --table-name pulsewire-readings \
+  --attribute-definitions AttributeName=turbineId,AttributeType=S AttributeName=readAt,AttributeType=N \
+  --key-schema AttributeName=turbineId,KeyType=HASH AttributeName=readAt,KeyType=RANGE \
+  --billing-mode PROVISIONED \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 >/dev/null
+
+aws_local dynamodb put-item --table-name pulsewire-readings \
+  --item '{"turbineId":{"S":"wt-017"},"readAt":{"N":"1767225600"},"rpm":{"N":"14"}}'
+
+echo "pulsewire-readings runs at 5/5 units with nothing to adjust them."

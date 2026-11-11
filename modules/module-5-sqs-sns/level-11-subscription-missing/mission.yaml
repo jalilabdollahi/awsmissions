@@ -1,17 +1,21 @@
-name: Topic, No Subscribers
-description: "SNS topic exists but has no subscriptions \u2014 published messages\
-  \ go nowhere"
-objective: 'Subscribe the SQS queue to the topic: `aws sns subscribe`'
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "Nobody Told Loyalty"
+description: >-
+  Bluebird Market publishes every completed checkout to the SNS topic
+  bluebird-checkout-events. The fulfilment team's queue bluebird-fulfilment
+  receives them fine. The loyalty team launched their new points service this
+  week and reads from the queue bluebird-loyalty, but customers are not
+  getting any points: that queue has stayed empty since launch day.
+objective: >-
+  Make every event published to bluebird-checkout-events reach both
+  bluebird-fulfilment and bluebird-loyalty, without disturbing the fulfilment
+  team's existing subscription.
+xp: 125
+difficulty: beginner
+expected_time: 8m
 concepts:
-- SQS
-- SNS
-- event delivery
-- queues
-- topics
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-11-subscription-missing
-implementation_status: playable
+  - SNS subscriptions
+  - fan-out
+  - subscription ARN vs endpoint
+services:
+  - sns
+  - sqs

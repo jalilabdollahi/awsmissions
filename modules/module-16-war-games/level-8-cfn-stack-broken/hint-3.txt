@@ -1,0 +1,9 @@
+Edit orders-stack.yaml:
+  - give the export a name that nobody else uses (leave cobalt-core's export alone)
+  - add  DeletionPolicy: Retain  to the LedgerTable resource (same indentation as Type)
+  - correct TABLE_NAME to the real table name
+  - add a Policies entry to LedgerFnRole allowing dynamodb:Scan on the table (!GetAtt LedgerTable.Arn)
+
+Then:
+  aws cloudformation update-stack --stack-name cobalt-orders --template-body file://orders-stack.yaml --capabilities CAPABILITY_NAMED_IAM
+  aws cloudformation describe-stacks --stack-name cobalt-orders --query 'Stacks[0].StackStatus'

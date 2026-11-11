@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Delete and re-create subscription with correct endpoint ARN
+The subscription's endpoint points at the staging queue. A subscription's endpoint cannot be modified (only things like filter policy or raw delivery can), so it has to be replaced. Remember that the staging queue must stop receiving production events too.

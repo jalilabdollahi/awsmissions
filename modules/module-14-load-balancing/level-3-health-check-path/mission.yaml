@@ -1,0 +1,23 @@
+name: "Taking the Pulse"
+description: >-
+  Brewline Coffee runs its mobile-ordering API on two instances behind the
+  load balancer brewline-alb. Ops dashboards have been red since the
+  Terraform apply an hour ago: both targets in the group brewline-orders show
+  "unhealthy", even though customers can still place orders (an ALB with no
+  healthy targets keeps sending traffic anyway, which is exactly why nobody
+  noticed sooner). The API team swears the service is up and says it exposes a
+  dedicated liveness endpoint; the root URL is not a page, it is just a 404.
+objective: >-
+  Make both targets of brewline-orders healthy by fixing the group's health check
+  so it asks a question the API actually answers with success. Do not make the
+  check accept error responses just to turn the dashboard green.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - health checks
+  - health check path
+  - success codes matcher
+services:
+  - elbv2
+  - ec2

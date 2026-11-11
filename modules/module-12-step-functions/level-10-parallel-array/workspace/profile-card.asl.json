@@ -1,0 +1,45 @@
+{
+  "Comment": "Orbit Mobile: fetch billing and usage at the same time, then publish a profile card",
+  "StartAt": "Gather",
+  "States": {
+    "Gather": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "FetchBilling",
+          "States": {
+            "FetchBilling": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:000000000000:function:orbit-fetch-billing",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "FetchUsage",
+          "States": {
+            "FetchUsage": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:000000000000:function:orbit-fetch-usage",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "PublishCard"
+    },
+    "PublishCard": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/orbit-profile-cards",
+        "MessageBody": {
+          "customerId.$": "$.customerId",
+          "plan.$": "$.billing.plan",
+          "gbUsed.$": "$.usage.gbUsed"
+        }
+      },
+      "End": true
+    }
+  }
+}

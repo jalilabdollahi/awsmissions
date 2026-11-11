@@ -1,17 +1,24 @@
-name: The Missing Secret Handshake
-description: "Role trust policy requires `sts:ExternalId` condition but caller doesn't\
-  \ provide it \u2014 AssumeRole denied"
-objective: Provide the correct ExternalId when calling `aws sts assume-role`
-xp: 200
-difficulty: beginner
-expected_time: 15m
+name: "The Secret Handshake"
+description: >-
+  Northwind Grocers lets the monitoring vendor MetricWave read its metrics
+  export bucket (northwind-metrics-export). MetricWave's service signs in as the
+  IAM user metricwave-svc and assumes the role metricwave-reader. Because the
+  vendor serves many customers, the role's trust policy demands a shared
+  external ID. MetricWave's onboarding sheet says their agent sends the
+  external ID "mw-5d1f-prod-8841". Since go-live every assume-role call from the
+  vendor is refused.
+objective: >-
+  Make metricwave-svc able to assume metricwave-reader with the external ID from
+  the vendor's onboarding sheet and read the export. Calls without an external
+  ID, or with a different one, must still be refused.
+xp: 300
+difficulty: advanced
+expected_time: 12m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- secrets
-module: module-1-iam
-module_title: IAM Foundations
-level: level-16-external-id-missing
-implementation_status: playable
+  - sts:ExternalId
+  - confused deputy problem
+  - third-party access
+services:
+  - iam
+  - sts
+  - s3

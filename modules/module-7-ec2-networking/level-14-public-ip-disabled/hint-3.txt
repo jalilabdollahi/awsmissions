@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 allocate-address --domain vpc
+  aws ec2 associate-address --instance-id <id> --allocation-id <eipalloc-...>

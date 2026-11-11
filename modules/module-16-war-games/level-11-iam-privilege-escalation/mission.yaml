@@ -1,0 +1,27 @@
+name: "Security Audit"
+description: >-
+  An external red team turned Quasar Fintech's CI deploy role into full
+  account administrator in a few minutes, using nothing but the
+  permissions it already held (finding PT-2026-014, in your workspace). The
+  report lists several independent escalation paths. The pipeline still has
+  to ship tonight's release, so the role cannot simply be emptied.
+objective: >-
+  Close every privilege-escalation path from qf-ci-deployer while keeping
+  its legitimate duties working: deploying code to qf-* Lambda functions,
+  creating functions with the standard qf-svc-lambda-exec role, and uploading
+  to qf-build-artifacts. The role must not be able to mint admin roles, pass
+  privileged roles, create credentials for other identities, or rewrite
+  its own permissions.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - IAM privilege escalation paths
+  - iam:PassRole scoping
+  - least privilege
+  - resource-level permissions
+services:
+  - iam
+  - lambda
+  - s3
+  - sts

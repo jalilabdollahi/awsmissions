@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the role/user path or the policy path condition
+IAM matches the policy's Resource against the full ARN of the user, and the ARN includes the user's path. The variable ${aws:username} contributes only the name, so the policy describes an ARN that no contractor has.
+
+Fix the Resource so it matches the caller's own ARN and nobody else's (no wildcard over all users).

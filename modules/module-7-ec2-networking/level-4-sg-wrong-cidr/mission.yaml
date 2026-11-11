@@ -1,15 +1,18 @@
-name: Too Restrictive CIDR
-description: Security group inbound rule has CIDR `0.0.0.0/32` (single IP) instead
-  of `0.0.0.0/0`
-objective: Fix the CIDR block on the inbound rule
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "The Office Moved"
+description: >-
+  Northwind Logistics' engineers work from one office and reach the build bastion
+  over SSH. The company moved buildings last month and the engineers have not been
+  able to connect since. The new office's public egress range is 203.0.113.0/24.
+  The security group nw-bastion-sg still carries a rule somebody typed for the
+  old building.
+objective: >-
+  Allow SSH to the bastion from the new office range 203.0.113.0/24 only. The old
+  rule must not linger, and SSH must never be opened to the whole internet.
+xp: 100
+difficulty: beginner
+expected_time: 6m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-4-sg-wrong-cidr
-implementation_status: playable
+  - CIDR notation
+  - security group sources
+services:
+  - ec2

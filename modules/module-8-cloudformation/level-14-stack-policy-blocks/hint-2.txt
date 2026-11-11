@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update or remove the stack policy: `aws cloudformation set-stack-policy`
+Termination protection is a stack setting, not part of the template: while it is on, delete-stack is refused outright, whoever calls it. It exists so that deleting something important takes a deliberate second step. The cleanup job lacks that step, but the right move is to lift the lock on the one stack that is meant to die, not on every stack, and not to touch the production stack or the open PR.
+
+Look for a cloudformation subcommand that changes this flag for a single stack.

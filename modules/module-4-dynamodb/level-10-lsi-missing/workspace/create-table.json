@@ -1,0 +1,12 @@
+{
+  "TableName": "clinic-appointments",
+  "AttributeDefinitions": [
+    {"AttributeName": "patientId", "AttributeType": "S"},
+    {"AttributeName": "apptDate", "AttributeType": "S"}
+  ],
+  "KeySchema": [
+    {"AttributeName": "patientId", "KeyType": "HASH"},
+    {"AttributeName": "apptDate", "KeyType": "RANGE"}
+  ],
+  "BillingMode": "PAY_PER_REQUEST"
+}

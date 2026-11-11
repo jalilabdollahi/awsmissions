@@ -1,0 +1,1 @@
+S3 can be reached privately through a gateway endpoint, which attaches to route tables (free, no NAT, no internet route). Attach it only to the private table. The endpoint's policy is a separate setting: unrestricted by default, so supply one that names only the quartz-exports bucket and its objects.

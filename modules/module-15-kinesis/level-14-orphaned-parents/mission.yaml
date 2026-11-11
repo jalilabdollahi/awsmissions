@@ -1,0 +1,27 @@
+name: "Orphaned Parents, Missing Children"
+description: >-
+  Ledgerline, a payments processor, writes account entries (account, a running
+  seq number per account, amount) into the Kinesis stream ledger-entries. A
+  Lambda, ledger-export, produces the nightly export for the reconciliation
+  team: all entries still in the stream, grouped per account in the order they
+  were written. The stream started with one shard and was resharded twice as
+  traffic grew. The reconciliation team now reports that the export is missing
+  every entry written since the first reshard and that new entries never show
+  up at all. The function raises no error, and the stream, the retention and
+  the data are fine.
+objective: >-
+  Make ledger-export return every entry still retained in ledger-entries,
+  including entries written after any reshard, each exactly once, and with each
+  account's entries in the order they were written.
+xp: 550
+difficulty: expert
+expected_time: 30m
+concepts:
+  - resharding
+  - parent and child shards
+  - ListShards
+  - ordering across shards
+services:
+  - kinesis
+  - lambda
+  - iam

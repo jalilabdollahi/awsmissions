@@ -62,7 +62,7 @@ if ! command -v aws >/dev/null 2>&1; then
       sudo apt-get update -qq && sudo apt-get install -y curl unzip
     fi
     TMP_DIR=$(mktemp -d)
-    curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$TMP_DIR/awscliv2.zip"
+    curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "$TMP_DIR/awscliv2.zip"
     unzip -q "$TMP_DIR/awscliv2.zip" -d "$TMP_DIR"
     sudo "$TMP_DIR/aws/install"
     rm -rf "$TMP_DIR"
@@ -72,7 +72,11 @@ if ! command -v aws >/dev/null 2>&1; then
     exit 1
   fi
 fi
-echo "✅ AWS CLI $(aws --version 2>&1 | awk '{print $1}')"
+AWS_CLI_VERSION=$(aws --version 2>&1 | awk '{print $1}' | cut -d/ -f2)
+if ! python3 -c "import sys; v=tuple(int(x) for x in '$AWS_CLI_VERSION'.split('.')[:2]); sys.exit(0 if v >= (2, 13) else 1)" 2>/dev/null; then
+  echo "⚠️  AWS CLI $AWS_CLI_VERSION is older than 2.13. In-game commands still work, but upgrading is recommended."
+fi
+echo "✅ AWS CLI $AWS_CLI_VERSION"
 
 # ─── jq ───────────────────────────────────────────────────────────────────────
 if ! command -v jq >/dev/null 2>&1; then
@@ -89,6 +93,10 @@ echo "✅ zip"
 # ─── Python venv ──────────────────────────────────────────────────────────────
 echo ""
 echo "🐍 Setting up Python virtual environment..."
+if [ -d ".venv" ] && ! .venv/bin/python -c "import sys" >/dev/null 2>&1; then
+  echo "♻️  Existing .venv is broken — recreating it"
+  rm -rf .venv
+fi
 if [ ! -d ".venv" ]; then
   python3 -m venv .venv
 fi
@@ -105,18 +113,12 @@ echo "📦 Installing Python dependencies..."
 pip install -q -r requirements.txt
 echo "✅ Python packages installed"
 
-# ─── awscli-local (awslocal wrapper) ──────────────────────────────────────────
-if ! command -v awslocal >/dev/null 2>&1; then
-  echo "📦 Installing awscli-local..."
-  pip install -q awscli-local
-fi
-echo "✅ awslocal (awscli-local)"
-
-# ─── LocalStack Docker image ──────────────────────────────────────────────────
+# ─── Floci (local AWS emulator) ───────────────────────────────────────────────
+FLOCI_IMAGE="floci/floci:2.4.0"
 echo ""
-echo "🐳 Pulling LocalStack Docker image..."
-docker pull localstack/localstack:3.8
-echo "✅ LocalStack image ready"
+echo "🐳 Pulling Floci emulator image ($FLOCI_IMAGE)..."
+docker pull "$FLOCI_IMAGE"
+echo "✅ Floci image ready"
 
 # ─── Build level registry ─────────────────────────────────────────────────────
 echo ""
@@ -124,17 +126,12 @@ echo "📋 Building level registry..."
 python3 scripts/build_levels.py
 echo "✅ levels.json generated"
 
-# ─── Progress file ────────────────────────────────────────────────────────────
-if [[ ! -f progress.json ]]; then
-  echo '{"player_name":null,"total_xp":0,"completed_levels":[],"current_level_id":1,"module_certificates":[],"hint_state":{},"time_per_level":{}}' > progress.json
-fi
-
 echo ""
 echo "════════════════════════════════════"
 echo "✅  AWSMissions is ready!"
 echo "   Run:  ./play.sh"
 echo ""
 echo "   No AWS account needed."
-echo "   Everything runs locally via LocalStack."
+echo "   Everything runs locally via Floci (https://github.com/floci-io/floci)."
 echo "════════════════════════════════════"
 echo ""

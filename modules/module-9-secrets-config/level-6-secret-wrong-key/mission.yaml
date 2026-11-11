@@ -1,16 +1,23 @@
-name: Wrong Key in JSON
-description: 'Secret exists as JSON `{"password": "abc123"}` but application reads
-  key `db_password`'
-objective: Update the secret value to use the correct JSON key
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Wrong Key in JSON"
+description: >-
+  Cinder Analytics keeps its warehouse login in the secret
+  cinder/warehouse/login. The new BI dashboard reads the JSON fields "user" and
+  "pass", but the secret was created in the standard database layout with
+  "username" and "password", so the dashboard logs "KeyError: 'user'" and shows
+  nothing. The nightly billing job, written years ago, reads "username" and
+  "password" and works perfectly; it must keep working. The secret.json file in
+  your workspace holds the current contents.
+objective: >-
+  Make cinder/warehouse/login satisfy both consumers: the dashboard must find
+  user and pass with the real credentials, while the billing job must still
+  find username and password, as well as host and port. Keep the history, so
+  the previous version stays available as AWSPREVIOUS.
+xp: 175
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- secrets
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-6-secret-wrong-key
-implementation_status: playable
+  - Secrets Manager JSON secrets
+  - secret versions
+  - put-secret-value
+services:
+  - secretsmanager

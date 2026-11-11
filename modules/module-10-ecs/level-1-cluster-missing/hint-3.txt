@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ecs create-cluster --cluster-name <name from run-report.sh>
+  bash run-report.sh

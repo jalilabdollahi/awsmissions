@@ -1,15 +1,22 @@
-name: Backwards Alarm
-description: "Alarm uses `LessThanThreshold` to detect high error counts \u2014 should\
-  \ be `GreaterThanThreshold`"
-objective: Fix the comparison operator on the alarm
-xp: 175
+name: "Crying Wolf at Full Health"
+description: >-
+  Nimbus Storage's data volume data-01 reports its free space in gigabytes to
+  Nimbus/Storage FreeSpaceGB. The alarm nimbus-data-volume-low-space is meant to
+  warn when fewer than 10 GB are left. Since it was created the on-call team
+  has been woken up while the volume is nearly empty of data (hundreds of
+  gigabytes free), and, worse, the alarm stayed green when the volume filled
+  up last week. Everyone has started ignoring it. The definition is in
+  alarm.json.
+objective: >-
+  Make nimbus-data-volume-low-space go to ALARM when free space is below 10 GB
+  and stay OK when plenty of space is free. Keep the metric, dimension and
+  threshold of 10.
+xp: 150
 difficulty: intermediate
 expected_time: 10m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-8-alarm-wrong-comparison
-implementation_status: playable
+  - comparison operators
+  - alarm direction
+  - metric dimensions
+services:
+  - cloudwatch

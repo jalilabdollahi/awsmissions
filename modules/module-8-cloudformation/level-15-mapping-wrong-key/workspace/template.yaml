@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Cobalt Telehealth appointment reminders
+Mappings:
+  RegionSizing:
+    us-east1:
+      Memory: "1024"
+      Timeout: "20"
+    eu-west-1:
+      Memory: "512"
+      Timeout: "30"
+    ap-southeast-2:
+      Memory: "256"
+      Timeout: "30"
+Resources:
+  ReminderSender:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cobalt-reminder-sender
+      Runtime: python3.12
+      Handler: index.handler
+      Role: arn:aws:iam::000000000000:role/cobalt-reminders-exec
+      MemorySize: !FindInMap [RegionSizing, !Ref "AWS::Region", Memory]
+      Timeout: !FindInMap [RegionSizing, !Ref "AWS::Region", Timeout]
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              return {"sent": 0}

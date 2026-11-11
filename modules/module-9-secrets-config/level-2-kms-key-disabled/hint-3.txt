@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Turn the original key back on:
+
+  aws kms enable-key --key-id <KeyId from describe-key>
+
+(The key ID is in the describe-key output; the alias itself needs no change.)

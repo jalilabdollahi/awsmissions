@@ -1,16 +1,21 @@
-name: Deprecated Engine
-description: "Function uses runtime `python3.6` (deprecated/unsupported) \u2014 invocation\
-  \ fails"
-objective: 'Update runtime to `python3.11`: `aws lambda update-function-configuration`'
-xp: 125
+name: "End of the Line"
+description: >-
+  Harborline Ledger's month-end close runs through the Lambda function
+  ledger-month-close. This morning finance reported that the close job produces
+  no totals at all. The function was deployed years ago and nobody has touched
+  its code; the platform team only mentions that "the runtime team sent a
+  deprecation email some time ago".
+objective: >-
+  Get ledger-month-close producing totals again without rewriting its source
+  code: it must run on a Python runtime that Lambda still supports and that
+  actually understands the code.
+xp: 100
 difficulty: beginner
 expected_time: 8m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-2-wrong-runtime
-implementation_status: playable
+  - Lambda runtimes
+  - runtime deprecation
+  - update-function-configuration
+services:
+  - lambda
+  - iam

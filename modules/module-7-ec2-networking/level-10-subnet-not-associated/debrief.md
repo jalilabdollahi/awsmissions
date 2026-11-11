@@ -1,14 +1,10 @@
-# Route Table Orphan
+# Debrief: associations connect tables to subnets
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in EC2 & Networking: Route table has correct routes but is not associated with the subnet
+A route table does nothing until it is associated with a subnet (or gateway). Here nothing was wrong with the routes. The association pointed at the neighbour: the private database subnet got the internet route, and the app subnet was left on the main table.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+This type of mix-up is easy to make because names like `public` live on the route table while the exposure is a property of the *subnet it is attached to*. It is also dangerous: it does not only break the app, it quietly exposes the database tier. The scanner finding was the only symptom on that side.
 
-## Key Concepts
-- EC2
-- VPC
-- networking
-- subnets
-- routing
+Real-world tips:
+- Audit with `describe-route-tables` and check each subnet's *effective* table, not just the tables.
+- Infrastructure as code (CloudFormation `SubnetRouteTableAssociation`, Terraform `aws_route_table_association`) makes the pairing explicit and reviewable.
+- A subnet can have only one route table, but one table can serve many subnets. Re-associating replaces the old link instantly.

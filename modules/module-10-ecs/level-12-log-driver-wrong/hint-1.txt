@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Task definition uses `journald` log driver — ECS Fargate only supports `awslogs`
+Check how the container's logs are configured in the running revision:
+
+  aws ecs describe-task-definition --task-definition checkout-worker --query 'taskDefinition.containerDefinitions[0].logConfiguration'
+  aws logs describe-log-groups

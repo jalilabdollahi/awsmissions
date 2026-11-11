@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the URI in the integration to use the correct Lambda ARN
+The integration uri contains a function ARN that doesn't match any function; the error message shows what API Gateway tried to call. Two functions have almost the same name, and only one of them serves customers. Fix the uri of the existing integration (update-integration with a replace patch on /uri is enough) and deploy the stage again.

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: VPC exists but has no subnets — instances cannot be launched
+Start by looking at what exists inside the VPC, and what an ALB asks for:
+
+  aws ec2 describe-subnets --filters Name=vpc-id,Values=<brightwave-prod id>
+  aws ec2 describe-availability-zones

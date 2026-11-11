@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add Lambda permission: `aws lambda add-permission` for `apigateway.amazonaws.com`
+The statement in the function's policy names an API id (in its SourceArn condition) that no longer exists; the rebuilt API got a new id. Policies are edited per statement: remove the stale statement by its id and add a new one for apigateway.amazonaws.com with a source ARN of the form arn:aws:execute-api:<region>:<account>:<api-id>/<stage>/<method>/<path>. Keep it tight: this route is GET /rates.

@@ -1,16 +1,21 @@
-name: Zero Tolerance
-description: "`maxReceiveCount` in redrive policy is set to `0` \u2014 messages go\
-  \ to DLQ immediately on first receive"
-objective: Set `maxReceiveCount` to a reasonable value (e.g., 3)
+name: "One Strike"
+description: >-
+  Pinecrest Clinics sends appointment reminders by SMS from the queue
+  pinecrest-sms. The SMS provider has short hiccups, and a reminder that fails
+  once is normally fine on the second try. Since the queue was given a
+  dead-letter queue, though, the ops team sees dozens of perfectly good
+  reminders in pinecrest-sms-dlq after every hiccup, and patients miss their
+  appointments.
+objective: >-
+  Make pinecrest-sms tolerate at least two failed attempts of a message before
+  it is parked in pinecrest-sms-dlq, while a message that never succeeds must
+  still be parked after at most 10 attempts.
 xp: 175
 difficulty: intermediate
 expected_time: 10m
 concepts:
-- SQS
-- SNS
-- event delivery
-- policy debugging
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-6-max-receive-zero
-implementation_status: playable
+  - maxReceiveCount
+  - redrive policy tuning
+  - transient vs permanent failure
+services:
+  - sqs

@@ -1,0 +1,8 @@
+Four independent escalation paths hide in this one policy:
+
+- creating roles and attaching or writing policies lets CI manufacture an administrator
+- iam:PassRole on every role lets a new Lambda function run with any role in the account, including the platform admin's
+- being allowed to create access keys for any user lets CI become that user
+- being allowed to write inline policies lets CI rewrite its own permissions
+
+The legitimate duties (deploying to qf-* functions, using the standard execution role, uploading artifacts) must keep working, so narrow instead of deleting everything.

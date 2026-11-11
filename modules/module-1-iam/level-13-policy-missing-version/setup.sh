@@ -1,9 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local iam create-role   --role-name home-reader-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name home-reader-role   --policy-name home-reader-policy   --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+aws_local s3 mb s3://lumen-homes >/dev/null
+seed="$(mktemp)"
+trap 'rm -f "$seed"' EXIT
+echo 'alice private' > "$seed"
+aws_local s3api put-object --bucket lumen-homes --key lumen-alice/notes.txt --body "$seed" >/dev/null
+echo 'bob private' > "$seed"
+aws_local s3api put-object --bucket lumen-homes --key lumen-bob/notes.txt --body "$seed" >/dev/null
 
-echo "Broken IAM role created: home-reader-role"
+policy_arn="$(aws_local iam create-policy --policy-name home-folders \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json" --query Policy.Arn --output text)"
+aws_local iam create-group --group-name lumen-staff >/dev/null
+aws_local iam attach-group-policy --group-name lumen-staff --policy-arn "$policy_arn"
+for u in lumen-alice lumen-bob; do
+  aws_local iam create-user --user-name "$u" >/dev/null
+  aws_local iam add-user-to-group --group-name lumen-staff --user-name "$u"
+done
+
+echo "home-folders is attached to lumen-staff, and nobody can open their own folder."

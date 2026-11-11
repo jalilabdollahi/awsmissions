@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: `AWS::SQS::Queue` resource is missing required `QueueName` — wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)
+The role's permissions are fine; the call that fails is sts:AssumeRole, which is decided by a different document. Compare what the stack contains with what the role really looks like:
+
+  aws iam get-role --role-name lumen-exporter
+
+Look at the AssumeRolePolicyDocument in the output, then at the AWS::IAM::Role section of template.yaml.

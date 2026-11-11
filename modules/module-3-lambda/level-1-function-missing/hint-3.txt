@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Package and create (the shell command `!zip` works inside the game):
+
+  zip label_builder.zip label_builder.py
+  aws lambda create-function --function-name parcel-label-formatter --runtime python3.12 --handler label_builder.build_label --role arn:aws:iam::000000000000:role/parcel-label-role --zip-file fileb://label_builder.zip

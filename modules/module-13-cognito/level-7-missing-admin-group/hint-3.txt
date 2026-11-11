@@ -1,0 +1,4 @@
+  aws cognito-idp create-group --user-pool-id <pool-id> --group-name ops-admins --precedence 1
+  aws cognito-idp admin-add-user-to-group --user-pool-id <pool-id> --username dara --group-name ops-admins
+
+Add only Dara. Eli must stay in support.

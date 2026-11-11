@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the JSON syntax in the bucket policy
+There is one independent fault per statement. One compares an ARN that does not belong to this account; one names an action that does not exist; one uses a condition operator that does not treat "*" as a wildcard (compare the two string operators StringEquals and StringLike). Type `edit` to open bucket-policy.json.

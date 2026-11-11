@@ -1,0 +1,5 @@
+Make the same request the app makes and read the body of the answer; it is JSON and says why it refused:
+
+  curl -s "$AWS_ENDPOINT_URL/cognito-idp/oauth2/authorize?client_id=<client-id>&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fmarigold.example.com%2Fauth%2Fcallback"
+
+Then print the client's CallbackURLs and AllowedOAuthFlows with describe-user-pool-client.

@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-aws_local iam create-role   --role-name bounded-reader-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name bounded-reader-role   --policy-name identity-reader-policy   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:GetObject","Resource":"arn:aws:s3:::mission-bucket/*"}]}' >/dev/null
-aws_local iam create-policy   --policy-name deny-s3-boundary   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Deny","Action":"s3:GetObject","Resource":"arn:aws:s3:::mission-bucket/*"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-permissions-boundary   --role-name bounded-reader-role   --permissions-boundary arn:aws:iam::000000000000:policy/deny-s3-boundary >/dev/null
+aws_local s3 mb s3://skyhook-sandbox-recordings >/dev/null
+aws_local s3 mb s3://skyhook-prod-telemetry >/dev/null
+seed="$(mktemp)"
+trap 'rm -f "$seed"' EXIT
+echo 'rec' > "$seed"
+aws_local s3api put-object --bucket skyhook-sandbox-recordings --key tests/run-001.bag --body "$seed" >/dev/null
+aws_local s3api put-object --bucket skyhook-prod-telemetry --key fleet/2025-11-10.bin --body "$seed" >/dev/null
 
-echo "Broken IAM role created: bounded-reader-role (boundary blocks S3)"
+boundary_arn="$(aws_local iam create-policy --policy-name intern-boundary \
+  --policy-document "file://$MISSION_DIR/workspace/boundary.json" --query Policy.Arn --output text)"
+
+aws_local iam create-user --user-name skyhook-intern >/dev/null
+aws_local iam put-user-policy --user-name skyhook-intern --policy-name s3-for-the-team \
+  --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:*","Resource":"*"}]}'
+aws_local iam put-user-permissions-boundary --user-name skyhook-intern --permissions-boundary "$boundary_arn"
+
+echo "skyhook-intern has s3:* on paper and cannot upload a thing."

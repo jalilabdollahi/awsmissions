@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Bucket exists and has an object but GetObject is denied — bucket policy blocks all access
+Read the policy that is attached to the bucket and compare it with what actually exists:
+
+  aws s3api get-bucket-policy --bucket meridian-audit-reports --query Policy --output text
+  aws iam list-users
+  aws s3 ls s3://meridian-audit-reports/ --recursive

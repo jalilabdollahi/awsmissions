@@ -1,0 +1,25 @@
+name: "Lost in Redirect"
+description: >-
+  Marigold sells tickets to local events. Its single-page app sends visitors to
+  the Cognito hosted login of the user pool marigold-fans (app client
+  marigold-web) using the authorization-code flow, with the callback URL
+  https://marigold.example.com/auth/callback. Since the app moved to
+  production, the hosted login never even shows a form: the authorize request
+  is rejected. The developer who set the client up months ago also left
+  http://localhost:3000/callback registered, which the front-end team still
+  uses on their laptops. Fan noor (password Front-Row-Seats-3!) is the test
+  account.
+objective: >-
+  Make the complete hosted-UI login work for the production callback URL
+  (authorize, sign in as noor, receive a code, exchange it for tokens), keep the
+  localhost callback working, accept no other callback URL, and do not leave the
+  deprecated implicit flow enabled on the client.
+xp: 300
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - hosted UI
+  - callback URL matching
+  - OAuth authorization code flow
+services:
+  - cognito-idp

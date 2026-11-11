@@ -1,0 +1,8 @@
+There are four faults, and they hide each other:
+
+- the stream is on again, but it was re-enabled with a view type that omits the data the updater reads
+- every re-enabled stream gets a brand-new ARN; the event source mapping still references the previous one
+- the function's configuration names a leaderboard table that does not exist
+- the role was rewritten from a template and cannot perform the one write operation the function uses
+
+Keep the tables and their data. The role should stay scoped to the leaderboard table.

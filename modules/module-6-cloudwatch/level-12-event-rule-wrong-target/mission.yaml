@@ -1,15 +1,21 @@
-name: Wrong Destination
-description: EventBridge rule has the wrong Lambda ARN as target
-objective: Update the rule target to the correct Lambda ARN
-xp: 175
+name: "Shipment Sent to the Sandbox"
+description: >-
+  Harbor Freight publishes a ShipmentCreated event whenever a container is
+  booked. The rule harbor-shipment-created forwards it to the ingestion queue
+  that the customs-pre-filing service reads: harbor-ingest-prod. Customs is
+  complaining that no bookings arrive, while the staging team is surprised by
+  a stream of real bookings in harbor-ingest-staging. The rule is enabled and
+  its pattern is correct. The target as deployed is in target.json.
+objective: >-
+  Deliver ShipmentCreated events from harbor-shipment-created to
+  harbor-ingest-prod and nowhere else; staging must stop receiving them.
+xp: 150
 difficulty: intermediate
 expected_time: 10m
 concepts:
-- CloudWatch
-- logs
-- alarms
-- lambda functions
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-12-event-rule-wrong-target
-implementation_status: playable
+  - EventBridge targets
+  - put-targets and remove-targets
+  - environment isolation
+services:
+  - events
+  - sqs

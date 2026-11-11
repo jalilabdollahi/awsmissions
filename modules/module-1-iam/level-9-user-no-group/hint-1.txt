@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: IAM user exists but is in no group and has no policies attached
+Start with who Priya is in IAM and what she inherits:
+
+  aws iam list-groups-for-user --user-name nimbus-priya
+  aws iam list-attached-user-policies --user-name nimbus-priya
+
+Then list the groups in the account and see what each one is for.

@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Quayside Ferries reporting storage (copied from the network stack)
+Resources:
+  ReportBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: quayside-report-data
+Outputs:
+  ReportBucketName:
+    Value: !Ref ReportBucket
+    Export:
+      Name: quayside-assets-bucket

@@ -1,0 +1,6 @@
+The console reads a claim from the ID token. Sign in as Dara yourself and decode the middle part of the token to see it:
+
+  aws cognito-idp initiate-auth --client-id <client-id> --auth-flow USER_PASSWORD_AUTH \
+    --auth-parameters USERNAME=dara,PASSWORD=...
+
+(The token is three base64url parts separated by dots; the payload is the second.) Then list the groups of the pool and of Dara.

@@ -1,36 +1,65 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-tmpdir="$(mktemp -d)"
-cleanup() {
-  rm -rf "$tmpdir"
-}
-trap cleanup EXIT
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
 
-cat > "$tmpdir/index.py" <<'EOF'
-import json
+# Three layer versions are built as real zips: python/<package>/...
+python3 - "$stage" <<'PY'
+import sys, zipfile
 
-def lambda_handler(event, context):
-    return {"statusCode": 200, "body": json.dumps("ok")}
-EOF
-mkdir -p "$tmpdir/python"
-cat > "$tmpdir/python/util.py" <<'EOF'
-VALUE = "layer-ok"
-EOF
-(
-  cd "$tmpdir"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-with zipfile.ZipFile('layer.zip', 'w') as z:
-    z.write('python/util.py')
-EOF
-)
-aws_local iam create-role   --role-name mission-lambda-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name mission-lambda-role   --policy-name mission-lambda-logs   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}' >/dev/null 2>&1 || true
-aws_local lambda publish-layer-version   --layer-name mission-utils   --zip-file fileb://"$tmpdir/layer.zip"   --compatible-runtimes python3.11 >/dev/null 2>&1 || true
-aws_local lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --layers arn:aws:lambda:us-east-1:000000000000:layer:missing-layer:1   --zip-file fileb://"$tmpdir/function.zip" >/dev/null 2>&1 || true
+out = sys.argv[1]
 
-echo "Broken function created: layer ARN points to missing-layer:1 instead of mission-utils"
+def layer(name, files):
+    with zipfile.ZipFile(f"{out}/{name}.zip", "w") as z:
+        for path, body in files.items():
+            z.writestr(path, body)
+
+RULES_V1 = '''HIGH_RISK = {"BR", "NG"}
+
+def score(txn):
+    points = 10
+    if txn["amount"] > 500:
+        points += 30
+    if txn["country"] in HIGH_RISK:
+        points += 20
+    return points
+'''
+RULES_V2 = '''HIGH_RISK = {"BR", "NG", "RU"}
+
+def velocity_penalty(count):
+    return max(0, count - 3) * 5
+
+def score(txn):
+    points = 10
+    if txn["amount"] > 500:
+        points += 30
+    if txn["country"] in HIGH_RISK:
+        points += 20
+    return points + velocity_penalty(txn["txns_last_hour"])
+'''
+layer("riskkit-v1", {"python/riskkit/__init__.py": "", "python/riskkit/rules.py": RULES_V1})
+layer("riskkit-v2", {"python/riskkit/__init__.py": "", "python/riskkit/rules.py": RULES_V2})
+layer("tracekit", {"python/tracekit.py": 'import hashlib, json\n\ndef trace_id(obj):\n    digest = hashlib.sha1(json.dumps(obj, sort_keys=True).encode()).hexdigest()\n    return "tk-" + digest[:10]\n'})
+PY
+
+aws_local lambda publish-layer-version --layer-name riskkit-core --description "legacy rules, pre-2024 (deprecated)" \
+  --compatible-runtimes python3.12 --zip-file "fileb://$stage/riskkit-v1.zip" >/dev/null
+aws_local lambda publish-layer-version --layer-name riskkit-core --description "2024 ruleset: velocity checks, RU added" \
+  --compatible-runtimes python3.12 --zip-file "fileb://$stage/riskkit-v2.zip" >/dev/null
+aws_local lambda publish-layer-version --layer-name tracekit-logging --description "trace id helper" \
+  --compatible-runtimes python3.12 --zip-file "fileb://$stage/tracekit.zip" >/dev/null
+
+aws_local iam create-role --role-name txn-scorer-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null
+
+(cd "$MISSION_DIR/workspace" && zip -q "$stage/scorer.zip" scorer.py)
+aws_local lambda create-function --function-name txn-scorer \
+  --runtime python3.12 --handler scorer.handler \
+  --role "arn:aws:iam::${ACCOUNT_ID}:role/txn-scorer-role" \
+  --layers "arn:aws:lambda:us-east-1:${ACCOUNT_ID}:layer:riskkit-core:1" \
+           "arn:aws:lambda:us-east-1:${ACCOUNT_ID}:layer:tracekit-logging:1" \
+  --zip-file "fileb://$stage/scorer.zip" >/dev/null
+
+echo "txn-scorer is wired to riskkit-core:1, an older layer version than the 2024 ruleset."

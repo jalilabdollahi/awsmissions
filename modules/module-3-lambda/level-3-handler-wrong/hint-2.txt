@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix handler to `index.lambda_handler`
+The Handler setting is "<file name without extension>.<exported function name>". Lambda is told to load a file that is not in the package. Look at the exports in relay.mjs (`!grep export relay.mjs`): one of them only says "alive", the other does the real signing work. Pick the one that matches what the mission is about.

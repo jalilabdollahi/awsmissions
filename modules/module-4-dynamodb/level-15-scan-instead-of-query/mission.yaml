@@ -1,15 +1,28 @@
-name: Full Table Scan
-description: "Application uses `Scan` on a large table with a filter \u2014 extremely\
-  \ slow and expensive"
-objective: Identify the proper key schema and rewrite as a `Query` operation
-xp: 300
-difficulty: intermediate
-expected_time: 20m
+name: "Scan Is Not a Query"
+description: >-
+  Orbit Freight's nightly report job lists every shipment of one region that
+  left the dock after a given time. It runs as the IAM user orbit-report-svc
+  and today it calls Scan on the table orbit-shipments with a filter on region
+  and shippedAt, which reads every item (millions in production) and burns
+  half the table's read budget. The security review has decided that this job
+  may never scan again: it should get exactly one read capability, Query,
+  used against a dedicated index named by-region-time (partition key region, sort
+  key shippedAt as a number), and nothing else. The job's current script is in
+  workspace/report.sh. The same account holds a table orbit-payroll that the
+  job must never touch.
+objective: >-
+  Redesign the access so that orbit-report-svc can query shipments of one region
+  newer than a timestamp through by-region-time, and cannot scan the table, cannot
+  fetch single items, cannot write anything and cannot
+  touch orbit-payroll. Existing shipments must stay in the table.
+xp: 400
+difficulty: expert
+expected_time: 25m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-15-scan-instead-of-query
-implementation_status: playable
+  - Scan vs Query
+  - GSI design
+  - IAM for DynamoDB indexes
+  - least privilege
+services:
+  - dynamodb
+  - iam

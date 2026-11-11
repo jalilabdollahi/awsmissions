@@ -1,16 +1,22 @@
-name: Trust Nobody
-description: "Role trust policy has wrong account ID in Principal \u2014 `sts:AssumeRole`\
-  \ fails"
-objective: Fix the Principal to the correct account ID (`000000000000` in LocalStack)
+name: "Trust Issues"
+description: >-
+  Orbit Ledger recently consolidated its AWS accounts. The nightly bookkeeping
+  batch signs in as the IAM user ledger-batch and is supposed to assume the role
+  ledger-nightly to read the books in the orbit-ledger-books bucket. Since the
+  migration, assuming the role fails with AccessDenied, even though ledger-batch
+  is allowed to call sts:AssumeRole on it.
+objective: >-
+  Let ledger-batch assume ledger-nightly and read the books. Other IAM users in
+  the account that are allowed to call sts:AssumeRole in general must still be
+  unable to assume this role.
 xp: 150
-difficulty: beginner
-expected_time: 10m
+difficulty: intermediate
+expected_time: 8m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-6-wrong-principal
-implementation_status: playable
+  - role trust policies
+  - IAM principals and ARNs
+  - cross-account migrations
+services:
+  - iam
+  - sts
+  - s3

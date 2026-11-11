@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Lambda expects raw message body but SNS wraps it in an envelope — JSON parsing fails
+Receive one message from the queue and read its body:
+
+  aws sqs receive-message --queue-url <url of delta-web-analytics>
+
+Then list what is configured on the subscription:
+
+  aws sns get-subscription-attributes --subscription-arn <SubscriptionArn>

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: User policy is missing `sts:AssumeRole` — cannot switch to the target role
+Try the switch yourself and read exactly what is denied, then look at both sides of the handshake: the role's trust policy and the auditor's own policy.
+
+  aws iam get-role --role-name cobalt-audit-readonly --query Role.AssumeRolePolicyDocument
+  aws iam get-user-policy --user-name cobalt-auditor --policy-name auditor-base

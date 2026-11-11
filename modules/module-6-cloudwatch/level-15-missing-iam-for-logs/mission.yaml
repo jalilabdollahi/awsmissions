@@ -1,17 +1,24 @@
-name: No Permission to Write
-description: Lambda execution role is missing `logs:CreateLogStream` and `logs:PutLogEvents`
-  permissions
-objective: Add CloudWatch Logs permissions to the Lambda execution role
-xp: 225
-difficulty: intermediate
+name: "The Shipper Without a Ticket"
+description: >-
+  Lumen Retail's store-gateway agent ships its logs to the group
+  /lumen/store-gateway using the IAM user lumen-shipper. A new store was
+  onboarded this week: the agent starts, creates its stream, and then every
+  upload fails with AccessDeniedException; the logs of that store are
+  missing. The user's inline policy lumen-shipper-logs was written in a hurry
+  and is stored in policy.json.
+objective: >-
+  Let lumen-shipper create log streams and upload log events in
+  /lumen/store-gateway, and nothing more: it must not be able to delete the log
+  group or change its retention. (Sandbox note: this emulator evaluates
+  CloudWatch Logs permissions against Resource "*", so keep the resource as it
+  is; in a real account you would scope it to the group's ARN.)
+xp: 250
+difficulty: advanced
 expected_time: 12m
 concepts:
-- CloudWatch
-- logs
-- alarms
-- roles
-- lambda functions
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-15-missing-iam-for-logs
-implementation_status: playable
+  - IAM for CloudWatch Logs
+  - logs:PutLogEvents
+  - least privilege
+services:
+  - logs
+  - iam

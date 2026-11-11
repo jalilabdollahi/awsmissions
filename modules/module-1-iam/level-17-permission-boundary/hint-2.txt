@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update or remove the permission boundary to allow the required actions
+A permissions boundary caps what identity policies can grant: the effective permissions are only what BOTH the identity policy and the boundary allow. The boundary here does not mention the action the intern needs.
+
+Extend the boundary (policy file in your workspace, `edit`) for exactly that action and exactly those buckets. Managed policies are versioned, so you publish a new default version rather than editing in place.

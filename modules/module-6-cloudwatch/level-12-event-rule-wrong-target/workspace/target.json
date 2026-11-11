@@ -1,0 +1,9 @@
+{
+  "Rule": "harbor-shipment-created",
+  "Targets": [
+    {
+      "Id": "ingest",
+      "Arn": "arn:aws:sqs:us-east-1:000000000000:harbor-ingest-staging"
+    }
+  ]
+}

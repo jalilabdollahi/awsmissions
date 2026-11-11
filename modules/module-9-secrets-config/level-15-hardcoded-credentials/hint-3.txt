@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws iam create-role --role-name nimbus-exporter-role --assume-role-policy-document <trust policy for lambda.amazonaws.com>
+  aws iam put-role-policy --role-name nimbus-exporter-role --policy-name read-api-token --policy-document <allow GetSecretValue on the exporter secret's ARN>
+  aws lambda update-function-configuration --function-name nimbus-exporter --role <new role ARN> --environment "Variables={APP_ENV=prod,TOKEN_SECRET_ID=nimbus/exporter/api-token}"
+  aws iam update-access-key --user-name nimbus-ci --access-key-id <key id> --status Inactive

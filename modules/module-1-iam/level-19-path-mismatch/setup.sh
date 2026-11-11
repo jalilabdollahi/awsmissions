@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local iam create-user --user-name mission-user --path /ops/ >/dev/null 2>&1 || true
-aws_local iam put-user-policy   --user-name mission-user   --policy-name path-check-policy   --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+aws_local iam create-group --group-name redwood-contractors --path /contractors/ >/dev/null
+for u in redwood-kim redwood-lee; do
+  aws_local iam create-user --user-name "$u" --path /contractors/ >/dev/null
+  aws_local iam add-user-to-group --group-name redwood-contractors --user-name "$u"
+done
+# Someone who is not a contractor and has a key of their own.
+aws_local iam create-user --user-name redwood-staff-ana >/dev/null
+aws_local iam create-access-key --user-name redwood-staff-ana >/dev/null
 
-echo "Broken IAM user created: mission-user at path /ops/"
+aws_local iam put-group-policy --group-name redwood-contractors --policy-name self-service-keys \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
+
+echo "redwood-contractors has a self-service policy that worked in the pilot and now matches nobody."

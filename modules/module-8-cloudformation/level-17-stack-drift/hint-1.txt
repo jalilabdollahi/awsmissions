@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Stack resources were manually modified outside CFN — stack has drifted
+Without a drift API you compare the two sides yourself. Read what the stack believes and what is really running:
+
+  aws cloudformation get-template --stack-name tern-ingest
+  aws lambda get-function-configuration --function-name tern-ingest-fn
+  aws s3api get-bucket-versioning --bucket tern-ingest-landing
+
+Check the Lambda's timeout, memory size and every environment variable, and the bucket's versioning.

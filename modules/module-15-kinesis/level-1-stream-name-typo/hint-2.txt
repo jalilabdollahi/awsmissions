@@ -1,0 +1,5 @@
+The function does not have the stream name in its code: it reads an environment variable. Look at what the function is configured with:
+
+  aws lambda get-function-configuration --function-name thermo-ingest --query Environment
+
+The release changed that value. The stream itself, and the role's permission on it, are fine.

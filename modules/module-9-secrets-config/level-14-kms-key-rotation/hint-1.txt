@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: KMS key rotation was enabled but application has old key ARN hardcoded — decryption fails after rotation
+Work out which key the records are tied to and in what state it is:
+
+  aws kms describe-key --key-id alias/atlas-data
+  aws kms list-keys
+  aws kms describe-key --key-id <other KeyId>
+
+Then try to decrypt a record yourself (decode the base64 value of /atlas/archive/record-1 into a file first) and read the error and the KeyId you get back.

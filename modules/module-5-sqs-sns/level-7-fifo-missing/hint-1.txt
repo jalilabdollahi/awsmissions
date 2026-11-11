@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Application requires ordered message processing (FIFO) but a Standard queue was created
+Ask SQS what kind of queue ironwood-ledger-events is, and what guarantees that kind gives:
+
+  aws sqs get-queue-attributes --queue-url <url of ironwood-ledger-events> --attribute-names All
+
+Look for FifoQueue in the output.

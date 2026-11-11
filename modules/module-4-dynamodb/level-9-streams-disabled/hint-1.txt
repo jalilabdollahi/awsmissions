@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Lambda should process every table change — DynamoDB Streams are disabled
+The consumer says no stream exists. Check the table's configuration: aws dynamodb describe-table --table-name greenroom-articles, and look for StreamSpecification / LatestStreamArn.

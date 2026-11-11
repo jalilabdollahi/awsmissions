@@ -1,0 +1,8 @@
+Four jobs:
+
+- documents: removing the delete markers resurfaces the newest real version, which is only correct for two of the three; the third was corrupted before the deletion and needs its last good version put back as the current one
+- cases: point-in-time restore never overwrites a table; it creates a new one at the time you give. The rows then have to be copied back into the live table
+- safety net: versioning is currently suspended
+- guardrail: the intern's policy grants everything on the bucket and the table; keep read and add, drop every delete
+
+Do not purge old versions, and do not remove the intern's access completely.

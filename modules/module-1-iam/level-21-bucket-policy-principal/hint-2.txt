@@ -1,0 +1,3 @@
+A bucket policy names exactly who it applies to, and a principal that matches no user is silently ignored. Also check which resource each action needs: listing is an operation on the bucket itself, reading a file is an operation on the objects inside it. One statement can not describe both with one Resource.
+
+Fix both problems in bucket-policy.json (`edit`) and keep it limited to the one reviewer.

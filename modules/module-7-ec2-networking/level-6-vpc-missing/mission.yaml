@@ -1,16 +1,20 @@
-name: No Network
-description: "Application requires a VPC with specific CIDR block \u2014 only the\
-  \ default VPC exists"
-objective: 'Create a new VPC: `aws ec2 create-vpc --cidr-block 10.0.0.0/16`'
-xp: 200
-difficulty: intermediate
-expected_time: 12m
+name: "Room for Meridian"
+description: >-
+  Meridian Health is standing up its production network. An engineer already
+  created a VPC called meridian-prod in a hurry, but the networking review
+  rejected it: it uses the same address space as the shared-services VPC that
+  Meridian will peer with later, and DNS hostnames are off, which the Kubernetes
+  team needs. VPC address ranges cannot be changed once the VPC exists.
+objective: >-
+  Make exactly one VPC named meridian-prod (Name tag) exist, with an IPv4 CIDR from
+  the 10.0.0.0/8 private range, size between /16 and /20, that overlaps neither
+  shared-services nor the default VPC, and with DNS hostnames enabled.
+xp: 125
+difficulty: beginner
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-- VPCs
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-6-vpc-missing
-implementation_status: playable
+  - VPC CIDR planning
+  - overlapping address space
+  - VPC attributes
+services:
+  - ec2

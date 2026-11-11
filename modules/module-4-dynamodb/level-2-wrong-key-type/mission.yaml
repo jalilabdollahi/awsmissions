@@ -1,15 +1,23 @@
-name: Type Mismatch
-description: "Table's hash key `userId` is defined as type `N` (Number) but application\
-  \ sends String values \u2014 all writes rejected"
-objective: Delete and recreate table with hash key type `S` (String)
-xp: 200
-difficulty: intermediate
-expected_time: 12m
+name: "Numbers Don't Look Like UUIDs"
+description: >-
+  Postbox sends push notifications for a ride-sharing app. The new preferences
+  service stores each rider's notification settings in the table postbox-prefs,
+  keyed by recipientId. The first real rider signed up this morning and the
+  service threw a ValidationException on every write. The recipientId values
+  come from the identity provider and look like
+  7f3c2a9e-1b64-4d0a-9c1e-5a2b8d4e6f10. Someone created the table by hand last
+  week, and also switched on deletion protection "so nobody drops it by
+  accident". The table is still empty.
+objective: >-
+  Make postbox-prefs accept preference items for riders identified by their UUID
+  string recipientId, and let the service read an item back by that id. The
+  table must keep its name.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-2-wrong-key-type
-implementation_status: playable
+  - DynamoDB attribute types
+  - immutable key schema
+  - deletion protection
+services:
+  - dynamodb

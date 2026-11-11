@@ -1,16 +1,24 @@
-name: Missing Config
-description: "Application reads SSM parameter `/mission/config/db-host` \u2014 parameter\
-  \ doesn't exist"
-objective: 'Create the parameter: `aws ssm put-parameter`'
-xp: 225
-difficulty: advanced
-expected_time: 12m
+name: "Missing Config"
+description: >-
+  Corvid Commerce's checkout service no longer has connection settings baked
+  into its image: at startup it reads /corvid/checkout/db-host and
+  /corvid/checkout/db-port from SSM Parameter Store, running as the IAM role
+  corvid-checkout. The new environment was provisioned in a hurry and the
+  service dies with ParameterNotFound. The role's permissions have already
+  been set up for the /corvid/checkout/ path. The database's connection
+  details are recorded in the secret corvid/checkout/db-credentials.
+objective: >-
+  Create the two parameters the service reads, /corvid/checkout/db-host and
+  /corvid/checkout/db-port, holding the host and port recorded for the
+  checkout database, so that the corvid-checkout role can read both.
+xp: 125
+difficulty: beginner
+expected_time: 10m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- parameter store
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-10-ssm-parameter-missing
-implementation_status: playable
+  - SSM Parameter Store
+  - put-parameter
+  - parameter hierarchies
+services:
+  - ssm
+  - secretsmanager
+  - iam

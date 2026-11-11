@@ -1,15 +1,22 @@
-name: Wrong Index Key
-description: "GSI `email-index` exists but is keyed on `username` instead of `email`\
-  \ \u2014 queries return nothing"
-objective: Delete the wrong GSI and create a new one with the correct key attribute
-xp: 250
+name: "The Index That Knew the Wrong Thing"
+description: >-
+  Stockroom runs warehouse pick lists. Pickers scan a product SKU and the app
+  asks the table stockroom-bins, through the index sku-index, which bins hold
+  that SKU and in what quantity, biggest stock first when they ask for "at least
+  N units". Since a refactor the picker app errors out with a ValidationException
+  on every scan. Whoever rebuilt the index copied the example from another
+  project and keyed it on a different attribute (the item attribute aisle).
+  The table itself, keyed by binId, is fine and holds live stock records that
+  must not be touched.
+objective: >-
+  Make sku-index answer "bins holding SKU X with at least N units": partition key
+  sku, sort key qty (number). Keep the index name, keep all stock records.
+xp: 175
 difficulty: intermediate
-expected_time: 15m
+expected_time: 12m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-5-gsi-wrong-key
-implementation_status: playable
+  - GSI key schema
+  - recreating an index
+  - sort key on an index
+services:
+  - dynamodb

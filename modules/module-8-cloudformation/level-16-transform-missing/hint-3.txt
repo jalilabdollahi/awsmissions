@@ -1,1 +1,10 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Add this line right after AWSTemplateFormatVersion in template.yaml:
+
+  Transform: AWS::Serverless-2016-10-31
+
+Then remove the stack that was deployed without it and deploy again (the transform creates an IAM role, so acknowledge the capabilities):
+
+  aws cloudformation delete-stack --stack-name parcelhub-notifier
+  aws cloudformation wait stack-delete-complete --stack-name parcelhub-notifier
+  aws cloudformation create-stack --stack-name parcelhub-notifier --template-body file://template.yaml --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND
+  aws cloudformation wait stack-create-complete --stack-name parcelhub-notifier

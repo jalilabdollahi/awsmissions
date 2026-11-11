@@ -1,0 +1,24 @@
+name: "Read-Only Robot"
+description: >-
+  Stockroom's nightly sync job pushes warehouse counts to the inventory API. It
+  authenticates with the OAuth client-credentials grant against the token
+  endpoint of the user pool stockroom-machines, as the app client nightly-sync,
+  and asks for the scopes inventory/read and inventory/write. Since the API was
+  split off, the token endpoint answers with invalid_scope and the counts have
+  not been updated for three days. The dashboard client stockroom-dashboard
+  in the same pool is read-only by design. The pool has a resource server
+  with the identifier inventory.
+objective: >-
+  Make the client-credentials grant for nightly-sync succeed with both
+  inventory/read and inventory/write in the resulting access token. The
+  inventory/admin scope must stay defined but out of reach for nightly-sync,
+  and the dashboard client must still be unable to obtain inventory/write.
+xp: 300
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - resource servers and custom scopes
+  - client credentials grant
+  - allowed OAuth scopes
+services:
+  - cognito-idp

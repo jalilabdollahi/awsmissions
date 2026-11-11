@@ -1,17 +1,23 @@
-name: Access Denied to Secret
-description: Secret exists but IAM role is missing `secretsmanager:GetSecretValue`
-  permission
-objective: Add the required permission to the role policy
-xp: 275
-difficulty: advanced
-expected_time: 15m
+name: "Access Denied to Secret"
+description: >-
+  Quokka Pay's payments API runs as the IAM role quokka-api and loads its
+  processor token from the secret quokka/prod/payments-api at startup. After
+  Monday's deploy the service crash-loops with AccessDeniedException on
+  GetSecretValue. The secret exists and its value is fine; the role's inline
+  policy quokka-secrets was edited in the same release, and policy.json in your
+  workspace is the copy that was applied.
+objective: >-
+  Let quokka-api read quokka/prod/payments-api, and only that secret. It must
+  stay unable to read the admin console secret (quokka/prod/admin-console) or
+  the staging secret.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- policy debugging
-- roles
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-7-secret-no-permission
-implementation_status: playable
+  - secretsmanager:GetSecretValue
+  - secret ARNs
+  - least privilege
+services:
+  - secretsmanager
+  - iam
+  - sts

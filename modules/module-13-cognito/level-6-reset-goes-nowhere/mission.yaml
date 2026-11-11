@@ -1,0 +1,24 @@
+name: "Reset Goes Nowhere"
+description: >-
+  Pinecrest Library's patrons manage their cards in a portal backed by the user
+  pool pinecrest-patrons (client pinecrest-portal). Omar, a patron since the
+  desk staff imported the old card database last week, clicked "Forgot
+  password" and got an error instead of an email. Lena, who registered herself,
+  can reset hers without trouble. The library's records say Omar's email address
+  is omar@example.com. In this lab, outgoing mail is captured by the emulator and
+  can be read at the emulator's endpoint URL followed by /_aws/ses.
+objective: >-
+  Make the self-service password reset work for omar: starting "forgot
+  password" for him must deliver a code to omar@example.com, and completing the
+  reset with that code must let him sign in with the new password. Lena's
+  account must stay as it is.
+xp: 170
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - forgot-password flow
+  - email_verified
+  - account recovery
+services:
+  - cognito-idp
+  - ses

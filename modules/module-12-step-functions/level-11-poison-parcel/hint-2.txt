@@ -1,0 +1,5 @@
+Each Map iteration only receives what ItemSelector builds. The manifest's batchId never gets copied into it, so AcceptParcel cannot find it. In ItemSelector, "$" refers to the Map state's own input.
+
+Once that works, a malformed parcel raises its own error name and kills the entire Map. A failure that should affect one item belongs to a handler inside the iteration: think about Catch on the validating Task, where it should send the item, and what the rest of the manifest should do meanwhile.
+
+Edit manifest-import.asl.json with `edit`.

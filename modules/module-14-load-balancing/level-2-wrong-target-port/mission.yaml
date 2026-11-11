@@ -1,0 +1,20 @@
+name: "Right Address, Wrong Extension"
+description: >-
+  Tidewater Logistics exposes its parcel-tracking API through the load balancer
+  tidewater-alb. After last night's deploy the tracking page shows errors and the
+  target group tracking-api lists its only instance as unhealthy. The service
+  itself is running fine on the instance (the team can see it answering on its
+  usual port), and the target group's own port setting was not touched.
+objective: >-
+  Get the tracking API answering through tidewater-alb on port 80, with every
+  target registered in the group tracking-api reporting healthy.
+xp: 90
+difficulty: beginner
+expected_time: 7m
+concepts:
+  - target port override
+  - deregister-targets
+  - target health
+services:
+  - elbv2
+  - ec2

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Fix the YAML syntax error in the template
+CloudFormation parses the file as YAML before it looks at a single resource, so a syntax error means nothing is created at all. In YAML, nesting is expressed only by indentation: sibling keys must start in exactly the same column. A key that sits one space off is neither a sibling nor a child, and the parser gives up.
+
+Compare the column of "DelayTopic:" with the column of "TimetableBucket:".

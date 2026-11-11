@@ -1,16 +1,24 @@
-name: Name Conflict
-description: "Two stacks both export a value with the same name `SharedBucketName`\
-  \ \u2014 second stack fails"
-objective: Change the export name in one of the stacks to be unique
-xp: 225
+name: "Name Taken"
+description: >-
+  Quayside Ferries' web team already consumes the export quayside-assets-bucket
+  from the quayside-network stack. Now the reporting team has copied that
+  stack's template as the starting point for their own, quayside-reports, and
+  the deploy fails with CREATE_FAILED and a complaint about an export that is
+  "already exported by another stack". The existing web stack must keep
+  working untouched while the reporting team gets their bucket.
+objective: >-
+  Deploy the reporting template as the stack quayside-reports so that it
+  exports its own bucket name under a name of its own, while the existing
+  quayside-assets-bucket export and the quayside-web stack that imports it keep
+  their original values.
+xp: 200
 difficulty: intermediate
 expected_time: 15m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-10-output-export-duplicate
-implementation_status: playable
+  - stack Outputs
+  - Export names
+  - cross-stack references
+services:
+  - cloudformation
+  - s3
+  - ssm

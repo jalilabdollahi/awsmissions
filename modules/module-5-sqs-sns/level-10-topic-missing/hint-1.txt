@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Application publishes to SNS topic `mission-topic` that doesn't exist
+Find out what exists on the SNS side:
+
+  aws sns list-topics
+
+Compare the result with the topic name in the mission text.

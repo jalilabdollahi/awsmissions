@@ -1,0 +1,8 @@
+Start the reset yourself and read the error:
+
+  aws cognito-idp forgot-password --client-id <client-id> --username omar
+
+Then compare Omar's attributes with Lena's, whose reset works:
+
+  aws cognito-idp admin-get-user --user-pool-id <pool-id> --username omar
+  aws cognito-idp admin-get-user --user-pool-id <pool-id> --username lena

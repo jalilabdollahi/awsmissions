@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add lifecycle rule: abort incomplete multipart uploads after 7 days
+Stranded multipart uploads must be aborted by hand once, and a lifecycle rule with AbortIncompleteMultipartUpload prevents them from piling up again. Think about which keys such a rule must cover: look at where the stranded uploads live. Also remember that put-bucket-lifecycle-configuration overwrites every existing rule. Type `edit` to open lifecycle.json.

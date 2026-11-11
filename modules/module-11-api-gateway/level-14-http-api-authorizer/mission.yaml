@@ -1,0 +1,26 @@
+name: "Yes Means Yes"
+description: >-
+  Pinecone Labs exposes an internal metrics feed through an HTTP API
+  (API Gateway v2) named pinecone-metrics, stage prod, route
+  GET /metrics. A Lambda authorizer, pinecone-bouncer, protects it: it looks at the
+  header x-pine-key and answers with the short JSON form
+  {"isAuthorized": true|false}, which is the format the team's new platform
+  template uses. Since the authorizer was attached, every call, valid key or
+  not, ends in HTTP 500 Internal Server Error, and the function logs show it
+  returned exactly what it was supposed to. The authorizer function must not be
+  changed.
+objective: >-
+  Make GET /metrics on pinecone-metrics stage prod return the metrics for callers
+  sending x-pine-key: pine-7a21, refuse callers with a wrong key (403) and callers
+  with no key (401), without touching the authorizer function's code and
+  without removing the authorizer from the route.
+xp: 300
+difficulty: advanced
+expected_time: 20m
+concepts:
+  - HTTP API Lambda authorizer
+  - simple responses vs IAM policy responses
+  - authorizer payload format
+services:
+  - apigatewayv2
+  - lambda

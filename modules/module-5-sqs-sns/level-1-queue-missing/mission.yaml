@@ -1,15 +1,21 @@
-name: No Queue
-description: Application sends messages but queue `mission-queue` doesn't exist
-objective: 'Create the SQS queue: `aws sqs create-queue`'
-xp: 150
-difficulty: intermediate
-expected_time: 8m
+name: "Typo at the Dock"
+description: >-
+  Harborline Freight's order-intake service has been throwing
+  AWS.SimpleQueueService.NonExistentQueue since last night's infrastructure
+  re-deploy. The deploy script created a queue called harborline-order (singular)
+  from a typo in the config, and nobody noticed because the service names its
+  queue harborline-orders. Customers can place orders, but nothing reaches the
+  warehouse worker.
+objective: >-
+  Make the queue harborline-orders exist so the intake service can send orders
+  and the warehouse worker can receive them. Because the warehouse worker polls
+  all day, the queue should use long polling with a 10 second wait.
+xp: 75
+difficulty: beginner
+expected_time: 5m
 concepts:
-- SQS
-- SNS
-- event delivery
-- queues
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-1-queue-missing
-implementation_status: playable
+  - SQS queues
+  - queue naming
+  - long polling
+services:
+  - sqs

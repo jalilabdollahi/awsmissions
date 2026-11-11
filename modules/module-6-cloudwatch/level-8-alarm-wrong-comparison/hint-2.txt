@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the comparison operator on the alarm
+The alarm is configured to fire when free space is above 10 GB, which is the opposite of the intention. For a metric where "low is bad", the comparison operator has to point downwards. Threshold, metric and dimension are already right.

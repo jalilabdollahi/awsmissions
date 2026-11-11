@@ -1,17 +1,25 @@
-name: The Broken Gate
-description: "Bucket policy JSON has a syntax error (missing closing bracket) \u2014\
-  \ policy rejected"
-objective: Fix the JSON syntax in the bucket policy
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "The Broken Gate"
+description: >-
+  Quillhouse Press exchanges files with a printing partner through the bucket
+  quillhouse-partner-drop. The partner's service user partner-sync must list
+  and download from outbound/ and upload to inbound/. Nothing else. The bucket
+  policy was reviewed by a linter and "looks perfectly valid" (it is in your
+  workspace as bucket-policy.json), yet the partner reports that listing,
+  downloading and uploading all fail with AccessDenied. The press's own
+  catalogue under internal/ must stay invisible to the partner.
+objective: >-
+  Repair the bucket policy so partner-sync can list outbound/ and inbound/,
+  download from outbound/, and upload to inbound/, while it still cannot read
+  internal/, write to outbound/, delete anything, or list the bucket without a
+  prefix. Other users must get nothing.
+xp: 275
+difficulty: advanced
+expected_time: 18m
 concepts:
-- S3
-- bucket configuration
-- object access
-- policy debugging
-- buckets
-module: module-2-s3
-module_title: S3 Mastery
-level: level-14-bucket-policy-syntax
-implementation_status: playable
+  - bucket policy debugging
+  - Principal ARNs
+  - Action names
+  - condition operators (StringEquals vs StringLike)
+services:
+  - s3
+  - iam

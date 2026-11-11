@@ -1,15 +1,25 @@
-name: The Overprotective Guard
-description: PutItem has a ConditionExpression `attribute_not_exists(id)` that prevents
-  updating an existing item
-objective: Remove or change the condition expression to allow the update
-xp: 250
-difficulty: intermediate
+name: "The Overprotective Guard"
+description: >-
+  Parcelo's warehouse robots mark orders as shipped by running the script
+  workspace/ship-orders.sh against the table parcelo-orders. It loops over the
+  two orders the dock reported as loaded, ord-1042 and ord-1043, and for each
+  one flips the status to SHIPPED, assigns a tracking number and bumps the
+  version counter. Nothing ships: every call fails with
+  ConditionalCheckFailedException. The condition was added "to stop double
+  shipping" by someone who was thinking about creating new orders. Careful: the
+  dock list is known to be sloppy. ord-1043 was in fact shipped yesterday, and
+  shipping it twice would hand the customer a second tracking number.
+objective: >-
+  Get ord-1042 shipped (status SHIPPED, version incremented by exactly one, a
+  tracking number set, everything else on the order intact) while the guard keeps
+  protecting orders that are not in PACKED state: ord-1043 must come out of the
+  run unchanged. Edit and run the script; do not just remove the guard.
+xp: 275
+difficulty: advanced
 expected_time: 15m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-13-condition-blocks-write
-implementation_status: playable
+  - ConditionExpression
+  - optimistic locking
+  - conditional updates
+services:
+  - dynamodb

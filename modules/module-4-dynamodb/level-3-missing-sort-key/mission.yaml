@@ -1,15 +1,24 @@
-name: One Key Short
-description: "Table has only a hash key but the application queries with both hash\
-  \ + sort key \u2014 query fails"
-objective: Recreate table with both partition key and sort key
-xp: 200
-difficulty: intermediate
-expected_time: 15m
+name: "History Keeps Vanishing"
+description: >-
+  Fixline's support desk shows a timeline for every ticket: opened, assigned,
+  escalated, resolved. Agents complain that timelines always show a single
+  entry, the most recent one. Engineers confirmed the service writes every event
+  to the table fixline-ticket-events with a ticketId (string) and an eventAt
+  attribute (ISO-8601 string such as 2026-03-02T09:15:00Z), and that no write
+  ever fails. The table was built from a quick-start snippet that only declared
+  ticketId as key. The service reads a ticket's events with a time window, for
+  example "everything since 08:00".
+objective: >-
+  Fix fixline-ticket-events so that several events for the same ticket are all
+  stored, and so that the events of one ticket can be read back in time order
+  and filtered by a time window. The table may be recreated; the history it
+  currently holds is only the last event per ticket and can be discarded.
+xp: 110
+difficulty: beginner
+expected_time: 8m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-3-missing-sort-key
-implementation_status: playable
+  - sort keys
+  - item identity
+  - range queries
+services:
+  - dynamodb

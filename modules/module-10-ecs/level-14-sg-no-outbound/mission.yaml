@@ -1,16 +1,24 @@
-name: Locked Container
-description: "Security group has no outbound rules \u2014 task can't pull image or\
-  \ call AWS services"
-objective: 'Add egress rule allowing all outbound: `0.0.0.0/0`'
-xp: 250
+name: "Locked Out of Our Own Endpoints"
+description: >-
+  Slate Reports runs its slate-reports Fargate service in an isolated VPC with no
+  internet route at all. It reaches AWS through interface VPC endpoints for ECR,
+  CloudWatch Logs and Secrets Manager, protected by the security group
+  slate-vpce-sg. The task group slate-task-sg was hardened to have no outbound
+  rules, and slate-vpce-sg still trusts the CIDR of a subnet that was deleted a
+  year ago. New tasks cannot pull images or log, and nothing in the VPC can use
+  the endpoints.
+objective: >-
+  Open exactly the path tasks need to reach the endpoints: slate-task-sg may send
+  HTTPS (443) to slate-vpce-sg, and slate-vpce-sg must accept HTTPS from
+  slate-task-sg. No rule may use 0.0.0.0/0, and the task group must not become
+  allow-all.
+xp: 350
 difficulty: advanced
 expected_time: 15m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- tasks
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-14-sg-no-outbound
-implementation_status: playable
+  - security group egress and ingress pairing
+  - interface VPC endpoints
+  - isolated subnets
+services:
+  - ecs
+  - ec2

@@ -1,0 +1,3 @@
+Recovery codes are only sent to a verified address, and nothing marks Omar's address as verified. But look at the address itself too: does it match the one in the library's records?
+
+Both the email value and the email_verified attribute can be changed with an admin command.

@@ -1,0 +1,5 @@
+Ask the stream how long it keeps data:
+
+  aws kinesis describe-stream-summary --stream-name meter-reads
+
+One field in the summary tells you how far back a consumer could replay. Compare it with a 72-hour outage.

@@ -1,1 +1,10 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Append a statement like this to the Statement array in key-policy.json (keep the admin statement):
+
+  {"Sid": "AllowReportWriterToUseTheKey", "Effect": "Allow",
+   "Principal": {"AWS": "arn:aws:iam::000000000000:role/orbit-report-writer"},
+   "Action": ["kms:Encrypt", "kms:Decrypt", "kms:GenerateDataKey", "kms:DescribeKey"],
+   "Resource": "*"}
+
+Then install the policy (PutKeyPolicy takes a key ID, not an alias):
+
+  aws kms put-key-policy --key-id <KeyId> --policy-name default --policy file://key-policy.json

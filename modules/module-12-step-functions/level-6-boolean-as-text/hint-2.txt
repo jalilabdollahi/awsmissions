@@ -1,0 +1,5 @@
+Choice operators are typed: the name of the comparison (String..., Numeric..., Boolean...) must match the JSON type of the value. Check the type of "express" in the input against the operator used by the rule.
+
+Separately, find out what happens when the Variable path is absent from the input; the failed executions of the old partner parcels show it. There is a test that asks only whether a field exists.
+
+Open dispatch.asl.json with `edit`.

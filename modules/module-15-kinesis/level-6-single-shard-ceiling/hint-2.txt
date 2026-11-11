@@ -1,0 +1,1 @@
+You can change a stream's shard count in place, without recreating it, so the history stays. Look at `aws kinesis update-shard-count help`. If the API refuses your target, read the error: there is a limit on how far a single call may scale.

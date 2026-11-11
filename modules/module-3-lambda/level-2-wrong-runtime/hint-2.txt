@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Update runtime to `python3.11`: `aws lambda update-function-configuration`
+The configured runtime has been retired, so Lambda cannot start it. You do not need to touch the code, only choose another runtime. But pick one that can read the code: `!head -20 month_close.py` shows which language features it relies on (match statements arrived in a specific Python version).

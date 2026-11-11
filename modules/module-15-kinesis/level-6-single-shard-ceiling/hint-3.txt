@@ -1,0 +1,4 @@
+A single call can at most double the open shard count, so do it in steps (wait until the stream is ACTIVE between calls):
+
+  aws kinesis update-shard-count --stream-name charger-heartbeats --target-shard-count 2 --scaling-type UNIFORM_SCALING
+  aws kinesis update-shard-count --stream-name charger-heartbeats --target-shard-count 4 --scaling-type UNIFORM_SCALING

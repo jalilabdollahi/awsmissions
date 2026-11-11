@@ -1,15 +1,21 @@
-name: Too Granular
-description: "Alarm evaluation period is 10s but the metric is published every 5 minutes\
-  \ \u2014 alarm never evaluates"
-objective: Fix period to match metric publish interval (300 seconds)
-xp: 200
+name: "Five Minutes Too Late"
+description: >-
+  Brightside Mail's deliverability team wants to know quickly when bounces
+  spike, because mailbox providers start throttling a sender after a few
+  minutes of bad traffic. Their alarm brightside-bounce-spike fires on 50 or
+  more bounced messages, which is correct, but on Tuesday a burst of 300
+  bounces was only reported after the damage was done. They suspect the
+  alarm is slow. The definition is in alarm.json.
+objective: >-
+  Make brightside-bounce-spike react to a burst of bounces within seconds
+  (it must be able to change state after at most one minute of data), without changing the
+  metric, the statistic or the threshold of 50.
+xp: 175
 difficulty: intermediate
-expected_time: 12m
+expected_time: 10m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-9-alarm-wrong-period
-implementation_status: playable
+  - alarm period
+  - detection latency
+  - evaluation periods
+services:
+  - cloudwatch

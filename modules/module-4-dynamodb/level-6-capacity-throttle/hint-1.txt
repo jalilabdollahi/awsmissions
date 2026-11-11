@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Table is in PROVISIONED mode with 1 RCU/WCU — application load causes constant throttling
+The table is provisioned at 5/5 units: check aws dynamodb describe-table --table-name pulsewire-readings. Then look at which AWS service can adjust DynamoDB capacity for you (hint: it is not DynamoDB itself).

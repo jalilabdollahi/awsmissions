@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add S3 read permissions to the task IAM role
+Both statements use the bucket ARN (arn:aws:s3:::name). Object actions such as GetObject and PutObject are evaluated against object ARNs (arn:aws:s3:::name/...), while ListBucket is evaluated against the bucket ARN. Split the statements so every action sits on the ARN kind it needs, and keep uploads read-only.

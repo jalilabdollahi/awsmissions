@@ -1,0 +1,26 @@
+name: "The Credential Crisis"
+description: >-
+  Juniper Health's claims portal has been returning 500s since 02:40 UTC,
+  right after a failed credential rotation. To get past the failed
+  rotation, an engineer deleted and re-created the database secret and
+  loaded the new password into it. The database is healthy and already
+  uses the new password, but nobody touched the application side. The
+  SEV-1 ticket INC-9004 is in your workspace.
+objective: >-
+  juniper-claims-api must authenticate again: its role has to be able to read
+  the re-created juniper/prod/db-credentials secret, the function has to
+  look the secret up correctly, and the secret's current version has to hold
+  the password the database accepts. The role may read only this one secret.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+  - Secrets Manager ARNs and version stages
+  - rotation failure recovery
+  - IAM resource scoping for secrets
+  - Lambda configuration
+services:
+  - secretsmanager
+  - lambda
+  - iam
+  - ssm

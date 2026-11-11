@@ -1,0 +1,1 @@
+Impersonate the tenant mentally: what stops portal-acme from sending tenantId=globex? Read its policy: aws iam get-user-policy --user-name portal-acme --policy-name portal-data-access (or open it with edit).

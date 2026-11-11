@@ -1,0 +1,6 @@
+The load balancer's default rule answers for any host it does not recognise. Look at the rule that is supposed to claim the customer-portal hostnames:
+
+  aws elbv2 describe-listeners --load-balancer-arn <arn of helix-alb>
+  aws elbv2 describe-rules --listener-arn <listener arn>
+
+Try both names to see the difference:  bash probe.sh portal.helixpay.example   and   bash probe.sh app.helixpay.example

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Either move to public subnet or note that NAT gateway is needed (add route via NAT)
+The private route table only knows the VPC's local network, so nothing can leave. Pointing it at the internet gateway would make the subnet public; instead it needs a NAT gateway, which must sit in the public subnet (the one that does have an IGW route) and needs an Elastic IP.

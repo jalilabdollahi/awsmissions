@@ -1,0 +1,7 @@
+Follow one error line through the whole chain and see where it stops:
+
+  aws logs describe-metric-filters --log-group-name /kp/settlement-api
+  aws logs test-metric-filter --filter-pattern '<pattern>' --log-event-messages 'level=ERROR code=SETTLE_TIMEOUT batch=B-1'
+  aws cloudwatch describe-alarms --alarm-names kp-settlement-errors
+
+`test-metric-filter` lets you check a pattern against sample log lines without waiting for real traffic. Then compare what the alarm is configured to do with what the postmortem says it should do.

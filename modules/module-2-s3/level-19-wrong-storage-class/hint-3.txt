@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Copy each live object onto itself as STANDARD (keep the default metadata directive), then remove the misdirected rule from lifecycle.json and re-apply the file:
+
+  aws s3api copy-object --bucket hotline-media --key live/site.css --copy-source hotline-media/live/site.css --storage-class STANDARD
+  aws s3api put-bucket-lifecycle-configuration --bucket hotline-media --lifecycle-configuration file://lifecycle.json

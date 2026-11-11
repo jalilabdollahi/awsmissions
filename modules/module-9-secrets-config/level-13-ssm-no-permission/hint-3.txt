@@ -1,1 +1,7 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Edit policy.json: set Action to ["ssm:GetParameter", "ssm:GetParameters"], set Resource to arn:aws:ssm:us-east-1:000000000000:parameter/kiln/prod/*, and add a second statement allowing kms:Decrypt on the key ARN from:
+
+  aws kms describe-key --key-id alias/kiln-config --query KeyMetadata.Arn --output text
+
+Then:
+
+  aws iam put-role-policy --role-name kiln-task --policy-name kiln-task-config --policy-document file://policy.json

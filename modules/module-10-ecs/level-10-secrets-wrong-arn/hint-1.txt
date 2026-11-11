@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Task definition references Secrets Manager ARN that doesn't exist — task fails to start
+The container never starts, so look at why the task stopped:
+
+  aws ecs list-tasks --cluster cedar --desired-status STOPPED
+  aws ecs describe-tasks --cluster cedar --tasks <arn> --query 'tasks[0].stoppedReason'
+
+Then compare the ARN in task-definition.json with the real secret: aws secretsmanager describe-secret --secret-id cedar/db-credentials

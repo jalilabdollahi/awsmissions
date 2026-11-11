@@ -1,4 +1,0 @@
-Outputs:
-  SharedBucketName:
-    Value: REF MissionBucket
-    ExportName: SharedBucketName

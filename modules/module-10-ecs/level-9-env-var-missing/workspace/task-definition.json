@@ -1,0 +1,29 @@
+{
+  "family": "pulse-ingest",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "ingest",
+      "image": "alpine:3.21",
+      "essential": true,
+      "command": [
+        "sh", "-c",
+        "if [ -z \"$APP_MODE\" ]; then echo \"FATAL: APP_MODE is not set (valid modes: api, worker)\"; exit 1; fi; case \"$APP_MODE\" in worker) echo \"pulse ingest worker started, polling queue\"; sleep 3600;; api) echo \"FATAL: api mode is the HTTP frontend, not for this service\"; exit 2;; *) echo \"FATAL: unknown APP_MODE=$APP_MODE\"; exit 2;; esac"
+      ],
+      "environment": [
+        { "name": "QUEUE_NAME", "value": "pulse-events" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/pulse-ingest",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ingest"
+        }
+      }
+    }
+  ]
+}

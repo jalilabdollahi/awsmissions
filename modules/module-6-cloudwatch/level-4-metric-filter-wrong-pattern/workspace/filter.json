@@ -1,0 +1,13 @@
+{
+  "logGroupName": "/ledgerbox/payments",
+  "filterName": "payment-failures",
+  "filterPattern": "\"Error\"",
+  "metricTransformations": [
+    {
+      "metricName": "PaymentFailures",
+      "metricNamespace": "Ledgerbox",
+      "metricValue": "1",
+      "defaultValue": 0
+    }
+  ]
+}

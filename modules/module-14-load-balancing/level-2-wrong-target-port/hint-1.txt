@@ -1,0 +1,5 @@
+The instance runs, so look at how the target group sees it, including the port:
+
+  aws elbv2 describe-target-health --target-group-arn <arn of tracking-api>
+
+Compare the Port column with the port the app listens on (the target group's default port).

@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0` via IGW
+See which route tables exist in the VPC and what each subnet is attached to:
+
+  aws ec2 describe-route-tables --filters Name=vpc-id,Values=<harborview-prod id>
+  aws ec2 describe-subnets --filters Name=vpc-id,Values=<harborview-prod id>
+
+Notice the "Main": true association and which routes it carries.

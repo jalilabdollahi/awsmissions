@@ -1,0 +1,6 @@
+Send one real test event and follow it through each hand-off instead of guessing:
+
+  aws events put-events --entries '[{"Source":"cedarpoint.shop","DetailType":"OrderPlaced","Detail":"{\"orderId\":\"CP-1\",\"items\":[{\"sku\":\"MUG-RED\",\"qty\":4}]}"}]'
+  aws stepfunctions list-executions --state-machine-arn <arn>
+
+Did any workflow start? Which one? Then inspect the rule: aws events describe-rule / list-targets-by-rule.

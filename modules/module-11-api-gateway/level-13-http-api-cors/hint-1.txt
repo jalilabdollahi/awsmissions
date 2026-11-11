@@ -1,0 +1,1 @@
+Ask the API what it does for a browser preflight: curl -i -X OPTIONS -H 'Origin: https://boards.maple.example' -H 'Access-Control-Request-Method: POST' <invoke url of /boards>. Then look at aws apigatewayv2 get-api --api-id <id>.

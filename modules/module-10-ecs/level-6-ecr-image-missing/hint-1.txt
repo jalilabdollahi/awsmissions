@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Task definition references ECR image that doesn't exist — task fails to pull
+The container never starts, so there are no app logs. Ask ECS why the task stopped:
+
+  aws ecs list-tasks --cluster hearth --desired-status STOPPED
+  aws ecs describe-tasks --cluster hearth --tasks <task arn> --query 'tasks[0].stoppedReason'

@@ -1,15 +1,23 @@
-name: SAM Template Rejected
-description: 'Template uses `AWS::Serverless::Function` but is missing `Transform:
-  AWS::Serverless-2016-10-31`'
-objective: Add the Transform declaration at the template root
-xp: 225
-difficulty: intermediate
+name: "SAM Template Rejected"
+description: >-
+  Parcelhub's courier team writes its notifier Lambda with the AWS Serverless
+  Application Model (SAM) shorthand: a single AWS::Serverless::Function
+  instead of a function, a role and an alias spelled out by hand. They deploy
+  template.yaml as the stack parcelhub-notifier. CloudFormation answers with a
+  perfectly green status, yet there is no Lambda function anywhere in the
+  account, and the dispatch system gets "function not found" when it tries to
+  call parcel-notifier.
+objective: >-
+  Deploy template.yaml as the stack parcelhub-notifier so that the Lambda
+  function parcel-notifier really exists and answers an invocation with the
+  stage name from its environment.
+xp: 275
+difficulty: advanced
 expected_time: 15m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-16-transform-missing
-implementation_status: playable
+  - CloudFormation Transform
+  - AWS SAM
+  - macros
+services:
+  - cloudformation
+  - lambda

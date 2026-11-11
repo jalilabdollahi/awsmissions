@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: FIFO queue exists but `ContentBasedDeduplication` is disabled and application doesn't provide `MessageDeduplicationId` — duplicates processed
+Reproduce what the webhook does: send a message to the queue without a deduplication id and read the error.
+
+  aws sqs send-message --queue-url <url of tidewater-payments.fifo> --message-group-id merchant-9 --message-body test
+
+Then look at the queue's attributes.

@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: API requires API key but no usage plan exists associating the key to the stage
+Try the call with the partner key (aws apigateway get-api-keys --include-values shows the value). Then see how keys connect to the API: aws apigateway get-usage-plans.

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create usage plan, associate API stage, and link API key to usage plan
+A key opens an API only through a usage plan: the plan must list the API stage (apiId + stage) and the key must be added to the plan. There is no plan at all right now. Give it the contract's throttle and quota (workspace/usage-plan.json is a skeleton), and add only the partner key, because the trial key has to stay locked out.

@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Fernwood Bakery per-branch order storage
+Parameters:
+  BranchCode:
+    Type: String
+    Description: Three-letter code of the bakery branch (dub, cor, gal)
+  RetentionNote:
+    Type: String
+    Default: keep-90-days
+Resources:
+  OrdersBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "fernwood-orders-${BranchCode}"
+      Tags:
+        - Key: retention
+          Value: !Ref RetentionNote
+Outputs:
+  OrdersBucket:
+    Value: !Ref OrdersBucket

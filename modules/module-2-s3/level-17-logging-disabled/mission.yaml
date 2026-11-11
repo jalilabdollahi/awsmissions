@@ -1,16 +1,22 @@
-name: No Paper Trail
-description: "S3 server access logging is disabled \u2014 access logs not being collected"
-objective: 'Enable logging: `aws s3api put-bucket-logging`'
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "No Paper Trail"
+description: >-
+  Corvid Retail's incident response team asked who downloaded the leaked price
+  list from the bucket corvid-storefront-assets last Tuesday. Nobody can tell:
+  server access logging was never turned on and no log bucket exists. Security
+  wants the logs delivered into a dedicated bucket named corvid-access-logs
+  under the prefix storefront/. A logging bucket used to be set up by a
+  Terraform module that has since been retired, and the new bucket will need to
+  let the S3 logging service write into it.
+objective: >-
+  Turn on server access logging for corvid-storefront-assets with delivery to
+  corvid-access-logs under storefront/, and give the S3 logging service (and
+  only that service) permission to write the log files there.
+xp: 275
+difficulty: advanced
+expected_time: 16m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-17-logging-disabled
-implementation_status: playable
+  - S3 server access logging
+  - log delivery permissions
+  - service principals in bucket policies
+services:
+  - s3

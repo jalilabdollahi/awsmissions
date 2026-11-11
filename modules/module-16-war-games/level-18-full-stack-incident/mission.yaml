@@ -1,0 +1,28 @@
+name: "The Production Incident"
+description: >-
+  Black Friday: Northstar Outfitters' storefront tells customers "order
+  received", but nothing has reached the order ledger for 40 minutes. The
+  pipeline is API Gateway, an intake Lambda, an SQS queue, a writer Lambda and a
+  DynamoDB table, and four different people touched four different
+  parts of it this morning. The incident ticket (INC-8830, in your
+  workspace) has the timeline and the rules of engagement.
+objective: >-
+  An order POSTed to /v1/orders on ns-orders-api must be enqueued by the
+  intake function, picked up by the writer function and end up in the ns-orders
+  table, without losing the existing ledger entry o-legacy-1. The intake
+  role may send to ns-order-queue only. Do not rebuild the API or the queue.
+xp: 600
+difficulty: expert
+expected_time: 60m
+concepts:
+  - end-to-end incident triage
+  - Lambda environment configuration
+  - IAM resource scoping for SQS
+  - reserved concurrency
+  - DynamoDB key schema
+services:
+  - apigateway
+  - lambda
+  - sqs
+  - dynamodb
+  - iam

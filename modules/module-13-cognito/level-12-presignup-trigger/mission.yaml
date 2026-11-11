@@ -1,0 +1,27 @@
+name: "The Bouncer Who Forgot to Answer"
+description: >-
+  Brightpath Staffing lets partner agencies register themselves in the user
+  pool brightpath-partners (client brightpath-portal). A pre sign-up Lambda
+  function, brightpath-presignup, is meant to confirm accounts instantly when
+  the email address is from a partner domain (partner.example.com or
+  agency.example.org) and leave everyone else on the normal email-code flow. After
+  its last edit, partner staff get a cryptic "invalid Lambda response" error
+  during registration, and people typing their company address with capital
+  letters (Dev@Partner.Example.com) report the same trouble on top of it.
+  Public sign-ups from other domains are behaving correctly. The function's
+  source is in presignup.py in your workspace.
+objective: >-
+  Make partner sign-ups succeed and be confirmed on the spot, with the email
+  marked as verified, whatever the capitalisation of the address, so that
+  the new account can sign in right away. Sign-ups from any other domain must
+  still succeed but stay unconfirmed.
+xp: 300
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - Lambda triggers
+  - pre sign-up
+  - trigger response contract
+services:
+  - cognito-idp
+  - lambda

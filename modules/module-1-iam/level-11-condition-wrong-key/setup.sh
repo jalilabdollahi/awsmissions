@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local iam create-role   --role-name guarded-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name guarded-role   --policy-name guarded-policy   --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
+aws_local --region eu-west-1 sqs create-queue --queue-name patient-events-eu >/dev/null
+aws_local --region us-east-1 sqs create-queue --queue-name patient-events-us >/dev/null
 
-echo "Broken IAM role created: guarded-role"
+aws_local iam create-user --user-name meridian-eu-worker >/dev/null
+aws_local iam put-user-policy --user-name meridian-eu-worker --policy-name eu-sqs-only \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
+
+echo "meridian-eu-worker is rolled out and locked out of its own queue."

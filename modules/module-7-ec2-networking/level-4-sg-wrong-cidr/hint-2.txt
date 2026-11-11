@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the CIDR block on the inbound rule
+The SSH rule is valid but points at the old building's addresses, so no engineer in the new office matches it. The fix is a swap: authorise the new range and revoke the old one. Do not "solve" it with 0.0.0.0/0, and leave the unrelated monitoring rule alone.

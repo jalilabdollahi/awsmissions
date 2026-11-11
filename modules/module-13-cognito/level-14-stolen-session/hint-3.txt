@@ -1,0 +1,4 @@
+  aws cognito-idp admin-user-global-sign-out --user-pool-id <pool-id> --username mara
+  aws cognito-idp admin-reset-user-password --user-pool-id <pool-id> --username mara
+
+The first ends every session; the second forces Mara to choose a new password through the reset flow. Do not touch noah.

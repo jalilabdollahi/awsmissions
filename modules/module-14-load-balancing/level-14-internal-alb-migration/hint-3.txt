@@ -1,0 +1,9 @@
+The skeleton of the rebuild (ARNs come from describe-target-groups; the old load balancer has to be deleted, and you may reuse its name once it is gone or pick a new one):
+
+  aws elbv2 create-load-balancer --name <name> --scheme internet-facing --subnets <subnet-a> <subnet-b>
+  aws elbv2 create-listener --load-balancer-arn <new-lb> --protocol HTTP --port <same port as the old listener> --default-actions Type=forward,TargetGroupArn=<web-tg>
+  aws elbv2 create-rule --listener-arn <new-listener> --priority 10 --conditions '[...]' --actions '[...]'   # /status, fixed response
+  aws elbv2 create-rule --listener-arn <new-listener> --priority 20 --conditions '[...]' --actions '[...]'   # api host, forward to API tg
+  aws elbv2 delete-load-balancer --load-balancer-arn <old-lb>
+
+Copy the exact condition and fixed-response body from describe-rules.

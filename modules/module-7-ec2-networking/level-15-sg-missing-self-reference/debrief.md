@@ -1,12 +1,9 @@
-# Cluster Can't Talk
+# Debrief: sharing a security group is not trust
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in EC2 & Networking: Auto Scaling group instances need to communicate with each other — security group missing a self-referencing rule
+A common misconception is that instances in the same security group can reach each other. They cannot: the *default* group has a self-referencing rule, but any group you create does not. A rule whose source is the group's own id says "any network interface that carries this group may connect", which is exactly what a cluster needs.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+Why it beats a CIDR:
+- It follows autoscaling and replacement: new nodes join the group and are instantly admitted; terminated ones disappear from the rule.
+- It cannot be reached from outside the group, even from other hosts in the same subnet.
 
-## Key Concepts
-- EC2
-- VPC
-- networking
+Gossip protocols (Serf, Consul, Cassandra, Redis Cluster...) commonly need *both* TCP and UDP, and the failure is silent: the nodes simply never see peers. When a cluster will not form, test each direction and protocol, and check the rule list per protocol rather than per port.

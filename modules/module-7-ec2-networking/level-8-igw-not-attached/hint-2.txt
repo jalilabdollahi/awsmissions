@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Attach the IGW to the VPC: `aws ec2 attach-internet-gateway`
+The route table correctly sends 0.0.0.0/0 to skyline-igw, but that gateway has no attachment, so it is not part of any VPC and no traffic can pass. The route and the instance are fine; the gateway must be linked to the VPC. legacy-igw is a distraction.

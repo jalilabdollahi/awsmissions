@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Disable requester pays: `aws s3api put-bucket-request-payment --payer BucketOwner`
+With Requester Pays the person making the request is billed, so ordinary callers must add a special header or be rejected. That is correct for the public dataset bucket named in the briefing and wrong for the others. Find all offenders with a small loop over the bucket list; checking one bucket at a time is easy to get wrong.

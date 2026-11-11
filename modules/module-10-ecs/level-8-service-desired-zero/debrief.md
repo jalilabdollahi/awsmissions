@@ -1,13 +1,9 @@
-# Zero Tasks
+# Debrief: "ACTIVE" does not mean "has tasks"
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in ECS & Containers: Service exists but `desiredCount` is 0 — no tasks running
+An ECS service is a controller with one job: keep `runningCount` equal to `desiredCount`. With `desiredCount: 0` it is perfectly satisfied, its status stays ACTIVE and its events say "has reached a steady state". Nothing flags a problem except the traffic that now has no targets.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
-
-## Key Concepts
-- ECS
-- Fargate
-- task definitions
-- tasks
+Habits that prevent this:
+- Treat scale-to-zero as a temporary override and track it (ticket, calendar reminder, or an alarm on `RunningTaskCount < 1` for production services).
+- If you use Application Auto Scaling, a `MinCapacity` of 0 lets a policy scale a service to zero on its own; set a sensible minimum for services that must stay up.
+- `describe-services` shows `desiredCount`, `runningCount` and `pendingCount` side by side: compare them before digging into logs.
+- Keep at least two tasks across two AZs for production services so a deployment or an AZ failure does not remove all capacity.

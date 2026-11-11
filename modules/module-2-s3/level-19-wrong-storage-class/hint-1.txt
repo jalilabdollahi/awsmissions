@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Frequently accessed objects are set to `GLACIER` storage class — retrieval takes hours
+Inspect the objects (class, content type, metadata) and the lifecycle rules:
+
+  aws s3api head-object --bucket hotline-media --key live/autumn-banner.png
+  aws s3api get-bucket-lifecycle-configuration --bucket hotline-media

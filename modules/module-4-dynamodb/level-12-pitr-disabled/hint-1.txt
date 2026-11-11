@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Compliance requires Point-in-Time Recovery — it's disabled on the table
+Don't trust names. Which tables does the auditor care about? aws dynamodb list-tags-of-resource --resource-arn arn:aws:dynamodb:us-east-1:000000000000:table/<name> shows tags, and describe-continuous-backups shows the backup state of a table.

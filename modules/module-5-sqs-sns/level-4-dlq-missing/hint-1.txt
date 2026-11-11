@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Queue has no Dead Letter Queue — failed messages disappear after max receive count
+Ask the queue what it does with a message that keeps failing:
+
+  aws sqs get-queue-attributes --queue-url <url of ledgerlink-settlements> --attribute-names All
+
+Notice what is missing from the output, then open redrive.json in your workspace.

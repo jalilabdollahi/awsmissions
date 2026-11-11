@@ -1,0 +1,7 @@
+Compare the queue's actual settings with the numbers in the ops-review notes:
+
+  aws sqs get-queue-attributes --queue-url $AWS_ENDPOINT_URL/000000000000/pw-sort-jobs --attribute-names All
+  aws sqs list-queues
+  aws cloudwatch describe-alarms
+
+Look at the RedrivePolicy field character by character, at VisibilityTimeout, and at whether any alarm watches the dead-letter queue at all.

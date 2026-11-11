@@ -1,13 +1,11 @@
-# No Way Out
+# Debrief: egress is the half people forget
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in EC2 & Networking: Security group has a custom outbound rule that blocks all egress — app can't reach external APIs
+Every new security group ships with one allow-all outbound rule. Delete it and the group becomes deny-by-default in both directions. Because groups are stateful, replies to inbound connections still get out, but anything the instance *starts* needs an egress rule.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+This is the opposite failure from an ingress mistake and it looks different: DNS lookups, package installs, API calls and database connects all hang at once.
 
-## Key Concepts
-- EC2
-- VPC
-- networking
-- REST APIs
+Real-world tips:
+- Hardened egress is good practice for databases and workers. Enumerate flows: DNS (UDP/TCP 53 to the VPC resolver), HTTPS to AWS endpoints, the database port.
+- Referencing the database *security group* as the destination follows the DB if it moves; a CIDR does not.
+- Remember return paths still cross the other side's rules: the DB group needs the matching ingress rule (already present here).
+- VPC endpoints let a locked-down worker reach AWS APIs without a route to the internet at all.

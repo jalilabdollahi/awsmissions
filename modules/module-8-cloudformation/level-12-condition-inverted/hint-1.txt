@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Condition `IsProduction: !Equals [!Ref Env, dev]` — logic is inverted (true when env is dev, not prod)
+Compare what exists in production with what the template says should exist there:
+
+  aws s3api get-bucket-versioning --bucket marlow-prod-catalog
+  aws sns list-topics
+  aws cloudformation describe-stacks --stack-name marlow-catalog --query 'Stacks[0].Parameters'
+
+Then read the Conditions section of template.yaml and say each condition out loud in plain English.

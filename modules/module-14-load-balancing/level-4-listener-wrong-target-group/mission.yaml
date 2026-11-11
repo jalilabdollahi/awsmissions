@@ -1,0 +1,21 @@
+name: "Members Meet the Staging Build"
+description: >-
+  Maplewood Credit Union's online-banking portal sits behind the load balancer
+  maplewood-alb. This morning members started seeing a grey "STAGING BUILD" banner
+  and half-finished screens. Both the production and the staging fleet are up and
+  healthy, each in its own target group (portal-prod and portal-staging). During
+  last night's release rehearsal someone changed how the load balancer decides
+  where traffic goes.
+objective: >-
+  Members visiting maplewood-alb on port 80 must get the production portal again.
+  The staging target group and its instance must stay in place for testers.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - listeners
+  - default actions
+  - forward to target group
+services:
+  - elbv2
+  - ec2

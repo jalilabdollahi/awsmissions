@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send — messages lost
+Check what the queue's policy says about SNS. Read the attributes of ember-pager-intake and look for the Policy attribute:
+
+  aws sqs get-queue-attributes --queue-url <url of ember-pager-intake> --attribute-names All
+
+Then open policy.json in your workspace.

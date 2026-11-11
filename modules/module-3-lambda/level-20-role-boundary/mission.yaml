@@ -1,0 +1,26 @@
+name: "Fenced In"
+description: >-
+  Quasar Fintech's audit job (the Lambda function key-audit) reads an API key
+  from Parameter Store and stores its fingerprint in an audit bucket. In code
+  review the role's own policy was checked and approved: it allows exactly
+  those two things. Yet in production the function dies with AccessDenied on
+  the Parameter Store read. The platform team mentions that every role created
+  by the self-service portal is automatically fenced with a permissions
+  boundary called quasar-self-service-boundary. The same role policy also
+  carries a leftover dynamodb:* grant, and the security team insists it stays
+  ineffective.
+objective: >-
+  Let key-audit read /quasar/api-key and write its audit record, while the
+  boundary stays attached to the role and the role still cannot use DynamoDB.
+xp: 400
+difficulty: expert
+expected_time: 20m
+concepts:
+  - IAM permissions boundary
+  - effective permissions
+  - managed policy versions
+services:
+  - lambda
+  - iam
+  - ssm
+  - s3

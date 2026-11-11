@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Look up the production URL and write it into the parameter with --overwrite:
+
+  aws sqs get-queue-url --queue-name ticketdesk-support
+  aws ssm put-parameter --name /ticketdesk/prod/support-queue-url --type String --overwrite --value <that url>

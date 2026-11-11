@@ -1,0 +1,8 @@
+Four problems, all rooted in the template you have in your workspace:
+
+- an Output exports a name that another stack already exports (export names are unique per region), which is why the stack failed
+- the table has no protection against being deleted along with the stack, which makes the "delete and recreate" shortcut dangerous
+- the function's environment names a table that does not exist
+- the function's role has no permission to read the table
+
+Prefer updating the existing stack in place over deleting it.

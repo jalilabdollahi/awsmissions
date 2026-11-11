@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Set a reasonable threshold (e.g., `5`) for the alarm
+The alarm watches the right metric with the right statistic and comparison, but the number it compares against can never be reached: CPU utilisation is a percentage between 0 and 100. One wrong magnitude is enough to keep the alarm green forever.

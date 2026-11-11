@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Recreate the topic, then subscribe the queue's ARN:
+
+  aws sns create-topic --name lighthouse-storm-warnings
+  aws sqs get-queue-attributes --queue-url <url of harbor-radio-feed> --attribute-names QueueArn
+  aws sns subscribe --topic-arn <topic arn> --protocol sqs --notification-endpoint <queue arn>

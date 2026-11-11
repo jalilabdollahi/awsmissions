@@ -1,18 +1,25 @@
-name: Can't Pull Image
-description: "Task fails to start \u2014 no `executionRoleArn` set, so ECS can't pull\
-  \ the ECR image or write logs"
-objective: Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach
-  it
-xp: 275
-difficulty: advanced
+name: "Nobody to Pull the Secret"
+description: >-
+  PayrollWorks is shipping revision 2 of its payroll-api service, which reads the
+  database password from Secrets Manager (payroll/db-password) and logs to
+  CloudWatch. The release pipeline's pre-flight check refuses to promote the
+  task definition. On real Fargate this revision would die at start-up with
+  "ResourceInitializationError: unable to pull secrets". The definition in
+  task-definition.json names no execution role at all, and no suitable role
+  exists in the account.
+objective: >-
+  Ship payroll-api with a proper ECS task execution role: create it, make sure it
+  can read payroll/db-password (and no other secret), write to the payroll-api log
+  group and authenticate to the container registry, reference it from a new task
+  definition revision, and roll the payroll-api service onto that revision.
+xp: 225
+difficulty: intermediate
 expected_time: 15m
 concepts:
-- ECS
-- Fargate
-- task definitions
-- policy debugging
-- roles
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-4-execution-role-missing
-implementation_status: playable
+  - task execution role
+  - ECS trust policy
+  - Secrets Manager access
+services:
+  - ecs
+  - iam
+  - secretsmanager

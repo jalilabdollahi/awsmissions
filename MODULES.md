@@ -1,465 +1,353 @@
-# AWSMissions — Module & Level Reference
-
-> Full level-by-level breakdown for all 12 modules.
-> Each level entry includes: folder name, display name, broken state, fix, XP, time.
-
----
-
-## Module 1: IAM Foundations (20 Levels · Beginner · ~3,000 XP)
-
-**Learning goal:** Master IAM policies, roles, trust relationships, and permission debugging.  
-**Tools used:** `aws iam`, `aws sts`  
-**LocalStack services:** IAM, STS
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-empty-policy` | The Empty Statement | Policy attached to role has `"Statement": []` — all actions denied | Add an `Allow` statement with the required action and resource | 100 | 5m |
-| 2 | `level-2-deny-effect` | Wrong Side of the Law | Policy Effect is `"Deny"` instead of `"Allow"` on a basic S3 read policy | Change Effect to `"Allow"` | 100 | 5m |
-| 3 | `level-3-action-typo` | The Misspelled Gate | Policy action has typo: `"s3:GetObjcet"` — IAM rejects all GetObject calls | Fix the typo to `"s3:GetObject"` | 100 | 5m |
-| 4 | `level-4-wrong-resource` | The Locked Vault | Policy grants `s3:GetObject` on `arn:aws:s3:::wrong-bucket/*` but app reads from `mission-bucket` | Fix the resource ARN to point to the correct bucket | 125 | 8m |
-| 5 | `level-5-no-policy` | The Bare Role | IAM role exists and is attached to Lambda but has zero policies — all calls denied | Attach a managed policy or put an inline policy granting required permissions | 125 | 8m |
-| 6 | `level-6-wrong-principal` | Trust Nobody | Role trust policy has wrong account ID in Principal — `sts:AssumeRole` fails | Fix the Principal to the correct account ID (`000000000000` in LocalStack) | 150 | 10m |
-| 7 | `level-7-wrong-service-principal` | Wrong Service | Lambda execution role has `"Service": "ec2.amazonaws.com"` in trust policy — Lambda can't assume it | Change service principal to `"lambda.amazonaws.com"` | 150 | 10m |
-| 8 | `level-8-missing-passrole` | The Blocked Handoff | IAM user can create Lambda but can't assign an execution role — missing `iam:PassRole` | Add `iam:PassRole` permission on the target role to the user policy | 175 | 10m |
-| 9 | `level-9-user-no-group` | The Orphan User | IAM user exists but is in no group and has no policies attached | Create a group with a policy, add the user to the group | 125 | 8m |
-| 10 | `level-10-group-no-policy` | The Empty Club | User is in a group but the group has no policies — all actions denied | Attach a policy to the group | 125 | 8m |
-| 11 | `level-11-condition-wrong-key` | The Bad Condition | Policy has a condition block using wrong key: `"aws:sourceIp"` when it should be `"aws:SourceAccount"` — condition never matches | Fix the condition key to the correct one | 175 | 12m |
-| 12 | `level-12-condition-operator` | Almost Right | Policy condition uses `StringEquals` for a value that requires wildcard matching — use `StringLike` | Change condition operator from `StringEquals` to `StringLike` | 175 | 12m |
-| 13 | `level-13-policy-missing-version` | Time Traveler | IAM policy document missing `"Version": "2012-10-17"` — policy variables don't resolve | Add the Version field to the policy document | 125 | 8m |
-| 14 | `level-14-inline-blocks-managed` | Double Trouble | Inline policy grants S3 access but a second inline policy explicitly Denies it — Deny wins | Remove or fix the conflicting Deny policy | 200 | 15m |
-| 15 | `level-15-assume-role-no-sts` | Can't Switch Hats | User policy is missing `sts:AssumeRole` — cannot switch to the target role | Add `sts:AssumeRole` on the target role ARN | 150 | 10m |
-| 16 | `level-16-external-id-missing` | The Missing Secret Handshake | Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it — AssumeRole denied | Provide the correct ExternalId when calling `aws sts assume-role` | 200 | 15m |
-| 17 | `level-17-permission-boundary` | The Invisible Ceiling | IAM role has a permission boundary that blocks S3 access even though the identity policy allows it | Update or remove the permission boundary to allow the required actions | 225 | 15m |
-| 18 | `level-18-resource-wildcard` | Scope Creep | Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects — only that file is allowed | Change resource to `arn:aws:s3:::bucket/*` | 125 | 8m |
-| 19 | `level-19-path-mismatch` | The Wrong Path | IAM user exists at path `/ops/` but policy ARN references `/dev/` — condition on path fails | Fix the role/user path or the policy path condition | 175 | 12m |
-| 20 | `level-20-policy-size` | The Bloated Policy | Inline policy exceeds 2,048 character limit — IAM rejects the PutRolePolicy call | Refactor: extract into a managed policy and attach it | 200 | 15m |
-
----
-
-## Module 2: S3 Mastery (20 Levels · Beginner · ~3,200 XP)
-
-**Learning goal:** Master S3 buckets, policies, features, and common misconfigurations.  
-**Tools used:** `aws s3`, `aws s3api`  
-**LocalStack services:** S3
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-bucket-missing` | No Bucket, No Service | Application fails — target bucket `mission-bucket` doesn't exist | Create the bucket: `aws s3 mb s3://mission-bucket` | 100 | 5m |
-| 2 | `level-2-access-denied-read` | Keep Out | Bucket exists and has an object but GetObject is denied — bucket policy blocks all access | Fix bucket policy to allow `s3:GetObject` for the required principal | 125 | 8m |
-| 3 | `level-3-access-denied-write` | Read-Only Trap | Bucket policy only allows `s3:GetObject` — PutObject is denied | Add `s3:PutObject` to the bucket policy | 125 | 8m |
-| 4 | `level-4-versioning-disabled` | Lost History | Application expects versioned objects but versioning is disabled — previous versions unreachable | Enable versioning: `aws s3api put-bucket-versioning` | 125 | 8m |
-| 5 | `level-5-versioning-suspended` | Frozen in Time | Versioning is Suspended (not Enabled) — new versions are not created | Change versioning status from `Suspended` to `Enabled` | 150 | 10m |
-| 6 | `level-6-public-access-block` | The Force Field | Bucket policy grants public read but `BlockPublicPolicy` is true — policy silently rejected | Disable public access block: `aws s3api put-public-access-block` | 150 | 10m |
-| 7 | `level-7-cors-missing` | The CORS Complaint | Web application can't fetch objects — CORS configuration is missing entirely | Add a CORS configuration via `aws s3api put-bucket-cors` | 150 | 10m |
-| 8 | `level-8-cors-wrong-origin` | Wrong Domain Allowed | CORS is configured but allows `https://wrong-app.com` instead of `https://myapp.com` | Fix the AllowedOrigins value in the CORS rule | 150 | 10m |
-| 9 | `level-9-lifecycle-wrong-prefix` | Eternal Storage | Lifecycle rule exists to expire objects after 30 days but prefix is `logs/` while objects are under `app-logs/` — objects never expire | Fix the prefix in the lifecycle rule | 175 | 12m |
-| 10 | `level-10-lifecycle-missing` | Incomplete Uploads Pile Up | Multipart uploads are being abandoned and accumulating cost — no lifecycle rule to abort them | Add lifecycle rule: abort incomplete multipart uploads after 7 days | 175 | 12m |
-| 11 | `level-11-notification-missing` | Silent Arrivals | Lambda function should trigger on object upload — S3 event notification not configured | Add event notification: `aws s3api put-bucket-notification-configuration` | 175 | 12m |
-| 12 | `level-12-notification-wrong-event` | Wrong Trigger | S3 event notification is configured but targets `s3:ObjectRemoved:*` instead of `s3:ObjectCreated:*` | Fix the event type in the notification configuration | 150 | 10m |
-| 13 | `level-13-encryption-missing` | Plaintext Exposure | Bucket has no default encryption — objects stored unencrypted | Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption` | 150 | 10m |
-| 14 | `level-14-bucket-policy-syntax` | The Broken Gate | Bucket policy JSON has a syntax error (missing closing bracket) — policy rejected | Fix the JSON syntax in the bucket policy | 125 | 8m |
-| 15 | `level-15-acl-too-open` | Public by Accident | Bucket ACL is set to `public-read` — all objects are publicly readable | Change ACL to `private`: `aws s3api put-bucket-acl --acl private` | 125 | 8m |
-| 16 | `level-16-static-website-missing` | Silent Website | Static website hosting is disabled — requests return `NoSuchWebsiteConfiguration` | Enable static website hosting with index.html and error.html | 150 | 10m |
-| 17 | `level-17-logging-disabled` | No Paper Trail | S3 server access logging is disabled — access logs not being collected | Enable logging: `aws s3api put-bucket-logging` | 150 | 10m |
-| 18 | `level-18-object-lock-wrong-mode` | Too Flexible | Object lock is in `GOVERNANCE` mode but compliance requirements need `COMPLIANCE` mode | Change retention mode to `COMPLIANCE` on the object | 200 | 15m |
-| 19 | `level-19-wrong-storage-class` | Expensive Archive | Frequently accessed objects are set to `GLACIER` storage class — retrieval takes hours | Change storage class to `STANDARD` via copy with metadata replacement | 175 | 12m |
-| 20 | `level-20-requester-pays-wrong` | Unexpected Bills | Bucket has `requester-pays` enabled — callers are being charged unexpectedly | Disable requester pays: `aws s3api put-bucket-request-payment --payer BucketOwner` | 175 | 12m |
-
----
-
-## Module 3: Lambda Functions (18 Levels · Beginner · ~3,150 XP)
-
-**Learning goal:** Deploy, configure, and debug Lambda functions.  
-**Tools used:** `aws lambda`, `aws iam`, `aws logs`  
-**LocalStack services:** Lambda, IAM, S3, CloudWatch Logs
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-function-missing` | No Function Found | Invocation fails — Lambda function `mission-function` doesn't exist | Deploy the function using `aws lambda create-function` | 100 | 5m |
-| 2 | `level-2-wrong-runtime` | Deprecated Engine | Function uses runtime `python3.6` (deprecated/unsupported) — invocation fails | Update runtime to `python3.11`: `aws lambda update-function-configuration` | 125 | 8m |
-| 3 | `level-3-handler-wrong` | The Missing Door | Function is deployed but handler is `main.handler` — file is actually `index.py` with function `lambda_handler` | Fix handler to `index.lambda_handler` | 125 | 8m |
-| 4 | `level-4-role-missing` | The Roleless Function | Function has no execution role set — invocation rejected | Create an IAM role with Lambda trust policy and assign it to the function | 150 | 10m |
-| 5 | `level-5-role-wrong-service` | Wrong Trust | Execution role exists but trust policy has `ec2.amazonaws.com` instead of `lambda.amazonaws.com` | Fix the trust relationship on the role | 150 | 10m |
-| 6 | `level-6-env-var-missing` | The Blank Config | Function code reads `os.environ['DATABASE_URL']` but the env var is not set — KeyError on invocation | Add the environment variable via `aws lambda update-function-configuration --environment` | 125 | 8m |
-| 7 | `level-7-timeout-too-low` | Three Seconds and Out | Function needs 30 seconds to process but timeout is 3s — always times out | Increase timeout to 60s: `aws lambda update-function-configuration --timeout 60` | 125 | 8m |
-| 8 | `level-8-memory-too-low` | Out of Memory | Function crashes with memory error — configured at 128MB, needs 512MB | Increase memory: `aws lambda update-function-configuration --memory-size 512` | 125 | 8m |
-| 9 | `level-9-concurrency-zero` | The Throttled Function | Function has reserved concurrency set to `0` — all invocations are throttled immediately | Remove or increase reserved concurrency: `aws lambda put-function-concurrency` | 150 | 10m |
-| 10 | `level-10-dlq-missing` | Lost on Failure | Async invocation fails silently — no dead-letter queue configured | Configure DLQ: `aws lambda update-function-configuration --dead-letter-config` | 175 | 12m |
-| 11 | `level-11-layer-wrong-arn` | Missing Dependency | Function references a Lambda layer ARN that doesn't exist — init fails | Create the layer and update the function to use the correct ARN | 200 | 15m |
-| 12 | `level-12-trigger-missing` | The Silent Upload | S3 bucket receives files but Lambda is never triggered — event source mapping missing | Add S3 notification configuration pointing to the Lambda function | 175 | 12m |
-| 13 | `level-13-trigger-wrong-bucket` | Watching the Wrong Door | S3 trigger is configured but points to `wrong-bucket` instead of `uploads-bucket` | Fix the event source to point to the correct bucket | 150 | 10m |
-| 14 | `level-14-resource-policy-missing` | Permission Denied by Lambda | S3 configured to invoke Lambda but Lambda resource policy doesn't allow S3 service | Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com` principal | 200 | 15m |
-| 15 | `level-15-alias-wrong-version` | The Ghost Alias | Lambda alias `production` points to version `5` which was deleted — invocations fail | Update alias to point to an existing version or `$LATEST` | 175 | 12m |
-| 16 | `level-16-vpc-no-subnet` | Stranded in VPC | Lambda has VPC config but `SubnetIds` is empty — deployment fails | Add the correct subnet IDs to VPC configuration | 175 | 12m |
-| 17 | `level-17-vpc-no-sg` | Unguarded VPC | Lambda VPC config has subnets but no security groups — cannot configure network interface | Add at least one security group to the VPC configuration | 175 | 12m |
-| 18 | `level-18-function-url-auth` | The Locked Door | Lambda function URL is configured with `AuthType: AWS_IAM` — public HTTP requests return 403 | Change AuthType to `NONE` for public access: `aws lambda update-function-url-config` | 150 | 10m |
-
----
-
-## Module 4: DynamoDB (15 Levels · Intermediate · ~3,375 XP)
-
-**Learning goal:** Create and configure DynamoDB tables, indexes, and access patterns.  
-**Tools used:** `aws dynamodb`  
-**LocalStack services:** DynamoDB
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-table-missing` | No Table, No Data | Application fails — DynamoDB table `MissionTable` doesn't exist | Create the table with the correct key schema via `aws dynamodb create-table` | 150 | 8m |
-| 2 | `level-2-wrong-key-type` | Type Mismatch | Table's hash key `userId` is defined as type `N` (Number) but application sends String values — all writes rejected | Delete and recreate table with hash key type `S` (String) | 200 | 12m |
-| 3 | `level-3-missing-sort-key` | One Key Short | Table has only a hash key but the application queries with both hash + sort key — query fails | Recreate table with both partition key and sort key | 200 | 15m |
-| 4 | `level-4-gsi-missing` | No Index, No Query | Application queries a GSI named `email-index` but the index doesn't exist on the table | Add the GSI via table update: `aws dynamodb update-table` | 250 | 15m |
-| 5 | `level-5-gsi-wrong-key` | Wrong Index Key | GSI `email-index` exists but is keyed on `username` instead of `email` — queries return nothing | Delete the wrong GSI and create a new one with the correct key attribute | 250 | 15m |
-| 6 | `level-6-capacity-throttle` | Out of Capacity | Table is in PROVISIONED mode with 1 RCU/WCU — application load causes constant throttling | Increase provisioned capacity or switch to PAY_PER_REQUEST | 200 | 12m |
-| 7 | `level-7-billing-mode-wrong` | Provisionless Pain | Application has spiky unpredictable traffic but table is in PROVISIONED mode with no auto-scaling | Change billing mode to `PAY_PER_REQUEST` | 200 | 12m |
-| 8 | `level-8-ttl-disabled` | Eternal Records | Application expects expired records to be cleaned up automatically — TTL is not enabled | Enable TTL on the `expiresAt` attribute: `aws dynamodb update-time-to-live` | 175 | 10m |
-| 9 | `level-9-streams-disabled` | The Silent Table | Lambda should process every table change — DynamoDB Streams are disabled | Enable streams: `aws dynamodb update-table --stream-specification StreamEnabled=true` | 225 | 12m |
-| 10 | `level-10-lsi-missing` | Local Index Gap | Application queries with a Local Secondary Index `status-index` that doesn't exist — LSI must be created at table creation time | Delete and recreate table with the LSI included | 275 | 20m |
-| 11 | `level-11-projection-wrong` | Half the Picture | GSI `category-index` has `ProjectionType: KEYS_ONLY` but application needs all attributes | Delete the GSI and recreate it with `ProjectionType: ALL` | 250 | 15m |
-| 12 | `level-12-pitr-disabled` | No Safety Net | Compliance requires Point-in-Time Recovery — it's disabled on the table | Enable PITR: `aws dynamodb update-continuous-backups` | 175 | 10m |
-| 13 | `level-13-condition-blocks-write` | The Overprotective Guard | PutItem has a ConditionExpression `attribute_not_exists(id)` that prevents updating an existing item | Remove or change the condition expression to allow the update | 250 | 15m |
-| 14 | `level-14-reserved-word-attr` | Reserved Words | Attribute name `status` is a DynamoDB reserved word — query using it as an expression attribute fails | Use Expression Attribute Names (`#s = :val`) in the query | 225 | 15m |
-| 15 | `level-15-scan-instead-of-query` | Full Table Scan | Application uses `Scan` on a large table with a filter — extremely slow and expensive | Identify the proper key schema and rewrite as a `Query` operation | 300 | 20m |
-
----
-
-## Module 5: SQS & SNS (15 Levels · Intermediate · ~3,375 XP)
-
-**Learning goal:** Configure queues, topics, subscriptions, and common messaging pitfalls.  
-**Tools used:** `aws sqs`, `aws sns`  
-**LocalStack services:** SQS, SNS
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-queue-missing` | No Queue | Application sends messages but queue `mission-queue` doesn't exist | Create the SQS queue: `aws sqs create-queue` | 150 | 8m |
-| 2 | `level-2-wrong-queue-url` | Wrong Address | Application is configured with an incorrect queue URL — messages going nowhere | Retrieve the correct URL: `aws sqs get-queue-url` and update the config | 150 | 8m |
-| 3 | `level-3-visibility-too-low` | Message Ghost | Visibility timeout is 5 seconds — workers take 30s to process, messages become visible again and are re-processed | Increase visibility timeout to 60s: `aws sqs set-queue-attributes` | 200 | 12m |
-| 4 | `level-4-dlq-missing` | No Safety Net | Queue has no Dead Letter Queue — failed messages disappear after max receive count | Create a DLQ and configure redrive policy on the source queue | 225 | 15m |
-| 5 | `level-5-dlq-wrong-arn` | Lost DLQ | DLQ is configured but the ARN points to a non-existent queue — redrive fails silently | Fix the DLQ ARN in the redrive policy | 200 | 12m |
-| 6 | `level-6-max-receive-zero` | Zero Tolerance | `maxReceiveCount` in redrive policy is set to `0` — messages go to DLQ immediately on first receive | Set `maxReceiveCount` to a reasonable value (e.g., 3) | 175 | 10m |
-| 7 | `level-7-fifo-missing` | Order Ignored | Application requires ordered message processing (FIFO) but a Standard queue was created | Create a new FIFO queue (`.fifo` suffix) and update application config | 225 | 15m |
-| 8 | `level-8-fifo-no-deduplication` | Duplicate Messages | FIFO queue exists but `ContentBasedDeduplication` is disabled and application doesn't provide `MessageDeduplicationId` — duplicates processed | Enable content-based deduplication on the FIFO queue | 200 | 12m |
-| 9 | `level-9-queue-policy-missing` | SNS Can't Send | SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send — messages lost | Add queue policy allowing SNS service to `sqs:SendMessage` | 250 | 15m |
-| 10 | `level-10-topic-missing` | No Topic | Application publishes to SNS topic `mission-topic` that doesn't exist | Create the SNS topic: `aws sns create-topic` | 150 | 8m |
-| 11 | `level-11-subscription-missing` | Topic, No Subscribers | SNS topic exists but has no subscriptions — published messages go nowhere | Subscribe the SQS queue to the topic: `aws sns subscribe` | 175 | 10m |
-| 12 | `level-12-subscription-wrong-endpoint` | Wrong Endpoint | SNS subscription exists but targets wrong SQS queue ARN | Delete and re-create subscription with correct endpoint ARN | 175 | 10m |
-| 13 | `level-13-filter-policy-blocks-all` | The Silence Filter | SNS subscription has a filter policy `{"eventType": ["nonexistent"]}` — no messages pass through | Fix or remove the filter policy to allow relevant message attributes | 250 | 15m |
-| 14 | `level-14-raw-delivery-missing` | Double-Wrapped | Lambda expects raw message body but SNS wraps it in an envelope — JSON parsing fails | Enable `RawMessageDelivery` on the SNS-to-SQS subscription | 225 | 15m |
-| 15 | `level-15-message-too-large` | Message Size Exceeded | Application sends 300KB messages — SQS limit is 256KB — sends fail | Use the SQS Extended Client pattern: store payload in S3, send S3 reference in queue | 300 | 20m |
-
----
-
-## Module 6: CloudWatch & Logging (15 Levels · Intermediate · ~3,375 XP)
-
-**Learning goal:** Set up logging, metrics, alarms, and EventBridge rules.  
-**Tools used:** `aws logs`, `aws cloudwatch`, `aws events`  
-**LocalStack services:** CloudWatch Logs, CloudWatch Metrics, EventBridge
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-log-group-missing` | Where Are My Logs? | Lambda function writes logs but log group `/aws/lambda/mission-function` doesn't exist — logs dropped | Create the log group: `aws logs create-log-group` | 150 | 8m |
-| 2 | `level-2-retention-not-set` | Infinite Log Growth | Log group exists but retention is set to `Never` — logs accumulate indefinitely | Set retention policy to 30 days: `aws logs put-retention-policy` | 150 | 8m |
-| 3 | `level-3-log-stream-missing` | Stream Doesn't Exist | Application tries to write to a specific log stream that doesn't exist | Create the log stream: `aws logs create-log-stream` | 150 | 8m |
-| 4 | `level-4-metric-filter-wrong-pattern` | Filter Catches Nothing | Metric filter exists to count ERROR logs but pattern is `[ERROR]` when logs use `ERROR:` format | Fix the filter pattern to match actual log format | 200 | 12m |
-| 5 | `level-5-alarm-missing` | Silent Failure | Error metric is being published but no CloudWatch alarm is configured — nobody gets alerted | Create a CloudWatch alarm on the error metric | 200 | 12m |
-| 6 | `level-6-alarm-wrong-threshold` | Always Firing | Alarm threshold is `0` — alarm fires constantly even with zero errors | Set a reasonable threshold (e.g., `5`) for the alarm | 175 | 10m |
-| 7 | `level-7-alarm-no-action` | The Mute Alarm | Alarm fires (changes state to ALARM) but no action is configured — nobody is notified | Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm` | 200 | 12m |
-| 8 | `level-8-alarm-wrong-comparison` | Backwards Alarm | Alarm uses `LessThanThreshold` to detect high error counts — should be `GreaterThanThreshold` | Fix the comparison operator on the alarm | 175 | 10m |
-| 9 | `level-9-alarm-wrong-period` | Too Granular | Alarm evaluation period is 10s but the metric is published every 5 minutes — alarm never evaluates | Fix period to match metric publish interval (300 seconds) | 200 | 12m |
-| 10 | `level-10-log-insights-syntax` | Query Crash | CloudWatch Logs Insights query has a syntax error — query fails to execute | Fix the query syntax (check `fields`, `filter`, `stats` commands) | 225 | 15m |
-| 11 | `level-11-event-rule-disabled` | Rule Is Off | EventBridge rule exists but its state is `DISABLED` — no events are delivered | Enable the rule: `aws events enable-rule` | 150 | 8m |
-| 12 | `level-12-event-rule-wrong-target` | Wrong Destination | EventBridge rule has the wrong Lambda ARN as target | Update the rule target to the correct Lambda ARN | 175 | 10m |
-| 13 | `level-13-event-pattern-wrong` | Mismatched Pattern | EventBridge rule has `"source": ["aws.ec3"]` (typo) instead of `"aws.ec2"` — events never match | Fix the event pattern | 175 | 10m |
-| 14 | `level-14-composite-alarm-inverted` | Logic Flipped | Composite alarm uses `ALARM(alarm-a) AND NOT ALARM(alarm-b)` but should trigger when both are in ALARM | Fix the composite alarm rule expression | 275 | 18m |
-| 15 | `level-15-missing-iam-for-logs` | No Permission to Write | Lambda execution role is missing `logs:CreateLogStream` and `logs:PutLogEvents` permissions | Add CloudWatch Logs permissions to the Lambda execution role | 225 | 12m |
-
----
-
-## Module 7: EC2 & Networking (15 Levels · Intermediate · ~3,750 XP)
-
-**Learning goal:** Configure security groups, VPC networking, and EC2 basics.  
-**Tools used:** `aws ec2`  
-**LocalStack services:** EC2, VPC
-
-> Note: LocalStack free tier has partial EC2 support. Levels focus on security groups, VPCs, subnets, and route tables — areas with strong LocalStack support.
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-sg-missing` | No Security Group | Instance launch fails — no security group specified and no default SG exists in VPC | Create a security group and reference it in the instance config | 175 | 10m |
-| 2 | `level-2-sg-no-inbound` | The Closed Door | Security group exists but has no inbound rules — all inbound traffic blocked (port 22, 80, 443) | Add inbound rules for the required ports | 175 | 10m |
-| 3 | `level-3-sg-wrong-port` | Port Mismatch | Security group allows port 8080 inbound but application runs on port 80 | Fix the security group inbound rule to allow port 80 | 175 | 10m |
-| 4 | `level-4-sg-wrong-cidr` | Too Restrictive CIDR | Security group inbound rule has CIDR `0.0.0.0/32` (single IP) instead of `0.0.0.0/0` | Fix the CIDR block on the inbound rule | 175 | 10m |
-| 5 | `level-5-sg-egress-blocked` | No Way Out | Security group has a custom outbound rule that blocks all egress — app can't reach external APIs | Remove the blocking egress rule or add an allow-all egress rule | 200 | 12m |
-| 6 | `level-6-vpc-missing` | No Network | Application requires a VPC with specific CIDR block — only the default VPC exists | Create a new VPC: `aws ec2 create-vpc --cidr-block 10.0.0.0/16` | 200 | 12m |
-| 7 | `level-7-subnet-missing` | No Subnets | VPC exists but has no subnets — instances cannot be launched | Create public and private subnets in the VPC | 225 | 15m |
-| 8 | `level-8-igw-not-attached` | Internet Gap | Internet gateway exists but is not attached to the VPC — no internet access | Attach the IGW to the VPC: `aws ec2 attach-internet-gateway` | 225 | 15m |
-| 9 | `level-9-route-table-missing` | No Route to Internet | VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0` via IGW | Add route: `aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id igw-xxx` | 250 | 15m |
-| 10 | `level-10-subnet-not-associated` | Route Table Orphan | Route table has correct routes but is not associated with the subnet | Associate route table with subnet: `aws ec2 associate-route-table` | 225 | 15m |
-| 11 | `level-11-nacl-blocking-http` | Firewall in the Way | Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule — HTTP blocked | Fix NACL rule order (lower rule number = higher priority) or remove the DENY rule | 275 | 18m |
-| 12 | `level-12-iam-instance-profile-missing` | EC2 Can't Talk to AWS | Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile | Create instance profile with IAM role and associate it with the instance | 250 | 15m |
-| 13 | `level-13-key-pair-missing` | No SSH Key | Instance launched without a key pair — SSH access impossible | Create a key pair and re-launch instance with it | 225 | 15m |
-| 14 | `level-14-public-ip-disabled` | Invisible Instance | Instance in public subnet but `AssociatePublicIpAddress` is false — no public IP | Enable auto-assign public IP on the subnet or allocate an Elastic IP | 250 | 15m |
-| 15 | `level-15-sg-missing-self-reference` | Cluster Can't Talk | Auto Scaling group instances need to communicate with each other — security group missing a self-referencing rule | Add an inbound rule referencing the security group ID as source | 275 | 18m |
-
----
-
-## Module 8: CloudFormation (18 Levels · Intermediate · ~4,950 XP)
-
-**Learning goal:** Write, debug, and manage CloudFormation stacks.  
-**Tools used:** `aws cloudformation`  
-**LocalStack services:** CloudFormation, IAM, S3, Lambda, SQS
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-yaml-syntax` | Parse Error | CFN template has a YAML indentation error — stack creation fails immediately | Fix the YAML syntax error in the template | 150 | 8m |
-| 2 | `level-2-wrong-resource-type` | Unknown Resource | Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` — CREATE_FAILED | Fix the resource type name | 150 | 8m |
-| 3 | `level-3-missing-required-property` | Missing Requirement | `AWS::SQS::Queue` resource is missing required `QueueName` — wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required) | Add the missing required property | 175 | 10m |
-| 4 | `level-4-parameter-no-default` | No Default Value | Template has a Parameter with no Default and no value passed at deploy — create fails | Either add a Default value or pass the parameter at stack creation | 175 | 10m |
-| 5 | `level-5-parameter-wrong-type` | Type Collision | Parameter declared as `Type: Number` but value passed is a string — validation error | Fix parameter type or the value being passed | 175 | 10m |
-| 6 | `level-6-ref-nonexistent` | Missing Reference | `!Ref MyBucket` references a logical ID `MyBucket` that doesn't exist in the template | Add the missing resource or fix the reference name | 175 | 10m |
-| 7 | `level-7-getatt-wrong-attribute` | Wrong Attribute | `!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` — depends on resource type | Fix the attribute name in the GetAtt reference | 200 | 12m |
-| 8 | `level-8-circular-dependency` | Going in Circles | Resource A has `DependsOn: B` and B has `DependsOn: A` — circular dependency error | Break the circular dependency by removing one DependsOn or restructuring resources | 275 | 18m |
-| 9 | `level-9-rollback-complete` | Stack Stuck | Stack is in `ROLLBACK_COMPLETE` state from a previous failed create — cannot update | Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be updated) | 200 | 12m |
-| 10 | `level-10-output-export-duplicate` | Name Conflict | Two stacks both export a value with the same name `SharedBucketName` — second stack fails | Change the export name in one of the stacks to be unique | 225 | 15m |
-| 11 | `level-11-importvalue-wrong-name` | Broken Cross-Stack Link | `!ImportValue SharedBucketName` — but the export is actually named `mission-SharedBucketName` | Fix the ImportValue key to match the exact export name | 200 | 12m |
-| 12 | `level-12-condition-inverted` | Wrong Condition Logic | Condition `IsProduction: !Equals [!Ref Env, dev]` — logic is inverted (true when env is dev, not prod) | Fix the condition expression | 225 | 15m |
-| 13 | `level-13-deletion-policy-delete` | Dangerous Delete | S3 bucket resource has no `DeletionPolicy` (defaults to Delete) — stack deletion will wipe data | Add `DeletionPolicy: Retain` to the bucket resource | 200 | 12m |
-| 14 | `level-14-stack-policy-blocks` | Policy Lock | Stack update policy prevents changes to the S3 bucket resource — update fails | Update or remove the stack policy: `aws cloudformation set-stack-policy` | 250 | 15m |
-| 15 | `level-15-mapping-wrong-key` | Missing Map Entry | `!FindInMap [RegionMap, !Ref AWS::Region, AMI]` — the `us-east-1` key is missing from the Mappings section | Add the missing key to the Mappings section | 200 | 12m |
-| 16 | `level-16-transform-missing` | SAM Template Rejected | Template uses `AWS::Serverless::Function` but is missing `Transform: AWS::Serverless-2016-10-31` | Add the Transform declaration at the template root | 225 | 15m |
-| 17 | `level-17-stack-drift` | Reality Diverged | Stack resources were manually modified outside CFN — stack has drifted | Detect drift: `aws cloudformation detect-stack-drift`, then reconcile by updating the stack | 300 | 20m |
-| 18 | `level-18-nested-stack-wrong-url` | Nested Stack 404 | Nested stack references a template URL in S3 that doesn't exist or has wrong path | Upload the template to S3 and fix the TemplateURL property | 275 | 18m |
-
----
-
-## Module 9: Secrets & Config (15 Levels · Advanced · ~4,500 XP)
-
-**Learning goal:** Manage encryption keys, secrets, and configuration securely.  
-**Tools used:** `aws kms`, `aws secretsmanager`, `aws ssm`  
-**LocalStack services:** KMS, Secrets Manager, SSM Parameter Store
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-kms-key-missing` | No Key | Application tries to encrypt using KMS key alias `alias/mission-key` — key doesn't exist | Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias` | 250 | 15m |
-| 2 | `level-2-kms-key-disabled` | Disabled Key | KMS key exists but is disabled — encrypt/decrypt operations fail with `DisabledException` | Enable the key: `aws kms enable-key` | 225 | 12m |
-| 3 | `level-3-kms-key-policy-missing` | No Key Permission | KMS key exists and is enabled but key policy doesn't grant the IAM role permission to use it | Update the key policy to grant `kms:Encrypt`, `kms:Decrypt` to the role | 300 | 18m |
-| 4 | `level-4-kms-wrong-alias` | Wrong Key Name | Application uses `alias/production-key` but key was created with alias `alias/prod-key` | Create the correct alias or update application config | 225 | 12m |
-| 5 | `level-5-secret-missing` | No Secret | Application calls `GetSecretValue` for `mission/db-password` — secret doesn't exist | Create the secret: `aws secretsmanager create-secret` | 250 | 15m |
-| 6 | `level-6-secret-wrong-key` | Wrong Key in JSON | Secret exists as JSON `{"password": "abc123"}` but application reads key `db_password` | Update the secret value to use the correct JSON key | 250 | 15m |
-| 7 | `level-7-secret-no-permission` | Access Denied to Secret | Secret exists but IAM role is missing `secretsmanager:GetSecretValue` permission | Add the required permission to the role policy | 275 | 15m |
-| 8 | `level-8-secret-wrong-version` | Wrong Version | Application pinned to a specific secret version that no longer exists (was rotated) | Update application to use `AWSCURRENT` stage or fix the version reference | 300 | 18m |
-| 9 | `level-9-secret-rotation-broken` | Stale Credentials | Secret rotation was configured but rotation Lambda ARN is wrong — secret is never rotated | Fix the rotation Lambda ARN: `aws secretsmanager rotate-secret` with correct config | 325 | 20m |
-| 10 | `level-10-ssm-parameter-missing` | Missing Config | Application reads SSM parameter `/mission/config/db-host` — parameter doesn't exist | Create the parameter: `aws ssm put-parameter` | 225 | 12m |
-| 11 | `level-11-ssm-wrong-type` | Plaintext Secret | SSM parameter `/mission/config/api-key` is stored as `String` type — should be `SecureString` (encrypted) | Delete and recreate as SecureString: `aws ssm put-parameter --type SecureString` | 250 | 15m |
-| 12 | `level-12-ssm-wrong-path` | Path Confusion | Application reads `/production/db/password` but parameter was created at `/prod/db/password` | Create parameter at the correct path or fix the application path config | 225 | 12m |
-| 13 | `level-13-ssm-no-permission` | SSM Blocked | ECS task role is missing `ssm:GetParameter` permission — task crashes at startup | Add `ssm:GetParameter` and `ssm:GetParameters` to the task role | 275 | 15m |
-| 14 | `level-14-kms-key-rotation` | Rotation Breaks Decrypt | KMS key rotation was enabled but application has old key ARN hardcoded — decryption fails after rotation | Update application to use key alias instead of key ARN (aliases track rotation automatically) | 350 | 20m |
-| 15 | `level-15-hardcoded-credentials` | Credentials in Code | Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded in environment variables | Remove hardcoded credentials, create proper IAM execution role with required permissions | 375 | 25m |
-
----
-
-## Module 10: ECS & Containers (15 Levels · Advanced · ~4,500 XP)
-
-**Learning goal:** Deploy and debug containerized workloads on ECS with Fargate.  
-**Tools used:** `aws ecs`, `aws ecr`, `aws iam`  
-**LocalStack services:** ECS, ECR, IAM, CloudWatch Logs
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-cluster-missing` | No Cluster | ECS service create fails — cluster `mission-cluster` doesn't exist | Create cluster: `aws ecs create-cluster --cluster-name mission-cluster` | 225 | 12m |
-| 2 | `level-2-task-definition-missing` | No Task Definition | Service references task definition `mission-task` with no revision registered | Register the task definition: `aws ecs register-task-definition` | 250 | 15m |
-| 3 | `level-3-wrong-cpu-memory` | Invalid Config | Fargate task definition has CPU `256` with memory `256` — Fargate requires memory >= 512MB for 256 CPU units | Fix memory to a valid Fargate combination (256 CPU → 512, 1024, or 2048 MB) | 250 | 15m |
-| 4 | `level-4-execution-role-missing` | Can't Pull Image | Task fails to start — no `executionRoleArn` set, so ECS can't pull the ECR image or write logs | Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach it | 275 | 15m |
-| 5 | `level-5-task-role-wrong-perms` | App Can't Access AWS | Task starts but application inside container can't read from S3 — task role has no S3 permission | Add S3 read permissions to the task IAM role | 275 | 15m |
-| 6 | `level-6-ecr-image-missing` | No Image Found | Task definition references ECR image that doesn't exist — task fails to pull | Push a valid image to ECR: `docker build`, `aws ecr get-login-password`, `docker push` | 300 | 20m |
-| 7 | `level-7-container-port-wrong` | Port Mismatch | Task definition exposes port 8080 but load balancer target group expects port 80 | Fix containerPort in task definition or update target group | 275 | 15m |
-| 8 | `level-8-service-desired-zero` | Zero Tasks | Service exists but `desiredCount` is 0 — no tasks running | Update service: `aws ecs update-service --desired-count 2` | 225 | 12m |
-| 9 | `level-9-env-var-missing` | App Crash at Startup | Task starts but application crashes because required env var `APP_MODE` not in task definition | Add the environment variable to the task definition container config | 250 | 15m |
-| 10 | `level-10-secrets-wrong-arn` | Secret Not Found | Task definition references Secrets Manager ARN that doesn't exist — task fails to start | Fix the ARN in the `secrets` section of the task definition | 300 | 18m |
-| 11 | `level-11-health-check-wrong` | Permanently Unhealthy | Container health check command is `CMD ["curl", "http://localhost/wrong-path"]` — always fails | Fix the health check path to match the actual application health endpoint | 275 | 15m |
-| 12 | `level-12-log-driver-wrong` | No Logs | Task definition uses `journald` log driver — ECS Fargate only supports `awslogs` | Change `logDriver` to `awslogs` and configure the `awslogs-group` option | 275 | 15m |
-| 13 | `level-13-subnet-no-nat` | No Internet in Private | Fargate task in private subnet with no NAT gateway — task can't pull image or reach AWS APIs | Either move to public subnet or note that NAT gateway is needed (add route via NAT) | 325 | 20m |
-| 14 | `level-14-sg-no-outbound` | Locked Container | Security group has no outbound rules — task can't pull image or call AWS services | Add egress rule allowing all outbound: `0.0.0.0/0` | 250 | 15m |
-| 15 | `level-15-service-discovery-missing` | Can't Find Service | Service A tries to reach Service B via DNS `service-b.local` — no Cloud Map service discovery configured | Set up AWS Cloud Map namespace and service, link to ECS service | 375 | 25m |
-
----
-
-## Module 11: API Gateway (12 Levels · Advanced · ~3,900 XP)
-
-**Learning goal:** Build and debug REST APIs with Lambda integrations.  
-**Tools used:** `aws apigateway`, `aws lambda`  
-**LocalStack services:** API Gateway, Lambda, IAM
-
-| # | Folder | Name | Broken State | Fix | XP | Time |
-|---|--------|------|-------------|-----|----|------|
-| 1 | `level-1-api-missing` | No API Exists | REST API `mission-api` doesn't exist — client gets connection refused | Create the REST API: `aws apigateway create-rest-api` | 250 | 15m |
-| 2 | `level-2-resource-missing` | No Path Configured | API exists but the `/items` resource path doesn't exist — 404 on all requests | Create the resource: `aws apigateway create-resource` with correct path part | 250 | 15m |
-| 3 | `level-3-method-wrong` | Wrong HTTP Method | `POST /items` resource only has a `GET` method configured — POST returns 405 | Add a POST method to the resource | 275 | 15m |
-| 4 | `level-4-integration-missing` | No Backend | Method exists but has no integration — request returns empty 200 | Add Lambda proxy integration: `aws apigateway put-integration` | 300 | 18m |
-| 5 | `level-5-integration-wrong-arn` | Wrong Lambda | Integration exists but Lambda ARN points to non-existent function | Fix the URI in the integration to use the correct Lambda ARN | 275 | 15m |
-| 6 | `level-6-lambda-permission-missing` | API Can't Invoke Lambda | Integration is correct but API Gateway can't invoke Lambda — missing resource policy | Add Lambda permission: `aws lambda add-permission` for `apigateway.amazonaws.com` | 300 | 18m |
-| 7 | `level-7-not-deployed` | API Not Live | API is fully configured but never deployed to a stage — all requests fail | Deploy the API: `aws apigateway create-deployment --stage-name prod` | 250 | 15m |
-| 8 | `level-8-cors-missing` | CORS Error | API works from CLI but web browser gets CORS error — OPTIONS method and CORS headers not configured | Enable CORS on the resource (add OPTIONS method + response headers) | 325 | 20m |
-| 9 | `level-9-throttle-zero` | All Requests Throttled | Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` — every request throttled | Update stage settings to allow reasonable throttle limits | 275 | 15m |
-| 10 | `level-10-auth-wrong` | Authorization Required | API requires AWS_IAM authorization but client expects no auth — all requests 403 | Change method authorization to `NONE` or provide correct SigV4 headers | 325 | 20m |
-| 11 | `level-11-mapping-template-wrong` | Garbled Request | Mapping template transforms request body but uses wrong field name — Lambda receives null values | Fix the VTL mapping template to correctly map request fields | 375 | 25m |
-| 12 | `level-12-api-key-no-plan` | API Key Rejected | API requires API key but no usage plan exists associating the key to the stage | Create usage plan, associate API stage, and link API key to usage plan | 375 | 25m |
-
----
-
-## Module 12: Production War Games (18 Levels · Expert · ~7,200 XP)
-
-**Learning goal:** Debug complex multi-service failures that mirror real-world production incidents.  
-Each war game has 2–4 simultaneous issues to find and fix.  
-**Tools used:** All previous services  
-**LocalStack services:** All services
-
-| # | Folder | Name | Broken State (Multiple Issues) | XP | Time |
-|---|--------|------|-------------------------------|-----|------|
-| 1 | `level-1-lambda-cant-read-s3` | The Blocked Pipeline | Lambda role missing `s3:GetObject` AND bucket policy has explicit Deny for Lambda role | 400 | 25m |
-| 2 | `level-2-sns-sqs-lambda-broken` | The Silent Chain | SNS→SQS→Lambda pipeline: SQS queue policy missing (SNS can't send) + Lambda concurrency is 0 | 450 | 30m |
-| 3 | `level-3-alarm-never-fires` | The Blind System | Error metric filter uses wrong pattern + alarm threshold inverted + alarm has no SNS action | 450 | 30m |
-| 4 | `level-4-s3-trigger-broken` | Upload Goes Nowhere | S3 event notification on wrong bucket + Lambda resource policy missing principal + DLQ not configured | 450 | 30m |
-| 5 | `level-5-api-gateway-full-break` | The Dead API | API deployed to wrong stage + Lambda ARN wrong + CORS missing + throttle is zero | 500 | 35m |
-| 6 | `level-6-ecs-wont-start` | Container Chaos | ECS task: execution role missing + wrong ECR image ARN + health check command wrong | 500 | 35m |
-| 7 | `level-7-dynamodb-lambda-stream` | Stream Silence | DynamoDB Streams disabled + Lambda event source mapping wrong stream ARN + Lambda role missing `dynamodb:GetRecords` | 475 | 30m |
-| 8 | `level-8-cfn-stack-broken` | Stack Refuses to Update | Stack in ROLLBACK_COMPLETE + export name conflict + deletion policy missing on RDS | 475 | 35m |
-| 9 | `level-9-secrets-rotation-cascade` | The Credential Crisis | Secret ARN changed after rotation + Lambda env var has old ARN + IAM policy uses ARN not name | 500 | 35m |
-| 10 | `level-10-cross-account-role` | The Missing Bridge | Assume-role fails: wrong Principal in trust policy + missing ExternalId condition + user missing sts:AssumeRole | 500 | 35m |
-| 11 | `level-11-iam-privilege-escalation` | Security Audit | Role has `iam:CreateRole` + `iam:AttachRolePolicy` + `iam:PassRole` — can create admin role and escalate | Identify and remove over-permissive IAM capabilities | 550 | 40m |
-| 12 | `level-12-public-s3-exposure` | Data Exposure Incident | S3 bucket has public access block disabled + bucket ACL is public-read + bucket policy allows `*` principal | Find all three vectors and lock down the bucket | 550 | 40m |
-| 13 | `level-13-sqs-message-pileup` | Queue Meltdown | DLQ ARN wrong in redrive policy + visibility timeout too low + no alarm on DLQ depth | 475 | 30m |
-| 14 | `level-14-cloudwatch-observability-gap` | Flying Blind | Lambda has no log group + metric filter on wrong log group + alarm period mismatch + no SNS action | 500 | 35m |
-| 15 | `level-15-ecs-networking-labyrinth` | The Unreachable Service | ECS task in private subnet + no NAT route + security group blocks 443 egress + execution role missing ecr permission | 550 | 40m |
-| 16 | `level-16-kms-breaks-everything` | Encryption Lockout | KMS key disabled + key policy missing IAM role + Lambda uses hardcoded key ARN (not alias) after rotation | 550 | 40m |
-| 17 | `level-17-api-auth-lockout` | The Auth Maze | API Gateway: IAM auth enabled + Lambda permission missing + usage plan throttle is zero + CORS blocks browser | 575 | 45m |
-| 18 | `level-18-full-stack-incident` | The Production Incident | Complete app stack broken: CloudFormation drift + IAM permission removed + S3 bucket policy expired + Lambda concurrency at 0 + CloudWatch alarm silenced | 600 | 60m |
-
----
-
-## Implementation Notes for AI
-
-### Each module directory structure
-
-```
-modules/
-  module-1-iam/
-    level-1-empty-policy/
-      mission.yaml      ← name, description, objective, xp, difficulty, expected_time, concepts
-      setup.sh          ← executable, creates broken state in LocalStack using aws CLI
-      validate.sh       ← executable, exits 0=pass, 1=fail with descriptive message
-      solution.md       ← step-by-step aws CLI commands to fix the issue
-      hint-1.txt        ← vague first hint (point toward the problem area)
-      hint-2.txt        ← more specific second hint (name the broken attribute)
-      hint-3.txt        ← near-solution third hint (show the command structure)
-      debrief.md        ← why this matters in real AWS, common real-world scenario
-```
-
-### setup.sh requirements
-
-- Always use `#!/usr/bin/env bash` and `set -e`
-- Use `ENDPOINT="http://localhost:4566"` for all `--endpoint-url` args
-- Use `AWS_DEFAULT_REGION=us-east-1` and `ACCOUNT="000000000000"` (LocalStack default)
-- End with an `echo` describing the broken state
-- Keep it idempotent where possible (use `||true` on creates that might already exist)
-- For Lambda levels: include a minimal valid `function.zip` in the level directory OR create it inline in setup.sh using Python's zipfile
-
-### validate.sh requirements
-
-- Always use `#!/usr/bin/env bash`
-- Do NOT use `set -e` at top — use explicit error handling
-- Last line must be either `exit 0` (pass) or `exit 1` (fail)
-- Before `exit 1`, print a helpful FAIL message pointing to what's still wrong
-- Before `exit 0`, print a PASS message confirming what was fixed
-- Test the actual state in LocalStack, not just whether a resource exists
-
-### solution.md format
-
-```markdown
-# Solution: [Level Name]
-
-## The Problem
-[1-2 sentences explaining what was broken and why it matters]
-
-## Fix
-
-\`\`\`bash
-# Step 1: [description]
-aws iam put-role-policy \
-  --role-name lambda-execution-role \
-  --policy-name fixed-policy \
-  --policy-document '{"Version":"2012-10-17","Statement":[...]}'
-\`\`\`
-
-## Verify
-\`\`\`bash
-aws iam get-role-policy \
-  --role-name lambda-execution-role \
-  --policy-name fixed-policy
-\`\`\`
-```
-
-### mission.yaml format
-
-```yaml
-name: "Human-readable level title"
-description: "1-2 sentences describing the symptom the player sees"
-objective: "1 sentence: what the player must do to fix it"
-xp: 150
-difficulty: "beginner"   # beginner | intermediate | advanced | expert
-expected_time: "10m"
-concepts:
-  - IAM policy
-  - Effect: Allow
-  - Statement array
-module: "module-1-iam"
-level: "level-1-empty-policy"
-```
-
-### levels.json format (auto-generated by scripts/build_levels.py)
-
-Mirrors the structure of k8smissions and terraformissions:
-```json
-{
-  "generated_at": "ISO timestamp",
-  "level_count": 196,
-  "modules": [
-    {
-      "name": "module-1-iam",
-      "levels": [
-        {
-          "id": "module-1-iam/level-1-empty-policy",
-          "name": "level-1-empty-policy",
-          "path": "modules/module-1-iam/level-1-empty-policy",
-          "mission": { ...mission.yaml contents... }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### LocalStack account ID
-
-LocalStack uses account ID `000000000000` for all ARNs. All `setup.sh` and `validate.sh` scripts must use this account ID in ARN constructions.
-
-### Lambda function.zip for Lambda levels
-
-For levels that need to deploy a Lambda function, include a minimal `index.py` in the level directory and have `setup.sh` create `function.zip` inline:
-
-```bash
-cd /tmp
-cat > index.py << 'EOF'
-import json
-def lambda_handler(event, context):
-    return {"statusCode": 200, "body": json.dumps("OK")}
-EOF
-zip function.zip index.py
-aws --endpoint-url=$ENDPOINT lambda create-function \
-  --function-name mission-function \
-  --runtime python3.11 \
-  --role arn:aws:iam::$ACCOUNT:role/execution-role \
-  --handler index.lambda_handler \
-  --zip-file fileb://function.zip
-rm -f index.py function.zip
-cd -
-```
+# AWSMissions Curriculum
+
+Generated from each level's `mission.yaml` by `scripts/build_levels.py`. Do not edit by hand.
+
+**268 missions across 16 modules.**
+
+## Module 1: IAM Foundations (21 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | The Half-Open Door | beginner | 100 | IAM inline policies, s3:GetObject, bucket vs object ARNs, least privilege | `level-1-empty-policy` |
+| 2 | Wrong Side of the Law | beginner | 100 | IAM policy evaluation, explicit Deny, s3:PutObject | `level-2-deny-effect` |
+| 3 | Fat Fingers | beginner | 100 | IAM action names, implicit deny, least privilege | `level-3-action-typo` |
+| 4 | Right Queue, Wrong Address | beginner | 125 | IAM resource ARNs, SQS ARNs, region and account in ARNs | `level-4-wrong-resource` |
+| 5 | The Bare Role | beginner | 125 | Lambda execution roles, identity policies, least privilege | `level-5-no-policy` |
+| 6 | Trust Issues | intermediate | 150 | role trust policies, IAM principals and ARNs, cross-account migrations | `level-6-wrong-principal` |
+| 7 | Cloned Credentials | intermediate | 175 | trust policy principal types, Service vs AWS principals, break-glass access | `level-7-wrong-service-principal` |
+| 8 | Dropped Baton | intermediate | 200 | iam:PassRole, privilege escalation, Lambda execution roles | `level-8-missing-passrole` |
+| 9 | First Day, No Access | intermediate | 150 | IAM groups, group membership, least privilege | `level-9-user-no-group` |
+| 10 | The Empty Club | intermediate | 175 | IAM groups, managed policies, attaching policies, least privilege | `level-10-group-no-policy` |
+| 11 | Data Stays in Europe | intermediate | 200 | IAM condition keys, aws:RequestedRegion, data residency guardrails | `level-11-condition-wrong-key` |
+| 12 | Almost, But Not Quite | intermediate | 200 | IAM condition operators, StringEquals vs StringLike, s3:prefix | `level-12-condition-operator` |
+| 13 | Dollar Signs Without Meaning | intermediate | 225 | IAM policy variables, policy Version element, managed policy versions | `level-13-policy-missing-version` |
+| 14 | Frozen in Time | advanced | 250 | explicit Deny, inline vs managed policies, policy evaluation logic | `level-14-inline-blocks-managed` |
+| 15 | One Hat Short | intermediate | 225 | sts:AssumeRole, identity-based permission to assume a role, same-account trust | `level-15-assume-role-no-sts` |
+| 16 | The Secret Handshake | advanced | 300 | sts:ExternalId, confused deputy problem, third-party access | `level-16-external-id-missing` |
+| 17 | The Invisible Ceiling | advanced | 325 | permissions boundaries, effective permissions (intersection), managed policy versions | `level-17-permission-boundary` |
+| 18 | Scope Creep | advanced | 300 | resource wildcards, over-permissive policies, least privilege | `level-18-resource-wildcard` |
+| 19 | Lost in the Path | expert | 400 | IAM paths, user ARNs, policy variables, self-service credentials | `level-19-path-mismatch` |
+| 20 | The Bloated Policy | expert | 450 | IAM policy size limits, inline vs managed policies, policy consolidation | `level-20-policy-size` |
+| 21 | Guest List Gone Wrong | advanced | 275 | resource-based policies, S3 bucket policies, principals in bucket policies | `level-21-bucket-policy-principal` |
+
+## Module 2: S3 Mastery (20 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Manifest Not Found | beginner | 75 | S3 bucket names, bucket creation, NoSuchBucket | `level-1-bucket-missing` |
+| 2 | Keep Out | beginner | 100 | bucket policies, Principal element, object ARN prefixes | `level-2-access-denied-read` |
+| 3 | Read-Only Trap | beginner | 100 | bucket policies, object vs bucket ARNs, s3:PutObject | `level-3-access-denied-write` |
+| 4 | Lost History | beginner | 100 | S3 versioning, object versions, overwrite protection | `level-4-versioning-disabled` |
+| 5 | Suspended Animation | beginner | 150 | suspended versioning, null version, restoring an object version | `level-5-versioning-suspended` |
+| 6 | The Force Field | intermediate | 175 | S3 Block Public Access, BlockPublicPolicy, public bucket policies | `level-6-public-access-block` |
+| 7 | The CORS Complaint | beginner | 125 | CORS, preflight requests, AllowedOrigins, ExposeHeaders | `level-7-cors-missing` |
+| 8 | Wrong Domain Allowed | intermediate | 175 | CORS, AllowedOrigins matching, per-origin rules | `level-8-cors-wrong-origin` |
+| 9 | Eternal Storage | intermediate | 150 | S3 lifecycle rules, rule filters and prefixes, Expiration | `level-9-lifecycle-wrong-prefix` |
+| 10 | Incomplete Uploads Pile Up | intermediate | 200 | multipart uploads, AbortIncompleteMultipartUpload, lifecycle configuration replacement | `level-10-lifecycle-missing` |
+| 11 | Silent Arrivals | intermediate | 175 | S3 event notifications, SQS destinations, prefix and suffix filters | `level-11-notification-missing` |
+| 12 | Wrong Trigger | intermediate | 175 | S3 event types, ObjectCreated vs ObjectRemoved, notification configuration replacement | `level-12-notification-wrong-event` |
+| 13 | Plaintext Exposure | intermediate | 200 | default bucket encryption, SSE-KMS, customer managed keys, encrypting existing objects | `level-13-encryption-missing` |
+| 14 | The Broken Gate | advanced | 275 | bucket policy debugging, Principal ARNs, Action names, condition operators (StringEquals vs StringLike) | `level-14-bucket-policy-syntax` |
+| 15 | Public by Accident | intermediate | 150 | S3 ACLs, object ownership, public access, AllUsers grantee | `level-15-acl-too-open` |
+| 16 | Silent Website | intermediate | 175 | S3 static website hosting, index document, error document | `level-16-static-website-missing` |
+| 17 | No Paper Trail | advanced | 275 | S3 server access logging, log delivery permissions, service principals in bucket policies | `level-17-logging-disabled` |
+| 18 | Too Flexible | expert | 400 | S3 Object Lock, governance vs compliance retention, default retention, per-version retention | `level-18-object-lock-wrong-mode` |
+| 19 | Expensive Archive | advanced | 250 | storage classes, lifecycle transitions, copy-object metadata directive | `level-19-wrong-storage-class` |
+| 20 | Unexpected Bills | intermediate | 200 | Requester Pays, bucket payer configuration, auditing many buckets | `level-20-requester-pays-wrong` |
+
+## Module 3: Lambda Functions (20 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Return to Sender | beginner | 75 | Lambda deployment packages, create-function, handler naming | `level-1-function-missing` |
+| 2 | End of the Line | beginner | 100 | Lambda runtimes, runtime deprecation, update-function-configuration | `level-2-wrong-runtime` |
+| 3 | Wrong Door, Right House | beginner | 100 | Lambda handler, Node.js ES modules, Lambda init errors | `level-3-handler-wrong` |
+| 4 | Nobody Home | beginner | 125 | Lambda execution role, trust policy, least privilege | `level-4-role-missing` |
+| 5 | Borrowed Badge | beginner | 125 | IAM trust policy, service principals, update-assume-role-policy | `level-5-role-wrong-service` |
+| 6 | The Blank Config | intermediate | 150 | Lambda environment variables, update-function-configuration, DynamoDB, execution role permissions | `level-6-env-var-missing` |
+| 7 | Three Seconds and Out | intermediate | 150 | Lambda timeout, function configuration limits, API integration limits | `level-7-timeout-too-low` |
+| 8 | Out of Memory | intermediate | 175 | Lambda memory, out of memory, cost control | `level-8-memory-too-low` |
+| 9 | The Throttled Function | intermediate | 175 | reserved concurrency, throttling, protecting downstream resources | `level-9-concurrency-zero` |
+| 10 | Lost on Failure | intermediate | 200 | asynchronous invocation, on-failure destinations, event invoke config | `level-10-dlq-missing` |
+| 11 | Missing Dependency | intermediate | 225 | Lambda layers, layer versions, update-function-configuration | `level-11-layer-wrong-arn` |
+| 12 | The Silent Upload | advanced | 250 | S3 event notifications, notification filters, Lambda triggers | `level-12-trigger-missing` |
+| 13 | Watching the Wrong Door | advanced | 250 | S3 event notifications, environment separation, Lambda triggers | `level-13-trigger-wrong-bucket` |
+| 14 | Permission Denied by Lambda | advanced | 275 | Lambda resource-based policy, add-permission, cross-principal access | `level-14-resource-policy-missing` |
+| 15 | The Ghost Alias | advanced | 275 | Lambda versions, aliases, safe releases | `level-15-alias-wrong-version` |
+| 16 | Stranded in VPC | advanced | 325 | Lambda VPC configuration, private vs public subnets, availability zones | `level-16-vpc-no-subnet` |
+| 17 | Unguarded VPC | advanced | 350 | security groups, security group references, Lambda VPC configuration | `level-17-vpc-no-sg` |
+| 18 | The Locked Door | advanced | 350 | Lambda function URLs, AuthType NONE, resource-based policy, CORS | `level-18-function-url-auth` |
+| 19 | Bad Apple in the Batch | expert | 450 | SQS event source mapping, partial batch response, dead-letter queues, idempotency | `level-19-sqs-poison-batch` |
+| 20 | Fenced In | expert | 400 | IAM permissions boundary, effective permissions, managed policy versions | `level-20-role-boundary` |
+
+## Module 4: DynamoDB (16 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | No Table, No Orders | beginner | 90 | DynamoDB tables, partition key and sort key, on-demand billing | `level-1-table-missing` |
+| 2 | Numbers Don't Look Like UUIDs | beginner | 100 | DynamoDB attribute types, immutable key schema, deletion protection | `level-2-wrong-key-type` |
+| 3 | History Keeps Vanishing | beginner | 110 | sort keys, item identity, range queries | `level-3-missing-sort-key` |
+| 4 | Login by Email | intermediate | 150 | global secondary index, alternate access patterns, index backfill | `level-4-gsi-missing` |
+| 5 | The Index That Knew the Wrong Thing | intermediate | 175 | GSI key schema, recreating an index, sort key on an index | `level-5-gsi-wrong-key` |
+| 6 | Five Units Against a Flood | intermediate | 200 | provisioned capacity, Application Auto Scaling, target tracking | `level-6-capacity-throttle` |
+| 7 | Flash Sale Pricing | intermediate | 175 | on-demand billing, billing mode switch, capacity leftovers | `level-7-billing-mode-wrong` |
+| 8 | Sessions That Never Die | intermediate | 200 | DynamoDB TTL, epoch-second timestamps, eventual deletion | `level-8-ttl-disabled` |
+| 9 | The Silent Table | intermediate | 200 | DynamoDB Streams, stream view type, change data capture | `level-9-streams-disabled` |
+| 10 | The Index You Can't Add Later | advanced | 275 | local secondary index, table migration, immutable table design | `level-10-lsi-missing` |
+| 11 | Half the Picture | advanced | 250 | index projections, KEYS_ONLY vs INCLUDE vs ALL, index cost | `level-11-projection-wrong` |
+| 12 | The Audit Nobody Wanted | intermediate | 225 | point-in-time recovery, resource tags, compliance scope | `level-12-pitr-disabled` |
+| 13 | The Overprotective Guard | advanced | 275 | ConditionExpression, optimistic locking, conditional updates | `level-13-condition-blocks-write` |
+| 14 | Words You Cannot Say | intermediate | 225 | reserved words, ExpressionAttributeNames, UpdateExpression | `level-14-reserved-word-attr` |
+| 15 | Scan Is Not a Query | expert | 400 | Scan vs Query, GSI design, IAM for DynamoDB indexes, least privilege | `level-15-scan-instead-of-query` |
+| 16 | Tenants Behind Glass | advanced | 325 | fine-grained access control, dynamodb:LeadingKeys, multi-tenant isolation | `level-16-tenant-leading-keys` |
+
+## Module 5: SQS & SNS (17 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Typo at the Dock | beginner | 75 | SQS queues, queue naming, long polling | `level-1-queue-missing` |
+| 2 | Staging Is Not Production | beginner | 100 | SQS queue URL, get-queue-url, Parameter Store configuration | `level-2-wrong-queue-url` |
+| 3 | The Label That Printed Twice | beginner | 100 | visibility timeout, at-least-once delivery, SQS queue attributes | `level-3-visibility-too-low` |
+| 4 | Poison Pill | intermediate | 150 | dead-letter queues, redrive policy, maxReceiveCount, message retention | `level-4-dlq-missing` |
+| 5 | The Dead Letter Gets Lost | intermediate | 150 | dead-letter queues, redrive policy, queue ARN | `level-5-dlq-wrong-arn` |
+| 6 | One Strike | intermediate | 175 | maxReceiveCount, redrive policy tuning, transient vs permanent failure | `level-6-max-receive-zero` |
+| 7 | Out of Order | intermediate | 150 | FIFO queues, message groups, ordering guarantees | `level-7-fifo-missing` |
+| 8 | Twice Charged | intermediate | 175 | FIFO deduplication, ContentBasedDeduplication, exactly-once processing | `level-8-fifo-no-deduplication` |
+| 9 | Locked Mailbox | intermediate | 225 | SQS queue policy, service principal, aws:SourceArn condition, confused deputy | `level-9-queue-policy-missing` |
+| 10 | Storm Warning, No Station | beginner | 100 | SNS topics, subscriptions die with their topic, SNS to SQS fan-out | `level-10-topic-missing` |
+| 11 | Nobody Told Loyalty | beginner | 125 | SNS subscriptions, fan-out, subscription ARN vs endpoint | `level-11-subscription-missing` |
+| 12 | Wrong Mailbox | intermediate | 150 | SNS subscription endpoint, immutable subscription attributes, environment isolation | `level-12-subscription-wrong-endpoint` |
+| 13 | The Silent Refund Worker | advanced | 250 | SNS filter policies, FilterPolicyScope, message attributes vs message body | `level-13-filter-policy-blocks-all` |
+| 14 | Gift Wrap | advanced | 250 | SNS message envelope, RawMessageDelivery, subscription filter policy | `level-14-raw-delivery-missing` |
+| 15 | Forty Tonnes of Paperwork | advanced | 300 | SQS message size limit, claim-check pattern, S3 offload | `level-15-message-too-large` |
+| 16 | Mail Without a Stamp | advanced | 250 | IAM identity policy for SQS, least privilege, queue ARN | `level-16-producer-lacks-send` |
+| 17 | Second Chance for Six Invoices | advanced | 300 | DLQ redrive, StartMessageMoveTask, operational recovery | `level-17-replay-the-dlq` |
+
+## Module 6: CloudWatch & Logging (17 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Logs Into the Void | beginner | 75 | CloudWatch Logs, log groups, log streams | `level-1-log-group-missing` |
+| 2 | The Logs That Never Die | beginner | 100 | log retention, cost control, CloudWatch Logs groups | `level-2-retention-not-set` |
+| 3 | Gateway Seven Is Mute | beginner | 100 | log streams, PutLogEvents, CloudWatch Logs hierarchy | `level-3-log-stream-missing` |
+| 4 | Counting the Wrong Word | intermediate | 150 | metric filters, filter pattern syntax, logs to metrics | `level-4-metric-filter-wrong-pattern` |
+| 5 | Nobody Is Watching Checkout | intermediate | 150 | CloudWatch alarms, alarm actions, SNS notifications | `level-5-alarm-missing` |
+| 6 | A Zero Too Many | beginner | 100 | alarm thresholds, metric units and ranges, put-metric-alarm | `level-6-alarm-wrong-threshold` |
+| 7 | The Pager That Never Rang | intermediate | 175 | alarm actions, ActionsEnabled, SNS topic subscriptions | `level-7-alarm-no-action` |
+| 8 | Crying Wolf at Full Health | intermediate | 150 | comparison operators, alarm direction, metric dimensions | `level-8-alarm-wrong-comparison` |
+| 9 | Five Minutes Too Late | intermediate | 175 | alarm period, detection latency, evaluation periods | `level-9-alarm-wrong-period` |
+| 10 | The Empty Error Table | intermediate | 200 | Logs Insights, query syntax, JSON field discovery, CloudWatch dashboards | `level-10-log-insights-syntax` |
+| 11 | Receipts on Strike | beginner | 100 | EventBridge rules, rule state, event delivery to SQS | `level-11-event-rule-disabled` |
+| 12 | Shipment Sent to the Sandbox | intermediate | 150 | EventBridge targets, put-targets and remove-targets, environment isolation | `level-12-event-rule-wrong-target` |
+| 13 | The Pattern That Matched Nothing | advanced | 225 | EventBridge event patterns, exact matching, content filtering on detail | `level-13-event-pattern-wrong` |
+| 14 | Paging When Everything Is Fine | advanced | 300 | composite alarms, alarm rule expressions, boolean logic | `level-14-composite-alarm-inverted` |
+| 15 | The Shipper Without a Ticket | advanced | 250 | IAM for CloudWatch Logs, logs:PutLogEvents, least privilege | `level-15-missing-iam-for-logs` |
+| 16 | The Grey Light | intermediate | 200 | TreatMissingData, INSUFFICIENT_DATA state, sparse metrics | `level-16-alarm-stuck-insufficient-data` |
+| 17 | Last Night's Outage Was Silent | expert | 450 | logs to metrics to alarms, metric filter patterns, metric namespaces, end-to-end verification | `level-17-logs-to-pager-pipeline` |
+
+## Module 7: EC2 & Networking (17 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Launch Day Lockout | beginner | 100 | security groups, RunInstances, VPC scoping | `level-1-sg-missing` |
+| 2 | Quillpad Is Unreachable | beginner | 100 | security group inbound rules, default deny | `level-2-sg-no-inbound` |
+| 3 | Eight-Thousand-Eighty Is Not Home | beginner | 100 | security group ports, source security groups, Parameter Store | `level-3-sg-wrong-port` |
+| 4 | The Office Moved | beginner | 100 | CIDR notation, security group sources | `level-4-sg-wrong-cidr` |
+| 5 | Hardened Into a Corner | beginner | 125 | security group egress, least privilege, default allow-all outbound | `level-5-sg-egress-blocked` |
+| 6 | Room for Meridian | beginner | 125 | VPC CIDR planning, overlapping address space, VPC attributes | `level-6-vpc-missing` |
+| 7 | An ALB With Nowhere to Land | beginner | 125 | subnets, availability zones, multi-AZ load balancers | `level-7-subnet-missing` |
+| 8 | Skyline Café Is Offline | intermediate | 150 | internet gateway attachment, route targets, public subnets | `level-8-igw-not-attached` |
+| 9 | Dead End Street | intermediate | 150 | route tables, main route table, public vs private subnets | `level-9-route-table-missing` |
+| 10 | Wired to the Wrong Subnet | intermediate | 150 | route table associations, subnet isolation | `level-10-subnet-not-associated` |
+| 11 | The Rule Before the Rule | intermediate | 200 | network ACL rule ordering, stateless filtering, ephemeral ports | `level-11-nacl-blocking-http` |
+| 12 | Born Without Credentials | intermediate | 200 | instance profiles, role trust policy, least privilege | `level-12-iam-instance-profile-missing` |
+| 13 | No Key, No Entry | intermediate | 200 | EC2 key pairs, immutable launch parameters, instance replacement | `level-13-key-pair-missing` |
+| 14 | Invisible Instance | intermediate | 175 | public IPv4 addresses, Elastic IPs, auto-assign public IP | `level-14-public-ip-disabled` |
+| 15 | Gossip Behind Closed Doors | advanced | 275 | self-referencing security groups, east-west traffic, TCP vs UDP rules | `level-15-sg-missing-self-reference` |
+| 16 | Peering Without a Path | advanced | 300 | VPC peering, bidirectional routing, non-transitive networking | `level-16-peering-missing-routes` |
+| 17 | Private Road to S3 | expert | 400 | VPC gateway endpoints, endpoint policies, private subnets | `level-17-s3-endpoint-missing` |
+
+## Module 8: CloudFormation (18 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Parse Error | beginner | 75 | CloudFormation template format, YAML indentation, create-stack | `level-1-yaml-syntax` |
+| 2 | Green Stack, Missing Bucket | beginner | 100 | CloudFormation resource types, update-stack, describe-stack-resources | `level-2-wrong-resource-type` |
+| 3 | Nobody Can Wear This Role | beginner | 125 | AWS::IAM::Role, AssumeRolePolicyDocument, required properties | `level-3-missing-required-property` |
+| 4 | Who Fills the Blank? | beginner | 100 | CloudFormation parameters, Default values, create-stack --parameters | `level-4-parameter-no-default` |
+| 5 | Thirty Seconds, Give or Take an S | intermediate | 150 | Number parameters, ROLLBACK_COMPLETE, stack events | `level-5-parameter-wrong-type` |
+| 6 | Ref to Nowhere | intermediate | 150 | Ref intrinsic function, logical IDs, SSM parameters from CloudFormation | `level-6-ref-nonexistent` |
+| 7 | Attribute Not Found | intermediate | 175 | Fn::GetAtt, resource attributes, UPDATE_ROLLBACK_COMPLETE | `level-7-getatt-wrong-attribute` |
+| 8 | Chicken, Egg, Bucket | intermediate | 200 | circular dependencies, DependsOn, implicit dependencies via GetAtt and Ref | `level-8-circular-dependency` |
+| 9 | Stack Stuck in Rollback | intermediate | 175 | ROLLBACK_COMPLETE, stack lifecycle, delete-stack, ImportValue | `level-9-rollback-complete` |
+| 10 | Name Taken | intermediate | 200 | stack Outputs, Export names, cross-stack references | `level-10-output-export-duplicate` |
+| 11 | No Export Named That | intermediate | 175 | Fn::ImportValue, list-exports, cross-stack references | `level-11-importvalue-wrong-name` |
+| 12 | Upside-Down Production | advanced | 275 | Conditions, Fn::If, Fn::Equals, UsePreviousValue | `level-12-condition-inverted` |
+| 13 | Handle With Care | advanced | 300 | DeletionPolicy, Retain, stack deletion, data safety | `level-13-deletion-policy-delete` |
+| 14 | Policy Lock | intermediate | 200 | termination protection, stack protection, stack policies | `level-14-stack-policy-blocks` |
+| 15 | Missing Map Entry | advanced | 250 | Mappings, Fn::FindInMap, pseudo parameters | `level-15-mapping-wrong-key` |
+| 16 | SAM Template Rejected | advanced | 275 | CloudFormation Transform, AWS SAM, macros | `level-16-transform-missing` |
+| 17 | Reality Diverged | expert | 450 | configuration drift, get-template, update-stack, infrastructure as code discipline | `level-17-stack-drift` |
+| 18 | Nested Stack 404 | expert | 400 | nested stacks, TemplateURL, child stack parameters and outputs, Fn::GetAtt on stack outputs | `level-18-nested-stack-wrong-url` |
+
+## Module 9: Secrets & Config (15 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | No Key | beginner | 100 | KMS keys, key aliases, automatic key rotation | `level-1-kms-key-missing` |
+| 2 | Disabled Key | beginner | 100 | KMS key states, DisabledException, alias to key mapping | `level-2-kms-key-disabled` |
+| 3 | No Key Permission | intermediate | 175 | KMS key policies, IAM policies vs key policies, least privilege | `level-3-kms-key-policy-missing` |
+| 4 | Wrong Key Name | intermediate | 175 | KMS aliases, update-alias, key identification | `level-4-kms-wrong-alias` |
+| 5 | No Secret | beginner | 100 | Secrets Manager deletion, recovery window, restore-secret | `level-5-secret-missing` |
+| 6 | Wrong Key in JSON | intermediate | 175 | Secrets Manager JSON secrets, secret versions, put-secret-value | `level-6-secret-wrong-key` |
+| 7 | Access Denied to Secret | intermediate | 200 | secretsmanager:GetSecretValue, secret ARNs, least privilege | `level-7-secret-no-permission` |
+| 8 | Wrong Version | intermediate | 200 | secret versions, staging labels, AWSCURRENT / AWSPREVIOUS | `level-8-secret-wrong-version` |
+| 9 | Stale Credentials | advanced | 275 | Secrets Manager rotation, rotation Lambda, rotation rules | `level-9-secret-rotation-broken` |
+| 10 | Missing Config | beginner | 125 | SSM Parameter Store, put-parameter, parameter hierarchies | `level-10-ssm-parameter-missing` |
+| 11 | Plaintext Secret | intermediate | 175 | SecureString, parameter types, KMS keys for SSM, parameter versions | `level-11-ssm-wrong-type` |
+| 12 | Path Confusion | intermediate | 200 | Parameter Store hierarchies, parameter naming, path-scoped IAM | `level-12-ssm-wrong-path` |
+| 13 | SSM Blocked | advanced | 250 | ssm:GetParameter, parameter ARNs, kms:Decrypt for SecureString, least privilege | `level-13-ssm-no-permission` |
+| 14 | Rotation Breaks Decrypt | expert | 450 | manual vs automatic key rotation, kms:ReEncrypt, encryption context, key lifecycle | `level-14-kms-key-rotation` |
+| 15 | Credentials in Code | expert | 400 | Lambda execution roles, credential hygiene, least privilege, access key deactivation | `level-15-hardcoded-credentials` |
+
+## Module 10: ECS & Containers (16 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | The Cluster That Never Was | beginner | 100 | ECS clusters, run-task, Fargate | `level-1-cluster-missing` |
+| 2 | Deployed Nothing | beginner | 100 | task definitions, register-task-definition, ECS services | `level-2-task-definition-missing` |
+| 3 | Sizing the Thumbnailer | beginner | 125 | Fargate CPU and memory combinations, container memory limits, right-sizing | `level-3-wrong-cpu-memory` |
+| 4 | Nobody to Pull the Secret | intermediate | 225 | task execution role, ECS trust policy, Secrets Manager access | `level-4-execution-role-missing` |
+| 5 | Access Denied at the Bucket | intermediate | 225 | ECS task role, S3 bucket vs object ARNs, least privilege | `level-5-task-role-wrong-perms` |
+| 6 | The Image That Wasn't There | intermediate | 150 | image references, stoppedReason, registry pulls | `level-6-ecr-image-missing` |
+| 7 | Knocking on the Wrong Door | intermediate | 225 | containerPort, target groups, ECS load balancer mapping | `level-7-container-port-wrong` |
+| 8 | Paused for Maintenance, Never Resumed | beginner | 75 | desiredCount, ECS services, capacity | `level-8-service-desired-zero` |
+| 9 | Crash on Arrival | intermediate | 175 | container environment variables, task logs, exit codes | `level-9-env-var-missing` |
+| 10 | Secret Handshake Failed | intermediate | 225 | ECS secrets, Secrets Manager ARNs, JSON key references | `level-10-secrets-wrong-arn` |
+| 11 | Permanently Unhealthy | intermediate | 175 | target group health checks, response code matcher, load balancer reasons | `level-11-health-check-wrong` |
+| 12 | Silent Checkout | intermediate | 200 | awslogs log driver, Fargate logging, CloudWatch Logs | `level-12-log-driver-wrong` |
+| 13 | Private but Stranded | advanced | 300 | NAT gateway, private subnets, egress-only access | `level-13-subnet-no-nat` |
+| 14 | Locked Out of Our Own Endpoints | advanced | 350 | security group egress and ingress pairing, interface VPC endpoints, isolated subnets | `level-14-sg-no-outbound` |
+| 15 | Who Is inventory.shop.local? | advanced | 350 | AWS Cloud Map, ECS service discovery, private DNS namespaces | `level-15-service-discovery-missing` |
+| 16 | Friday Deploy Gone Wrong | expert | 450 | task definition revisions, rollbacks, deployment circuit breaker | `level-16-bad-deployment-rollback` |
+
+## Module 11: API Gateway (15 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Status Page With No Page | beginner | 100 | REST API building blocks, Lambda proxy integration, deployment and stages | `level-1-api-missing` |
+| 2 | Notes Without an Address | beginner | 110 | API resources, path parameters, redeploying a stage | `level-2-resource-missing` |
+| 3 | Read-Only by Accident | beginner | 115 | HTTP methods on a resource, one integration per method, Lambda proxy request body | `level-3-method-wrong` |
+| 4 | A Door Into an Empty Room | beginner | 120 | method vs integration, Lambda proxy integration, query string parameters | `level-4-integration-missing` |
+| 5 | Dial the Right Number | beginner | 125 | integration URI, Lambda ARN, updating an integration in place | `level-5-integration-wrong-arn` |
+| 6 | Locked Out After the Rebuild | intermediate | 175 | Lambda resource-based policy, lambda add-permission, source ARN scoping | `level-6-lambda-permission-missing` |
+| 7 | Ready, Tested, Invisible | beginner | 125 | deployments, stages, stage variables | `level-7-not-deployed` |
+| 8 | The Browser Says No | intermediate | 225 | CORS preflight, MOCK integration, integration response header mapping | `level-8-cors-missing` |
+| 9 | Zero Tolerance | advanced | 275 | stage throttling, method settings, rate vs burst | `level-9-throttle-zero` |
+| 10 | Token in the Wrong Pocket | advanced | 250 | Lambda authorizer (TOKEN), identity source, 401 vs 403 | `level-10-auth-wrong` |
+| 11 | Lost in Translation | advanced | 325 | VTL mapping templates, $input.path, escapeJavaScript, non-proxy integration | `level-11-mapping-template-wrong` |
+| 12 | A Key to Nowhere | advanced | 325 | API keys, usage plans, stage association, quota and throttle | `level-12-api-key-no-plan` |
+| 13 | One Setting for the Whole Browser | advanced | 275 | HTTP API (v2), CorsConfiguration, credentials and wildcard origins | `level-13-http-api-cors` |
+| 14 | Yes Means Yes | advanced | 300 | HTTP API Lambda authorizer, simple responses vs IAM policy responses, authorizer payload format | `level-14-http-api-authorizer` |
+| 15 | Two Dialects of the Same Event | advanced | 250 | HTTP API payload format version, event shape 1.0 vs 2.0, automatic response formatting | `level-15-http-api-payload-format` |
+
+## Module 12: Step Functions (14 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Nobody Invited the Lambda | beginner | 90 | Step Functions execution role, lambda:InvokeFunction, least privilege | `level-1-invoke-denied` |
+| 2 | Ghost Function | beginner | 100 | Task state Resource ARN, Lambda.ResourceNotFoundException, update-state-machine | `level-2-renamed-function` |
+| 3 | Fell Through the Cracks | beginner | 90 | Choice state, Default branch, States.Runtime errors | `level-3-no-default-route` |
+| 4 | Where Did My Order Go | beginner | 100 | ResultPath, state input and output, JSONPath | `level-4-input-overwritten` |
+| 5 | Literally Dollar | intermediate | 150 | Parameters, dynamic values with .$, intrinsic functions, States.Format | `level-5-literal-dollar` |
+| 6 | Truthy Parcels | intermediate | 160 | Choice state, BooleanEquals, IsPresent, JSON types | `level-6-boolean-as-text` |
+| 7 | Try, Try Again | intermediate | 180 | Retry, ErrorEquals, transient versus permanent errors, BackoffRate | `level-7-retry-wrong-errors` |
+| 8 | Silent Failure | intermediate | 200 | Catch, error handling, Fail state, ResultPath on Catch | `level-8-swallowed-error` |
+| 9 | A Week Is Not Always a Week | intermediate | 170 | Wait state, Timestamp / TimestampPath, long-running executions | `level-9-wait-forever` |
+| 10 | Two Branches, One Array | advanced | 280 | Parallel state, ResultSelector, ResultPath, state data flow | `level-10-parallel-array` |
+| 11 | One Bad Parcel | advanced | 310 | Map state, ItemSelector, per-item Catch, partial failure | `level-11-poison-parcel` |
+| 12 | The Approver Never Called Back | advanced | 330 | waitForTaskToken, send-task-success / send-task-failure, callback pattern, Catch | `level-12-approval-token` |
+| 13 | Friday Release | expert | 520 | state machine versions, aliases, rollback and fix-forward, Choice thresholds | `level-13-bad-release-alias` |
+| 14 | Four Dominoes | expert | 560 | EventBridge rules, event patterns, Step Functions as a rule target, input path, execution role | `level-14-event-to-workflow` |
+
+## Module 13: Cognito (14 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Door Without a Handle | beginner | 90 | app client auth flows, USER_PASSWORD_AUTH, ExplicitAuthFlows | `level-1-auth-flow-off` |
+| 2 | Twenty-Four Characters of Pain | beginner | 100 | password policy, InvalidPasswordException, user pool configuration | `level-2-password-too-strict` |
+| 3 | Welcome Aboard, Please Wait | beginner | 90 | FORCE_CHANGE_PASSWORD, NEW_PASSWORD_REQUIRED challenge, admin-set-user-password | `level-3-stuck-on-temp-password` |
+| 4 | Check Your Inbox | beginner | 100 | sign-up confirmation, UNCONFIRMED users, email verification | `level-4-unconfirmed-signup` |
+| 5 | Never Ship a Secret | intermediate | 150 | client secret, SECRET_HASH, public vs confidential clients | `level-5-secret-in-the-binary` |
+| 6 | Reset Goes Nowhere | intermediate | 170 | forgot-password flow, email_verified, account recovery | `level-6-reset-goes-nowhere` |
+| 7 | Admin in Name Only | intermediate | 160 | user pool groups, cognito:groups claim, group membership | `level-7-missing-admin-group` |
+| 8 | One Flag Too Few | intermediate | 200 | update-user-pool-client replaces settings, token validity, hosted UI callback URLs | `level-8-client-update-wipe` |
+| 9 | Provisioner Denied | intermediate | 200 | IAM permissions for Cognito admin APIs, user pool ARN, least privilege | `level-9-provisioner-denied` |
+| 10 | Read-Only Robot | advanced | 300 | resource servers and custom scopes, client credentials grant, allowed OAuth scopes | `level-10-machine-scopes` |
+| 11 | Lost in Redirect | advanced | 300 | hosted UI, callback URL matching, OAuth authorization code flow | `level-11-hosted-ui-redirect` |
+| 12 | The Bouncer Who Forgot to Answer | advanced | 300 | Lambda triggers, pre sign-up, trigger response contract | `level-12-presignup-trigger` |
+| 13 | Claims Vanish | expert | 500 | pre token generation trigger, Lambda config is replaced as a whole, custom attributes and claims | `level-13-claims-vanish` |
+| 14 | Stolen Session | expert | 550 | incident response, global sign-out, token revocation, password reset | `level-14-stolen-session` |
+
+## Module 14: Load Balancing & Auto Scaling (14 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Ghost Town Storefront | beginner | 80 | target groups, register targets, ALB 503 | `level-1-empty-target-group` |
+| 2 | Right Address, Wrong Extension | beginner | 90 | target port override, deregister-targets, target health | `level-2-wrong-target-port` |
+| 3 | Taking the Pulse | beginner | 100 | health checks, health check path, success codes matcher | `level-3-health-check-path` |
+| 4 | Members Meet the Staging Build | beginner | 100 | listeners, default actions, forward to target group | `level-4-listener-wrong-target-group` |
+| 5 | Admin Door Left Ajar | intermediate | 160 | listener rules, rule priority, path-pattern conditions, fixed-response action | `level-5-rule-priority-shadow` |
+| 6 | One Letter Off | intermediate | 170 | host-header conditions, listener rules, virtual hosting | `level-6-host-header-typo` |
+| 7 | Secure by Redirect | intermediate | 175 | redirect action, HTTP 301 vs 302, redirect placeholders | `level-7-https-redirect` |
+| 8 | Cart Amnesia | intermediate | 180 | sticky sessions, lb_cookie, target group attributes | `level-8-sticky-sessions` |
+| 9 | The Night Shift Never Ended | intermediate | 190 | Auto Scaling min/desired/max, scheduled actions, capacity | `level-9-asg-scaled-to-zero` |
+| 10 | Orphaned Fleet | advanced | 260 | Auto Scaling + load balancer integration, attach target groups, self-healing | `level-10-asg-not-attached` |
+| 11 | Version One Forever | advanced | 280 | launch template versions, instance refresh, ASG launch template reference | `level-11-stale-launch-template` |
+| 12 | Out of Breath | advanced | 300 | health check timeout and interval, failure detection time, Target.Timeout | `level-12-health-check-timeout` |
+| 13 | Cutover Night | expert | 480 | weighted target groups, blue/green deployment, capacity before traffic | `level-13-blue-green-cutover` |
+| 14 | Internal Affairs | expert | 520 | internal vs internet-facing, immutable load balancer scheme, rebuilding listeners and rules | `level-14-internal-alb-migration` |
+
+## Module 15: Kinesis & Firehose (14 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | Wrong Stream, Right Thermostat | beginner | 75 | Kinesis stream names, Lambda environment variables, ResourceNotFoundException | `level-1-stream-name-typo` |
+| 2 | Scan and Deliver Denied | beginner | 100 | Kinesis IAM actions, stream ARNs, least privilege | `level-2-scanner-denied` |
+| 3 | Short Memory | beginner | 100 | stream retention period, replay, Kinesis cost model | `level-3-short-memory` |
+| 4 | The Auditor Sees Nothing | beginner | 125 | shard iterator types, TRIM_HORIZON vs LATEST, GetRecords | `level-4-audit-sees-nothing` |
+| 5 | One Key to Rule Them All | intermediate | 150 | partition keys, hot shards, ordering within a shard | `level-5-one-key-to-rule-them-all` |
+| 6 | Ceiling at One Megabyte | intermediate | 175 | shard capacity, resharding, UpdateShardCount | `level-6-single-shard-ceiling` |
+| 7 | Sharing the Pipe | intermediate | 200 | enhanced fan-out, stream consumers, event source mappings | `level-7-shared-pipe` |
+| 8 | Billed Twice at the Seam | intermediate | 175 | AT_SEQUENCE_NUMBER vs AFTER_SEQUENCE_NUMBER, consumer checkpoints, at-least-once processing | `level-8-billed-twice` |
+| 9 | Poison Pill in the Pipe | intermediate | 225 | event source mapping error handling, bisect batch on function error, maximum retry attempts, on-failure destination | `level-9-poison-pill` |
+| 10 | Clicks in the Wrong Lake | advanced | 250 | Firehose S3 destination, UpdateDestination, custom prefixes, delivery stream versions | `level-10-clicks-in-the-wrong-lake` |
+| 11 | Fifteen Minutes Too Late | advanced | 275 | Firehose buffering hints, buffer size vs interval, compression, small-files problem | `level-11-fifteen-minutes-late` |
+| 12 | The Archive That Never Fills | advanced | 325 | Firehose sources, KinesisStreamAsSource, immutable delivery stream type | `level-12-archive-that-never-fills` |
+| 13 | Breaking the Transform Contract | expert | 450 | Firehose data transformation, recordId, result and data contract, base64 payloads, processing-failed records | `level-13-transform-contract` |
+| 14 | Orphaned Parents, Missing Children | expert | 550 | resharding, parent and child shards, ListShards, ordering across shards | `level-14-orphaned-parents` |
+
+## Module 16: Production War Games (20 levels)
+
+| # | Mission | Difficulty | XP | Concepts | Directory |
+|---|---------|------------|----|----------|-----------|
+| 1 | The Blocked Pipeline | expert | 400 | identity vs resource policies, explicit Deny, Lambda configuration, incident triage | `level-1-lambda-cant-read-s3` |
+| 2 | The Silent Chain | expert | 450 | SNS subscription filter policies, raw message delivery, SQS event source mappings, Lambda reserved concurrency | `level-2-sns-sqs-lambda-broken` |
+| 3 | The Blind System | expert | 450 | CloudWatch Logs metric filters, alarm comparison operators, alarm actions, SNS to SQS paging | `level-3-alarm-never-fires` |
+| 4 | Upload Goes Nowhere | expert | 450 | S3 event notifications, notification key filters, Lambda execution role, recursive trigger risk | `level-4-s3-trigger-broken` |
+| 5 | The Dead API | expert | 500 | API Gateway stages and deployments, Lambda proxy integration, usage plans and API keys, Lambda reserved concurrency | `level-5-api-gateway-full-break` |
+| 6 | Container Chaos | expert | 500 | ECS task definitions, container startup failures, ECS services and desired count, stopped task diagnostics | `level-6-ecs-wont-start` |
+| 7 | Stream Silence | expert | 475 | DynamoDB Streams, stream view types, event source mappings, Lambda environment and IAM | `level-7-dynamodb-lambda-stream` |
+| 8 | Stack Refuses to Update | expert | 475 | CloudFormation failed stacks, export name uniqueness, DeletionPolicy Retain, Lambda handler configuration | `level-8-cfn-stack-broken` |
+| 9 | The Credential Crisis | expert | 500 | Secrets Manager ARNs and version stages, rotation failure recovery, IAM resource scoping for secrets, Lambda configuration | `level-9-secrets-rotation-cascade` |
+| 10 | The Missing Bridge | expert | 500 | cross-account role assumption, ExternalId and confused deputy, role chaining, trust policy vs identity policy | `level-10-cross-account-role` |
+| 11 | Security Audit | expert | 550 | IAM privilege escalation paths, iam:PassRole scoping, least privilege, resource-level permissions | `level-11-iam-privilege-escalation` |
+| 12 | Data Exposure Incident | expert | 550 | S3 bucket policies and public principals, IAM group and user policies, prefix-scoped least privilege, incident containment without outage | `level-12-public-s3-exposure` |
+| 13 | Queue Meltdown | expert | 475 | SQS dead-letter queues and redrive policy, maxReceiveCount, visibility timeout, CloudWatch alarms on SQS metrics | `level-13-sqs-message-pileup` |
+| 14 | Flying Blind | expert | 500 | CloudWatch Logs metric filters (JSON patterns), Lambda log groups, alarm metric matching, SNS paging topology | `level-14-cloudwatch-observability-gap` |
+| 15 | The Unreachable Service | expert | 550 | private subnets and NAT gateways, route tables, security group ingress and egress, ECS awsvpc networking | `level-15-ecs-networking-labyrinth` |
+| 16 | Encryption Lockout | expert | 550 | KMS key states, pending deletion and cancel-key-deletion, KMS aliases, key-scoped IAM permissions, key rotation | `level-16-kms-breaks-everything` |
+| 17 | The Auth Maze | expert | 575 | API Gateway Lambda authorizers, authorization types, identity source, Lambda execution roles, stage deployments | `level-17-api-auth-lockout` |
+| 18 | The Production Incident | expert | 600 | end-to-end incident triage, Lambda environment configuration, IAM resource scoping for SQS, reserved concurrency, DynamoDB key schema | `level-18-full-stack-incident` |
+| 19 | Leaked Keys | expert | 550 | credential leak response, access key rotation, attacker persistence, least privilege | `level-19-leaked-credential-response` |
+| 20 | Total Recall | expert | 550 | S3 versioning and delete markers, restoring previous object versions, DynamoDB point-in-time recovery, preventing destructive actions | `level-20-data-loss-recovery` |

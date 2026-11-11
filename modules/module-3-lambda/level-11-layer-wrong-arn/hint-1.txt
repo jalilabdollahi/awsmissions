@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Function references a Lambda layer ARN that doesn't exist — init fails
+The failure happens at import time, so look at the layers the function has and the versions that exist:
+
+  aws lambda get-function-configuration --function-name txn-scorer --query 'Layers[].Arn'
+  aws lambda list-layer-versions --layer-name riskkit-core

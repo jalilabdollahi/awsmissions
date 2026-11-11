@@ -1,0 +1,3 @@
+The target group pageturn-web is empty: nothing was ever registered in it, so the listener forwards requests into a group with zero targets. The web server instance exists and is running, it just is not part of the group.
+
+You need the instance id of pageturn-web-1 (look it up with describe-instances and a tag filter), then add it to the target group.

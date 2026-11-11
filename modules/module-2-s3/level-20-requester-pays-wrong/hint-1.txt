@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Bucket has `requester-pays` enabled — callers are being charged unexpectedly
+The setting is stored per bucket. Check the payer of every Ridgeline bucket, not just the one the partners mention:
+
+  aws s3api list-buckets --query 'Buckets[].Name' --output text
+  aws s3api get-bucket-request-payment --bucket <name>

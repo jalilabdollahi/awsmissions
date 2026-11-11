@@ -1,0 +1,25 @@
+name: "Clicks in the Wrong Lake"
+description: >-
+  Harborview Analytics collects web click events through the Amazon Data
+  Firehose delivery stream clickstream-to-lake. The data engineers' Athena table
+  reads s3://harborview-datalake/clicks/ and expects one folder per day named
+  dt=YYYY-MM-DD (for example clicks/dt=2026-03-14/). Since the delivery stream
+  was rebuilt last week, the table has stayed empty. Producers report no
+  errors, Firehose reports no failures, and the delivery stream's role is
+  fine. Someone has already noticed a bucket nobody recognises in the account.
+objective: >-
+  Make clickstream-to-lake deliver new click events into the data lake bucket
+  harborview-datalake, under clicks/ in a dt=YYYY-MM-DD folder for the day the
+  event was received (UTC).
+xp: 250
+difficulty: advanced
+expected_time: 18m
+concepts:
+  - Firehose S3 destination
+  - UpdateDestination
+  - custom prefixes
+  - delivery stream versions
+services:
+  - firehose
+  - s3
+  - iam

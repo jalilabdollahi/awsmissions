@@ -1,0 +1,6 @@
+Replace the inline policy with the four actions on the fernwood-staff ARN:
+
+  aws iam put-user-policy --user-name fernwood-provisioner --policy-name onboarding --policy-document file://policy.json
+
+Actions: cognito-idp:AdminCreateUser, AdminGetUser, AdminSetUserPassword, AdminAddUserToGroup
+Resource: arn:aws:cognito-idp:us-east-1:000000000000:userpool/<id of fernwood-staff>

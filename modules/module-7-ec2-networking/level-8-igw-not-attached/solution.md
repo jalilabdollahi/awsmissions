@@ -1,10 +1,11 @@
 # Solution
 
-```bash
-# Edit the local mission artifact first
-$EDITOR network.json
-# This edited file applies to: InternetGatewayAttached True
+The route to `skyline-igw` is fine; the gateway simply was never attached to the VPC, so the route is a dead end.
 
-# Then apply the fix
-aws ec2 attach-internet-gateway --internet-gateway-id igw-12345678 --vpc-id vpc-12345678
+```bash
+VPC=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=skyline-prod --query 'Vpcs[0].VpcId' --output text)
+IGW=$(aws ec2 describe-internet-gateways --filters Name=tag:Name,Values=skyline-igw --query 'InternetGateways[0].InternetGatewayId' --output text)
+aws ec2 attach-internet-gateway --internet-gateway-id $IGW --vpc-id $VPC
 ```
+
+Attaching `legacy-igw` instead would not help: the route table points at `skyline-igw`.

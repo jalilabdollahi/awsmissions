@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Create the SQS queue: `aws sqs create-queue`
+Queue names are matched exactly. The deploy created harborline-order, but the service uses harborline-orders, so the lookup fails. You need a queue with the exact name the service uses.
+
+For the polling requirement, SQS has a queue attribute that sets the default wait time for ReceiveMessage calls (long polling).

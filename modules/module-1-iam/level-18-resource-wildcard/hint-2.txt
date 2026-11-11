@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Change resource to `arn:aws:s3:::bucket/*`
+A wildcard in a Resource ARN matches every name that fits the pattern, today and in the future. The worker needs three specific buckets, and for each of them only one kind of access: reading inputs or writing outputs.
+
+Rewrite the policy in policy.json (`edit`) so it names exactly what the job needs.

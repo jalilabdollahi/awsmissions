@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be updated)
+The api stack failed while being created (its ImportValue pointed at an export that did not exist yet). A failed create ends in ROLLBACK_COMPLETE: CloudFormation removed everything it built but kept the empty stack record for you to inspect. That state is final; the only supported actions are to look at it and to delete it. The root cause has since disappeared (the export exists now), so the template itself is fine.

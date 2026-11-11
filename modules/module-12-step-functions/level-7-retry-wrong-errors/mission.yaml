@@ -1,0 +1,27 @@
+name: "Try, Try Again"
+description: >-
+  Fernhill Garden Centre reserves stock for each online order line through the
+  state machine fernhill-reserve. The stock service is locked for a few
+  seconds every time the warehouse scanner syncs, and during that window the
+  Lambda fernhill-reserve-stock raises a StockLocked error. The workflow
+  already has a Retry block copied from the AWS documentation, yet orders
+  placed during a sync still fail outright instead of waiting for the lock to
+  clear. Orders for SKUs that do not exist are rightly rejected and should
+  keep failing immediately.
+objective: >-
+  Make fernhill-reserve ride out a short stock lock: a reservation that hits
+  StockLocked for a few seconds must end up SUCCEEDED. A request for an
+  unknown SKU must still fail on the first attempt, with no retries wasted on
+  it.
+xp: 180
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - Retry
+  - ErrorEquals
+  - transient versus permanent errors
+  - BackoffRate
+services:
+  - stepfunctions
+  - lambda
+  - iam

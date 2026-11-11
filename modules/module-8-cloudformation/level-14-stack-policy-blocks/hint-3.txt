@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Disable the protection on kestrel-pr-731 only, then delete it:
+
+  aws cloudformation update-termination-protection --stack-name kestrel-pr-731 --no-enable-termination-protection
+  aws cloudformation delete-stack --stack-name kestrel-pr-731
+  aws cloudformation wait stack-delete-complete --stack-name kestrel-pr-731

@@ -1,16 +1,21 @@
-name: Where Are My Logs?
-description: "Lambda function writes logs but log group `/aws/lambda/mission-function`\
-  \ doesn't exist \u2014 logs dropped"
-objective: 'Create the log group: `aws logs create-log-group`'
-xp: 150
-difficulty: intermediate
-expected_time: 8m
+name: "Logs Into the Void"
+description: >-
+  SwiftPost runs its parcel-locker checkout API in containers whose log driver
+  is told to write to the CloudWatch log group /swiftpost/checkout-api. After
+  last week's account clean-up the containers still start, but the on-call
+  engineer sees no logs at all, and the log driver prints
+  ResourceNotFoundException on every flush. The driver is configured to create
+  its own log streams but, as a safety rule, not log groups.
+objective: >-
+  Make the checkout API able to write its logs: the log group
+  /swiftpost/checkout-api must exist so that a container can create a stream
+  in it and its log lines can be read back.
+xp: 75
+difficulty: beginner
+expected_time: 5m
 concepts:
-- CloudWatch
-- logs
-- alarms
-- lambda functions
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-1-log-group-missing
-implementation_status: playable
+  - CloudWatch Logs
+  - log groups
+  - log streams
+services:
+  - logs

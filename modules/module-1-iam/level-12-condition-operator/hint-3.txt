@@ -1,1 +1,3 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Change the operator from StringEquals to StringLike (keep the key s3:prefix and the value matters/2025/*) in policy.json, then:
+
+  aws iam put-user-policy --user-name ashgrove-clerk --policy-name clerk-browse --policy-document file://policy.json

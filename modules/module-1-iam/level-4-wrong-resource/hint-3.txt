@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+The queues live in us-east-1 in account 000000000000. Set the two Resource values to
+arn:aws:sqs:us-east-1:000000000000:orders-prod and arn:aws:sqs:us-east-1:000000000000:orders-dlq, then:
+
+  aws iam put-user-policy --user-name orderflow-consumer --policy-name consumer-access --policy-document file://policy.json

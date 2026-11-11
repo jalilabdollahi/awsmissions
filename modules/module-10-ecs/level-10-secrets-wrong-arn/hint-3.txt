@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws secretsmanager describe-secret --secret-id cedar/db-credentials --query ARN --output text
+  (valueFrom = <that arn>:username::   and   <that arn>:password::)
+  aws ecs register-task-definition --cli-input-json file://task-definition.json
+  aws ecs update-service --cluster cedar --service ledger-sync --task-definition ledger-sync:<new revision>

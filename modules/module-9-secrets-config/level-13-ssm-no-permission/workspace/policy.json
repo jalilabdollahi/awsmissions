@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadKilnProdConfig",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameters"
+      ],
+      "Resource": "arn:aws:ssm:us-east-1:000000000000:parameter//kiln/prod/*"
+    }
+  ]
+}

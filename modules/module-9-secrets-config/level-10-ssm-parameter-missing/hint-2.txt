@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create the parameter: `aws ssm put-parameter`
+Parameter Store has no "folders" to create: a parameter's full name, including its slashes, is all there is, and a path only exists once a parameter does. The service asks for two exact names, and neither exists yet. The role's policy already allows reading anything below /corvid/checkout/, so the only missing piece is the data itself. The values to store come from the secret, and they are not secrets themselves, so the plain String type is appropriate.

@@ -1,0 +1,3 @@
+By default a Task's result *replaces* its input for the next state. The Lambda only returns the score, so the order vanishes. A Task state has a field that decides where in the existing document the result is stored. Look at what ScoreOrder lacks compared with a state that preserves its input.
+
+Edit order-screening.asl.json with `edit`.

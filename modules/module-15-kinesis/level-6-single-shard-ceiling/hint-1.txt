@@ -1,0 +1,6 @@
+Check how many shards accept writes right now, and what a shard is rated for:
+
+  aws kinesis describe-stream-summary --stream-name charger-heartbeats
+  aws kinesis list-shards --stream-name charger-heartbeats
+
+Capacity is the number of OPEN shards times the per-shard limit from the briefing.

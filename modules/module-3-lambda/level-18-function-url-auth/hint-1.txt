@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Lambda function URL is configured with `AuthType: AWS_IAM` — public HTTP requests return 403
+Compare the two URLs and look at what protects the public one:
+
+  aws lambda get-function-url-config --function-name invite-landing
+  aws lambda get-policy --function-name invite-landing

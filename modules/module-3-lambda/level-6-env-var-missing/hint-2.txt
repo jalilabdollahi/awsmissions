@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add the environment variable via `aws lambda update-function-configuration --environment`
+The code reads a setting from an environment variable that the function does not have. Two traps: there are two similar rates tables (use `aws dynamodb list-tables` and `aws iam get-role-policy --role-name fx-lookup-role --policy-name read-prod-rates` to see which one the function is meant to use), and `--environment` overwrites the whole variable map instead of adding to it.

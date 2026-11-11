@@ -1,16 +1,22 @@
-name: Infinite Log Growth
-description: "Log group exists but retention is set to `Never` \u2014 logs accumulate\
-  \ indefinitely"
-objective: 'Set retention policy to 30 days: `aws logs put-retention-policy`'
-xp: 150
-difficulty: intermediate
+name: "The Logs That Never Die"
+description: >-
+  Orbit Analytics' cloud bill shows CloudWatch Logs storage growing by 40%
+  every month. Finance found why: the log groups /orbit/ingest, /orbit/api and
+  /orbit/worker were created by the app itself, so their retention is "Never
+  expire". The company's data policy says application logs are kept for 30 days.
+  The audit trail in /orbit/audit is different: legal requires one year there,
+  and it is configured correctly. Other teams' log groups in the same account
+  are not Orbit's business.
+objective: >-
+  Make /orbit/ingest, /orbit/api and /orbit/worker keep their logs for exactly
+  30 days. Leave /orbit/audit (1 year) and every log group that does not belong
+  to Orbit exactly as it is.
+xp: 100
+difficulty: beginner
 expected_time: 8m
 concepts:
-- CloudWatch
-- logs
-- alarms
-- policy debugging
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-2-retention-not-set
-implementation_status: playable
+  - log retention
+  - cost control
+  - CloudWatch Logs groups
+services:
+  - logs

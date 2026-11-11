@@ -1,0 +1,5 @@
+The Task fails before the Lambda starts: the Resource ARN does not point at an existing function. Compare the ARN in the definition with what actually exists:
+
+  aws lambda list-functions --query 'Functions[].FunctionName'
+
+Careful: more than one function looks like a match, and only one belongs to production.

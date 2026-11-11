@@ -1,16 +1,21 @@
-name: Type Collision
-description: "Parameter declared as `Type: Number` but value passed is a string \u2014\
-  \ validation error"
-objective: Fix parameter type or the value being passed
-xp: 175
+name: "Thirty Seconds, Give or Take an S"
+description: >-
+  Quarry Photo Co. resizes customer uploads in a Lambda function deployed by
+  the quarry-resizer stack. Large panoramas need a 45 second timeout, so the
+  release engineer put "45s" into the parameter file that the deploy script
+  feeds to create-stack. The stack went to ROLLBACK_COMPLETE and the function
+  was never created. The retry button in the pipeline just fails the same way.
+objective: >-
+  Get the quarry-resizer stack to CREATE_COMPLETE with the Lambda function
+  quarry-resizer configured with a 45 second timeout, passing the value through
+  the template's own TimeoutSeconds parameter.
+xp: 150
 difficulty: intermediate
 expected_time: 10m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- parameter store
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-5-parameter-wrong-type
-implementation_status: playable
+  - Number parameters
+  - ROLLBACK_COMPLETE
+  - stack events
+services:
+  - cloudformation
+  - lambda

@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Policy condition uses `StringEquals` for a value that requires wildcard matching — use `StringLike`
+List the folder as the clerk would and compare it with the policy. Read the policy first:
+
+  aws iam get-user-policy --user-name ashgrove-clerk --policy-name clerk-browse
+
+Look at the Condition: which operator is used and what does the value contain?

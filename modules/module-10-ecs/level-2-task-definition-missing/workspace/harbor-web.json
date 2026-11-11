@@ -1,0 +1,15 @@
+{
+  "family": "harbor-web",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx:alpine",
+      "essential": true,
+      "portMappings": [{ "containerPort": 80, "protocol": "tcp" }]
+    }
+  ]
+}

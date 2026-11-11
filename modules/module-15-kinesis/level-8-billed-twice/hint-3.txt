@@ -1,0 +1,4 @@
+In billing.py change ShardIteratorType from "AT_SEQUENCE_NUMBER" to "AFTER_SEQUENCE_NUMBER", keep the rest, then deploy:
+
+  zip billing.zip billing.py
+  aws lambda update-function-code --function-name billing-resume --zip-file fileb://billing.zip

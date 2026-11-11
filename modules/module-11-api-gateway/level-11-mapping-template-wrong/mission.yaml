@@ -1,17 +1,26 @@
-name: Garbled Request
-description: "Mapping template transforms request body but uses wrong field name \u2014\
-  \ Lambda receives null values"
-objective: Fix the VTL mapping template to correctly map request fields
-xp: 375
+name: "Lost in Translation"
+description: >-
+  Crateful's partner shops reserve stock with POST /reservations on the REST
+  API crateful-api (stage live). The method uses a non-proxy Lambda integration:
+  API Gateway reshapes the public JSON body with a mapping template before the
+  function crateful-reserve sees it. Partners send
+  {"productCode": "SKU-77", "quantity": 4, "note": "gift wrap"}. The function
+  wants {"sku": ..., "qty": ..., "note": ...} (qty as a JSON number) and answers
+  400 "sku required" whenever the mapped value comes out empty, which is now
+  every time. The template was written against an old version of the partner
+  contract and nobody updated it. Notes are free text and may contain quotes.
+objective: >-
+  Fix the request mapping template of POST /reservations so that productCode
+  reaches the function as sku, quantity as the number qty, and note as text that
+  survives quotes. The reservation for SKU-77 with 4 units must succeed.
+xp: 325
 difficulty: advanced
 expected_time: 25m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- lambda functions
-- templates
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-11-mapping-template-wrong
-implementation_status: playable
+  - VTL mapping templates
+  - $input.path
+  - escapeJavaScript
+  - non-proxy integration
+services:
+  - apigateway
+  - lambda

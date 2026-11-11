@@ -1,1 +1,3 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Get the queue ARN (arn:aws:sqs:us-east-1:000000000000:invoice-intake), fill notification.json with Events ["s3:ObjectCreated:*"] and prefix "inbox/" + suffix ".pdf" filter rules, then:
+
+  aws s3api put-bucket-notification-configuration --bucket acornpay-invoices --notification-configuration file://notification.json

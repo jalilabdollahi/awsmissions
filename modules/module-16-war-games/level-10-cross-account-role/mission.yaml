@@ -1,0 +1,26 @@
+name: "The Missing Bridge"
+description: >-
+  Ashgrove Audit has been engaged to audit Ferro Mining's Q3 ledger. Ferro's
+  cloud team built a two-hop access path (auditor user, bridge role, ledger
+  reader role) with an ExternalId on the first hop. On day one of fieldwork
+  the auditor cannot get past the first step. The engagement note
+  (FM-2026-Q3, in your workspace) gives the agreed design and the CISO's
+  constraints.
+objective: >-
+  The user ashgrove-auditor must be able to assume ferro-audit-bridge with the
+  agreed ExternalId, chain into ferro-ledger-reader, and read
+  s3://ferro-ledger-archive/2026/q3.csv. Assuming the bridge without the
+  ExternalId must still fail, and the auditor must not be able to reach
+  ferro-breakglass-admin.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+  - cross-account role assumption
+  - ExternalId and confused deputy
+  - role chaining
+  - trust policy vs identity policy
+services:
+  - iam
+  - sts
+  - s3

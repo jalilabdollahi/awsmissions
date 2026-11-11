@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add the environment variable to the task definition container config
+The start-up script refuses to run without an APP_MODE environment variable and tells you the valid values. One of them is the HTTP frontend; the other is the queue consumer, which is what this service is. Task definitions can't be edited: register a new revision and point the service at it.

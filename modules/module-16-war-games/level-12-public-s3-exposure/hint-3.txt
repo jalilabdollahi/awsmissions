@@ -1,0 +1,6 @@
+  aws s3api get-bucket-policy --bucket ardent-customer-exports --query Policy --output text > bp.json
+  # edit bp.json: remove the statement whose Principal is "*" (keep the analyst statement)
+  aws s3api put-bucket-policy --bucket ardent-customer-exports --policy file://bp.json
+  aws iam put-group-policy --group-name ardent-staff --policy-name staff-reading --policy-document file://staff.json     # Resource .../reports/*
+  aws iam put-user-policy --user-name ardent-partner-nova --policy-name partner-feed --policy-document file://nova.json   # Resource .../partners/nova/*
+  (same for ardent-partner-zephyr with partners/zephyr/*)

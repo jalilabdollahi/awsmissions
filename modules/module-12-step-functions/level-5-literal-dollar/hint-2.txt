@@ -1,0 +1,3 @@
+Two values in the stored item are written exactly as they appear in the definition, "$.email" and "States.Format(...)". In the Parameters of a Task, the service only evaluates a JSON path or an intrinsic function when the *key* is marked as dynamic. Check how the keys of the correct fields (fullName, plan) differ from the wrong ones.
+
+Open signup.asl.json with `edit`.

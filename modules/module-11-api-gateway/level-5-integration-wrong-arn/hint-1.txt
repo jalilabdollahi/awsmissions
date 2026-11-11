@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Integration exists but Lambda ARN points to non-existent function
+Call the endpoint and read the error body, then compare with the function list: aws lambda list-functions --query 'Functions[].FunctionName' and aws apigateway get-integration for the /invoices/latest GET.

@@ -1,0 +1,3 @@
+A Wait state can get its pause from the definition or from the execution input. Yours is hard-coded. There are four variants of the Wait state; one of them waits until an absolute point in time that is read from the input document.
+
+Open trial-reminder.asl.json with `edit`. Remember that only one of the Wait fields may be present.

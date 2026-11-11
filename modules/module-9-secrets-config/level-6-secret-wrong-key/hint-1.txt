@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Secret exists as JSON `{"password": "abc123"}` but application reads key `db_password`
+Read the secret the way the dashboard does and look at the key names in the JSON:
+
+  aws secretsmanager get-secret-value --secret-id cinder/warehouse/login --query SecretString --output text
+
+Compare them with what the dashboard asks for, and remember a second consumer exists.

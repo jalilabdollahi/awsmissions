@@ -1,1 +1,1 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+aws dynamodb update-table --table-name greenroom-articles --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES

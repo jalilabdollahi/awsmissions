@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Composite alarm uses `ALARM(alarm-a) AND NOT ALARM(alarm-b)` but should trigger when both are in ALARM
+Read the composite's rule and its state, and note what the two child alarms are doing right now:
+
+  aws cloudwatch describe-alarms --alarm-types CompositeAlarm MetricAlarm \
+    --query '[CompositeAlarms[].[AlarmName,AlarmRule,StateValue],MetricAlarms[].[AlarmName,StateValue]]'

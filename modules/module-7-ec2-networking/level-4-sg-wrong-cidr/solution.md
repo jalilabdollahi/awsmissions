@@ -1,10 +1,11 @@
 # Solution
 
-```bash
-# Edit the local mission artifact first
-$EDITOR network.json
-# This edited file applies to: CidrIp 0.0.0.0/0
+The SSH rule still names the old office range, `198.51.100.0/24`. A rule's source cannot be edited in place with the classic API, so add the new one and remove the old one:
 
-# Then apply the fix
-aws ec2 authorize-security-group-ingress --group-id sg-12345678 --protocol tcp --port 80 --cidr 0.0.0.0/0
+```bash
+SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=nw-bastion-sg --query 'SecurityGroups[0].GroupId' --output text)
+aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 22 --cidr 203.0.113.0/24
+aws ec2 revoke-security-group-ingress    --group-id $SG --protocol tcp --port 22 --cidr 198.51.100.0/24
 ```
+
+Leave the TCP 9100 monitoring rule alone.

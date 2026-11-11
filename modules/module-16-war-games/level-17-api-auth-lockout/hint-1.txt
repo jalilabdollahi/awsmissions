@@ -1,0 +1,7 @@
+Try the partner call, then peel the API apart gate by gate:
+
+  curl -i -H "Authorization: <token from SSM /pelican/partner-token>" "$AWS_ENDPOINT_URL/restapis/<api-id>/live/_user_request_/lockers"
+  aws apigateway get-method --rest-api-id <api-id> --resource-id <lockers resource> --http-method GET
+  aws apigateway get-authorizers --rest-api-id <api-id>
+
+Then invoke each Lambda yourself (`pl-token-auth` with {"authorizationToken":"...","methodArn":"arn:aws:execute-api:us-east-1:000000000000:<api-id>/live/GET/lockers"}, and `pl-lockers-api` with {}) and read the errors they return.

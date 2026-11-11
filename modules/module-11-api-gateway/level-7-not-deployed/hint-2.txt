@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Deploy the API: `aws apigateway create-deployment --stage-name prod`
+The clients call the stage prod, but the API was only ever deployed to dev. Deploying creates the stage. The function reports the stage variable tier, which belongs to the stage and not to the API definition, so it has to be supplied when you create the new stage, and it must not be copied from dev.

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local sqs create-queue --queue-name mission-queue >/dev/null 2>&1 || true
-aws_local sns create-topic --name mission-topic >/dev/null 2>&1 || true
-echo "Broken queue created: queue policy does not allow SNS to send messages"
+topic="$(aws_local sns create-topic --name ember-alerts --query TopicArn --output text)"
+aws_local sqs create-queue --queue-name ember-pager-intake >/dev/null
+aws_local sns subscribe --topic-arn "$topic" --protocol sqs \
+  --notification-endpoint "arn:aws:sqs:us-east-1:${ACCOUNT_ID}:ember-pager-intake" >/dev/null
+
+echo "ember-alerts is subscribed to ember-pager-intake, but the queue has no policy that lets SNS write to it."

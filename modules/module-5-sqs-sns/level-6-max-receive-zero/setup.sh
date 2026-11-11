@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local sqs create-queue --queue-name mission-queue >/dev/null 2>&1 || true
-aws_local sqs create-queue --queue-name mission-dlq >/dev/null 2>&1 || true
-url="$(aws_local sqs get-queue-url --queue-name mission-queue --query QueueUrl --output text)"
-aws_local sqs set-queue-attributes --queue-url "$url" --attributes RedrivePolicy='{"deadLetterTargetArn":"arn:aws:sqs:us-east-1:000000000000:mission-dlq","maxReceiveCount":"0"}' >/dev/null
-echo "Broken queue created: maxReceiveCount is 0"
+aws_local sqs create-queue --queue-name pinecrest-sms-dlq >/dev/null
+sms="$(aws_local sqs create-queue --queue-name pinecrest-sms --attributes VisibilityTimeout=1 \
+  --query QueueUrl --output text)"
+aws_local sqs set-queue-attributes --queue-url "$sms" --attributes "file://$MISSION_DIR/workspace/redrive.json"
+
+echo "pinecrest-sms parks a reminder after its very first failed attempt."

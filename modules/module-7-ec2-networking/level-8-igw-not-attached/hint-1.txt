@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Internet gateway exists but is not attached to the VPC — no internet access
+Follow the packet path. Start with the gateway the route uses:
+
+  aws ec2 describe-route-tables --filters Name=vpc-id,Values=<skyline-prod id>
+  aws ec2 describe-internet-gateways
+
+Look at each gateway's Attachments.

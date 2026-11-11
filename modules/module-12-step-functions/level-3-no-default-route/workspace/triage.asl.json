@@ -1,0 +1,53 @@
+{
+  "Comment": "Brightwave Telecom: route a support ticket to the right queue",
+  "StartAt": "ByPriority",
+  "States": {
+    "ByPriority": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.priority",
+          "StringEquals": "urgent",
+          "Next": "PageOnCall"
+        },
+        {
+          "Variable": "$.priority",
+          "StringEquals": "high",
+          "Next": "Escalate"
+        },
+        {
+          "Variable": "$.priority",
+          "StringEquals": "normal",
+          "Next": "Backlog"
+        }
+      ]
+    },
+    "PageOnCall": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/bw-pager",
+        "MessageBody.$": "States.JsonToString($)"
+      },
+      "End": true
+    },
+    "Escalate": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/bw-escalations",
+        "MessageBody.$": "States.JsonToString($)"
+      },
+      "End": true
+    },
+    "Backlog": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/bw-backlog",
+        "MessageBody.$": "States.JsonToString($)"
+      },
+      "End": true
+    }
+  }
+}

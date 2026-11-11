@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+aws apigateway update-integration --rest-api-id <id> --resource-id <latest resource id> --http-method GET --patch-operations "op=replace,path=/uri,value=arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:invoice-renderer/invocations"
+aws apigateway create-deployment --rest-api-id <id> --stage-name prod

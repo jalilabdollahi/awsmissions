@@ -1,3 +1,7 @@
-#compdef awsmissions
+#compdef awsmissions play.sh
 
-_arguments '1:command:(check hint reset solution debrief status next quit help)'
+_arguments \
+  '--reset-progress[delete progress.json and start over]' \
+  '--env[print exports that point a second terminal at the emulator]' \
+  '--stop[stop the emulator container]' \
+  '--help[show usage]'

@@ -1,0 +1,4 @@
+  aws ec2 accept-vpc-peering-connection --vpc-peering-connection-id <pcx>
+  aws ec2 create-route --route-table-id <rtb> --destination-cidr-block <peer cidr> --vpc-peering-connection-id <pcx>   (once per side)
+  aws ec2 authorize-security-group-ingress --group-id <db sg> --protocol tcp --port 5432 --cidr <orders cidr>
+  aws ec2 revoke-security-group-ingress    --group-id <db sg> --protocol tcp --port 5432 --cidr <wrong cidr>

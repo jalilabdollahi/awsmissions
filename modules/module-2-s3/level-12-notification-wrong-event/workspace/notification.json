@@ -1,0 +1,16 @@
+{
+  "QueueConfigurations": [
+    {
+      "Id": "thumbnail-on-upload",
+      "QueueArn": "arn:aws:sqs:us-east-1:000000000000:thumbnail-jobs",
+      "Events": ["s3:ObjectRemoved:*"],
+      "Filter": { "Key": { "FilterRules": [ { "Name": "prefix", "Value": "uploads/" } ] } }
+    },
+    {
+      "Id": "audit-original-deletes",
+      "QueueArn": "arn:aws:sqs:us-east-1:000000000000:deletion-audit",
+      "Events": ["s3:ObjectRemoved:*"],
+      "Filter": { "Key": { "FilterRules": [ { "Name": "prefix", "Value": "originals/" } ] } }
+    }
+  ]
+}

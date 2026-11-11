@@ -1,15 +1,23 @@
-name: Missing Map Entry
-description: "`!FindInMap [RegionMap, !Ref AWS::Region, AMI]` \u2014 the `us-east-1`\
-  \ key is missing from the Mappings section"
-objective: Add the missing key to the Mappings section
-xp: 200
-difficulty: intermediate
+name: "Missing Map Entry"
+description: >-
+  Cobalt Telehealth sizes its appointment-reminder Lambda per region from a
+  Mappings table: bigger memory where call volume is high, smaller elsewhere.
+  The capacity plan says the primary region, us-east-1, gets 1024 MB and a
+  20 second timeout. A new engineer deployed the stack in us-east-1 and it
+  rolled back; the events mention the Lambda function failing to create with
+  an odd, empty-looking value. Nobody edited the function itself.
+objective: >-
+  Deploy the stack cobalt-reminders in us-east-1 so that the Lambda function
+  cobalt-reminder-sender runs with 1024 MB and a 20 second timeout, with the
+  sizing still coming from the template's Mappings table rather than being
+  hard-coded.
+xp: 250
+difficulty: advanced
 expected_time: 12m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-15-mapping-wrong-key
-implementation_status: playable
+  - Mappings
+  - Fn::FindInMap
+  - pseudo parameters
+services:
+  - cloudformation
+  - lambda

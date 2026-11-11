@@ -1,15 +1,22 @@
-name: No Function Found
-description: "Invocation fails \u2014 Lambda function `mission-function` doesn't exist"
-objective: Deploy the function using `aws lambda create-function`
-xp: 100
+name: "Return to Sender"
+description: >-
+  Cobalt Parcel prints its shipping labels with a small Lambda function that
+  the nightly dispatch job calls by the name parcel-label-formatter. Last
+  night the job died on its first call and the warehouse printed zero labels.
+  The platform team says the function "must have been cleaned up with the old
+  sandbox", but the IAM role it ran under is still there, and the source code
+  is sitting in your workspace.
+objective: >-
+  Make parcel-label-formatter callable again, running the code from your
+  workspace under the existing label role, so that the dispatch job gets
+  correctly formatted labels back.
+xp: 75
 difficulty: beginner
-expected_time: 5m
+expected_time: 8m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-1-function-missing
-implementation_status: playable
+  - Lambda deployment packages
+  - create-function
+  - handler naming
+services:
+  - lambda
+  - iam

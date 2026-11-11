@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the query syntax (check `fields`, `filter`, `stats` commands)
+There are two spelling problems in the query line. One concerns which log group it reads from, the other the name of the field it filters on. Insights is case-sensitive about field names, and JSON keys become fields exactly as they are written in the log lines. A wrong group or a wrong field gives "no rows", not an error.

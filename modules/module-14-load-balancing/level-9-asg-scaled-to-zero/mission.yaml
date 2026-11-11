@@ -1,0 +1,23 @@
+name: "The Night Shift Never Ended"
+description: >-
+  Lumenbeam's video-thumbnail API runs in the Auto Scaling group lumen-api-asg
+  behind lumen-alb. Last week finance asked for a cost-saving "night mode"; an
+  engineer scaled the group down by hand and added a scheduled action called
+  nightly-shutdown. Now it is Monday morning, every request gets a 503, and the
+  group has no instances at all. Whoever fixes it should not have to repeat the
+  fix tonight.
+objective: >-
+  Bring lumen-api-asg back so lumen-alb serves traffic from at least two healthy
+  instances, with room to grow to at least six when load spikes, and make sure no
+  scheduled action will switch the service off again.
+xp: 190
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - Auto Scaling min/desired/max
+  - scheduled actions
+  - capacity
+services:
+  - autoscaling
+  - ec2
+  - elbv2

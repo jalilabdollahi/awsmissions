@@ -1,0 +1,6 @@
+Read the policy attached to the user and compare it with what the API actually calls:
+
+  aws iam list-user-policies --user-name gatehouse-api
+  aws iam get-user-policy --user-name gatehouse-api --policy-name intake-writer
+
+An AccessDenied message names the action that was refused.

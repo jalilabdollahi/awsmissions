@@ -1,6 +1,0 @@
-{
-  "allow": [
-    "kms:Encrypt",
-    "kms:Decrypt"
-  ]
-}

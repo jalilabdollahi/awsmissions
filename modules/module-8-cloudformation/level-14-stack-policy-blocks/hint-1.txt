@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Stack update policy prevents changes to the S3 bucket resource — update fails
+Try the cleanup yourself and read the refusal, then compare the protection flag of the three stacks:
+
+  aws cloudformation delete-stack --stack-name kestrel-pr-731
+  aws cloudformation describe-stacks --query 'Stacks[].[StackName,EnableTerminationProtection]'

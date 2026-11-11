@@ -1,1 +1,3 @@
-The policy needs `s3:GetObject` and the resource should be `arn:aws:s3:::mission-bucket/*`.
+Add a statement allowing s3:GetObject on arn:aws:s3:::harborline-reports/reports/* to policy.json, then replace the inline policy (the command overwrites the old document, so keep the existing listing statement):
+
+  aws iam put-user-policy --user-name ledgerlens-report --policy-name report-access --policy-document file://policy.json

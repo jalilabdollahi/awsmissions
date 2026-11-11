@@ -1,0 +1,4 @@
+  aws cognito-idp update-user-pool --user-pool-id <pool-id> \
+    --policies 'PasswordPolicy={MinimumLength=10,RequireUppercase=true,RequireLowercase=true,RequireNumbers=true,RequireSymbols=false}'
+
+Do not turn the other requirements off: the check also tries weak passwords.

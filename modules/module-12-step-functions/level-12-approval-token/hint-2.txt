@@ -1,0 +1,6 @@
+Three things are wrong, one behind another:
+1. A callback needs the real token from the context object ($$.Task.Token). In Parameters the key must be marked as dynamic for it to be evaluated.
+2. After a callback succeeds, the callback's own output replaces the data of the execution unless the Task says where to store it.
+3. send-task-failure with error "Rejected" currently fails the whole execution; a Catch for that error name is needed, leading to a state that informs the requester using the poId and the cause.
+
+Fix the first, test with your own send-task-success, and continue with the next.

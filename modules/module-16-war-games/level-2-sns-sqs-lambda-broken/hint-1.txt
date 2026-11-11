@@ -1,0 +1,8 @@
+Walk the chain one stage at a time instead of publishing blindly:
+
+  aws sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:000000000000:tt-ticket-events
+  aws sns get-subscription-attributes --subscription-arn <the arn from above>
+  aws lambda list-event-source-mappings --function-name tt-ticket-fulfiller
+  aws lambda get-function-concurrency --function-name tt-ticket-fulfiller
+
+Publish a test TicketSold event and use `aws sqs get-queue-attributes` on the queue to see whether anything arrives at all. Then peek at a message body to see what the function would be handed.

@@ -1,0 +1,24 @@
+name: "Literally Dollar"
+description: >-
+  Saffron Meal Kits stores every new subscriber in DynamoDB through the state
+  machine saffron-signup. The marketing lead noticed two oddities in the
+  saffron-subscribers table: the number of subscribers never grows past one
+  row, and the "welcomeLine" column reads like source code instead of a
+  greeting. All executions report SUCCEEDED, the role and the table are fine.
+objective: >-
+  Make saffron-signup store one item per subscriber, keyed by the subscriber's
+  real email address, with welcomeLine holding the finished sentence, for
+  example "Welcome to Saffron, Noor Haddad! Your family plan starts with 3
+  boxes."
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - Parameters
+  - dynamic values with .$
+  - intrinsic functions
+  - States.Format
+services:
+  - stepfunctions
+  - dynamodb
+  - iam

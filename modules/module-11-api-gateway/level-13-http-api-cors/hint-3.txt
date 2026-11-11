@@ -1,0 +1,1 @@
+aws apigatewayv2 update-api --api-id <id> --cors-configuration 'AllowOrigins=https://boards.maple.example,AllowMethods=GET,POST,AllowHeaders=content-type,AllowCredentials=true,MaxAge=600'

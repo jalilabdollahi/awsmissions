@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable the rule: `aws events enable-rule`
+The pattern and the target are correct. A rule only matches events while it is in the ENABLED state; a disabled rule keeps all its settings and silently ignores every event. EventBridge has a dedicated command for flipping that switch, and the State field in rule.json is the same setting.

@@ -1,0 +1,23 @@
+name: "Fell Through the Cracks"
+description: >-
+  Brightwave Telecom triages support tickets with the state machine
+  brightwave-ticket-triage. Urgent tickets page the on-call engineer, high
+  priority ones go to the escalation queue and normal ones to the backlog, and
+  that part works. But customers who file "low" tickets get an automated
+  "something went wrong" email, and those tickets never reach anyone. The failed executions are
+  piling up in the console.
+objective: >-
+  Make brightwave-ticket-triage deliver every ticket to exactly one queue:
+  urgent to bw-pager, high to bw-escalations, and every other priority
+  (normal, low, or any value the app adds later) to bw-backlog.
+xp: 90
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Choice state
+  - Default branch
+  - States.Runtime errors
+services:
+  - stepfunctions
+  - sqs
+  - iam

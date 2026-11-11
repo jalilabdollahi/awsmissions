@@ -1,0 +1,6 @@
+Two commands: remove (or neutralise) the shutdown action, then restore capacity with room to grow.
+
+  aws autoscaling delete-scheduled-action --auto-scaling-group-name lumen-api-asg --scheduled-action-name nightly-shutdown
+  aws autoscaling update-auto-scaling-group --auto-scaling-group-name lumen-api-asg --min-size 2 --desired-capacity 2 --max-size 6
+
+New instances take a few seconds to boot and pass health checks before lumen-alb serves them.

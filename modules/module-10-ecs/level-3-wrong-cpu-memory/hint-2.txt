@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix memory to a valid Fargate combination (256 CPU → 512, 1024, or 2048 MB)
+cpu 256 / memory 256 is not an offered Fargate size (256 CPU needs at least 512 MiB). And the task's memory must also cover the container's own 1536 MiB hard limit, so the answer has to be a pair that is both valid and large enough.

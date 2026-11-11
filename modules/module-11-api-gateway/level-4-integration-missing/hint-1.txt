@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Method exists but has no integration — request returns empty 200
+Try the request and then inspect the method: aws apigateway get-method --rest-api-id <id> --resource-id <id> --http-method GET. Is there a methodIntegration in the output?

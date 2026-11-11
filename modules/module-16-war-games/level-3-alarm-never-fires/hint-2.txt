@@ -1,0 +1,7 @@
+Three independent breaks, one per link of the chain:
+
+1. The metric filter pattern looks for a log level that this service never emits.
+2. The alarm's comparison operator is the wrong direction for an error counter.
+3. Even a correctly tripping alarm is silent: it has no action pointing at the paging topic.
+
+Fix them without making the alarm trigger on healthy INFO traffic.

@@ -1,15 +1,23 @@
-name: No Safety Net
-description: "Compliance requires Point-in-Time Recovery \u2014 it's disabled on the\
-  \ table"
-objective: 'Enable PITR: `aws dynamodb update-continuous-backups`'
-xp: 175
+name: "The Audit Nobody Wanted"
+description: >-
+  Ledgerly is a small fintech that has just been told by its auditor: every
+  DynamoDB table that holds SOX-relevant financial records must be recoverable
+  to any second within the last 35 days. A new engineer enabled backups on a
+  table called ledger-entries and called it done. The auditor's checklist,
+  however, is driven by the resource tag compliance=sox, not by table names, and
+  there are other tables carrying it. A scratch table used for experiments
+  (tag compliance=none) is expensive to protect and intentionally stays
+  unprotected.
+objective: >-
+  Make every table tagged compliance=sox point-in-time recoverable: a restore of
+  the table to its latest restorable time must succeed. Leave the scratch table
+  without point-in-time recovery.
+xp: 225
 difficulty: intermediate
-expected_time: 10m
+expected_time: 12m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-12-pitr-disabled
-implementation_status: playable
+  - point-in-time recovery
+  - resource tags
+  - compliance scope
+services:
+  - dynamodb

@@ -1,0 +1,173 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListUSE1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-use1-telemetry"
+    },
+    {
+      "Sid": "ReadUSE1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-use1-telemetry/*"
+    },
+    {
+      "Sid": "ListUSE2",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-use2-telemetry"
+    },
+    {
+      "Sid": "ReadUSE2",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-use2-telemetry/*"
+    },
+    {
+      "Sid": "ListUSW1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-usw1-telemetry"
+    },
+    {
+      "Sid": "ReadUSW1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-usw1-telemetry/*"
+    },
+    {
+      "Sid": "ListUSW2",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-usw2-telemetry"
+    },
+    {
+      "Sid": "ReadUSW2",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-usw2-telemetry/*"
+    },
+    {
+      "Sid": "ListEUW1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-euw1-telemetry"
+    },
+    {
+      "Sid": "ReadEUW1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-euw1-telemetry/*"
+    },
+    {
+      "Sid": "ListEUW2",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-euw2-telemetry"
+    },
+    {
+      "Sid": "ReadEUW2",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-euw2-telemetry/*"
+    },
+    {
+      "Sid": "ListEUC1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-euc1-telemetry"
+    },
+    {
+      "Sid": "ReadEUC1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-euc1-telemetry/*"
+    },
+    {
+      "Sid": "ListAPS1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-aps1-telemetry"
+    },
+    {
+      "Sid": "ReadAPS1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-aps1-telemetry/*"
+    },
+    {
+      "Sid": "ListAPSE1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-apse1-telemetry"
+    },
+    {
+      "Sid": "ReadAPSE1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-apse1-telemetry/*"
+    },
+    {
+      "Sid": "ListAPSE2",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-apse2-telemetry"
+    },
+    {
+      "Sid": "ReadAPSE2",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-apse2-telemetry/*"
+    },
+    {
+      "Sid": "ListAPNE1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-apne1-telemetry"
+    },
+    {
+      "Sid": "ReadAPNE1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-apne1-telemetry/*"
+    },
+    {
+      "Sid": "ListSAE1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-sae1-telemetry"
+    },
+    {
+      "Sid": "ReadSAE1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-sae1-telemetry/*"
+    },
+    {
+      "Sid": "ListCAC1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-cac1-telemetry"
+    },
+    {
+      "Sid": "ReadCAC1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-cac1-telemetry/*"
+    },
+    {
+      "Sid": "ListMES1",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::fleet-mes1-telemetry"
+    },
+    {
+      "Sid": "ReadMES1",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fleet-mes1-telemetry/*"
+    }
+  ]
+}

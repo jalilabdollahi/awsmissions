@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local dynamodb create-table   --table-name MissionTable   --attribute-definitions AttributeName=id,AttributeType=S   --key-schema AttributeName=id,KeyType=HASH   --billing-mode PAY_PER_REQUEST >/dev/null 2>&1 || true
-aws_local dynamodb put-item --table-name MissionTable --item '{"id":{"S":"item-1"},"status":{"S":"old"}}' >/dev/null
-echo "Broken state prepared: existing item blocks attribute_not_exists(id) writes"
+aws_local dynamodb create-table --table-name parcelo-orders \
+  --attribute-definitions AttributeName=orderId,AttributeType=S \
+  --key-schema AttributeName=orderId,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST >/dev/null
+
+aws_local dynamodb put-item --table-name parcelo-orders --item '{
+  "orderId":{"S":"ord-1042"},"status":{"S":"PACKED"},"version":{"N":"7"},
+  "customerId":{"S":"cust-318"},"lineItems":{"L":[{"S":"cable x2"},{"S":"adapter x1"}]}}'
+aws_local dynamodb put-item --table-name parcelo-orders --item '{
+  "orderId":{"S":"ord-1043"},"status":{"S":"SHIPPED"},"version":{"N":"3"},
+  "trackingNo":{"S":"TRK-OLD-777"},"customerId":{"S":"cust-902"},"lineItems":{"L":[{"S":"lamp x1"}]}}'
+
+echo "parcelo-orders has two orders. ship-orders.sh fails on both."

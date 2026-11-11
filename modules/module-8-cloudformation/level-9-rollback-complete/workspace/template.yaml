@@ -1,0 +1,9 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Saltmarsh Pharmacy api settings
+Resources:
+  AlertsTopicParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /saltmarsh/alerts-topic
+      Type: String
+      Value: !ImportValue saltmarsh-alerts-topic-arn

@@ -1,0 +1,3 @@
+Add a retrier with "ErrorEquals": ["StockLocked"], for example "IntervalSeconds": 2, "MaxAttempts": 4 and "BackoffRate": 1.5, to the Retry array of ReserveStock (keep the existing one). Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:fernhill-reserve --definition file://reserve.asl.json

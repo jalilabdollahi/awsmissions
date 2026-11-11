@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Change the Export Name in the reporting template to something unique (for example quayside-reports-bucket). Then remove the failed stack and deploy again:
+
+  aws cloudformation delete-stack --stack-name quayside-reports
+  aws cloudformation wait stack-delete-complete --stack-name quayside-reports
+  aws cloudformation create-stack --stack-name quayside-reports --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name quayside-reports

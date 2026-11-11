@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Break the circular dependency by removing one DependsOn or restructuring resources
+CloudFormation builds a graph: a resource waits for anything it names with DependsOn, Ref or GetAtt. Here the bucket waits for the policy (DependsOn), and the policy waits for the bucket (GetAtt on its ARN), so neither can ever be created first and the whole template is rejected.
+
+You cannot remove the real requirement (the policy must exist before the bucket's notification is configured), so cut the *other* edge: the policy does not need CloudFormation to look up the bucket's ARN, because the bucket's name is fixed and an S3 ARN is just a string built from it.

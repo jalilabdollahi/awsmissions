@@ -1,15 +1,20 @@
-name: Always Firing
-description: "Alarm threshold is `0` \u2014 alarm fires constantly even with zero\
-  \ errors"
-objective: Set a reasonable threshold (e.g., `5`) for the alarm
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "A Zero Too Many"
+description: >-
+  Pylon Compute's capacity team wants a heads-up when a node is CPU saturated,
+  which they define as NodeCpuPercent above 90. Their alarm
+  pylon-node-cpu-saturated has never fired, even though last Thursday three
+  nodes sat at 97% for twenty minutes and a customer called. The alarm is
+  defined in alarm.json in your workspace and was applied from there.
+objective: >-
+  Make pylon-node-cpu-saturated go to ALARM when NodeCpuPercent is above 90,
+  and stay out of ALARM at normal load (45%). Keep the metric, statistic and
+  period as they are.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-6-alarm-wrong-threshold
-implementation_status: playable
+  - alarm thresholds
+  - metric units and ranges
+  - put-metric-alarm
+services:
+  - cloudwatch

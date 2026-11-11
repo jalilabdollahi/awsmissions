@@ -1,15 +1,22 @@
-name: Rule Is Off
-description: "EventBridge rule exists but its state is `DISABLED` \u2014 no events\
-  \ are delivered"
-objective: 'Enable the rule: `aws events enable-rule`'
-xp: 150
-difficulty: intermediate
-expected_time: 8m
+name: "Receipts on Strike"
+description: >-
+  Skyline Cinemas' box office publishes a TicketSold event to the default
+  event bus for every ticket. An EventBridge rule, skyline-ticket-sold, is
+  supposed to forward them to the queue skyline-receipts, which the receipt
+  printers in the lobbies read. Since Monday's release no receipts are printing.
+  The queue is healthy, the box office is publishing events, and the rule
+  exists with the right pattern and the right target, but a deployment script
+  left it in the state shown in rule.json.
+objective: >-
+  Make TicketSold events from skyline.box-office reach skyline-receipts again,
+  and keep the rule selective: other event types must still not be forwarded.
+xp: 100
+difficulty: beginner
+expected_time: 6m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-11-event-rule-disabled
-implementation_status: playable
+  - EventBridge rules
+  - rule state
+  - event delivery to SQS
+services:
+  - events
+  - sqs

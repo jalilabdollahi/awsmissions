@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: API requires AWS_IAM authorization but client expects no auth — all requests 403
+401 versus 403 tells you where it fails. Look at how the authorizer finds the token: aws apigateway get-authorizers --rest-api-id <id>, and compare with the header partners really send.

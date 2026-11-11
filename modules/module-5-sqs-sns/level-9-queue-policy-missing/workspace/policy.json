@@ -1,0 +1,12 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowSnsDelivery",
+      "Effect": "Allow",
+      "Principal": { "Service": "sns.amazonaws.com" },
+      "Action": "sqs:SendMessage",
+      "Resource": "FILL_IN_QUEUE_ARN"
+    }
+  ]
+}

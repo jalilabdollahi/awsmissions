@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add the correct subnet IDs to VPC configuration
+Lambda is attached to a VPC through SubnetIds (where its network interfaces are placed) plus security groups; yours has the groups but no subnets. List the subnets of orders-vpc with their tags and availability zones, and check each subnet's route table: a subnet that routes 0.0.0.0/0 to an internet gateway is public, and security forbids those for this function.

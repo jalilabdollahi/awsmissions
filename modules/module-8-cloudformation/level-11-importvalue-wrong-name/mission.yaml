@@ -1,16 +1,25 @@
-name: Broken Cross-Stack Link
-description: "`!ImportValue SharedBucketName` \u2014 but the export is actually named\
-  \ `mission-SharedBucketName`"
-objective: Fix the ImportValue key to match the exact export name
-xp: 200
+name: "No Export Named That"
+description: >-
+  Ledgerline's compliance team wants an auditor stack that records where the
+  production audit topic and audit bucket live, so scanners can look them up in
+  SSM. The auditor template pulls both values from the platform stacks with
+  ImportValue, but the first deploy attempt rolls back with "No export named
+  ... found". Two platform stacks (production and staging) publish similarly
+  named exports, so it is easy to grab the wrong one.
+objective: >-
+  Deploy the auditor template as the stack ledgerline-auditor so that the SSM
+  parameters /ledgerline/audit/topic-arn and /ledgerline/audit/bucket hold the
+  PRODUCTION audit topic ARN and bucket name, as exported by the production
+  platform stack.
+xp: 175
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-11-importvalue-wrong-name
-implementation_status: playable
+  - Fn::ImportValue
+  - list-exports
+  - cross-stack references
+services:
+  - cloudformation
+  - ssm
+  - sns
+  - s3

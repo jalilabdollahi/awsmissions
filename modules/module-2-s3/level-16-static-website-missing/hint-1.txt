@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Static website hosting is disabled — requests return `NoSuchWebsiteConfiguration`
+Check whether the bucket has been set up as a website, and what the website endpoint answers:
+
+  aws s3api get-bucket-website --bucket driftwood-docs-site
+  curl -s -H "Host: driftwood-docs-site.s3-website-us-east-1.amazonaws.com" $AWS_ENDPOINT_URL/

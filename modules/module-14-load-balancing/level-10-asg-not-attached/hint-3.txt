@@ -1,0 +1,5 @@
+Attach the target group to the Auto Scaling group (existing instances get registered right away):
+
+  aws autoscaling attach-load-balancer-target-groups --auto-scaling-group-name orbit-dispatch-asg --target-group-arns <arn of orbit-dispatch>
+
+Give the health checks about ten seconds, check with bash probe.sh, then run check. The check also terminates one instance to see that its replacement joins on its own.

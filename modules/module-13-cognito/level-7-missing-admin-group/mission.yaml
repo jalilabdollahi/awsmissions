@@ -1,0 +1,22 @@
+name: "Admin in Name Only"
+description: >-
+  Parcelpost's internal console decides who may open the "Reroute shipments"
+  screen by looking at the cognito:groups claim of the ID token: the group
+  ops-admins is allowed, everyone else is read-only. Dara, the operations lead,
+  signs in through the app client parcelpost-console of the user pool
+  parcelpost-staff, and still gets the read-only view. Eli from support
+  correctly sees the read-only view. Both passwords are Parcel-Route-2024! and
+  Dara swears she was added to the admin group months ago.
+objective: >-
+  Make a fresh sign-in by dara return an ID token whose cognito:groups claim
+  contains ops-admins, while eli's tokens must not contain it and must still
+  show his support group.
+xp: 160
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - user pool groups
+  - cognito:groups claim
+  - group membership
+services:
+  - cognito-idp

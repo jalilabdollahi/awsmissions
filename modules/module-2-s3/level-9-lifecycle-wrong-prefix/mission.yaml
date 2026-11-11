@@ -1,15 +1,21 @@
-name: Eternal Storage
-description: "Lifecycle rule exists to expire objects after 30 days but prefix is\
-  \ `logs/` while objects are under `app-logs/` \u2014 objects never expire"
-objective: Fix the prefix in the lifecycle rule
-xp: 175
-difficulty: beginner
+name: "Eternal Storage"
+description: >-
+  Ember Games ships application logs to the bucket ember-app-logs, and the
+  storage bill has doubled since spring. Finance points out that the lifecycle
+  rules "expire-debug-logs" and "expire-error-logs" are enabled, yet October's
+  debug logs are still there. The rules are saved as lifecycle.json in your
+  workspace. Careful: the audit logs under app-logs/audit/ are retained for
+  legal reasons and must never expire.
+objective: >-
+  Make the debug logs expire after at most 14 days, keep the error logs expiring
+  after at most 90 days, and ensure the audit logs are not covered by any
+  expiration rule.
+xp: 150
+difficulty: intermediate
 expected_time: 12m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-9-lifecycle-wrong-prefix
-implementation_status: playable
+  - S3 lifecycle rules
+  - rule filters and prefixes
+  - Expiration
+services:
+  - s3

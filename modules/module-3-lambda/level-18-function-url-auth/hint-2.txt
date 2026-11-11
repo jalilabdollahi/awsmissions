@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`
+Three things control access to a function URL: its AuthType, the function's resource policy (even with AuthType NONE, a statement for lambda:InvokeFunctionUrl is needed or callers still get 403), and CORS for browsers (already restricted for you). Change what is needed, only for invite-landing, and edit the existing URL rather than recreating it.

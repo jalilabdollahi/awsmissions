@@ -1,0 +1,7 @@
+Find every way each identity can reach the bucket, not only the first one you spot:
+
+  aws s3api get-bucket-policy --bucket ardent-customer-exports --query Policy --output text
+  aws iam list-group-policies --group-name ardent-staff   (then get-group-policy)
+  aws iam list-user-policies --user-name ardent-partner-nova   (then get-user-policy)
+
+Access to an object is the union of every Allow in the user's identity policies, their groups' policies and the bucket policy. Test as an identity that has nothing of its own (`ardent-outsider`) to see what the bucket policy alone exposes.

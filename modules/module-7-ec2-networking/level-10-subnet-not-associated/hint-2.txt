@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Associate route table with subnet: `aws ec2 associate-route-table`
+The fernhill-public table's association points at the data subnet (10.100.2.0/24) instead of the app subnet. That is why the app cannot get out and the data subnet is exposed. Replace the association: remove the wrong link, create the right one.

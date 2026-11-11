@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: `!FindInMap [RegionMap, !Ref AWS::Region, AMI]` — the `us-east-1` key is missing from the Mappings section
+Deploy it and see how the function resource fails, then check which region the CLI is using:
+
+  aws cloudformation create-stack --stack-name cobalt-reminders --template-body file://template.yaml
+  aws cloudformation describe-stack-events --stack-name cobalt-reminders
+  aws configure get region
+
+Now read the Mappings section and the FindInMap lines in template.yaml.

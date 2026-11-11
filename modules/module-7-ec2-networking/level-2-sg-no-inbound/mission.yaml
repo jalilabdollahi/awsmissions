@@ -1,15 +1,18 @@
-name: The Closed Door
-description: "Security group exists but has no inbound rules \u2014 all inbound traffic\
-  \ blocked (port 22, 80, 443)"
-objective: Add inbound rules for the required ports
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "Quillpad Is Unreachable"
+description: >-
+  Quillpad, a small blogging platform, moved its web node into a freshly built
+  security group called quillpad-web-sg. The instance is healthy and nginx is up,
+  but every reader gets a timeout. The on-call engineer confirms nothing is wrong
+  on the host itself.
+objective: >-
+  Let readers reach the quillpad-web instance over both plain HTTP and HTTPS from
+  anywhere, keeping the group attached to the instance. Nothing else should be
+  open to the internet.
+xp: 100
+difficulty: beginner
+expected_time: 6m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-2-sg-no-inbound
-implementation_status: playable
+  - security group inbound rules
+  - default deny
+services:
+  - ec2

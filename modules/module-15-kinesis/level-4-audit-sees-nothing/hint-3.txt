@@ -1,0 +1,4 @@
+In audit.py set ShardIteratorType to "TRIM_HORIZON", then package and deploy the code:
+
+  zip audit.zip audit.py
+  aws lambda update-function-code --function-name swipe-audit --zip-file fileb://audit.zip

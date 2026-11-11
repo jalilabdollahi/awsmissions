@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create a new FIFO queue (`.fifo` suffix) and update application config
+Only FIFO queues keep messages of one message group in order, and the queue type can not be changed after creation. You will need a new queue. FIFO queue names must end in .fifo, but the name alone does not make a queue FIFO: there is also a creation attribute.

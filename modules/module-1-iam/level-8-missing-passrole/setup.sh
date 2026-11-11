@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local iam create-user --user-name mission-deployer >/dev/null 2>&1 || true
-aws_local iam create-role   --role-name lambda-execution-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
+lambda_trust='{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+aws_local iam create-role --role-name promo-fn-role --assume-role-policy-document "$lambda_trust" >/dev/null
+aws_local iam put-role-policy --role-name promo-fn-role --policy-name logs-only \
+  --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}'
+aws_local iam create-role --role-name platform-admin-role --assume-role-policy-document "$lambda_trust" >/dev/null
+aws_local iam attach-role-policy --role-name platform-admin-role \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
 
-aws_local iam put-user-policy   --user-name mission-deployer   --policy-name deployer-policy   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"lambda:CreateFunction","Resource":"*"}]}' >/dev/null
+aws_local iam create-user --user-name kestrel-releaser >/dev/null
+aws_local iam put-user-policy --user-name kestrel-releaser --policy-name release-pipeline \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
 
-echo "Broken IAM user created: mission-deployer (missing iam:PassRole)"
+echo "kestrel-releaser can create functions but not attach any execution role."

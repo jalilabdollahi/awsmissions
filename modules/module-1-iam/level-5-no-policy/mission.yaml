@@ -1,17 +1,23 @@
-name: The Bare Role
-description: "IAM role exists and is attached to Lambda but has zero policies \u2014\
-  \ all calls denied"
-objective: Attach a managed policy or put an inline policy granting required permissions
+name: "The Bare Role"
+description: >-
+  Bluefin Payments has a Lambda function, invoice-digest, that reads the day's
+  invoice files from the bucket bluefin-invoices and writes a summary file into
+  bluefin-digests. It was deployed this morning with a freshly created
+  execution role, invoice-digest-role, and ever since the function returns an
+  error instead of a digest. The role's trust policy is correct; someone just
+  never gave it any permissions.
+objective: >-
+  Give invoice-digest-role exactly the S3 access invoice-digest needs (read
+  invoices, write digests) so the function runs successfully, without opening
+  other buckets.
 xp: 125
 difficulty: beginner
 expected_time: 8m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- lambda functions
-module: module-1-iam
-module_title: IAM Foundations
-level: level-5-no-policy
-implementation_status: playable
+  - Lambda execution roles
+  - identity policies
+  - least privilege
+services:
+  - iam
+  - lambda
+  - s3

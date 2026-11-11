@@ -1,0 +1,9 @@
+Ask KMS and the function what they see, one layer at a time:
+
+  aws kms list-aliases
+  aws kms describe-key --key-id alias/vl-patient-notes --query KeyMetadata
+  aws kms get-key-rotation-status --key-id alias/vl-patient-notes
+  aws lambda get-function-configuration --function-name vl-note-reader --query Environment
+  aws iam get-role-policy --role-name vl-reader-role --policy-name reader
+
+Invoke the function with {"noteId":"n-1"} and read the first error. Then ask which key the role's policy is actually about.

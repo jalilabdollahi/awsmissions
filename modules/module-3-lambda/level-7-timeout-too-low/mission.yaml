@@ -1,17 +1,21 @@
-name: Three Seconds and Out
-description: "Function needs 30 seconds to process but timeout is 3s \u2014 always\
-  \ times out"
-objective: 'Increase timeout to 60s: `aws lambda update-function-configuration --timeout
-  60`'
-xp: 125
-difficulty: beginner
+name: "Three Seconds and Out"
+description: >-
+  Quillmark Reports renders customer statements in the Lambda function
+  statement-renderer. Short statements work, but every long one (the quarterly
+  statements run to a dozen pages) just stops: the customer portal shows a
+  spinner and then an error. The function logic is fine; ops noticed that its
+  configuration still carries the default limits from the project template.
+objective: >-
+  Let a 12-page statement render successfully. The portal calls the function
+  through an HTTP API that gives up after 29 seconds, so the function's
+  timeout must not exceed that.
+xp: 150
+difficulty: intermediate
 expected_time: 8m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-7-timeout-too-low
-implementation_status: playable
+  - Lambda timeout
+  - function configuration limits
+  - API integration limits
+services:
+  - lambda
+  - iam

@@ -1,0 +1,7 @@
+See how the gateway is exposed, and what its routing looks like:
+
+  aws elbv2 describe-load-balancers --names nimbus-gateway
+  aws elbv2 describe-listeners --load-balancer-arn <arn>
+  aws elbv2 describe-rules --listener-arn <listener arn>
+
+Note the load balancer's Scheme, and write down every rule (priority, condition, action) and the default action. bash probe.sh nimbus-gateway /status tries it out.

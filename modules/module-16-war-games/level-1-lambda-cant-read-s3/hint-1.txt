@@ -1,0 +1,6 @@
+Reproduce the failure first, and read the error the function returns:
+
+  aws lambda invoke --function-name hv-manifest-indexer --cli-binary-format raw-in-base64-out \
+    --payload '{"key":"incoming/manifest-20261110.csv"}' out.json; cat out.json
+
+The function does three things in a row: read from S3, write a copy to S3, write a row to DynamoDB. A failure at hop 1 hides whatever is wrong at hop 2 and 3, so test the hops on their own (the `hv-oncall` user can assume the role and try each call by hand). Also look at the function's configuration.

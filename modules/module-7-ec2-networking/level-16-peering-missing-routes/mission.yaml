@@ -1,0 +1,22 @@
+name: "Peering Without a Path"
+description: >-
+  Two teams at Copperline Retail own separate VPCs: orders-vpc (10.160.0.0/16)
+  and billing-vpc (10.161.0.0/16). Yesterday someone requested a peering
+  connection between them so the order service can call the billing database on
+  port 5432. The request was made and then everybody went home. The order service
+  still cannot connect, and the billing team says their database never even sees
+  a packet.
+objective: >-
+  Make the peering usable in both directions: the connection must be active, each
+  VPC's private route table must route the other VPC's CIDR through it, and the
+  billing database group must accept PostgreSQL only from the orders VPC range.
+  Do not route 0.0.0.0/0 over the peering.
+xp: 300
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - VPC peering
+  - bidirectional routing
+  - non-transitive networking
+services:
+  - ec2

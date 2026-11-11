@@ -1,15 +1,24 @@
-name: Wrong Attribute
-description: "`!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn`\
-  \ \u2014 depends on resource type"
-objective: Fix the attribute name in the GetAtt reference
-xp: 200
+name: "Attribute Not Found"
+description: >-
+  Orchard Analytics is rolling out release 2 of its orchard-reporting stack:
+  a new archive bucket, and permission for the reporting role to copy finished
+  reports into it. The workspace holds the release template. Rolling it out
+  with update-stack makes the update fail and roll back, which leaves the
+  archive bucket missing and the reporting bot unable to archive anything.
+objective: >-
+  Roll out release 2: update the orchard-reporting stack so that report-bot, by
+  assuming the role orchard-reporter, can upload to both orchard-reports and
+  the new orchard-archive bucket and nowhere else, with the stack ending in
+  UPDATE_COMPLETE.
+xp: 175
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-7-getatt-wrong-attribute
-implementation_status: playable
+  - Fn::GetAtt
+  - resource attributes
+  - UPDATE_ROLLBACK_COMPLETE
+services:
+  - cloudformation
+  - iam
+  - s3
+  - sts

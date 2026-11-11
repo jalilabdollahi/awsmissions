@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: IAM user exists at path `/ops/` but policy ARN references `/dev/` — condition on path fails
+The policy worked for the pilot accounts but not for these. Compare what the policy names with what the users really are:
+
+  aws iam get-group-policy --group-name redwood-contractors --policy-name self-service-keys
+  aws iam get-user --user-name redwood-kim
+
+Read the whole ARN IAM prints for the user.

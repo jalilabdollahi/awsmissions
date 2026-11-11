@@ -1,39 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-tmpdir="$(mktemp -d)"
-cleanup() {
-  rm -rf "$tmpdir"
-}
-trap cleanup EXIT
+aws_local iam create-role --role-name rate-quote-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null
 
-cat > "$tmpdir/index.py" <<'EOF'
-import json
-import os
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
+(cd "$MISSION_DIR/workspace" && zip -q "$stage/quote.zip" quote.py)
+aws_local lambda create-function --function-name rate-quote-engine \
+  --runtime python3.12 --handler quote.quote \
+  --role "arn:aws:iam::${ACCOUNT_ID}:role/rate-quote-role" \
+  --zip-file "fileb://$stage/quote.zip" >/dev/null
 
+# Partner identities live in Cartwheel's account but carry no Lambda permissions of their own.
+for u in partner-shipright partner-fastlane; do
+  aws_local iam create-user --user-name "$u" >/dev/null
+done
+# FastLane's old integration still has an unrelated, harmless permission.
+aws_local iam put-user-policy --user-name partner-fastlane --policy-name read-own-docs \
+  --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:ListAllMyBuckets","Resource":"*"}]}'
 
-def lambda_handler(event, context):
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "ok",
-            "database_url": os.environ.get("DATABASE_URL", "missing")
-        })
-    }
-EOF
-(
-  cd "$tmpdir"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-EOF
-)
-aws_local iam create-role   --role-name mission-lambda-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name mission-lambda-role   --policy-name mission-lambda-logs   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}' >/dev/null 2>&1 || true
-aws_local s3 mb s3://uploads-bucket >/dev/null 2>&1 || true
-aws_local lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --zip-file fileb://"$tmpdir/function.zip" >/dev/null 2>&1 || true
-aws_local s3api put-bucket-notification-configuration   --bucket uploads-bucket   --notification-configuration '{"LambdaFunctionConfigurations":[{"Id":"mission-trigger","LambdaFunctionArn":"arn:aws:lambda:us-east-1:000000000000:function:mission-function","Events":["s3:ObjectCreated:*"]}]}' >/dev/null
-
-echo "Broken state prepared: uploads-bucket notification exists but Lambda lacks invoke permission for S3"
+echo "partner-shipright is calling rate-quote-engine and being refused."

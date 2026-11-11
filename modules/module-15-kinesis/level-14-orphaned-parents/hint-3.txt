@@ -1,0 +1,4 @@
+In export.py replace the constant SHARD_IDS with a function that calls kinesis.list_shards(StreamName=...) (follow NextToken) and returns all shard ids sorted by their number, so parents come before children; read each one with the existing read_shard(). Then deploy:
+
+  zip export.zip export.py
+  aws lambda update-function-code --function-name ledger-export --zip-file fileb://export.zip

@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Invocation fails — Lambda function `mission-function` doesn't exist
+Ask Lambda what it knows, then ask IAM what is already available:
+
+  aws lambda list-functions
+  aws iam list-roles
+
+The error the dispatch job sees is about the function itself, not about permissions.

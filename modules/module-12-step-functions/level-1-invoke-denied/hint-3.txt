@@ -1,0 +1,3 @@
+Add a statement with Action lambda:InvokeFunction and the ARN of print-shipping-label only (arn:aws:lambda:us-east-1:000000000000:function:print-shipping-label), then replace the inline policy:
+
+  aws iam put-role-policy --role-name tidewater-label-flow-role --policy-name flow-permissions --policy-document file://role-policy.json

@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Fill in the files (Service = lambda.amazonaws.com, Action = s3:PutObject, Resource = arn:aws:s3:::tidewater-claim-receipts/receipts/*), then:
+
+  aws iam create-role --role-name claim-archiver-role --assume-role-policy-document file://trust-policy.json
+  aws iam put-role-policy --role-name claim-archiver-role --policy-name archive-receipts --policy-document file://permissions.json
+  aws lambda update-function-configuration --function-name claim-receipt-archiver --role arn:aws:iam::000000000000:role/claim-archiver-role

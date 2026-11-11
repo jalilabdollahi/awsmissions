@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add Lambda permission: `aws lambda add-permission` for `s3.amazonaws.com` principal
+A function has a resource-based policy that decides who may invoke it; you edit it with `add-permission`. The statement must name the exact principal (a user ARN looks like arn:aws:iam::<account>:user/<name>) and one action only. Using "*" as the principal would also let FastLane back in.

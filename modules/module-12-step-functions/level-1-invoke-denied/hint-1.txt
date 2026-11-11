@@ -1,0 +1,4 @@
+Read the execution history first. 'describe-execution' only gives a summary; the event list names the exact action that was refused.
+
+  aws stepfunctions list-executions --state-machine-arn <arn>
+  aws stepfunctions get-execution-history --execution-arn <executionArn>

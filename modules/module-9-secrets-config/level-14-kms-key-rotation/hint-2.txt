@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update application to use key alias instead of key ARN (aliases track rotation automatically)
+Ciphertext from a symmetric KMS key remembers which key made it. After a *manual* rotation (new key, moved alias) the old data still belongs to the old key, so the old key must stay available for decrypts, or the data must be moved. Moving it without ever exposing the plaintext is what kms:ReEncrypt is for: it decrypts under the source key and encrypts under the destination inside KMS. It needs the old key enabled just for the migration, and, because the records were bound to an encryption context, you must pass that context for both the source and the destination or the new ciphertext will refuse to decrypt without it.
+
+Automatic rotation, in contrast, keeps old key material inside the same key, so the key ID never changes and nothing ever has to be migrated. Turn it on for the current key.

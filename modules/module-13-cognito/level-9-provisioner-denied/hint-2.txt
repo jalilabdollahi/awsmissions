@@ -1,0 +1,3 @@
+Two things are off in the policy. The resource is a pool ARN that contains a pool id which no longer exists (the migration created a new pool with a new id), and the action list is shorter than what the job does.
+
+Keep the policy tight: just the actions the job needs, on the one pool it needs them for.

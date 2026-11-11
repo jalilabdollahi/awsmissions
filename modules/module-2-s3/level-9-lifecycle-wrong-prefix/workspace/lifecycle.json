@@ -1,0 +1,16 @@
+{
+  "Rules": [
+    {
+      "ID": "expire-debug-logs",
+      "Status": "Enabled",
+      "Filter": { "Prefix": "logs/debug/" },
+      "Expiration": { "Days": 14 }
+    },
+    {
+      "ID": "expire-error-logs",
+      "Status": "Enabled",
+      "Filter": { "Prefix": "app-logs/error/" },
+      "Expiration": { "Days": 90 }
+    }
+  ]
+}

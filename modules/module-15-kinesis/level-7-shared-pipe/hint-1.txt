@@ -1,0 +1,7 @@
+Find out how the two Lambdas are connected to the stream and which consumers the stream knows about:
+
+  aws lambda list-event-source-mappings --function-name risk-scorer
+  aws lambda list-event-source-mappings --function-name ledger-writer
+  aws kinesis list-stream-consumers --stream-arn arn:aws:kinesis:us-east-1:000000000000:stream/trade-ticks
+
+Compare the EventSourceArn of each mapping.

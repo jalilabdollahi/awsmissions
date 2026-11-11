@@ -1,0 +1,3 @@
+The listener forwards to both groups with weights; green has weight 0, so it never gets a request. But shifting 100% of traffic to a fleet smaller than the one it replaces is how cutovers fail: green has one instance and blue has two.
+
+Do it in this order: first grow the green Auto Scaling group (its min as well as its desired capacity) and wait until its targets are healthy, then change the weights. Blue stays in the action with weight 0 as the rollback path.

@@ -1,1 +1,1 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws lambda update-alias --function-name tax-calculator --name prod --function-version 2

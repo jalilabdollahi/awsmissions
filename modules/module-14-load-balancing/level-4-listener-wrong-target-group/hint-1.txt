@@ -1,0 +1,6 @@
+Both fleets are healthy, so the problem is not in the instances or the target groups. Look at what connects the load balancer to a fleet:
+
+  aws elbv2 describe-load-balancers --names maplewood-alb
+  aws elbv2 describe-listeners --load-balancer-arn <arn>
+
+Compare the listener's target group ARN with the ARNs from describe-target-groups. You can also see what members see with: bash probe.sh

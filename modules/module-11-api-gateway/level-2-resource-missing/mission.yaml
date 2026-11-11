@@ -1,17 +1,23 @@
-name: No Path Configured
-description: "API exists but the `/items` resource path doesn't exist \u2014 404 on\
-  \ all requests"
-objective: 'Create the resource: `aws apigateway create-resource` with correct path
-  part'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Notes Without an Address"
+description: >-
+  Quillnote is a note-taking app. Its REST API quillnote-api (stage v1) serves
+  GET /notes just fine, and a new mobile build now opens a single note with
+  GET /notes/{noteId}, for example /notes/n-204. Every one of those calls fails
+  while the list screen works. The Lambda behind the API, quillnote-notes, already
+  handles both shapes of request: it reads the note id from the path parameter
+  noteId and returns 400 when it is missing. The API definition was written by
+  hand and nobody added the second route.
+objective: >-
+  Make GET /notes/{noteId} on stage v1 of quillnote-api return the requested
+  note through the quillnote-notes function, while GET /notes keeps working.
+  The function must receive the id as the path parameter noteId.
+xp: 110
+difficulty: beginner
+expected_time: 12m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-2-resource-missing
-implementation_status: playable
+  - API resources
+  - path parameters
+  - redeploying a stage
+services:
+  - apigateway
+  - lambda

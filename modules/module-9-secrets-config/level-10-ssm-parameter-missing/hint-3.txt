@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Read the host and port out of the secret, then create one parameter each:
+
+  aws ssm put-parameter --name /corvid/checkout/db-host --type String --value <host from the secret>
+  aws ssm put-parameter --name /corvid/checkout/db-port --type String --value <port from the secret>

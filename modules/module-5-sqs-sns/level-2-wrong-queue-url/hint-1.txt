@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Application is configured with an incorrect queue URL — messages going nowhere
+The API's sends succeed, so something is accepting the messages, just not the queue the agents read. Find out where the API is told to send:
+
+  aws ssm get-parameter --name /ticketdesk/prod/support-queue-url
+
+Then compare with the address SQS reports for the production queue.

@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Bucket policy only allows `s3:GetObject` — PutObject is denied
+Reads work and writes do not, so the Principal is matched. Compare the two statements that name ci-runner:
+
+  aws s3api get-bucket-policy --bucket nimbus-build-artifacts --query Policy --output text
+
+Look at what the Resource field points at in each.

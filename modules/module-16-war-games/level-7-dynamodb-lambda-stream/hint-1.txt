@@ -1,0 +1,10 @@
+Check the pipeline from the source forward:
+
+  aws dynamodb describe-table --table-name orbit-workouts --query 'Table.[StreamSpecification,LatestStreamArn]'
+  aws lambda list-event-source-mappings --function-name orbit-leaderboard-updater
+  aws lambda get-function-configuration --function-name orbit-leaderboard-updater --query Environment
+
+Then call the function yourself with a stream-shaped record and read the error:
+  aws lambda invoke --function-name orbit-leaderboard-updater --cli-binary-format raw-in-base64-out \
+    --payload '{"Records":[{"eventName":"INSERT","dynamodb":{"NewImage":{"userId":{"S":"u-test"},"points":{"N":"1"}}}}]}' out.json; cat out.json
+(delete any test row you create from orbit-leaderboard afterwards).

@@ -1,18 +1,20 @@
-name: No Route to Internet
-description: VPC, subnet, and IGW exist but route table has no route to `0.0.0.0/0`
-  via IGW
-objective: 'Add route: `aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id
-  igw-xxx`'
-xp: 250
+name: "Dead End Street"
+description: >-
+  Harborview Dental's booking site lives in the harborview-prod VPC. The VPC has
+  an attached internet gateway, a web subnet and a private db subnet, but both
+  subnets use the VPC's automatically created main route table, which only has
+  the local route. Patients get timeouts and the web server cannot reach the
+  appointment-reminder API. The database subnet must never become reachable from
+  the internet.
+objective: >-
+  Make the web subnet public (default route to the internet gateway) while the
+  db subnet stays private (no route to any internet gateway).
+xp: 150
 difficulty: intermediate
-expected_time: 15m
+expected_time: 10m
 concepts:
-- EC2
-- VPC
-- networking
-- VPCs
-- subnets
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-9-route-table-missing
-implementation_status: playable
+  - route tables
+  - main route table
+  - public vs private subnets
+services:
+  - ec2

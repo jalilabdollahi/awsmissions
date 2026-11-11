@@ -1,16 +1,23 @@
-name: Wrong Address
-description: "Application is configured with an incorrect queue URL \u2014 messages\
-  \ going nowhere"
-objective: 'Retrieve the correct URL: `aws sqs get-queue-url` and update the config'
-xp: 150
-difficulty: intermediate
-expected_time: 8m
+name: "Staging Is Not Production"
+description: >-
+  TicketDesk's support-ticket API reads the address of its queue from the
+  Parameter Store entry /ticketdesk/prod/support-queue-url. Since Tuesday's
+  promotion from staging, customers' tickets are accepted by the API but the
+  support agents' worker, which consumes the production queue
+  ticketdesk-support, never sees them. The API does not report errors: the
+  sends are succeeding, just somewhere else.
+objective: >-
+  Make the production API deliver tickets to the production queue
+  ticketdesk-support. The API gets the queue address only from the parameter
+  /ticketdesk/prod/support-queue-url, so fix the configuration rather than the
+  queues. Staging must stop receiving production tickets.
+xp: 100
+difficulty: beginner
+expected_time: 6m
 concepts:
-- SQS
-- SNS
-- event delivery
-- queues
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-2-wrong-queue-url
-implementation_status: playable
+  - SQS queue URL
+  - get-queue-url
+  - Parameter Store configuration
+services:
+  - sqs
+  - ssm

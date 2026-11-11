@@ -1,15 +1,23 @@
-name: No API Exists
-description: "REST API `mission-api` doesn't exist \u2014 client gets connection refused"
-objective: 'Create the REST API: `aws apigateway create-rest-api`'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Status Page With No Page"
+description: >-
+  Lantern runs a public status page. Its front end calls
+  GET /status on the REST API lantern-status-api and shows the "state" field.
+  The Lambda function that knows the state, lantern-status, was deployed
+  yesterday, but the API in front of it never existed: the Terraform apply
+  that should have created it was cancelled halfway. Browsers get nothing but
+  errors and the support inbox is filling up with "is Lantern down?" mails.
+  The function already speaks the Lambda proxy format, so it needs no changes.
+objective: >-
+  Build the REST API lantern-status-api so that GET /status on the stage live
+  returns the status JSON produced by the lantern-status function, through
+  a Lambda proxy integration.
+xp: 100
+difficulty: beginner
+expected_time: 12m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-1-api-missing
-implementation_status: playable
+  - REST API building blocks
+  - Lambda proxy integration
+  - deployment and stages
+services:
+  - apigateway
+  - lambda

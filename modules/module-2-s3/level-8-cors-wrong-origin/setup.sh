@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-aws_local s3api put-bucket-cors --bucket mission-bucket --cors-configuration "file://$SCRIPT_DIR/config.json" >/dev/null
-echo "Broken bucket created: mission-bucket (wrong CORS origin)"
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
+
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+
+aws_local s3 mb s3://brightcart-media >/dev/null
+echo "hero banner" > "$work/hero.txt"
+aws_local s3 cp "$work/hero.txt" s3://brightcart-media/banners/hero.jpg >/dev/null
+
+aws_local s3api put-bucket-cors --bucket brightcart-media \
+  --cors-configuration "file://$MISSION_DIR/workspace/cors.json"
+
+echo "The admin app's preflights are rejected; the storefront is fine."

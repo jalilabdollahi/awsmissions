@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Set `maxReceiveCount` to a reasonable value (e.g., 3)
+maxReceiveCount is how many times SQS may hand a message out before it moves it to the dead-letter queue. At 1, the first failed attempt is also the last. Pick a value that allows at least three deliveries but still parks a hopeless message within ten.

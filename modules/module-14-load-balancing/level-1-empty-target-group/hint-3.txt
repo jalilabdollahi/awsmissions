@@ -1,0 +1,6 @@
+Find the instance id, then register it. The group's default port (8080) is the port the app listens on, so you do not need to pass a port.
+
+  aws ec2 describe-instances --filters "Name=tag:Name,Values=pageturn-web-1" --query 'Reservations[].Instances[].InstanceId' --output text
+  aws elbv2 register-targets --target-group-arn <target-group-arn> --targets Id=<instance-id>
+
+Health checks run every 5 seconds and need two passes, so give it about 10 seconds before you run check.

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable content-based deduplication on the FIFO queue
+A FIFO queue needs some way to identify duplicates. The producer can send a MessageDeduplicationId, or the queue can derive one from the message body. Only the second option works for a producer that cannot be changed, and it is a setting that can be turned on for an existing queue.

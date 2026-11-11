@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  (edit containerPort to 3000 in task-definition.json)
+  aws ecs register-task-definition --cli-input-json file://task-definition.json
+  aws ecs update-service --cluster invoicely --service invoice-api --task-definition invoice-api:<new rev> \
+    --load-balancers targetGroupArn=<arn>,containerName=app,containerPort=3000

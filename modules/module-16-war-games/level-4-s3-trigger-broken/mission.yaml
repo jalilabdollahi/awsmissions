@@ -1,0 +1,24 @@
+name: "Upload Goes Nowhere"
+description: >-
+  Marigold Photo Studio's wedding photographers upload shoots to an S3 bucket
+  and a Lambda function turns every JPEG into a gallery thumbnail. Since
+  Monday's storage reorganisation the uploads succeed but no thumbnail ever
+  appears. The escalation note is in your workspace; it mentions that the
+  trigger and the IAM policy were both "copied from staging".
+objective: >-
+  Uploading a .jpg to mg-photo-uploads must produce thumb-<name> in
+  mg-photo-thumbs, uploading other file types must not, and uploads to the
+  staging bucket must not trigger the production function. The thumbnailer
+  may read from the uploads bucket but must never be able to write to it.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+  - S3 event notifications
+  - notification key filters
+  - Lambda execution role
+  - recursive trigger risk
+services:
+  - s3
+  - lambda
+  - iam

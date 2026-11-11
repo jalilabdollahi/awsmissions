@@ -1,16 +1,23 @@
-name: Stack Stuck
-description: "Stack is in `ROLLBACK_COMPLETE` state from a previous failed create\
-  \ \u2014 cannot update"
-objective: Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be
-  updated)
-xp: 200
+name: "Stack Stuck in Rollback"
+description: >-
+  Saltmarsh Pharmacy's release train deployed the saltmarsh-api stack a few
+  minutes before the saltmarsh-shared stack it depends on. The api stack died
+  on creation and has been sitting in ROLLBACK_COMPLETE ever since. The shared
+  stack has meanwhile been deployed successfully, but re-running the api
+  deploy as an update is refused with an error about the stack state.
+objective: >-
+  Get saltmarsh-api to CREATE_COMPLETE with its template unchanged, so that the
+  SSM parameter /saltmarsh/alerts-topic holds the topic ARN exported by
+  saltmarsh-shared. The shared stack must be left alone.
+xp: 175
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- CloudFormation
-- stacks
-- templates
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-9-rollback-complete
-implementation_status: playable
+  - ROLLBACK_COMPLETE
+  - stack lifecycle
+  - delete-stack
+  - ImportValue
+services:
+  - cloudformation
+  - ssm
+  - sns

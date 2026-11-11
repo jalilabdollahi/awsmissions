@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix or remove the filter policy to allow relevant message attributes
+The filter rules are right, but a filter policy is matched against message attributes unless told otherwise. This publisher sends no attributes: eventType lives inside the JSON body. SNS can match against the body instead; the choice is a separate subscription attribute from the policy itself.

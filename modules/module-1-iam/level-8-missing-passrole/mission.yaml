@@ -1,17 +1,21 @@
-name: The Blocked Handoff
-description: "IAM user can create Lambda but can't assign an execution role \u2014\
-  \ missing `iam:PassRole`"
-objective: Add `iam:PassRole` permission on the target role to the user policy
-xp: 175
-difficulty: beginner
+name: "Dropped Baton"
+description: >-
+  Kestrel Retail's release pipeline runs as the IAM user kestrel-releaser. It
+  may create Lambda functions named kestrel-*, and the execution role
+  promo-fn-role already exists for them. Yet every deployment dies with
+  AccessDenied the moment the pipeline tries to attach the role to the new
+  function. There is also a powerful role, platform-admin-role, in the account
+  that no pipeline should ever be able to hand to a function.
+objective: >-
+  Let kestrel-releaser create Lambda functions that use promo-fn-role, while it
+  remains unable to create functions that use platform-admin-role.
+xp: 200
+difficulty: intermediate
 expected_time: 10m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- lambda functions
-module: module-1-iam
-module_title: IAM Foundations
-level: level-8-missing-passrole
-implementation_status: playable
+  - iam:PassRole
+  - privilege escalation
+  - Lambda execution roles
+services:
+  - iam
+  - lambda

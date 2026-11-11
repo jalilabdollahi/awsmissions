@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the missing key to the Mappings section
+Fn::FindInMap [MapName, TopLevelKey, SecondLevelKey] is an exact, case-sensitive lookup. The top-level key here is the pseudo parameter AWS::Region, whose value is the region you deploy to (us-east-1). If the Mappings table has no entry spelled exactly like that, there is nothing to substitute and the property receives an empty value that Lambda rejects. A create failure then rolls the stack back to ROLLBACK_COMPLETE, which cannot be updated.
+
+Read the region keys in the table very carefully, one character at a time.

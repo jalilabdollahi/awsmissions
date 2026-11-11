@@ -1,0 +1,4 @@
+In publisher.py replace the fixed "PartitionKey" value with the order's id (item["order_id"]), not a random value. Then package and deploy:
+
+  zip publisher.zip publisher.py
+  aws lambda update-function-code --function-name order-publisher --zip-file fileb://publisher.zip

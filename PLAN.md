@@ -1,3 +1,5 @@
+> **Historical document.** This is the original plan. AWSMissions now runs on Floci instead of LocalStack, and the curriculum has changed: see README.md, MODULES.md and LEVEL_SPEC.md for the current state.
+
 # AWSMissions — Master Plan
 
 > **Learn AWS by breaking it — then fixing it.**

@@ -1,0 +1,6 @@
+The blocking rule exists but never fires, so look at how the listener orders its rules:
+
+  aws elbv2 describe-listeners --load-balancer-arn <arn of corallo-alb>
+  aws elbv2 describe-rules --listener-arn <listener arn>
+
+Write down each rule's priority and path pattern. Then ask the load balancer: bash probe.sh /api/admin/users

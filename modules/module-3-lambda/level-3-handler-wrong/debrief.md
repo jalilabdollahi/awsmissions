@@ -1,13 +1,20 @@
-# The Missing Door
+# Debrief: the handler string is a pointer
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in Lambda Functions: Function is deployed but handler is `main.handler` — file is actually `index.py` with function `lambda_handler`
+`Handler` is a string with two halves: where Lambda should `import` code from, and which exported function it should call. For Node.js it is `file.exportName` (the file extension is dropped, and a folder is allowed: `src/relay.sign`). For Python it is `module.function`, for Java `package.Class::method`.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+When the pointer is wrong the symptoms depend on which half missed:
 
-## Key Concepts
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
+| Mistake | What you see |
+|---|---|
+| File not in the package | `Runtime.ImportModuleError: Cannot find module 'index'` |
+| File found, name not exported | `Runtime.HandlerNotFound` |
+| Wrong but valid export | Runs fine and returns the wrong thing |
+
+That last row is the dangerous one, and it is why this mission's checker verifies the HMAC signature instead of only looking for "no error". Here `relay.ping` would turn the errors green without relaying a single order.
+
+**Why it happened:** a pipeline template hard-coded `index.handler`, a common Node.js default, regardless of what the package actually contained.
+
+**In real life**
+- Keep the handler in the same repo as the code (SAM `Handler:`, Terraform `handler =`) so they change together.
+- `.mjs` files or `"type": "module"` mean ES modules (`export`), otherwise Node expects CommonJS `exports.handler = ...`.
+- A smoke-test invoke in the deploy pipeline catches this class of mistake before users do.

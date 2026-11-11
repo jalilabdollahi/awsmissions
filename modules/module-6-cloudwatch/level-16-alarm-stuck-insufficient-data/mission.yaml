@@ -1,0 +1,21 @@
+name: "The Grey Light"
+description: >-
+  Vesper's backup jobs publish a datapoint to Vesper/Backup BackupFailures only
+  when a job fails; successful nights publish nothing. The alarm
+  vesper-backup-failed (any failure at all) is meant to be green on good nights.
+  Instead it has shown the grey INSUFFICIENT_DATA state for three weeks, the
+  status board treats grey as "unknown", and nobody can tell a healthy
+  backup from a broken alarm. The definition is in alarm.json.
+objective: >-
+  Make vesper-backup-failed report OK when there are no failures, and still
+  go to ALARM when a failure is published. Keep the metric, statistic and
+  threshold.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - TreatMissingData
+  - INSUFFICIENT_DATA state
+  - sparse metrics
+services:
+  - cloudwatch

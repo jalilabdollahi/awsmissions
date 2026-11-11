@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: `POST /items` resource only has a `GET` method configured — POST returns 405
+Call the endpoint both ways and compare. Then list the configured methods of the resource: aws apigateway get-resource --rest-api-id <id> --resource-id <id> shows resourceMethods.

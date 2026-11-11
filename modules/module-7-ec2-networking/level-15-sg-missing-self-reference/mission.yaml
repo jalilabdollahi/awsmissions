@@ -1,15 +1,21 @@
-name: Cluster Can't Talk
-description: "Auto Scaling group instances need to communicate with each other \u2014\
-  \ security group missing a self-referencing rule"
-objective: Add an inbound rule referencing the security group ID as source
+name: "Gossip Behind Closed Doors"
+description: >-
+  Cobalt Cache runs a three-node membership cluster whose nodes gossip with each
+  other on TCP and UDP 7946. The nodes are healthy individually, yet they never
+  form a cluster: each one reports "no peers found". They all share the security
+  group cobalt-nodes-sg, which only has a rule admitting the monitoring server.
+  Cobalt security forbids opening cluster ports to CIDR ranges, because nodes
+  are replaced all the time and their addresses change.
+objective: >-
+  Let the members of cobalt-nodes-sg talk to each other on TCP and UDP 7946,
+  without allowing that traffic from any address range and without opening any
+  further port. The monitoring rule must stay.
 xp: 275
-difficulty: intermediate
-expected_time: 18m
+difficulty: advanced
+expected_time: 12m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-15-sg-missing-self-reference
-implementation_status: playable
+  - self-referencing security groups
+  - east-west traffic
+  - TCP vs UDP rules
+services:
+  - ec2

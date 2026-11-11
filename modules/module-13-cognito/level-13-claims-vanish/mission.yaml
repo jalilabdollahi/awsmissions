@@ -1,0 +1,26 @@
+name: "Claims Vanish"
+description: >-
+  Cobalt's multi-tenant SaaS keeps customer data apart with a tenant claim: a
+  pre token generation Lambda (cobalt-claims) copies each user's custom:tenant
+  attribute into the ID token of the user pool cobalt-tenants (client
+  cobalt-app), and every API trusts that claim. Ava belongs to tenant acme, Ben
+  to globex (both use the password Tenant-Wall-2024!). Yesterday the platform
+  team wired a welcome-email function (cobalt-welcome) to the pool as a post
+  confirmation trigger, and released a small refactor of cobalt-claims. Since
+  then the APIs return empty data for everybody: tokens no longer contain a tenant
+  claim. The welcome email must keep working. The sources of both functions
+  are in your workspace (claims.py, welcome.py).
+objective: >-
+  Make a fresh sign-in by ava produce an ID token with the claim tenant set to
+  acme, and by ben one with tenant set to globex, while keeping the
+  cobalt-welcome post confirmation trigger attached to the pool.
+xp: 500
+difficulty: expert
+expected_time: 20m
+concepts:
+  - pre token generation trigger
+  - Lambda config is replaced as a whole
+  - custom attributes and claims
+services:
+  - cognito-idp
+  - lambda

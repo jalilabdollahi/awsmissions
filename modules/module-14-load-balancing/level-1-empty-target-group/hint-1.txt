@@ -1,0 +1,6 @@
+A 503 from an ALB means it had no target to send the request to. Start at the target group, not at the server:
+
+  aws elbv2 describe-target-groups --names pageturn-web
+  aws elbv2 describe-target-health --target-group-arn <the TargetGroupArn from above>
+
+You can look at what a visitor sees with:  bash probe.sh

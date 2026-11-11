@@ -1,0 +1,3 @@
+Add "ResultPath": "$.fraud" (any key name under $) to the ScoreOrder state so the result is merged into the input. Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:lumen-order-screening --definition file://order-screening.asl.json

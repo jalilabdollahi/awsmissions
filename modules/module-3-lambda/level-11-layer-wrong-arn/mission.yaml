@@ -1,16 +1,21 @@
-name: Missing Dependency
-description: "Function references a Lambda layer ARN that doesn't exist \u2014 init\
-  \ fails"
-objective: Create the layer and update the function to use the correct ARN
-xp: 200
-difficulty: beginner
+name: "Missing Dependency"
+description: >-
+  Ironbridge Pay scores card transactions in the Lambda function txn-scorer.
+  Its business rules and its tracing helper both come from Lambda layers. After
+  the fraud team announced the 2024 ruleset, the function started to crash
+  while it is still initialising, before it even looks at the transaction. The
+  fraud team swears that the new ruleset has been published as a layer, and
+  the function's code did not change.
+objective: >-
+  Make txn-scorer use the 2024 version of the riskkit-core layer while keeping
+  the tracekit-logging layer it also depends on.
+xp: 225
+difficulty: intermediate
 expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-11-layer-wrong-arn
-implementation_status: playable
+  - Lambda layers
+  - layer versions
+  - update-function-configuration
+services:
+  - lambda
+  - iam

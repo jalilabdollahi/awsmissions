@@ -1,0 +1,26 @@
+name: "The Silent Chain"
+description: >-
+  Tidewater Tickets sells concert seats through a four-stage chain: the
+  checkout service publishes to SNS, a queue buffers the events, a Lambda
+  function fulfils them and writes the result to DynamoDB. After Tuesday's
+  release nothing has been written to the fulfilment table, yet checkout
+  reports every publish as successful. Support ticket TT-5530 is in your
+  workspace. Each stage was touched by a different person.
+objective: >-
+  Make a TicketSold event published to tt-ticket-events end up as an item in
+  tt-fulfilled-tickets, while TicketRefunded events keep being kept out of
+  the fulfilment queue. Do not rebuild the pipeline from scratch and do not
+  remove the subscription's filtering.
+xp: 450
+difficulty: expert
+expected_time: 30m
+concepts:
+  - SNS subscription filter policies
+  - raw message delivery
+  - SQS event source mappings
+  - Lambda reserved concurrency
+services:
+  - sns
+  - sqs
+  - lambda
+  - dynamodb

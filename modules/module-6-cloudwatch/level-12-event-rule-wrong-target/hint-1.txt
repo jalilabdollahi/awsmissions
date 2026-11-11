@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: EventBridge rule has the wrong Lambda ARN as target
+The rule matches, so look at where it sends the events:
+
+  aws events list-targets-by-rule --rule harbor-shipment-created
+
+Compare each target ARN with the queue the customs service reads.

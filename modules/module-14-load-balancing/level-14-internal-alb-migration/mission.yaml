@@ -1,0 +1,23 @@
+name: "Internal Affairs"
+description: >-
+  Nimbus Notes launched its public API gateway this morning, and nobody outside
+  the VPC can reach it. The gateway is the load balancer nimbus-gateway, whose
+  scheme turns out to be "internal". It routes by hostname and path (the API
+  hostname goes to the API fleet, /status answers by itself, everything else is
+  the web fleet) and the routing is exactly what the product team wants. Only
+  the exposure is wrong, and the scheme of a load balancer cannot be edited.
+objective: >-
+  Replace nimbus-gateway with an internet-facing Application Load Balancer that
+  spans at least two Availability Zones and reproduces the same routing on the same listener
+  port, using the existing target groups. The internal load balancer must be gone
+  when you are done so there is only one gateway to maintain.
+xp: 520
+difficulty: expert
+expected_time: 20m
+concepts:
+  - internal vs internet-facing
+  - immutable load balancer scheme
+  - rebuilding listeners and rules
+services:
+  - elbv2
+  - ec2

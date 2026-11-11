@@ -1,0 +1,6 @@
+Look at the delivery stream's description, in particular where it gets its data from, and compare it with how the apps publish:
+
+  aws firehose describe-delivery-stream --delivery-stream-name pageview-archive
+  aws kinesis list-streams
+
+Is anything pointing the delivery stream at the pageviews stream?

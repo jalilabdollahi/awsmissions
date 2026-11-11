@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Quarry Photo Co. image resizer
+Parameters:
+  TimeoutSeconds:
+    Type: Number
+    Description: Lambda timeout in seconds
+  ResizerMemory:
+    Type: Number
+    Default: 512
+Resources:
+  Resizer:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: quarry-resizer
+      Runtime: python3.12
+      Handler: index.handler
+      Role: arn:aws:iam::000000000000:role/quarry-lambda-exec
+      Timeout: !Ref TimeoutSeconds
+      MemorySize: !Ref ResizerMemory
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              return {"resized": True}

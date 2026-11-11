@@ -1,15 +1,23 @@
-name: Can't Find Service
-description: "Service A tries to reach Service B via DNS `service-b.local` \u2014\
-  \ no Cloud Map service discovery configured"
-objective: Set up AWS Cloud Map namespace and service, link to ECS service
-xp: 375
+name: "Who Is inventory.shop.local?"
+description: >-
+  Bramble Shop's catalog service looks up the inventory service by the DNS name
+  inventory.shop.local, a convention every team agreed on. Two ECS services exist
+  (catalog and inventory) but the lookup fails: there is no shop.local namespace
+  and the inventory tasks are not registered anywhere. The inventory service runs
+  two tasks, whose IP addresses change at every deployment, so hard-coding them is
+  not an option.
+objective: >-
+  Set up AWS Cloud Map service discovery so that the name inventory.shop.local
+  resolves to the live inventory tasks: a private DNS namespace shop.local, a
+  service named inventory with A records, and the ECS inventory service
+  registered to it. Every running inventory task must be listed with its real IP.
+xp: 350
 difficulty: advanced
-expected_time: 25m
+expected_time: 15m
 concepts:
-- ECS
-- Fargate
-- task definitions
-module: module-10-ecs
-module_title: ECS & Containers
-level: level-15-service-discovery-missing
-implementation_status: playable
+  - AWS Cloud Map
+  - ECS service discovery
+  - private DNS namespaces
+services:
+  - ecs
+  - servicediscovery

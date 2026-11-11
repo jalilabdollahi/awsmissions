@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AuditorReadsReports",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::000000000000:user/dana-auditor"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::meridian-audit-reports/report/*"
+    }
+  ]
+}

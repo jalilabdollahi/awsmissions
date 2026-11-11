@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Two stacks both export a value with the same name `SharedBucketName` — second stack fails
+Deploy the reporting template and see what the stack says about why it failed, then list every export in the account:
+
+  aws cloudformation create-stack --stack-name quayside-reports --template-body file://template.yaml
+  aws cloudformation describe-stack-events --stack-name quayside-reports
+  aws cloudformation list-exports
+
+Note which stack owns the name that is in the error.

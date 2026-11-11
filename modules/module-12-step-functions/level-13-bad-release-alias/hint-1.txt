@@ -1,0 +1,7 @@
+List what exists before you change anything: the versions, the alias, and what each version contains.
+
+  aws stepfunctions list-state-machine-versions --state-machine-arn <arn>
+  aws stepfunctions describe-state-machine-alias --state-machine-alias-arn <alias arn>
+  aws stepfunctions describe-state-machine --state-machine-arn <arn>:1
+
+Then run a test payment through the alias and read the execution history.

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Lambda has VPC config but `SubnetIds` is empty — deployment fails
+Check the function's network settings and then the VPC it should be in:
+
+  aws lambda get-function-configuration --function-name order-sync --query VpcConfig
+  aws ec2 describe-vpcs --filters Name=tag:Name,Values=orders-vpc

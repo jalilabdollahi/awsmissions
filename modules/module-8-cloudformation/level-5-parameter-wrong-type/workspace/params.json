@@ -1,0 +1,4 @@
+[
+  {"ParameterKey": "TimeoutSeconds", "ParameterValue": "45s"},
+  {"ParameterKey": "ResizerMemory", "ParameterValue": "512"}
+]

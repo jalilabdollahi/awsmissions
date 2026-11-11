@@ -1,0 +1,26 @@
+name: "Total Recall"
+description: >-
+  An intern's clean-up run emptied Marlow & Quayle Legal's case-document
+  bucket and case-index table on a Friday evening. The bucket has (had)
+  versioning and the table has point-in-time recovery, but a storage job also
+  suspended versioning, and one contract had been silently corrupted before
+  the deletion. The incident notes (INC-6611) are in your workspace, with a
+  pointer to the last good moment recorded in SSM.
+objective: >-
+  Bring every document back with its correct content, put every case back
+  into the live ml-case-index table, re-enable versioning on the bucket, and
+  make sure ml-intern can still read and add data but can no longer delete
+  objects, object versions or table items.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - S3 versioning and delete markers
+  - restoring previous object versions
+  - DynamoDB point-in-time recovery
+  - preventing destructive actions
+services:
+  - s3
+  - dynamodb
+  - iam
+  - ssm

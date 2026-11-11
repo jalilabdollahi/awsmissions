@@ -1,0 +1,5 @@
+A retry that never happens usually means the error did not match. Run a failing reservation and read the exact error name that the Lambda task reports:
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>
+
+Look for the LambdaFunctionFailed event and its "error" field.

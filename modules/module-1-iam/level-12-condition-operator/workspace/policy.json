@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BrowseOnly2025",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::ashgrove-case-files",
+      "Condition": {
+        "StringEquals": {
+          "s3:prefix": "matters/2025/*"
+        }
+      }
+    },
+    {
+      "Sid": "Read2025Files",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::ashgrove-case-files/matters/2025/*"
+    }
+  ]
+}

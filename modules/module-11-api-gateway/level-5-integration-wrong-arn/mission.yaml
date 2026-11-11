@@ -1,15 +1,24 @@
-name: Wrong Lambda
-description: Integration exists but Lambda ARN points to non-existent function
-objective: Fix the URI in the integration to use the correct Lambda ARN
-xp: 275
-difficulty: advanced
-expected_time: 15m
+name: "Dial the Right Number"
+description: >-
+  Invoicely's customer portal downloads the latest invoice via
+  GET /invoices/latest on the REST API invoicely-portal (stage prod). Since
+  yesterday's rename of the rendering function the portal shows "Something went
+  wrong". Two functions with similar names live in the account:
+  invoice-renderer (production) and invoice-renderer-staging (the sandbox
+  finance uses for new templates). API Gateway is wired to a function ARN that
+  somebody typed by hand. Real customers must get production invoices, and
+  finance's staging sandbox must stay out of the customer path.
+objective: >-
+  Repair the integration of GET /invoices/latest on invoicely-portal so that it
+  invokes the production function invoice-renderer and the portal receives its
+  invoice again.
+xp: 125
+difficulty: beginner
+expected_time: 10m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- lambda functions
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-5-integration-wrong-arn
-implementation_status: playable
+  - integration URI
+  - Lambda ARN
+  - updating an integration in place
+services:
+  - apigateway
+  - lambda

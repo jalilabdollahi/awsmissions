@@ -1,0 +1,6 @@
+Ask the load balancer why it dislikes the targets, and how it checks them:
+
+  aws elbv2 describe-target-health --target-group-arn <arn of brewline-orders>
+  aws elbv2 describe-target-groups --names brewline-orders
+
+Look at the Reason, and at HealthCheckPath and Matcher. Then see what the API answers: bash probe.sh /

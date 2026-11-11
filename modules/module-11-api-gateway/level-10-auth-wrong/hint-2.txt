@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change method authorization to `NONE` or provide correct SigV4 headers
+401 means API Gateway didn't find a token where the authorizer's identity source says it should be (it never even called the function). The authorizer is configured to read the Authorization header, but the partners use another header. Change the authorizer, not the method's authorization type, and deploy the stage again.

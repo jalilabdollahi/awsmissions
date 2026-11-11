@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Application expects versioned objects but versioning is disabled — previous versions unreachable
+Find out whether the bucket keeps old copies at all:
+
+  aws s3api get-bucket-versioning --bucket ledgerly-contracts
+  aws s3api list-object-versions --bucket ledgerly-contracts --prefix orbit/
+
+How many versions does orbit/msa.txt have?

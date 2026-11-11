@@ -1,1 +1,1 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+aws apigateway create-deployment --rest-api-id <id> --stage-name prod --variables tier=production

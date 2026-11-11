@@ -1,0 +1,25 @@
+name: "Data Exposure Incident"
+description: >-
+  A bug-bounty researcher downloaded a file full of customer PII from
+  Ardent Analytics' export bucket without credentials, and mentioned that
+  other access is too generous as well. The inventory of buckets and
+  identities, and the history of the "temporary" changes that caused it, is in
+  the incident file (SEC-INC-0719) in your workspace. Ardent's business must
+  keep running while the exposure is closed.
+objective: >-
+  Close every unintended read path to ardent-customer-exports (anyone with
+  an unrelated identity, the temp contractor via the staff group, and one
+  partner reading another partner's feed) while keeping the analyst's PII
+  access, each partner's own feed, staff access to reports/, and the
+  intentionally public logo in ardent-marketing-assets working.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - S3 bucket policies and public principals
+  - IAM group and user policies
+  - prefix-scoped least privilege
+  - incident containment without outage
+services:
+  - s3
+  - iam

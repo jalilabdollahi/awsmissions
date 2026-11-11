@@ -1,0 +1,8 @@
+Compare what the application asks for with what now exists:
+
+  aws secretsmanager describe-secret --secret-id juniper/prod/db-credentials
+  aws lambda get-function-configuration --function-name juniper-claims-api --query Environment
+  aws iam get-role-policy --role-name juniper-claims-role --policy-name claims-secrets
+  aws ssm get-parameter --name /juniper/db/live-password --with-decryption
+
+Look at the full ARNs, character by character, and at the staging labels on each secret version (VersionIdsToStages).

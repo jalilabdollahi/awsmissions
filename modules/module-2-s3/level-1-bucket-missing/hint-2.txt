@@ -1,1 +1,1 @@
-Use `aws s3 mb` to create `s3://mission-bucket`.
+Compare the two names letter by letter. S3 treats "almost the same" as a different bucket. The IAM policy for ingest-bot already points at the name from ingest.env, so the bucket itself is what is missing.

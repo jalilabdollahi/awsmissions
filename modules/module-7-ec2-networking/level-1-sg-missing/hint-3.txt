@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 create-security-group --group-name <name> --description <text> --vpc-id <tindle-prod vpc id>
+  aws ec2 authorize-security-group-ingress --group-id <new sg> --protocol tcp --port 443 --cidr 0.0.0.0/0
+
+Then replace the id in launch-web.sh (edit) and run it again.

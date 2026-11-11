@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm`
+There are two separate faults. An alarm with ActionsEnabled set to false changes state but runs no action at all. And the action itself targets a topic with no subscribers, so even an enabled action would reach nobody. The pager app is subscribed to a different topic.

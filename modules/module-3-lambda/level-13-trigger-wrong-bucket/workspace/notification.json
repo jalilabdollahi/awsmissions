@@ -1,0 +1,16 @@
+{
+  "LambdaFunctionConfigurations": [
+    {
+      "Id": "register-invoices",
+      "LambdaFunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:invoice-extractor",
+      "Events": ["s3:ObjectCreated:*"],
+      "Filter": {
+        "Key": {
+          "FilterRules": [
+            { "Name": "suffix", "Value": ".pdf" }
+          ]
+        }
+      }
+    }
+  ]
+}

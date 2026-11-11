@@ -1,17 +1,22 @@
-name: The Silent Table
-description: "Lambda should process every table change \u2014 DynamoDB Streams are\
-  \ disabled"
-objective: 'Enable streams: `aws dynamodb update-table --stream-specification StreamEnabled=true`'
-xp: 225
+name: "The Silent Table"
+description: >-
+  Greenroom is a newsroom CMS. Legal wants an audit trail: whenever an article
+  in the table greenroom-articles is edited, the audit consumer must see what
+  the headline was before and what it is now, so it can store the diff. The
+  consumer reads the table's change stream, but since go-live the audit log has
+  stayed empty and the consumer logs "no stream found for greenroom-articles".
+  The table was created from an older template that never switched streams on.
+objective: >-
+  Turn on DynamoDB Streams for greenroom-articles so that edits to an article
+  produce change records with both the item as it was before and as it is after
+  the edit. Existing articles must stay in place.
+xp: 200
 difficulty: intermediate
 expected_time: 12m
 concepts:
-- DynamoDB
-- tables
-- indexes
-- lambda functions
-- streams
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-9-streams-disabled
-implementation_status: playable
+  - DynamoDB Streams
+  - stream view type
+  - change data capture
+services:
+  - dynamodb
+  - dynamodbstreams

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the condition key to the correct one
+A Condition only matches if the key you name is a real context key of the request. If the key does not exist, IAM treats it as missing and the condition is false, so the Allow never applies. There is a specific global key that carries the region a request is directed at; look it up in the "AWS global condition context keys" documentation.

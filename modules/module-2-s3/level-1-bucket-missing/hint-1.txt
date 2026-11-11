@@ -1,1 +1,4 @@
-List the current buckets. The one the mission expects is missing.
+The error is NoSuchBucket, so the bucket the service asks for is not there. Find out which name the service uses and which buckets exist:
+
+  cat ingest.env
+  aws s3 ls

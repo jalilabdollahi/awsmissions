@@ -1,15 +1,23 @@
-name: Mismatched Pattern
-description: "EventBridge rule has `\"source\": [\"aws.ec3\"]` (typo) instead of `\"\
-  aws.ec2\"` \u2014 events never match"
-objective: Fix the event pattern
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "The Pattern That Matched Nothing"
+description: >-
+  QuillShop's "gold customer" workflow is supposed to start for every order
+  placed by a gold-tier customer: the shop publishes events such as
+  {"source":"quillshop.orders","detail-type":"OrderPlaced","detail":{"tier":"gold",...}}
+  to the default bus, and the rule quillshop-gold-orders copies matching ones
+  into the queue gold-concierge. The concierge team has not received a single
+  order since launch. The rule is enabled and its target is right. Its event
+  pattern is in pattern.json.
+objective: >-
+  Make the rule quillshop-gold-orders forward OrderPlaced events of gold-tier
+  customers from quillshop.orders to gold-concierge. Orders from other tiers
+  must not be forwarded.
+xp: 225
+difficulty: advanced
+expected_time: 12m
 concepts:
-- CloudWatch
-- logs
-- alarms
-module: module-6-cloudwatch
-module_title: CloudWatch & Logging
-level: level-13-event-pattern-wrong
-implementation_status: playable
+  - EventBridge event patterns
+  - exact matching
+  - content filtering on detail
+services:
+  - events
+  - sqs

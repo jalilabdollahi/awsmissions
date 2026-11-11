@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Remove or increase reserved concurrency: `aws lambda put-function-concurrency`
+Reserved concurrency is the number of executions the function is allowed to run at the same time; zero means none. But do not simply delete the setting: the post-mortem wants a cap, and the database pool (see redeem.py) only has room for 20 simultaneous users.

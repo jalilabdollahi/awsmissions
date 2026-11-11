@@ -1,17 +1,20 @@
-name: Out of Memory
-description: "Function crashes with memory error \u2014 configured at 128MB, needs\
-  \ 512MB"
-objective: 'Increase memory: `aws lambda update-function-configuration --memory-size
-  512`'
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "Out of Memory"
+description: >-
+  Skyline Maps stitches map tiles into one big image inside the Lambda function
+  tile-stitcher. Small previews work, but the full-size export used by the
+  print shop just dies: no error message, no stack trace, only a runtime exit.
+  The function was created with the template's default memory. The finance team
+  has capped the function at 1 GB because memory is billed per GB-second.
+objective: >-
+  Make a 16 x 16 tile export (a 256 MB canvas) succeed, with the function's
+  memory setting at no more than 1024 MB.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-8-memory-too-low
-implementation_status: playable
+  - Lambda memory
+  - out of memory
+  - cost control
+services:
+  - lambda
+  - iam

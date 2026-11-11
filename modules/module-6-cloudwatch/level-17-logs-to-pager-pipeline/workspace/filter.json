@@ -1,0 +1,13 @@
+{
+  "logGroupName": "/talon/orders-api",
+  "filterName": "order-errors",
+  "filterPattern": "\"error\"",
+  "metricTransformations": [
+    {
+      "metricName": "OrderErrors",
+      "metricNamespace": "Talon/Orders",
+      "metricValue": "1",
+      "defaultValue": 0
+    }
+  ]
+}

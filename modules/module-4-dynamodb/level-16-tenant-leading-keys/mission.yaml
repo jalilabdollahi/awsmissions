@@ -1,0 +1,24 @@
+name: "Tenants Behind Glass"
+description: >-
+  Crmly is a multi-tenant CRM. All tenants share one table, crmly-contacts
+  (partition key tenantId, sort key contactId), and every tenant's web portal
+  talks to DynamoDB with its own IAM identity. A penetration tester just
+  reported that the portal identity for the tenant acme, the IAM user
+  portal-acme, can read and write the contacts of every other tenant, for
+  example globex, simply by changing the tenantId in a request. The portal needs
+  to keep reading and writing acme's own contacts and nothing more.
+objective: >-
+  Restrict portal-acme so that it can query, read, write and delete contacts of
+  tenantId acme, but nothing belonging to other tenants and no table-wide scans.
+  The policy must not simply be replaced by an Allow on a different resource;
+  the table is shared and the isolation has to come from the policy itself.
+xp: 325
+difficulty: advanced
+expected_time: 20m
+concepts:
+  - fine-grained access control
+  - dynamodb:LeadingKeys
+  - multi-tenant isolation
+services:
+  - dynamodb
+  - iam

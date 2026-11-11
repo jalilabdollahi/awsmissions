@@ -1,16 +1,24 @@
-name: API Not Live
-description: "API is fully configured but never deployed to a stage \u2014 all requests\
-  \ fail"
-objective: 'Deploy the API: `aws apigateway create-deployment --stage-name prod`'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "Ready, Tested, Invisible"
+description: >-
+  Skyhook ships a weather API for drone pilots. The REST API skyhook-weather
+  (GET /conditions, backed by the Lambda skyhook-conditions) was finished and
+  tested on the stage dev last week. Release day came, the mobile app was
+  published pointing at the stage prod, and every request returns 404
+  {"message":"Not Found"}. The API configuration itself is complete. The
+  function reads a stage variable named tier from the request so that it can tell
+  callers which environment answered, and ops wants production to say
+  production.
+objective: >-
+  Publish skyhook-weather on a stage named prod so that
+  GET /conditions there works and reports the stage variable tier set to
+  production. Leave dev as it is.
+xp: 125
+difficulty: beginner
+expected_time: 10m
 concepts:
-- API Gateway
-- Lambda integration
-- stages
-- REST APIs
-module: module-11-api-gateway
-module_title: API Gateway
-level: level-7-not-deployed
-implementation_status: playable
+  - deployments
+  - stages
+  - stage variables
+services:
+  - apigateway
+  - lambda

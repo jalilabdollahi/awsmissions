@@ -1,17 +1,24 @@
-name: Policy Lock
-description: "Stack update policy prevents changes to the S3 bucket resource \u2014\
-  \ update fails"
-objective: 'Update or remove the stack policy: `aws cloudformation set-stack-policy`'
-xp: 250
+name: "Policy Lock"
+description: >-
+  Kestrel Robotics spins up one CloudFormation stack per pull request so
+  reviewers get a live preview. Last quarter an engineer deleted production by
+  mistake, so the shared deploy wrapper now switches on termination protection
+  for every stack it creates, previews included. The nightly cleanup job has
+  been failing ever since: the stack for the merged PR #731 refuses to go away
+  and its bucket and topic keep costing money. PR #742 is still under review
+  and production runs in kestrel-prod-core.
+objective: >-
+  Remove the preview stack kestrel-pr-731 and its resources, while
+  kestrel-pr-742 and kestrel-prod-core stay deployed and keep their termination
+  protection.
+xp: 200
 difficulty: intermediate
-expected_time: 15m
+expected_time: 12m
 concepts:
-- CloudFormation
-- stacks
-- templates
-- policy debugging
-- buckets
-module: module-8-cloudformation
-module_title: CloudFormation
-level: level-14-stack-policy-blocks
-implementation_status: playable
+  - termination protection
+  - stack protection
+  - stack policies
+services:
+  - cloudformation
+  - s3
+  - sns

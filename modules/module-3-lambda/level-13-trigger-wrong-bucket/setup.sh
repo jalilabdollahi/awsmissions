@@ -1,41 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-tmpdir="$(mktemp -d)"
-cleanup() {
-  rm -rf "$tmpdir"
-}
-trap cleanup EXIT
+aws_local s3 mb s3://marlowe-invoices-prod >/dev/null
+aws_local s3 mb s3://marlowe-invoices-staging >/dev/null
+aws_local dynamodb create-table --table-name marlowe-invoice-ledger \
+  --attribute-definitions AttributeName=doc_id,AttributeType=S \
+  --key-schema AttributeName=doc_id,KeyType=HASH --billing-mode PAY_PER_REQUEST >/dev/null
 
-cat > "$tmpdir/index.py" <<'EOF'
-import json
-import os
+aws_local iam create-role --role-name invoice-extractor-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null
+aws_local iam put-role-policy --role-name invoice-extractor-role --policy-name ledger-write \
+  --policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"dynamodb:PutItem\",\"Resource\":\"arn:aws:dynamodb:us-east-1:${ACCOUNT_ID}:table/marlowe-invoice-ledger\"}]}"
 
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
+(cd "$MISSION_DIR/workspace" && zip -q "$stage/extract.zip" extract.mjs)
+aws_local lambda create-function --function-name invoice-extractor \
+  --runtime nodejs20.x --handler extract.handler \
+  --role "arn:aws:iam::${ACCOUNT_ID}:role/invoice-extractor-role" \
+  --zip-file "fileb://$stage/extract.zip" >/dev/null
 
-def lambda_handler(event, context):
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "ok",
-            "database_url": os.environ.get("DATABASE_URL", "missing")
-        })
-    }
-EOF
-(
-  cd "$tmpdir"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-EOF
-)
-aws_local iam create-role   --role-name mission-lambda-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name mission-lambda-role   --policy-name mission-lambda-logs   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}' >/dev/null 2>&1 || true
-aws_local s3 mb s3://uploads-bucket >/dev/null 2>&1 || true
-aws_local s3 mb s3://wrong-bucket >/dev/null 2>&1 || true
-aws_local lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --zip-file fileb://"$tmpdir/function.zip" >/dev/null 2>&1 || true
-aws_local lambda add-permission   --function-name mission-function   --statement-id allow-s3   --action lambda:InvokeFunction   --principal s3.amazonaws.com   --source-arn arn:aws:s3:::uploads-bucket >/dev/null 2>&1 || true
-aws_local s3api put-bucket-notification-configuration   --bucket wrong-bucket   --notification-configuration file://notification.json >/dev/null
+# Both buckets may call the function; only the staging one is wired up.
+for b in prod staging; do
+  aws_local lambda add-permission --function-name invoice-extractor --statement-id "s3-$b" \
+    --action lambda:InvokeFunction --principal s3.amazonaws.com \
+    --source-arn "arn:aws:s3:::marlowe-invoices-$b" --source-account "$ACCOUNT_ID" >/dev/null
+done
+aws_local s3api put-bucket-notification-configuration --bucket marlowe-invoices-staging \
+  --notification-configuration "file://$MISSION_DIR/workspace/notification.json"
 
-echo "Broken state prepared: wrong-bucket notifies Lambda instead of uploads-bucket"
+echo "The extractor is wired to marlowe-invoices-staging."

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the DLQ ARN in the redrive policy
+The policy holds the ARN of the dead-letter queue. Compare that ARN with the real queue's ARN, one segment at a time (service, region, account, queue name). When the target does not exist, SQS has nowhere to put the message and it is discarded after its last attempt.

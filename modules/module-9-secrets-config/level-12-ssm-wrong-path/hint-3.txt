@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Create the three parameters under the production path with the same values and types (read them from /lattice/prod with --with-decryption):
+
+  aws ssm put-parameter --name /lattice/production/db-host --type String --value <host>
+  aws ssm put-parameter --name /lattice/production/db-user --type String --value <user>
+  aws ssm put-parameter --name /lattice/production/db-password --type SecureString --value <password>

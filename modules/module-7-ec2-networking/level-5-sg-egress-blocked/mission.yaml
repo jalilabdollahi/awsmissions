@@ -1,16 +1,20 @@
-name: No Way Out
-description: "Security group has a custom outbound rule that blocks all egress \u2014\
-  \ app can't reach external APIs"
-objective: Remove the blocking egress rule or add an allow-all egress rule
-xp: 200
-difficulty: intermediate
-expected_time: 12m
+name: "Hardened Into a Corner"
+description: >-
+  Parcelwise's route-optimizer worker was "hardened" by the security team: its
+  default allow-all outbound rule was removed from parcel-worker-sg and nothing
+  was put in its place. Since then the worker cannot call the carrier tracking
+  API over HTTPS and cannot reach its PostgreSQL database (parcel-db-sg already
+  admits the worker on port 5432). Security wants the group to stay locked down
+  to what the worker actually uses.
+objective: >-
+  Give parcel-worker-sg outbound access to HTTPS (443) on the internet and to
+  PostgreSQL (5432) on the parcel-db-sg group, and nothing broader than that.
+xp: 125
+difficulty: beginner
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-- REST APIs
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-5-sg-egress-blocked
-implementation_status: playable
+  - security group egress
+  - least privilege
+  - default allow-all outbound
+services:
+  - ec2

@@ -1,0 +1,3 @@
+  aws cognito-idp confirm-sign-up --client-id <client-id> --username kai --confirmation-code <6-digit code>
+
+The code is in the body of the "Your verification code" message at $AWS_ENDPOINT_URL/_aws/ses (pipe it through jq to read it more easily).

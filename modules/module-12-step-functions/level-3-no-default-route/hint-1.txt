@@ -1,0 +1,4 @@
+Compare a ticket that works with one that fails. Look at the failed executions and read their error and cause, not just the status:
+
+  aws stepfunctions list-executions --state-machine-arn <arn> --status-filter FAILED
+  aws stepfunctions describe-execution --execution-arn <executionArn>

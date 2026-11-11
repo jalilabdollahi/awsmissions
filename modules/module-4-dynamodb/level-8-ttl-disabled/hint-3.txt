@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+aws dynamodb update-time-to-live --table-name loginly-sessions --time-to-live-specification Enabled=false,AttributeName=expires
+aws dynamodb update-time-to-live --table-name loginly-sessions --time-to-live-specification Enabled=true,AttributeName=expiresAt

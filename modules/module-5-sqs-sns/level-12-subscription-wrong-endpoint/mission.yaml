@@ -1,15 +1,20 @@
-name: Wrong Endpoint
-description: SNS subscription exists but targets wrong SQS queue ARN
-objective: Delete and re-create subscription with correct endpoint ARN
-xp: 175
+name: "Wrong Mailbox"
+description: >-
+  Quartz Studio's billing system publishes invoice events to the SNS topic
+  quartz-invoice-events. The invoice-printing service reads the queue
+  quartz-invoices-prod, which stays empty, while the queue
+  quartz-invoices-staging, used by the test environment, is suddenly full of
+  production invoices. A subscription exists and SNS reports no errors.
+objective: >-
+  Deliver invoice events from quartz-invoice-events to quartz-invoices-prod,
+  and only there. The staging queue must stop receiving production events.
+xp: 150
 difficulty: intermediate
-expected_time: 10m
+expected_time: 8m
 concepts:
-- SQS
-- SNS
-- event delivery
-- queues
-module: module-5-sqs-sns
-module_title: SQS & SNS
-level: level-12-subscription-wrong-endpoint
-implementation_status: playable
+  - SNS subscription endpoint
+  - immutable subscription attributes
+  - environment isolation
+services:
+  - sns
+  - sqs

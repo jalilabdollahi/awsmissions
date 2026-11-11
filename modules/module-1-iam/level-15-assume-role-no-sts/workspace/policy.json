@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SeeOwnIdentity",
+      "Effect": "Allow",
+      "Action": [
+        "sts:GetCallerIdentity",
+        "iam:GetRole"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

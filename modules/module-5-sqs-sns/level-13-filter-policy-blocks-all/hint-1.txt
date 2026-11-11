@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: SNS subscription has a filter policy `{"eventType": ["nonexistent"]}` — no messages pass through
+Look at the subscription that feeds the refund worker and everything configured on it:
+
+  aws sns list-subscriptions-by-topic --topic-arn <ARN of cobalt-order-events>
+  aws sns get-subscription-attributes --subscription-arn <SubscriptionArn>
+
+Then think about where the vendor's publisher puts "eventType".

@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws iam update-assume-role-policy --role-name ember-app-role --policy-document file://trust.json   (principal ec2.amazonaws.com)
+  aws iam create-instance-profile --instance-profile-name <name>
+  aws iam add-role-to-instance-profile --instance-profile-name <name> --role-name ember-app-role
+  aws ec2 associate-iam-instance-profile --instance-id <id> --iam-instance-profile Name=<name>

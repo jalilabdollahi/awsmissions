@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Function code reads `os.environ['DATABASE_URL']` but the env var is not set — KeyError on invocation
+Read the error from a test invocation, then compare it with what the function is configured with:
+
+  aws lambda invoke --function-name fx-rate-lookup --cli-binary-format raw-in-base64-out --payload '{"pair":"EURUSD","amount":2500}' out.json; cat out.json
+  aws lambda get-function-configuration --function-name fx-rate-lookup --query Environment

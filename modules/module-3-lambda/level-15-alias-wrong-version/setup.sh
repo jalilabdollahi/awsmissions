@@ -1,42 +1,61 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-tmpdir="$(mktemp -d)"
-cleanup() {
-  rm -rf "$tmpdir"
-}
-trap cleanup EXIT
+aws_local iam create-role --role-name tax-calculator-role \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null
 
-cat > "$tmpdir/index.py" <<'EOF'
-import json
-import os
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
 
+# One real release per version: the behaviour differs, so the right version is observable.
+cat > "$stage/calc.py" <<'PY'
+RATES = {"default": 0.19}
+LABEL = "2023-rates"
 
-def lambda_handler(event, context):
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "ok",
-            "database_url": os.environ.get("DATABASE_URL", "missing")
-        })
-    }
-EOF
-(
-  cd "$tmpdir"
-  python3 - <<'EOF'
-import zipfile
-with zipfile.ZipFile('function.zip', 'w') as z:
-    z.write('index.py')
-EOF
-)
-aws_local iam create-role   --role-name mission-lambda-role   --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
-aws_local iam put-role-policy   --role-name mission-lambda-role   --policy-name mission-lambda-logs   --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],"Resource":"*"}]}' >/dev/null 2>&1 || true
-aws_local lambda create-function   --function-name mission-function   --runtime python3.11   --role arn:aws:iam::000000000000:role/mission-lambda-role   --handler index.lambda_handler   --zip-file fileb://"$tmpdir/function.zip" >/dev/null
-for _ in 1 2 3 4 5; do
-  aws_local lambda publish-version --function-name mission-function >/dev/null
-done
-aws_local lambda create-alias   --function-name mission-function   --name production   --function-version 5 >/dev/null 2>&1 || true
-aws_local lambda delete-function   --function-name mission-function   --qualifier 5 >/dev/null 2>&1 || true
+def handler(event, context):
+    rate = RATES.get(event.get("category"), RATES["default"])
+    return {"tax": round(event["amount"] * rate, 2), "calc": LABEL}
+PY
+(cd "$stage" && zip -q v1.zip calc.py)
+aws_local lambda create-function --function-name tax-calculator \
+  --runtime python3.12 --handler calc.handler \
+  --role "arn:aws:iam::${ACCOUNT_ID}:role/tax-calculator-role" \
+  --zip-file "fileb://$stage/v1.zip" >/dev/null
+aws_local lambda publish-version --function-name tax-calculator \
+  --description "2023 flat 19% rate - superseded" >/dev/null
 
-echo "Broken alias created: production points to deleted version 5"
+cat > "$stage/calc.py" <<'PY'
+RATES = {"default": 0.19, "books": 0.07}
+LABEL = "2024-rates"
+
+def handler(event, context):
+    rate = RATES.get(event.get("category"), RATES["default"])
+    return {"tax": round(event["amount"] * rate, 2), "calc": LABEL}
+PY
+(cd "$stage" && zip -q v2.zip calc.py)
+aws_local lambda update-function-code --function-name tax-calculator --zip-file "fileb://$stage/v2.zip" >/dev/null
+aws_local lambda publish-version --function-name tax-calculator \
+  --description "2024 rates incl. 7% books rate - APPROVED by finance 2024-01-15" >/dev/null
+
+cat > "$stage/calc.py" <<'PY'
+import math
+
+RATES = {"default": 0.19, "books": 0.07}
+LABEL = "nickel-rounding-experiment"
+
+def handler(event, context):
+    rate = RATES.get(event.get("category"), RATES["default"])
+    raw = event["amount"] * rate
+    return {"tax": round(math.ceil(raw * 20) / 20, 2), "calc": LABEL}
+PY
+(cd "$stage" && zip -q v3.zip calc.py)
+aws_local lambda update-function-code --function-name tax-calculator --zip-file "fileb://$stage/v3.zip" >/dev/null
+aws_local lambda publish-version --function-name tax-calculator \
+  --description "EXPERIMENT: rounds tax up to 5 cents - NOT approved, staging trial only" >/dev/null
+
+aws_local lambda create-alias --function-name tax-calculator --name staging --function-version 3 >/dev/null
+# A typo in the promotion script: there is no version 5.
+aws_local lambda create-alias --function-name tax-calculator --name prod --function-version 5 >/dev/null
+
+echo "Alias prod points at a version that does not exist."

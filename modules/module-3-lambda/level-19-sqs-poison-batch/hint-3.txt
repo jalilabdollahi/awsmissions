@@ -1,0 +1,4 @@
+In processor.py wrap each record in try/except and return {"batchItemFailures": [{"itemIdentifier": record["messageId"]}, ...]} for the bad ones, then:
+
+  zip processor.zip processor.py && aws lambda update-function-code --function-name ticket-processor --zip-file fileb://processor.zip
+  aws lambda update-event-source-mapping --uuid <uuid from list-event-source-mappings> --function-response-types ReportBatchItemFailures

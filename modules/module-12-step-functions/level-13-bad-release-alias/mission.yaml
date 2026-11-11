@@ -1,0 +1,29 @@
+name: "Friday Release"
+description: >-
+  Marlin Bank's card-payment guard, the state machine marlin-limit-check, is
+  called by the payments platform through its alias "live". Payments of EUR
+  1,000 or more must go to a human reviewer; smaller ones are approved
+  automatically. Version 2 shipped this afternoon (it switched to the new
+  currency-conversion Lambda) and the alias was moved to it. Since then the
+  fraud desk sees no large payments at all: everything is auto-approved. The
+  on-call engineer first thought of "just roll the alias back to version 1",
+  but a colleague warns that version 1 stopped working when its old
+  conversion function was retired weeks ago.
+objective: >-
+  Make the alias marlin-limit-check:live decide correctly again: payments of
+  EUR 1,000 or more (after conversion, boundary included) resolve to REVIEW,
+  smaller ones to APPROVE, and every execution started through the alias
+  succeeds. All the alias's traffic must go to one version that behaves
+  correctly; no canary split between a good and a bad version.
+xp: 520
+difficulty: expert
+expected_time: 25m
+concepts:
+  - state machine versions
+  - aliases
+  - rollback and fix-forward
+  - Choice thresholds
+services:
+  - stepfunctions
+  - lambda
+  - iam

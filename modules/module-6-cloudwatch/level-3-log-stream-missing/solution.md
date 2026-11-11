@@ -1,10 +1,10 @@
 # Solution
 
-```bash
-# Edit the local mission artifact first
-$EDITOR config.json
-# This edited file applies to: --log-group-name /aws/lambda/mission-function, --log-stream-name mission-stream
+`PutLogEvents` writes into a specific stream, and the stream has to exist. The group is fine; stream `field-gateway-07` was never created and the gateway's agent is not allowed to create it.
 
-# Then apply the fix
-aws logs create-log-stream --log-group-name /aws/lambda/mission-function --log-stream-name mission-stream
+```bash
+aws logs describe-log-streams --log-group-name /harvest/sensors
+aws logs create-log-stream --log-group-name /harvest/sensors --log-stream-name field-gateway-07
 ```
+
+Run `check`: the validator writes a sensor reading to the new stream and reads it back.

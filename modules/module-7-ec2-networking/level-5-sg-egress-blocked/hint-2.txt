@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Remove the blocking egress rule or add an allow-all egress rule
+IpPermissionsEgress is empty: a group with no outbound rules cannot start any connection. Restoring "allow everything" would defeat the hardening, so add only the two flows from the briefing: HTTPS to the internet, and PostgreSQL to the database's security group.

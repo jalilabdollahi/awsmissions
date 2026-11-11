@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded in environment variables
+Look at the function's configuration: its environment variables and the role it runs as.
+
+  aws lambda get-function-configuration --function-name nimbus-exporter
+  aws iam list-role-policies --role-name nimbus-bare
+  aws iam list-access-keys --user-name nimbus-ci

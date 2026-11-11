@@ -1,1 +1,1 @@
-Start by inspecting the resources involved in this mission: Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` — every request throttled
+429 means throttled. Look at the stage's settings: aws apigateway get-stage --rest-api-id <id> --stage-name v2 and read methodSettings.

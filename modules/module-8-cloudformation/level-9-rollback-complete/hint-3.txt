@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Delete the dead stack, wait until it is gone, then create it again from the unchanged template:
+
+  aws cloudformation delete-stack --stack-name saltmarsh-api
+  aws cloudformation wait stack-delete-complete --stack-name saltmarsh-api
+  aws cloudformation create-stack --stack-name saltmarsh-api --template-body file://template.yaml
+  aws cloudformation wait stack-create-complete --stack-name saltmarsh-api

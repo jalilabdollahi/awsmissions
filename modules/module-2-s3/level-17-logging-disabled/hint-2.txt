@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable logging: `aws s3api put-bucket-logging`
+Logging needs a dedicated target bucket (never the source bucket itself), the target prefix security asked for, and a policy on the target bucket that lets the S3 logging service principal write the log objects. Without the policy, logging looks enabled but nothing arrives. Type `edit` to open logging-bucket-policy.json.

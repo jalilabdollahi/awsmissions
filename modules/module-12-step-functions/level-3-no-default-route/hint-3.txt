@@ -1,0 +1,3 @@
+Add a "Default" key to the ByPriority Choice state that names the state which should receive everything else (the backlog Task is already defined). Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:brightwave-ticket-triage --definition file://triage.asl.json

@@ -1,0 +1,7 @@
+Reproduce what the job does. Look up the client's id and secret, then call the token endpoint yourself and read the exact error text:
+
+  aws cognito-idp describe-user-pool-client --user-pool-id <pool-id> --client-id <client-id>
+  curl -s -X POST "$AWS_ENDPOINT_URL/cognito-idp/oauth2/token" -u "<client-id>:<secret>" \
+    -d grant_type=client_credentials --data-urlencode "scope=inventory/read inventory/write"
+
+Also look at the resource server: aws cognito-idp describe-resource-server ...

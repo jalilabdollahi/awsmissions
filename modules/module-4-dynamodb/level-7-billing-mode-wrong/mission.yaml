@@ -1,15 +1,24 @@
-name: Provisionless Pain
-description: Application has spiky unpredictable traffic but table is in PROVISIONED
-  mode with no auto-scaling
-objective: Change billing mode to `PAY_PER_REQUEST`
-xp: 200
+name: "Flash Sale Pricing"
+description: >-
+  Ticketflash sells concert tickets. Seat holds live in the table
+  ticketflash-holds (provisioned, 10 units each way, plus a global secondary
+  index event-index on eventId). On sale days traffic jumps from a few requests
+  per second to thousands within a minute, then drops to nothing for weeks. The
+  team once tried to chase this with auto scaling, but it always reacts too late
+  and the cost report shows paying for idle capacity all month. The platform
+  lead's decision: stop forecasting and pay per request. The 6 current holds
+  and the index must survive the change.
+objective: >-
+  Move ticketflash-holds to on-demand billing without rebuilding the table or
+  losing the event-index lookup, and clean up the auto scaling configuration that
+  was left behind for it.
+xp: 175
 difficulty: intermediate
-expected_time: 12m
+expected_time: 10m
 concepts:
-- DynamoDB
-- tables
-- indexes
-module: module-4-dynamodb
-module_title: DynamoDB
-level: level-7-billing-mode-wrong
-implementation_status: playable
+  - on-demand billing
+  - billing mode switch
+  - capacity leftovers
+services:
+  - dynamodb
+  - application-autoscaling

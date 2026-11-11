@@ -1,17 +1,23 @@
-name: The Silent Upload
-description: "S3 bucket receives files but Lambda is never triggered \u2014 event\
-  \ source mapping missing"
-objective: Add S3 notification configuration pointing to the Lambda function
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "The Silent Upload"
+description: >-
+  Helixia Labs' sequencers drop result files into the S3 bucket helixia-lab-inbox
+  all day. A Lambda function, lab-result-indexer, is supposed to add each new
+  result to the search table lab-result-index, but clinicians report that
+  nothing new shows up. The function itself works (it was tested by hand) and
+  S3 is already allowed to call it. The bucket also receives huge raw scan
+  images under scans/, and indexing those would cost a fortune.
+objective: >-
+  Make every new .json file uploaded under results/ in helixia-lab-inbox get
+  indexed automatically, and nothing else in the bucket.
+xp: 250
+difficulty: advanced
+expected_time: 15m
 concepts:
-- Lambda
-- execution roles
-- function configuration
-- buckets
-- lambda functions
-module: module-3-lambda
-module_title: Lambda Functions
-level: level-12-trigger-missing
-implementation_status: playable
+  - S3 event notifications
+  - notification filters
+  - Lambda triggers
+services:
+  - s3
+  - lambda
+  - dynamodb
+  - iam

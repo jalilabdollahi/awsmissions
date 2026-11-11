@@ -1,0 +1,23 @@
+name: "Admin Door Left Ajar"
+description: >-
+  Corallo Cart's load balancer corallo-alb splits traffic by path: the shop
+  front end serves everything, and /api/* goes to the API fleet. A penetration
+  tester just reported that anyone on the internet can open /api/admin/users.
+  The team is sure they added a listener rule that blocks /api/admin/* with a 403
+  last month, and the rule is still in the listener. It simply never seems to
+  fire.
+objective: >-
+  Requests for /api/admin/* through corallo-alb on port 80 must be answered with
+  HTTP 403 by the load balancer itself. Other /api/* paths must still reach the
+  API fleet, and everything else must still reach the shop front end.
+xp: 160
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - listener rules
+  - rule priority
+  - path-pattern conditions
+  - fixed-response action
+services:
+  - elbv2
+  - ec2

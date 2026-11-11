@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Auto Scaling group instances need to communicate with each other — security group missing a self-referencing rule
+Inspect what the nodes' shared group lets in:
+
+  aws ec2 describe-security-groups --filters Name=group-name,Values=cobalt-nodes-sg --query 'SecurityGroups[0].IpPermissions'
+
+Ask yourself who is allowed on port 7946.

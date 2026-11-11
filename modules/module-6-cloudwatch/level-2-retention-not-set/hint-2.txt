@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Set retention policy to 30 days: `aws logs put-retention-policy`
+Retention is configured per log group, and groups created by applications get "never expire". Set it on the three application groups only. The audit group and the billing team's group have deliberate values, so a loop over every group in the account would break them.

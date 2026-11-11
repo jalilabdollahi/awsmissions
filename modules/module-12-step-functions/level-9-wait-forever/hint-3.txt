@@ -1,0 +1,3 @@
+Remove "Seconds" from WaitForReminderTime and set "TimestampPath": "$.remindAt". Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:halcyon-trial-reminder --definition file://trial-reminder.asl.json

@@ -1,0 +1,3 @@
+Two things in the S3 destination differ from the table's expectation: the bucket's name and the prefix. The prefix may contain Firehose expressions such as !{timestamp:yyyy-MM-dd}, which are evaluated at delivery time in UTC.
+
+destination.json in your workspace is a copy of the destination configuration. To apply it you need `aws firehose update-destination`, which asks for the delivery stream's current version id and its destination id (both shown by describe-delivery-stream).

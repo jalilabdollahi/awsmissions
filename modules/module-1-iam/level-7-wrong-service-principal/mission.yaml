@@ -1,17 +1,22 @@
-name: Wrong Service
-description: "Lambda execution role has `\"Service\": \"ec2.amazonaws.com\"` in trust\
-  \ policy \u2014 Lambda can't assume it"
-objective: Change service principal to `"lambda.amazonaws.com"`
-xp: 150
-difficulty: beginner
+name: "Cloned Credentials"
+description: >-
+  Quayside Gaming keeps a break-glass role, sre-breakglass, that the on-call
+  engineer (IAM user sre-oncall) assumes to purge the stuck payments-retry
+  queue during incidents. The role was made by cloning the trust policy of an
+  EC2 instance role to save time. During tonight's incident the on-call
+  engineer could not assume it at all.
+objective: >-
+  Let sre-oncall assume sre-breakglass and purge the payments-retry queue. The
+  second IAM user, sre-intern, may call sts:AssumeRole in general but must not
+  be able to use this role.
+xp: 175
+difficulty: intermediate
 expected_time: 10m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- lambda functions
-module: module-1-iam
-module_title: IAM Foundations
-level: level-7-wrong-service-principal
-implementation_status: playable
+  - trust policy principal types
+  - Service vs AWS principals
+  - break-glass access
+services:
+  - iam
+  - sts
+  - sqs

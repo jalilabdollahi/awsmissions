@@ -1,0 +1,1 @@
+The retention period is a stream setting you can change in place; you do not need a new stream. Remember the two limits in the briefing: long enough for the outage plus a day, but no more than seven days. Retention is measured in hours.
