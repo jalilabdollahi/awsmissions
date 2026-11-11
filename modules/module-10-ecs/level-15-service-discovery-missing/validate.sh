@@ -35,8 +35,8 @@ fi
 task_ips() {
   local arn
   for arn in $(aws_local ecs list-tasks --cluster shop --service-name inventory --desired-status RUNNING --query 'taskArns[]' --output text); do
-    docker inspect -f '{{.State.Running}}' "floci-aws-ecs-${arn##*/}-inventory" 2>/dev/null | grep -q true || continue
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "floci-aws-ecs-${arn##*/}-inventory"
+    docker inspect -f '{{.State.Running}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-${arn##*/}-inventory" 2>/dev/null | grep -q true || continue
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-${arn##*/}-inventory"
   done | sort
 }
 registered_ips() {

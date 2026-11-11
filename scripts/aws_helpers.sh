@@ -16,6 +16,10 @@ export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-test}"
 export AWS_ENDPOINT_URL="${AWS_ENDPOINT_URL:-http://localhost:${AWSMISSIONS_PORT}}"
 export AWS_PAGER=""
 ACCOUNT_ID="000000000000"
+# Floci names the containers it spawns floci-aws-<namespace>-<service>-...
+# (e.g. floci-aws-awsmissions-ecs-<task id>-<container>). See engine/floci.py.
+if [ "$AWSMISSIONS_PORT" = 4566 ]; then _awsm_ns=awsmissions; else _awsm_ns="awsm$AWSMISSIONS_PORT"; fi
+export AWSMISSIONS_NAMESPACE="${AWSMISSIONS_NAMESPACE:-$_awsm_ns}"
 
 # aws_local ARGS...   — AWS CLI as the account root (bypasses IAM enforcement).
 aws_local() {

@@ -11,9 +11,9 @@ serving() {
   local arn id image
   for arn in $(aws_local ecs list-tasks --cluster hearth --family hearth-web --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
-    image=$(docker inspect -f '{{.Image}}' "floci-aws-ecs-$id-web" 2>/dev/null || true)
+    image=$(docker inspect -f '{{.Image}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-web" 2>/dev/null || true)
     [ -n "$image" ] && [ "$image" = "$(docker image inspect -f '{{.Id}}' "$APPROVED" 2>/dev/null || echo none)" ] || continue
-    docker exec "floci-aws-ecs-$id-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && return 0
+    docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && return 0
   done
   return 1
 }

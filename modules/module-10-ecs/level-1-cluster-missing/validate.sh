@@ -15,7 +15,7 @@ if [ -z "$TASKS" ]; then
 fi
 for arn in $TASKS; do
   id=${arn##*/}
-  if docker inspect -f '{{.State.Running}}' "floci-aws-ecs-$id-report" 2>/dev/null | grep -q true; then
+  if docker inspect -f '{{.State.Running}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-report" 2>/dev/null | grep -q true; then
     echo "nightly-report is running in ledgerly-batch (task $id). The ledger report is being generated."
     exit 0
   fi

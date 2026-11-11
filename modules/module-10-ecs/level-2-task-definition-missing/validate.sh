@@ -23,7 +23,7 @@ serving() {
   local good=0 arn id
   for arn in $(aws_local ecs list-tasks --cluster harbor --service-name harbor-web --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
-    if docker exec "floci-aws-ecs-$id-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null; then
+    if docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null; then
       good=$((good + 1))
     fi
   done

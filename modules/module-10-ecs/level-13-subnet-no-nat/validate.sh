@@ -35,7 +35,7 @@ if not any(x.get("DestinationCidrBlock") == "0.0.0.0/0" and x.get("GatewayId", "
 alive() {
   local arn
   for arn in $(aws_local ecs list-tasks --cluster lantern --service-name lantern-sync --desired-status RUNNING --query 'taskArns[]' --output text); do
-    docker inspect -f '{{.State.Running}}' "floci-aws-ecs-${arn##*/}-sync" 2>/dev/null | grep -q true && return 0
+    docker inspect -f '{{.State.Running}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-${arn##*/}-sync" 2>/dev/null | grep -q true && return 0
   done
   return 1
 }

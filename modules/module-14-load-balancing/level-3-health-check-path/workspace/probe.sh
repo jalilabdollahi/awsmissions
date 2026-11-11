@@ -7,8 +7,10 @@
 set -euo pipefail
 PORT="${AWSMISSIONS_PORT:-4566}"
 EP="${AWS_ENDPOINT_URL:-http://localhost:$PORT}"
+if [ "$PORT" = 4566 ]; then NS_DEFAULT=awsmissions; else NS_DEFAULT="awsm$PORT"; fi
+NS="${AWSMISSIONS_NAMESPACE:-$NS_DEFAULT}"
 ID=$(aws --endpoint-url="$EP" ec2 describe-instances --filters "Name=tag:Name,Values=brewline-api-1" \
   "Name=instance-state-name,Values=running" --query 'Reservations[0].Instances[0].InstanceId' --output text)
-docker exec "floci-aws-ec2-$ID" sh -c \
+docker exec "floci-aws-$NS-ec2-$ID" sh -c \
   'wget -S -qO- "http://127.0.0.1:8080$1" 2>&1 || true' _ "${1:-/}"
 echo

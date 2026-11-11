@@ -25,7 +25,7 @@ stays_up() {
   for arn in $(aws_local ecs list-tasks --cluster pulse --service-name pulse-ingest --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
     [ "$(aws_local ecs describe-tasks --cluster pulse --tasks "$arn" --query 'tasks[0].taskDefinitionArn' --output text)" = "$TD" ] || continue
-    [ "$(docker exec "floci-aws-ecs-$id-ingest" printenv APP_MODE 2>/dev/null || true)" = worker ] && return 0
+    [ "$(docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-ingest" printenv APP_MODE 2>/dev/null || true)" = worker ] && return 0
   done
   return 1
 }

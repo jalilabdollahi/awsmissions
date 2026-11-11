@@ -19,8 +19,8 @@ received() {
   local arn id
   for arn in $(aws_local ecs list-tasks --cluster cedar --service-name ledger-sync --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
-    [ "$(docker exec "floci-aws-ecs-$id-sync" printenv DB_USER 2>/dev/null || true)" = "$WANT_USER" ] || continue
-    [ "$(docker exec "floci-aws-ecs-$id-sync" printenv DB_PASSWORD 2>/dev/null || true)" = "$WANT_PASS" ] && return 0
+    [ "$(docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-sync" printenv DB_USER 2>/dev/null || true)" = "$WANT_USER" ] || continue
+    [ "$(docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-sync" printenv DB_PASSWORD 2>/dev/null || true)" = "$WANT_PASS" ] && return 0
   done
   return 1
 }

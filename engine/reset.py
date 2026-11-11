@@ -52,6 +52,7 @@ def mission_env(workdir: Path | None = None, mission_dir: Path | None = None) ->
             "AWS_PAGER": "",
             "AWSMISSIONS_ROOT": str(REPO_ROOT),
             "AWSMISSIONS_PORT": str(floci.port()),
+            "AWSMISSIONS_NAMESPACE": floci.namespace(),
         }
     )
     venv_bin = REPO_ROOT / ".venv" / "bin"

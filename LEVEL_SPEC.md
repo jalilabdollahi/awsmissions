@@ -115,6 +115,11 @@ validator should reject these with a message explaining why.
 - ECS runs real containers (`nginx:alpine` works). The default VPC is
   `vpc-default-us-east-1`, subnets `subnet-default-us-east-1-[a-c]`.
 - EC2: security groups, VPC resources, ~31 seeded AMIs.
+- Spawned containers are named `floci-aws-<namespace>-<service>-...`, e.g.
+  `floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-<task id>-<container name>` or
+  `floci-aws-${AWSMISSIONS_NAMESPACE}-ec2-<instance id>`. Never hard-code the
+  namespace: it differs per emulator port. `AWSMISSIONS_NAMESPACE` is set by the
+  engine, `aws_helpers.sh` and `./play.sh --env`.
 - **Floci is lenient in places.** For example it accepted a CloudFormation
   template with resource type `AWS::S3::Buckett` and reported `CREATE_COMPLETE`.
   **Never assume a breakage reproduces.** The test harness proves it does. If

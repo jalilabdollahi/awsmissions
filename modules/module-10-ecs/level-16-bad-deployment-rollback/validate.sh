@@ -18,7 +18,7 @@ serving() {
   local n=0 arn
   for arn in $(aws_local ecs list-tasks --cluster tidepool --service-name tidepool-web --desired-status RUNNING --query 'taskArns[]' --output text); do
     [ "$(aws_local ecs describe-tasks --cluster tidepool --tasks "$arn" --query 'tasks[0].taskDefinitionArn' --output text)" = "$TD" ] || continue
-    docker exec "floci-aws-ecs-${arn##*/}-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && n=$((n + 1))
+    docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-${arn##*/}-web" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && n=$((n + 1))
   done
   [ "$n" -ge 2 ]
 }

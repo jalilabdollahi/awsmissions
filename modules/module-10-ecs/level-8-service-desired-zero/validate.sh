@@ -20,7 +20,7 @@ fi
 answering() {
   local n=0 arn
   for arn in $(aws_local ecs list-tasks --cluster sundial --service-name sundial-api --desired-status RUNNING --query 'taskArns[]' --output text); do
-    docker exec "floci-aws-ecs-${arn##*/}-api" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && n=$((n + 1))
+    docker exec "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-${arn##*/}-api" wget -q -O /dev/null http://127.0.0.1:80/ 2>/dev/null && n=$((n + 1))
   done
   [ "$n" -ge 2 ]
 }

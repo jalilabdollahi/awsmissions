@@ -28,7 +28,7 @@ alive() {
   local arn id
   for arn in $(aws_local ecs list-tasks --cluster pixelmill --service-name resizer --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
-    docker inspect -f '{{.State.Running}}' "floci-aws-ecs-$id-resizer" 2>/dev/null | grep -q true && return 0
+    docker inspect -f '{{.State.Running}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-resizer" 2>/dev/null | grep -q true && return 0
   done
   return 1
 }

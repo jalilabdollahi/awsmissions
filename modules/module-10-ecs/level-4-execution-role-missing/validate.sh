@@ -47,7 +47,7 @@ alive() {
   for arn in $(aws_local ecs list-tasks --cluster payroll --service-name payroll-api --desired-status RUNNING --query 'taskArns[]' --output text); do
     id=${arn##*/}
     [ "$(aws_local ecs describe-tasks --cluster payroll --tasks "$arn" --query 'tasks[0].taskDefinitionArn' --output text)" = "$TD_ARN" ] || continue
-    docker inspect -f '{{.State.Running}}' "floci-aws-ecs-$id-api" 2>/dev/null | grep -q true && return 0
+    docker inspect -f '{{.State.Running}}' "floci-aws-${AWSMISSIONS_NAMESPACE}-ecs-$id-api" 2>/dev/null | grep -q true && return 0
   done
   return 1
 }
