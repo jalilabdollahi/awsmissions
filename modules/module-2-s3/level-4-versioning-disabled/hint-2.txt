@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable versioning: `aws s3api put-bucket-versioning`
+Versioning is a per-bucket setting that is off until someone enables it. While it is off, an upload to an existing key replaces the old object. It also cannot recover data that was overwritten before it was switched on.

@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Abort each listed upload (key + upload id), then add a second rule to lifecycle.json: Filter {"Prefix": ""} with "AbortIncompleteMultipartUpload": {"DaysAfterInitiation": 7}, keeping the existing rule, and apply:
+
+  aws s3api abort-multipart-upload --bucket datavault-exports --key <key> --upload-id <id>
+  aws s3api put-bucket-lifecycle-configuration --bucket datavault-exports --lifecycle-configuration file://lifecycle.json

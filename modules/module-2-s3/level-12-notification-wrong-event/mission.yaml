@@ -1,15 +1,23 @@
-name: Wrong Trigger
-description: S3 event notification is configured but targets `s3:ObjectRemoved:*`
-  instead of `s3:ObjectCreated:*`
-objective: Fix the event type in the notification configuration
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "Wrong Trigger"
+description: >-
+  SnapFolio's photo gallery should generate a thumbnail for every image that is
+  uploaded to uploads/ in the bucket snapfolio-gallery. The worker reads jobs
+  from the queue thumbnail-jobs. Since the release it only fires when someone
+  deletes a photo, and the gallery fills with grey placeholders. The bucket's
+  notification setup (saved as notification.json in your workspace) also feeds
+  the queue deletion-audit, which compliance uses to record deletions of
+  customer originals under originals/. That audit trail is working and must not
+  change.
+objective: >-
+  Make new objects under uploads/ trigger the thumbnail-jobs queue (and uploads
+  to uploads/ only), without disturbing the deletion audit of originals/.
+xp: 175
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-12-notification-wrong-event
-implementation_status: playable
+  - S3 event types
+  - ObjectCreated vs ObjectRemoved
+  - notification configuration replacement
+services:
+  - s3
+  - sqs

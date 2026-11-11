@@ -1,17 +1,22 @@
-name: Lost History
-description: "Application expects versioned objects but versioning is disabled \u2014\
-  \ previous versions unreachable"
-objective: 'Enable versioning: `aws s3api put-bucket-versioning`'
-xp: 125
+name: "Lost History"
+description: >-
+  Ledgerly stores customer contracts in the bucket ledgerly-contracts and the
+  contract service (IAM user contract-svc) saves revisions by uploading to the
+  same key again. Yesterday a paralegal's second upload silently replaced the
+  signed Orbit master agreement, and nobody can get the original back. The
+  service's code already asks S3 for older revisions, but there are none to
+  return.
+objective: >-
+  Make ledgerly-contracts keep every revision of a contract, so that when
+  contract-svc uploads the same key twice, both revisions can be listed and the
+  older one can be downloaded again.
+xp: 100
 difficulty: beginner
-expected_time: 8m
+expected_time: 6m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-4-versioning-disabled
-implementation_status: playable
+  - S3 versioning
+  - object versions
+  - overwrite protection
+services:
+  - s3
+  - iam

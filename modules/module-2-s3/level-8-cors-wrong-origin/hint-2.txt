@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the AllowedOrigins value in the CORS rule
+Look at the admin-editor rule character by character. A browser's Origin header is scheme + host (+ port) and nothing else, and S3 compares it to AllowedOrigins as an exact string. Then check whether the rule lists all the methods the admin app uses. Remember put-bucket-cors replaces the whole configuration, so the storefront rule must be sent again too. Type `edit` to open cors.json.

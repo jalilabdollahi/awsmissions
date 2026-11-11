@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add `s3:PutObject` to the bucket policy
+S3 actions apply either to the bucket (arn:aws:s3:::name) or to objects (arn:aws:s3:::name/key). s3:PutObject is an object action, so a Resource without a key part can never match an upload. Your workspace has a copy of the policy: type `edit` to open bucket-policy.json.

@@ -1,16 +1,23 @@
-name: Public by Accident
-description: "Bucket ACL is set to `public-read` \u2014 all objects are publicly readable"
-objective: 'Change ACL to `private`: `aws s3api put-bucket-acl --acl private`'
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "Public by Accident"
+description: >-
+  Sunrise Studio shares wedding galleries from the bucket sunrise-photos. A
+  security scan flagged it: the bucket ACL grants READ to the AllUsers group,
+  and the two gallery photos carry public-read ACLs of their own, left over
+  from an old uploader script. The web app (IAM user renderer-app) reads the
+  photos through its own IAM permissions, never through ACLs. The bucket still
+  allows ACLs, which is how the script got away with it.
+objective: >-
+  Remove every public ACL grant from the bucket and from the existing objects
+  without deleting any photo, make sure ACLs cannot expose the bucket again, and
+  keep renderer-app able to read the galleries.
+xp: 150
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-15-acl-too-open
-implementation_status: playable
+  - S3 ACLs
+  - object ownership
+  - public access
+  - AllUsers grantee
+services:
+  - s3
+  - iam

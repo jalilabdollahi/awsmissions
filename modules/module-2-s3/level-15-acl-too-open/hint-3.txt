@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Reset the bucket ACL and every object ACL to private, and guard the bucket:
+
+  aws s3api put-bucket-acl --bucket sunrise-photos --acl private
+  aws s3api put-object-acl --bucket sunrise-photos --key <key> --acl private      # repeat for every object
+  aws s3api put-public-access-block --bucket sunrise-photos --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true

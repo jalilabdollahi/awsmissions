@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Enable versioning, then copy the good version (the newest non-null one) over the current object:
+
+  aws s3api put-bucket-versioning --bucket pixelcart-feature-flags --versioning-configuration Status=Enabled
+  aws s3api copy-object --bucket pixelcart-feature-flags --key flags.json --copy-source "pixelcart-feature-flags/flags.json?versionId=<id>"

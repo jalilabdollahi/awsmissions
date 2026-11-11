@@ -1,1 +1,3 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Change the thumbnail rule's Events to ["s3:ObjectCreated:*"] and leave the audit rule exactly as it is. Then send the whole file:
+
+  aws s3api put-bucket-notification-configuration --bucket snapfolio-gallery --notification-configuration file://notification.json

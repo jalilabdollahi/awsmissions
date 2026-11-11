@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Multipart uploads are being abandoned and accumulating cost — no lifecycle rule to abort them
+Part of what you pay for does not appear in a normal listing. Look for unfinished uploads and for the existing lifecycle rules:
+
+  aws s3api list-multipart-uploads --bucket datavault-exports
+  aws s3api get-bucket-lifecycle-configuration --bucket datavault-exports

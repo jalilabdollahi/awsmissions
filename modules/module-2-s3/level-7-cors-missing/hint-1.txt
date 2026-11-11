@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Web application can't fetch objects — CORS configuration is missing entirely
+A browser sends an OPTIONS "preflight" before the real request; curl does not. Check what the bucket answers:
+
+  aws s3api get-bucket-cors --bucket tidewater-pod-photos
+  curl -i -X OPTIONS -H "Origin: https://dashboard.tidewater.example" -H "Access-Control-Request-Method: PUT" $AWS_ENDPOINT_URL/tidewater-pod-photos/pod/shipment-88213.jpg

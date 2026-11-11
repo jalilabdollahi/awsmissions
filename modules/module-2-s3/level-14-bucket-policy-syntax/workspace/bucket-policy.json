@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PartnerListsDropFolders",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::000000000000:user/partner-sync" },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::quillhouse-partner-drop",
+      "Condition": {
+        "StringEquals": { "s3:prefix": ["outbound/*", "inbound/*"] }
+      }
+    },
+    {
+      "Sid": "PartnerDownloadsOutbound",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::000000000000:user/partner-sync" },
+      "Action": "s3:GetObjects",
+      "Resource": "arn:aws:s3:::quillhouse-partner-drop/outbound/*"
+    },
+    {
+      "Sid": "PartnerUploadsInbound",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::123456789012:user/partner-sync" },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::quillhouse-partner-drop/inbound/*"
+    }
+  ]
+}

@@ -1,17 +1,24 @@
-name: The Force Field
-description: "Bucket policy grants public read but `BlockPublicPolicy` is true \u2014\
-  \ policy silently rejected"
-objective: 'Disable public access block: `aws s3api put-public-access-block`'
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "The Force Field"
+description: >-
+  Lumen Design publishes its logos and press kit from the bucket
+  lumen-brand-assets. The marketing intern wrote a public-read policy
+  (public-read-policy.json in your workspace) and applied it, but the command
+  fails with Access Denied even for the account owner, and the press page shows
+  broken images. Security hardened this bucket last quarter and nobody wrote
+  down how. The bucket also holds unreleased contract drafts that must stay
+  private.
+objective: >-
+  Publish the press kit so that anyone can download objects under public/ in
+  lumen-brand-assets, while private/ stays unreadable to everyone but the
+  owner. Do not strip the other protections from the bucket: new public ACLs
+  must remain blocked.
+xp: 175
+difficulty: intermediate
+expected_time: 12m
 concepts:
-- S3
-- bucket configuration
-- object access
-- policy debugging
-- buckets
-module: module-2-s3
-module_title: S3 Mastery
-level: level-6-public-access-block
-implementation_status: playable
+  - S3 Block Public Access
+  - BlockPublicPolicy
+  - public bucket policies
+services:
+  - s3
+  - iam

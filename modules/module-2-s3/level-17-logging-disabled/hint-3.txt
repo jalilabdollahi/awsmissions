@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Create the bucket, allow the service principal logging.s3.amazonaws.com to s3:PutObject on arn:aws:s3:::corvid-access-logs/storefront/*, and enable logging:
+
+  aws s3 mb s3://corvid-access-logs
+  aws s3api put-bucket-policy --bucket corvid-access-logs --policy file://logging-bucket-policy.json
+  aws s3api put-bucket-logging --bucket corvid-storefront-assets --bucket-logging-status '{"LoggingEnabled":{"TargetBucket":"corvid-access-logs","TargetPrefix":"storefront/"}}'

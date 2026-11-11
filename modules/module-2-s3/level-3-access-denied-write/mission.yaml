@@ -1,16 +1,22 @@
-name: Read-Only Trap
-description: "Bucket policy only allows `s3:GetObject` \u2014 PutObject is denied"
-objective: Add `s3:PutObject` to the bucket policy
-xp: 125
+name: "Read-Only Trap"
+description: >-
+  Nimbus Labs' CI pipeline authenticates as the IAM user ci-runner. It can pull
+  yesterday's build from the bucket nimbus-build-artifacts without trouble, but
+  every publish step fails with AccessDenied. Release engineering says the
+  bucket policy (copy in your workspace) "definitely has a publish statement".
+  The release-manager user publishes to releases/ and must keep doing so.
+objective: >-
+  Let ci-runner upload build outputs under artifacts/ in nimbus-build-artifacts
+  while it keeps reading the bucket. It must not be able to write anywhere else
+  or delete anything, and release-manager must still be able to publish under
+  releases/.
+xp: 100
 difficulty: beginner
 expected_time: 8m
 concepts:
-- S3
-- bucket configuration
-- object access
-- policy debugging
-- buckets
-module: module-2-s3
-module_title: S3 Mastery
-level: level-3-access-denied-write
-implementation_status: playable
+  - bucket policies
+  - object vs bucket ARNs
+  - s3:PutObject
+services:
+  - s3
+  - iam

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption`
+put-bucket-encryption sets the default for new objects only. It takes an algorithm (AES256 is S3-managed, aws:kms uses KMS), and for KMS the key to use; omitting the key silently selects the AWS managed key. BucketKeyEnabled is part of the same rule. Objects that already exist keep whatever they have until they are rewritten, and a copy onto the same key counts as a rewrite.

@@ -1,15 +1,25 @@
-name: Too Flexible
-description: Object lock is in `GOVERNANCE` mode but compliance requirements need
-  `COMPLIANCE` mode
-objective: Change retention mode to `COMPLIANCE` on the object
-xp: 200
-difficulty: beginner
-expected_time: 15m
+name: "Too Flexible"
+description: >-
+  Fennel Capital keeps its audited general ledgers in the bucket
+  fennel-ledger-archive, which has Object Lock enabled. The regulator's
+  examination found that a privileged administrator could still shorten or lift
+  the retention, because everything was written in GOVERNANCE mode with only a
+  30 day default. Rules require that ledger records are immutable for 7 years,
+  with no one able to bypass that, not even the root user. Three ledger
+  versions are stored today under ledger/ (two versions of 2025 and the 2024
+  file), each locked in GOVERNANCE until 2028-01-01.
+objective: >-
+  Make every stored version under ledger/ immutable in COMPLIANCE mode (keeping
+  at least the current 2028-01-01 retain-until date), and change the bucket's
+  default so that every future object is locked in COMPLIANCE mode for at least
+  7 years.
+xp: 400
+difficulty: expert
+expected_time: 20m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-18-object-lock-wrong-mode
-implementation_status: playable
+  - S3 Object Lock
+  - governance vs compliance retention
+  - default retention
+  - per-version retention
+services:
+  - s3

@@ -1,16 +1,25 @@
-name: Plaintext Exposure
-description: "Bucket has no default encryption \u2014 objects stored unencrypted"
-objective: 'Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption`'
-xp: 150
-difficulty: beginner
-expected_time: 10m
+name: "Plaintext Exposure"
+description: >-
+  Riverside Imaging stores patient scans in the bucket riverside-scans. An
+  internal audit found the bucket has no default encryption, so scans are
+  written as plain objects. The compliance policy requires server-side
+  encryption with the clinic's own customer managed KMS key (alias
+  alias/riverside-phi), not S3-managed keys and not the AWS managed key. The
+  billing team has a second CMK, alias/riverside-billing, which must not be
+  used here. The bucket already contains one scan that was uploaded before the
+  audit.
+objective: >-
+  Configure default encryption on riverside-scans with SSE-KMS using the
+  alias/riverside-phi key (with S3 Bucket Keys enabled to cut KMS request
+  cost), and re-encrypt the existing scan under scans/ with the same key.
+xp: 200
+difficulty: intermediate
+expected_time: 14m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-13-encryption-missing
-implementation_status: playable
+  - default bucket encryption
+  - SSE-KMS
+  - customer managed keys
+  - encrypting existing objects
+services:
+  - s3
+  - kms

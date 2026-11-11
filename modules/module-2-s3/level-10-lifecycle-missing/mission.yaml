@@ -1,15 +1,23 @@
-name: Incomplete Uploads Pile Up
-description: "Multipart uploads are being abandoned and accumulating cost \u2014 no\
-  \ lifecycle rule to abort them"
-objective: 'Add lifecycle rule: abort incomplete multipart uploads after 7 days'
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Incomplete Uploads Pile Up"
+description: >-
+  DataVault's nightly export job uploads multi-gigabyte files to the bucket
+  datavault-exports using multipart upload. When the job's pods get evicted,
+  the half-finished uploads are never completed or aborted, and their stored
+  parts are billed forever. Finance found several of them listed in the bucket.
+  The bucket already has a lifecycle rule that moves old exports to cheaper
+  storage (saved as lifecycle.json in your workspace), which the team wants to
+  keep as it is.
+objective: >-
+  Stop abandoned multipart uploads from accumulating anywhere in the bucket by
+  having them aborted automatically after at most 7 days, keep the existing
+  storage-class transition rule working, and clean up the incomplete uploads
+  that are there right now.
+xp: 200
+difficulty: intermediate
+expected_time: 14m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-10-lifecycle-missing
-implementation_status: playable
+  - multipart uploads
+  - AbortIncompleteMultipartUpload
+  - lifecycle configuration replacement
+services:
+  - s3

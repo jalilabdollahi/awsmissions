@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+For each version (there are three) run put-object-retention with Mode COMPLIANCE, then change the default:
+
+  aws s3api put-object-retention --bucket fennel-ledger-archive --key <key> --version-id <id> --retention '{"Mode":"COMPLIANCE","RetainUntilDate":"2028-01-01T00:00:00Z"}'
+  aws s3api put-object-lock-configuration --bucket fennel-ledger-archive --object-lock-configuration '{"ObjectLockEnabled":"Enabled","Rule":{"DefaultRetention":{"Mode":"COMPLIANCE","Years":7}}}'

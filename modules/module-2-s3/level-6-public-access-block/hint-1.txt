@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Bucket policy grants public read but `BlockPublicPolicy` is true — policy silently rejected
+Try to apply the policy yourself and read the exact error, then look at what protects the bucket:
+
+  aws s3api put-bucket-policy --bucket lumen-brand-assets --policy file://public-read-policy.json
+  aws s3api get-public-access-block --bucket lumen-brand-assets

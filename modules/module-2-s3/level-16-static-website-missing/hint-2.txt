@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable static website hosting with index.html and error.html
+Website behaviour (index pages, custom errors) only exists when the bucket has a website configuration. It needs an index document suffix (applied to every path that ends with a slash) and an error document key. Which of the two HTML files in the bucket is the current branded error page? Type `edit` to open website.json.

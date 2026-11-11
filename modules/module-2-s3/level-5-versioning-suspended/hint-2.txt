@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change versioning status from `Suspended` to `Enabled`
+Suspended keeps old versions but stops creating new ones: every new write overwrites a single "null" version. The status must go back to Enabled. After that, the live flags.json is still the bad upload, so you also have to make an earlier good version the latest one. There is no rollback command; a version can be copied onto its own key.

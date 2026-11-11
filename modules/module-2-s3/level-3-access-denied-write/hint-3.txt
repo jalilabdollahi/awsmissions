@@ -1,1 +1,7 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Point the CiPublishesBuilds statement at the artifacts/ prefix only:
+
+  "Resource": "arn:aws:s3:::nimbus-build-artifacts/artifacts/*"
+
+Then re-apply the whole file (keep the other statements):
+
+  aws s3api put-bucket-policy --bucket nimbus-build-artifacts --policy file://bucket-policy.json

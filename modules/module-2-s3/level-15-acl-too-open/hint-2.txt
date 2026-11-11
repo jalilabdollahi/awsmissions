@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Change ACL to `private`: `aws s3api put-bucket-acl --acl private`
+Look for the AllUsers group in the grants. The bucket ACL and each object's ACL are separate, so fixing one does not fix the other. Also think about prevention: the bucket currently allows ACLs, and S3 has two mechanisms that stop ACLs from exposing data (Object Ownership and Block Public Access).

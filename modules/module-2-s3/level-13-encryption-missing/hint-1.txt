@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Bucket has no default encryption — objects stored unencrypted
+Look at what the bucket does by default, at the existing scan, and at the keys that exist:
+
+  aws s3api get-bucket-encryption --bucket riverside-scans
+  aws s3api head-object --bucket riverside-scans --key scans/mri-0042.dcm
+  aws kms list-aliases --query 'Aliases[?starts_with(AliasName, `alias/riverside`)]'

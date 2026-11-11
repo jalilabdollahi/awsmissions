@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Turn off BlockPublicPolicy and RestrictPublicBuckets (leave the two ACL settings true), scope the policy Resource to .../public/*, then apply it:
+
+  aws s3api put-public-access-block --bucket lumen-brand-assets --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=false,RestrictPublicBuckets=false
+  aws s3api put-bucket-policy --bucket lumen-brand-assets --policy file://public-read-policy.json

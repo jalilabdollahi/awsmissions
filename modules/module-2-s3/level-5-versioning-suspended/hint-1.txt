@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Versioning is Suspended (not Enabled) — new versions are not created
+Look at the bucket's versioning state and the history of the broken file:
+
+  aws s3api get-bucket-versioning --bucket pixelcart-feature-flags
+  aws s3api list-object-versions --bucket pixelcart-feature-flags --prefix flags.json
+
+Note which version ids are UUIDs and which one is "null".

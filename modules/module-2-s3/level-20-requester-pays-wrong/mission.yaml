@@ -1,18 +1,23 @@
-name: Unexpected Bills
-description: "Bucket has `requester-pays` enabled \u2014 callers are being charged\
-  \ unexpectedly"
-objective: 'Disable requester pays: `aws s3api put-bucket-request-payment --payer
-  BucketOwner`'
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Unexpected Bills"
+description: >-
+  Ridgeline Analytics' finance team is fielding angry mail: partner companies
+  say their automated downloads from the Ridgeline buckets now fail or show up
+  on their own AWS invoice. Requester Pays was switched on across the account
+  last week by a script that was supposed to touch only the public dataset
+  bucket ridgeline-open-data, where downloaders really are meant to pay for
+  their own transfer. All other Ridgeline buckets are normal buckets that the
+  company pays for.
+objective: >-
+  Find every Ridgeline bucket that has Requester Pays turned on by mistake and
+  make the bucket owner pay again, but leave the public dataset bucket
+  ridgeline-open-data on Requester Pays.
+xp: 200
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- S3
-- bucket configuration
-- object access
-- buckets
-- REST APIs
-module: module-2-s3
-module_title: S3 Mastery
-level: level-20-requester-pays-wrong
-implementation_status: playable
+  - Requester Pays
+  - bucket payer configuration
+  - auditing many buckets
+services:
+  - s3
+  - iam

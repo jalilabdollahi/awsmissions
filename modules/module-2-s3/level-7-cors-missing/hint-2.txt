@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add a CORS configuration via `aws s3api put-bucket-cors`
+The bucket has no CORS rules, so S3 refuses every preflight. A rule needs the exact origin, the methods the page uses, the request headers it sends, and (for the ETag requirement) the response headers JavaScript may read. A wildcard origin would fix the symptom but opens the bucket to every website. A starting file is in your workspace: type `edit` to open cors.json.

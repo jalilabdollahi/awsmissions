@@ -1,14 +1,21 @@
-name: Silent Website
-description: "Static website hosting is disabled \u2014 requests return `NoSuchWebsiteConfiguration`"
-objective: Enable static website hosting with index.html and error.html
-xp: 150
-difficulty: beginner
+name: "Silent Website"
+description: >-
+  Driftwood Software's documentation site is a set of static files in the bucket
+  driftwood-docs-site (index.html, a guides/ section with its own index.html, a
+  branded 404.html). Tonight's launch announcement went out and every visit to
+  the website endpoint shows an XML error page instead of the site. Nobody
+  remembers enabling website hosting on this bucket in the first place. An old
+  error.html from the previous site design is still in the bucket.
+objective: >-
+  Serve the files as a website: the root and every folder (such as /guides/)
+  must show their index.html, and mistyped URLs must show the site's own
+  404.html page with a 404 status.
+xp: 175
+difficulty: intermediate
 expected_time: 10m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-16-static-website-missing
-implementation_status: playable
+  - S3 static website hosting
+  - index document
+  - error document
+services:
+  - s3

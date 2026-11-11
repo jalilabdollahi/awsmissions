@@ -1,14 +1,22 @@
-name: Frozen in Time
-description: "Versioning is Suspended (not Enabled) \u2014 new versions are not created"
-objective: Change versioning status from `Suspended` to `Enabled`
+name: "Suspended Animation"
+description: >-
+  PixelCart's storefront reads its feature switches from flags.json in the
+  bucket pixelcart-feature-flags, written by the IAM user flag-publisher. Last
+  week someone paused versioning "to save storage costs" and a botched deploy
+  then overwrote flags.json with garbage. The checkout page is broken, and the
+  team cannot see why uploads no longer produce separate revisions. The last
+  good flags were published a few days earlier.
+objective: >-
+  Bring back the last good flags.json (the version that has "rollout": 50) as
+  the live object, and make the bucket keep a separate, retrievable version for
+  every future upload.
 xp: 150
 difficulty: beginner
 expected_time: 10m
 concepts:
-- S3
-- bucket configuration
-- object access
-module: module-2-s3
-module_title: S3 Mastery
-level: level-5-versioning-suspended
-implementation_status: playable
+  - suspended versioning
+  - null version
+  - restoring an object version
+services:
+  - s3
+  - iam

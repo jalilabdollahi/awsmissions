@@ -1,10 +1,27 @@
 # Solution
 
-```bash
-# Edit the local file first
-$EDITOR config.json
-# This edited file applies to: --bucket mission-bucket
+The `admin-editor` rule is wrong in two ways:
 
-# Then apply it from this level directory
-aws s3api put-bucket-cors   --bucket mission-bucket   --cors-configuration file://config.json
+- its origin is `https://admin.brightcart.example/` with a **trailing slash**. A browser's `Origin` header never has one, and S3 compares origins as exact strings, so the rule never matches;
+- its `AllowedMethods` only lists `GET`, but the admin app also uses `PUT` and `DELETE`.
+
+1. Read the live configuration:
+
+```bash
+aws s3api get-bucket-cors --bucket brightcart-media
+```
+
+2. In `cors.json` change the admin rule to:
+
+```json
+"AllowedOrigins": ["https://admin.brightcart.example"],
+"AllowedMethods": ["GET", "PUT", "DELETE"]
+```
+
+Leave the `storefront-readonly` rule alone.
+
+3. `put-bucket-cors` replaces the whole configuration, so apply the complete file:
+
+```bash
+aws s3api put-bucket-cors --bucket brightcart-media --cors-configuration file://cors.json
 ```

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix the prefix in the lifecycle rule
+A lifecycle rule applies to objects whose key starts with the rule's prefix, nothing else: no wildcards, no "contains". One of the two rules has a prefix that none of the real keys start with. Be careful with the obvious shortcut of removing the prefix: everything in the bucket, including data with a different retention requirement, would then match. Type `edit` to open lifecycle.json.

@@ -1,1 +1,4 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Set the default, then rewrite the old object with the same key:
+
+  aws s3api put-bucket-encryption --bucket riverside-scans --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"aws:kms","KMSMasterKeyID":"alias/riverside-phi"},"BucketKeyEnabled":true}]}'
+  aws s3api copy-object --bucket riverside-scans --key scans/mri-0042.dcm --copy-source riverside-scans/scans/mri-0042.dcm --server-side-encryption aws:kms --ssekms-key-id alias/riverside-phi

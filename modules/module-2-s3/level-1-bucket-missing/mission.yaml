@@ -1,11 +1,21 @@
-name: "No Bucket, No Service"
-description: "The application expects an S3 bucket named mission-bucket, but it does not exist in the local AWS environment."
-objective: "Create the missing S3 bucket so the application can start storing objects."
-xp: 100
-difficulty: "beginner"
-expected_time: "3m"
+name: "Manifest Not Found"
+description: >-
+  Harborline Freight's dock scanners push container manifests through a small
+  ingest service that runs as the IAM user ingest-bot. After last night's
+  region migration the service restarts in a loop and the log is full of
+  NoSuchBucket errors. The service configuration is in ingest.env in your
+  workspace. Somebody mentioned that a bucket "with almost the same name" was
+  created during the migration.
+objective: >-
+  Make the manifest bucket that the ingest service is configured to use
+  available, so ingest-bot can store a manifest in it and read it back.
+xp: 75
+difficulty: beginner
+expected_time: 4m
 concepts:
-  - S3 bucket creation
-  - aws s3 mb
-module: "module-2-s3"
-level: "level-1-bucket-missing"
+  - S3 bucket names
+  - bucket creation
+  - NoSuchBucket
+services:
+  - s3
+  - iam
