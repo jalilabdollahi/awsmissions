@@ -1,0 +1,9 @@
+Treat it as a live incident: contain, recover, eradicate. Start by looking at what the identity has and what exists that should not:
+
+  aws ssm get-parameter --name /cinder/forensics/leaked-key --with-decryption
+  aws iam list-access-keys --user-name cg-build-bot
+  aws iam get-user-policy --user-name cg-build-bot --policy-name ci-everything
+  aws iam list-users
+  aws iam list-roles --query 'Roles[].[RoleName,AssumeRolePolicyDocument.Statement[0].Principal]'
+
+Look for users and roles you cannot account for, especially ones with administrator policies.

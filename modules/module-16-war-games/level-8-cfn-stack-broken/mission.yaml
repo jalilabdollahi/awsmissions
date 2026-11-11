@@ -1,0 +1,27 @@
+name: "Stack Refuses to Update"
+description: >-
+  Cobalt Retail moved its order ledger into a CloudFormation stack, but the
+  stack ended up in a failed state and the deploy bot won't touch it. Meanwhile
+  finance has already started writing real entries into the table the stack
+  created. Everyone's first suggestion is "delete it and start over". Change
+  ticket CHG-2207, in your workspace, explains what the stack was meant to
+  do and which neighbouring stack must not be disturbed.
+objective: >-
+  Bring the cobalt-orders stack to a healthy *_COMPLETE state with its
+  ledger function working, without losing the entries already in the
+  cobalt-ledger table and without touching the legacy cobalt-core stack or its
+  export. The stack must also be safe to delete in future without destroying
+  the ledger.
+xp: 475
+difficulty: expert
+expected_time: 35m
+concepts:
+  - CloudFormation failed stacks
+  - export name uniqueness
+  - DeletionPolicy Retain
+  - Lambda handler configuration
+services:
+  - cloudformation
+  - dynamodb
+  - lambda
+  - iam

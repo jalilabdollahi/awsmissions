@@ -1,0 +1,6 @@
+  aws s3api put-bucket-versioning --bucket ml-case-documents --versioning-configuration Status=Enabled
+  aws s3api delete-object --bucket ml-case-documents --key <key> --version-id <delete marker version id>      # removes the marker
+  aws s3api copy-object --bucket ml-case-documents --key contracts/acme-msa.txt --copy-source 'ml-case-documents/contracts/acme-msa.txt?versionId=<good version>'
+  aws dynamodb restore-table-to-point-in-time --source-table-name ml-case-index --target-table-name ml-case-index-restored --restore-date-time <time from SSM>
+  aws dynamodb scan --table-name ml-case-index-restored      # then aws dynamodb put-item each row into ml-case-index
+  aws iam put-user-policy --user-name ml-intern --policy-name casework --policy-document file://policy.json    # s3:Get/Put/List and dynamodb:Get/Put/Query/Scan only

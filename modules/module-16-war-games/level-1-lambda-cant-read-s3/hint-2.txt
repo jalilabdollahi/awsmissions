@@ -1,0 +1,7 @@
+Three separate things are wrong, one per layer:
+
+- the role's own identity policy is missing a permission the function needs
+- the bucket has its own policy, and a statement left over from the 03:40 "freeze" blocks one of the function's calls
+- the 05:30 deploy changed a value in the function's configuration
+
+S3 evaluates the role's policy AND the bucket policy. A missing Allow and a present Deny look the same from the outside (AccessDenied), but are fixed in different places.

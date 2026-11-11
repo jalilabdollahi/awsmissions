@@ -1,0 +1,25 @@
+name: "Queue Meltdown"
+description: >-
+  A malformed parcel record entered Parcelwise's sort-jobs queue on Thursday
+  and the sorter workers choked on it, again and again, for hours.
+  Nobody was paged, and the poison message never left the queue. The ops
+  review notes (in your workspace) describe the intended design (a
+  dead-letter queue and a page) and the agreed numbers.
+objective: >-
+  A message that keeps failing must be parked in pw-sort-jobs-dlq after a
+  handful of receives (at most 5), the source queue must give a worker 30
+  seconds per parcel before handing the message to somebody else, and ops must
+  get paged through pw-ops-alerts when the DLQ holds a message. Do not
+  delete the queues.
+xp: 475
+difficulty: expert
+expected_time: 30m
+concepts:
+  - SQS dead-letter queues and redrive policy
+  - maxReceiveCount
+  - visibility timeout
+  - CloudWatch alarms on SQS metrics
+services:
+  - sqs
+  - cloudwatch
+  - sns

@@ -1,0 +1,23 @@
+name: "Ghost Function"
+description: >-
+  Harborview Pharmacy approves prescription refills through the state machine
+  harborview-refill-flow. Last sprint the platform team tidied up Lambda names
+  and the function behind the eligibility check was renamed. The refill app
+  now shows "Could not verify refill, please call the pharmacy" for every
+  customer. The Lambda team insists their function is healthy and answers
+  direct invocations. IAM has been reviewed and is not the issue.
+objective: >-
+  Make harborview-refill-flow approve a refill for {"rx": "RX-5521", "dose": 2}
+  using the production eligibility function (not the staging copy that
+  happens to sit next to it).
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Task state Resource ARN
+  - Lambda.ResourceNotFoundException
+  - update-state-machine
+services:
+  - stepfunctions
+  - lambda
+  - iam

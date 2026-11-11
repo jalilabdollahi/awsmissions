@@ -1,0 +1,27 @@
+name: "Silent Failure"
+description: >-
+  Pinecrest Tickets charges cards through the state machine
+  pinecrest-checkout and then sends a receipt. The finance team ran their
+  monthly reconciliation and found 212 orders marked SUCCEEDED in Step
+  Functions that were never paid for. Customers whose cards were declined got
+  neither a receipt nor an explanation, and the dashboards show a spotless
+  success rate. The charge Lambda is doing its job: it raises CardDeclined.
+objective: >-
+  When the card is declined, pinecrest-checkout must tell the customer and
+  fail honestly: put a message on pinecrest-declined that contains the orderId
+  and the reason from the error, and end the execution as FAILED. Paid orders
+  must keep succeeding, with a receipt on pinecrest-receipts and nothing on
+  pinecrest-declined.
+xp: 200
+difficulty: intermediate
+expected_time: 14m
+concepts:
+  - Catch
+  - error handling
+  - Fail state
+  - ResultPath on Catch
+services:
+  - stepfunctions
+  - lambda
+  - sqs
+  - iam

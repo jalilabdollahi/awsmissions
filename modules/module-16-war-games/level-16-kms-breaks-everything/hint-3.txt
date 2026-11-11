@@ -1,0 +1,6 @@
+  aws kms cancel-key-deletion --key-id <key id>      # leaves the key Disabled...
+  aws kms enable-key --key-id <key id>               # ...so enable it too
+  aws kms enable-key-rotation --key-id <key id>
+  aws lambda update-function-configuration --function-name vl-note-reader --environment 'Variables={KEY_ALIAS=alias/vl-patient-notes}'
+  aws iam put-role-policy --role-name vl-reader-role --policy-name reader --policy-document file://policy.json
+      (keep dynamodb:GetItem on vl-vault; kms:Decrypt AND kms:Encrypt on the arn of the patient-notes key only)

@@ -1,0 +1,3 @@
+Both Lambdas work. The error is in PublishCard, so look at what that state received. Read the history of a failed execution and compare the output of the Parallel state with the paths PublishCard uses:
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>

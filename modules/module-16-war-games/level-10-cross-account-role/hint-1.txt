@@ -1,0 +1,8 @@
+Walk the chain one hop at a time, as the auditor would, and note which hop's error you get first:
+
+  aws iam list-user-policies --user-name ashgrove-auditor
+  aws iam get-role --role-name ferro-audit-bridge --query Role.AssumeRolePolicyDocument
+  aws iam get-role --role-name ferro-ledger-reader --query Role.AssumeRolePolicyDocument
+  aws iam get-role-policy --role-name ferro-ledger-reader --policy-name read-2026
+
+Each hop has two halves: the caller must be ALLOWED to call sts:AssumeRole on the target (caller's identity policy), and the target's trust policy must name the caller. Compare every ARN, string and condition with the design in the engagement note.

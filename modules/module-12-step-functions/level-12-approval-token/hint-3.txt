@@ -1,0 +1,5 @@
+In AskManager: rename the key to "taskToken.$", add "ResultPath": "$.approval", and add a Catch for "Rejected" with "ResultPath": "$.rejection" whose Next is a new Task that sends poId, requester and $.rejection.Cause to brightline-requester-notices and ends ("End": true). Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:brightline-po-approval --definition file://po-approval.asl.json
+
+Test it yourself with: aws stepfunctions send-task-success --task-token <token> --task-output '{"approvedBy":"me"}'

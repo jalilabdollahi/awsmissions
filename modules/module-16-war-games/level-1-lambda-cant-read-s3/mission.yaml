@@ -1,0 +1,27 @@
+name: "The Blocked Pipeline"
+description: >-
+  Harbor & Vine Logistics indexes every overnight freight manifest with a
+  Lambda function, hv-manifest-indexer. Since this morning the dispatch
+  dashboard is empty and the function is failing. The incident ticket
+  (INC-2291, in your workspace) says someone "froze" the old indexer at 03:40
+  and the 05:30 deploy touched the function. Nobody remembers exactly what
+  changed, and more than one thing is wrong.
+objective: >-
+  Get hv-manifest-indexer processing manifests again: it must read from
+  s3://hv-manifests/incoming/, write to processed/, and record the result in
+  the hv-manifest-index table. Do not widen the role beyond the manifests
+  bucket, do not give it any access to hv-payroll-exports, and keep the
+  contractor restriction on restricted/ intact.
+xp: 400
+difficulty: expert
+expected_time: 25m
+concepts:
+  - identity vs resource policies
+  - explicit Deny
+  - Lambda configuration
+  - incident triage
+services:
+  - lambda
+  - iam
+  - s3
+  - dynamodb

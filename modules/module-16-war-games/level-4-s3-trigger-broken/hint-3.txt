@@ -1,0 +1,6 @@
+  aws s3api put-bucket-notification-configuration --bucket <bucket> --notification-configuration file://notif.json
+      (an empty configuration '{}' removes triggers from a bucket;
+       the Lambda configuration needs LambdaFunctionArn, Events ["s3:ObjectCreated:*"] and a Filter.Key.FilterRules suffix rule)
+  aws iam put-role-policy --role-name mg-thumbnailer-role --policy-name thumbnailer --policy-document file://policy.json
+      (s3:GetObject on mg-photo-uploads/*, s3:PutObject only on mg-photo-thumbs/*)
+  aws lambda update-function-configuration --function-name mg-thumbnailer --environment 'Variables={THUMB_BUCKET=mg-photo-thumbs}'

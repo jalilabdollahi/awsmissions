@@ -1,0 +1,8 @@
+Four independent faults, one per layer:
+
+- API Gateway has no deployment for the stage partners call
+- the GET /books integration points at the old function name from before the rename
+- the API key is attached to a usage plan, but that plan only covers a different stage
+- the Lambda function has its reserved concurrency set to a value that blocks every invocation
+
+Changes to an API are not live until they are deployed to a stage.

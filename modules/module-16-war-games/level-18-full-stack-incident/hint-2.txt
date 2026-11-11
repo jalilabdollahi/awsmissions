@@ -1,0 +1,8 @@
+Four faults, one per component, and they hide each other:
+
+- the intake function's configuration names a queue that does not exist
+- the intake role was "least-privileged" down to nothing for SQS
+- the writer function is parked by a concurrency setting
+- the table's key attribute does not match what the writer stores (and a key schema cannot be altered in place)
+
+Existing ledger rows (o-legacy-1) must survive, and the intake role must be allowed on the order queue only, not on every queue.

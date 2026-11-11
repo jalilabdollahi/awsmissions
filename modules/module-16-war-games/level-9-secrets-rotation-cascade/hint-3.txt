@@ -1,0 +1,7 @@
+  # IAM: allow GetSecretValue on  arn:aws:secretsmanager:us-east-1:000000000000:secret:juniper/prod/db-credentials-*
+  aws iam put-role-policy --role-name juniper-claims-role --policy-name claims-secrets --policy-document file://policy.json
+  # Lambda: SECRET_ID = the secret's current ARN (or just its name)
+  aws lambda update-function-configuration --function-name juniper-claims-api --environment 'Variables={SECRET_ID=<arn>}'
+  # Secrets Manager: move AWSCURRENT onto the AWSPENDING version
+  aws secretsmanager update-secret-version-stage --secret-id juniper/prod/db-credentials --version-stage AWSCURRENT \
+     --move-to-version-id <pending version id> --remove-from-version-id <current version id>

@@ -1,0 +1,23 @@
+{
+  "Comment": "Saffron Meal Kits: store a new subscriber",
+  "StartAt": "SaveSubscriber",
+  "States": {
+    "SaveSubscriber": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:putItem",
+      "Parameters": {
+        "TableName": "saffron-subscribers",
+        "Item": {
+          "email": { "S": "$.email" },
+          "fullName": { "S.$": "$.fullName" },
+          "plan": { "S.$": "$.plan" },
+          "boxesPerWeek": { "N.$": "States.JsonToString($.boxes)" },
+          "welcomeLine": {
+            "S": "States.Format('Welcome to Saffron, {}! Your {} plan starts with {} boxes.', $.fullName, $.plan, $.boxes)"
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

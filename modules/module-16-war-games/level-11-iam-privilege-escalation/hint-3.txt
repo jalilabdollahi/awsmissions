@@ -1,0 +1,6 @@
+Rewrite the policy as one document and put it back with `aws iam put-role-policy --role-name qf-ci-deployer --policy-name ci-deploy --policy-document file://policy.json`:
+
+- drop every iam:* action except iam:PassRole
+- iam:PassRole: Resource = only arn:aws:iam::000000000000:role/qf-svc-lambda-exec
+- lambda:*: Resource = arn:aws:lambda:us-east-1:000000000000:function:qf-* instead of *
+- keep s3:PutObject/GetObject on arn:aws:s3:::qf-build-artifacts/*

@@ -1,0 +1,8 @@
+Four things stand between a poison message and an alert:
+
+- the redrive policy sends failed messages to a queue name that does not exist
+- the receive limit before parking is absurdly high
+- the visibility timeout gives a worker far less time than a parcel needs
+- no alarm watches the dead-letter queue, and nothing notifies ops
+
+Queue attributes such as RedrivePolicy are set with one call that takes all of them as a JSON map; the redrive policy is itself a JSON string inside that map.

@@ -1,0 +1,30 @@
+name: "One Bad Parcel"
+description: >-
+  Kestrel Logistics imports a nightly manifest with the state machine
+  kestrel-manifest-import. A Map state validates each parcel and puts the
+  accepted ones on kestrel-accepted, tagged with the manifest's batchId.
+  After last week's release nothing is accepted at all, and before that
+  release a single malformed parcel (a zero weight from a faulty scale) used
+  to take the entire 4,000-parcel manifest down with it. Operations wants both
+  problems solved properly: good parcels flow, and bad ones are set aside for
+  a human instead of being lost.
+objective: >-
+  Make kestrel-manifest-import succeed for a manifest such as
+  {"batchId": "B-2041", "parcels": [...]} that contains one malformed parcel:
+  every valid parcel is delivered to kestrel-accepted with its batchId, and
+  the malformed one is sent to kestrel-quarantine together with its batchId,
+  its id and the reason it was rejected. A malformed parcel must not appear on
+  kestrel-accepted.
+xp: 310
+difficulty: advanced
+expected_time: 18m
+concepts:
+  - Map state
+  - ItemSelector
+  - per-item Catch
+  - partial failure
+services:
+  - stepfunctions
+  - lambda
+  - sqs
+  - iam

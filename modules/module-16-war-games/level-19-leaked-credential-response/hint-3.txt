@@ -1,0 +1,6 @@
+  aws iam create-access-key --user-name cg-build-bot          # then: aws ssm put-parameter --name /cinder/ci/build-bot-credentials --type SecureString --overwrite --value '{"id":"...","secret":"..."}'
+  aws iam delete-access-key --user-name cg-build-bot --access-key-id <leaked id>      (or update-access-key --status Inactive)
+  aws iam list-access-keys --user-name cg-support-sync        # delete each key
+  aws iam detach-user-policy --user-name cg-support-sync --policy-arn arn:aws:iam::aws:policy/AdministratorAccess; aws iam delete-user --user-name cg-support-sync
+  aws iam detach-role-policy --role-name cg-audit-helper --policy-arn arn:aws:iam::aws:policy/AdministratorAccess; aws iam delete-role --role-name cg-audit-helper
+  aws iam put-user-policy --user-name cg-build-bot --policy-name ci-everything --policy-document file://policy.json    # s3:PutObject/GetObject on cg-build-artifacts/* only

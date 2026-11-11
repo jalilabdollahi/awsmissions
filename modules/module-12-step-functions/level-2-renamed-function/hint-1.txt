@@ -1,0 +1,3 @@
+Look at the failed execution's event history, not only its status line. Which event fails, and does the function ever start?
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>

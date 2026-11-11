@@ -1,0 +1,27 @@
+name: "Encryption Lockout"
+description: >-
+  At 07:40 Vaultline Clinics' clinicians started getting errors when opening
+  patient notes. A "cloud hygiene" job had scheduled the KMS key behind the
+  notes for deletion because it looked unused, and during the same
+  clean-up the function's configuration and IAM policy were left pointing at
+  last year's setup. Ticket INC-7702 (in your workspace) explains who uses
+  what. The encrypted notes cannot be re-keyed.
+objective: >-
+  vl-note-reader must open note n-1 end to end (decrypt it and re-encrypt it
+  for the audit archive) using the existing patient-notes key; that key must
+  be usable again and have automatic rotation enabled. The reader's role may
+  use the patient-notes key and must not be able to use the billing key.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - KMS key states
+  - pending deletion and cancel-key-deletion
+  - KMS aliases
+  - key-scoped IAM permissions
+  - key rotation
+services:
+  - kms
+  - lambda
+  - iam
+  - dynamodb

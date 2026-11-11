@@ -1,0 +1,24 @@
+name: "Where Did My Order Go"
+description: >-
+  Lumen Wholesale screens every new order with the state machine
+  lumen-order-screening: a Lambda computes a fraud score, then the order is
+  queued for the review desk. The reviewers complain that the messages in
+  lumen-review-desk are "just a score" with no order number, customer or
+  items, so they cannot tell what to review. The fraud-score Lambda is correct
+  and the queue permissions are fine.
+objective: >-
+  Make each message that lumen-order-screening puts on lumen-review-desk carry
+  the complete original order (orderId, customer and items) together with the
+  fraud score the Lambda computed.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - ResultPath
+  - state input and output
+  - JSONPath
+services:
+  - stepfunctions
+  - lambda
+  - sqs
+  - iam

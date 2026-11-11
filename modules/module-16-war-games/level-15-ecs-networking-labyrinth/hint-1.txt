@@ -1,0 +1,8 @@
+Check the network from three sides, starting with where ECS actually put the tasks:
+
+  aws ecs describe-services --cluster mt-prod --services mt-gateway --query 'services[0].networkConfiguration'
+  aws ecs describe-tasks --cluster mt-prod --tasks <task arn> --query 'tasks[0].attachments'
+  aws ec2 describe-route-tables --filters Name=vpc-id,Values=<mt-vpc id>
+  aws ec2 describe-security-groups --filters Name=group-name,Values=mt-gateway-sg,mt-alb-sg
+
+Compare each with the target design in the incident file: which subnet, which route, which rule in each direction.

@@ -1,0 +1,4 @@
+Look at what the executions are doing right now and at the definition's Wait state. How long does an execution wait, and does that depend on its input?
+
+  aws stepfunctions list-executions --state-machine-arn <arn> --status-filter RUNNING
+  aws stepfunctions describe-state-machine --state-machine-arn <arn>

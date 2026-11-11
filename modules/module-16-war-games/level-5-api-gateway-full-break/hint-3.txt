@@ -1,0 +1,5 @@
+  aws apigateway put-integration --rest-api-id <api> --resource-id <books resource> --http-method GET --type AWS_PROXY \
+     --integration-http-method POST --uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/<ARN of qm-catalog-api>/invocations
+  aws apigateway create-deployment --rest-api-id <api> --stage-name prod
+  aws apigateway update-usage-plan --usage-plan-id <plan> --patch-operations op=add,path=/apiStages,value=<api>:prod
+  aws lambda delete-function-concurrency --function-name qm-catalog-api

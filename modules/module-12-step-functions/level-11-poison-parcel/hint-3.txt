@@ -1,0 +1,6 @@
+1. In ItemSelector add "batchId.$": "$.batchId".
+2. On ValidateParcel add a Catch for MalformedParcel with "ResultPath": "$.error" and a Next to a new Task inside the iteration that sends batchId, parcelId and the error to the kestrel-quarantine queue and ends the iteration ("End": true).
+
+Then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:kestrel-manifest-import --definition file://manifest-import.asl.json

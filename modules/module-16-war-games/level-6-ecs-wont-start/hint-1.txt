@@ -1,0 +1,11 @@
+Ask ECS what it knows before you change anything:
+
+  aws ecs describe-services --cluster ledger-prod --services ledger-web --query 'services[0].[desiredCount,runningCount,taskDefinition,events[:3]]'
+  aws ecs describe-task-definition --task-definition ledger-web:1
+  aws ecs list-tasks --cluster ledger-prod --desired-status STOPPED
+
+To see a failure for real, run one task by hand and read why it stopped:
+
+  aws ecs run-task --cluster ledger-prod --task-definition ledger-web:1 --launch-type FARGATE \
+    --network-configuration 'awsvpcConfiguration={subnets=[subnet-default-us-east-1-a]}'
+  aws ecs describe-tasks --cluster ledger-prod --tasks <taskArn> --query 'tasks[0].[stoppedReason,containers[0].exitCode,containers[0].reason]'

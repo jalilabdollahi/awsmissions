@@ -1,0 +1,4 @@
+  aws sns set-subscription-attributes --subscription-arn <arn> --attribute-name FilterPolicy --attribute-value '{"eventType":["TicketSold"]}'
+  aws sns set-subscription-attributes --subscription-arn <arn> --attribute-name RawMessageDelivery --attribute-value true
+  aws lambda update-event-source-mapping --uuid <uuid from list-event-source-mappings> --enabled
+  aws lambda delete-function-concurrency --function-name tt-ticket-fulfiller

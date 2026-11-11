@@ -1,0 +1,7 @@
+There are four problems and each one hides the next:
+- the rule's event pattern versus what the shop really sends (compare the pattern with your test event),
+- which state machine the rule target points at,
+- what the target hands to the workflow (an EventBridge target passes the whole event envelope by default; the workflow reads orderId and items at the top level),
+- what the workflow's own execution role may invoke (read the failed execution's history).
+
+Fix one, send another test event, read the new symptom. The workspace holds copies of the pattern, the target list and the role policy (type `edit`).

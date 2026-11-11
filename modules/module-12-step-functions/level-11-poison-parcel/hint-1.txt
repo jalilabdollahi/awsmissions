@@ -1,0 +1,5 @@
+Start with the first failing item, then the next problem behind it. Read the history of a failed execution:
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>
+
+What does the input of an iteration look like, and which state tries to use a field that is not there?

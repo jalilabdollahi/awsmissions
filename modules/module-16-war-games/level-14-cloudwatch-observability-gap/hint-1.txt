@@ -1,0 +1,9 @@
+Trace one failing order through the chain and see where it stops:
+
+  aws lambda invoke --function-name tf-checkout-fn --cli-binary-format raw-in-base64-out --payload '{"fail":true}' out.json
+  aws logs describe-log-groups --query 'logGroups[].logGroupName'
+  aws logs describe-metric-filters
+  aws cloudwatch describe-alarms --alarm-names tf-checkout-errors
+  aws sns list-subscriptions
+
+`aws logs test-metric-filter` lets you try a filter pattern against a sample log line without waiting for traffic.

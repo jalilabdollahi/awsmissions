@@ -1,0 +1,5 @@
+A Retry block only fires for errors named in its ErrorEquals list. The existing block lists the platform's Lambda errors; your function raises its own exception, and its class name is the error name. You need a retrier for that name, with a few attempts spaced far enough apart to outlast a ~5 second lock.
+
+Be precise: a catch-all such as States.ALL would also retry the unknown-SKU error, which can never succeed, and the mission forbids that.
+
+Open reserve.asl.json with `edit`.

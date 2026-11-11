@@ -1,0 +1,6 @@
+Look at exactly what a manager receives. Start an execution, then read the request message from the approvals queue:
+
+  aws stepfunctions start-execution --state-machine-arn <arn> --input '{"poId":"PO-1","amount":100,"requester":"me"}'
+  aws sqs receive-message --queue-url <brightline-approvals url>
+
+Is the value in the token field something a callback could use?

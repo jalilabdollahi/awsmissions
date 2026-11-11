@@ -1,0 +1,6 @@
+  aws lambda update-function-configuration --function-name ns-order-intake --environment 'Variables={QUEUE_URL=<real queue url>}'
+  aws iam put-role-policy --role-name ns-intake-role --policy-name intake --policy-document file://policy.json
+      (add sqs:SendMessage on arn:aws:sqs:us-east-1:000000000000:ns-order-queue; keep the logs statement)
+  aws lambda delete-function-concurrency --function-name ns-order-writer
+  # table: scan the old rows to a file, delete-table, create-table with key attribute "orderId" (S),
+  # then put the saved rows back under the new key name

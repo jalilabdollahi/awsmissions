@@ -1,0 +1,4 @@
+Set the Gate threshold to 1000 in limit-check.asl.json, then:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:marlin-limit-check --definition file://limit-check.asl.json --publish
+  aws stepfunctions update-state-machine-alias --state-machine-alias-arn arn:aws:states:us-east-1:000000000000:stateMachine:marlin-limit-check:live --routing-configuration stateMachineVersionArn=<the new version arn>,weight=100

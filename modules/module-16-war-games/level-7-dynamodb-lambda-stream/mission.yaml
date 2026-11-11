@@ -1,0 +1,24 @@
+name: "Stream Silence"
+description: >-
+  Orbit Fitness' weekly step-challenge leaderboard stopped moving on Tuesday
+  night. Workouts are still logged, but the Lambda function that converts
+  each new workout into a leaderboard score never seems to run, or never
+  succeeds. The change log in your workspace (ORBIT-1893) shows four people
+  touching the pipeline within an hour.
+objective: >-
+  Logging a workout in orbit-workouts must add its points to that user's score
+  in orbit-leaderboard via the DynamoDB stream and the
+  orbit-leaderboard-updater function. Keep both tables and their existing
+  data, and keep the role limited to the leaderboard table.
+xp: 475
+difficulty: expert
+expected_time: 30m
+concepts:
+  - DynamoDB Streams
+  - stream view types
+  - event source mappings
+  - Lambda environment and IAM
+services:
+  - dynamodb
+  - lambda
+  - iam

@@ -1,0 +1,5 @@
+A Parallel state's output is not an object with your names in it: it is a list with one entry per branch, in the order the branches are defined. PublishCard looks for named fields ($.billing..., $.usage...) and for the customerId, which the default ResultPath of the Parallel state also overwrites.
+
+Think about two fields of the Parallel state: one that reshapes the list into named fields, and one that decides where the result is stored.
+
+Open profile-card.asl.json with `edit`.

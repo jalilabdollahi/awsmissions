@@ -1,0 +1,26 @@
+name: "Two Branches, One Array"
+description: >-
+  Orbit Mobile builds a customer "profile card" for its call-centre screen.
+  The state machine orbit-profile-card looks up billing and data usage at the
+  same time in a Parallel state, then publishes one compact message to the
+  queue orbit-profile-cards with the customerId, plan and gbUsed. Since the
+  two lookups were made parallel, every execution dies at the publish step
+  with a path error, even though both Lambdas return the right data.
+objective: >-
+  Make orbit-profile-card publish, for a customer such as C-5521, a message to
+  orbit-profile-cards of the form {"customerId": ..., "plan": ..., "gbUsed":
+  ...} with the real values from the two lookups. The two lookups must stay in
+  parallel branches.
+xp: 280
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - Parallel state
+  - ResultSelector
+  - ResultPath
+  - state data flow
+services:
+  - stepfunctions
+  - lambda
+  - sqs
+  - iam

@@ -1,0 +1,5 @@
+Compare what happens to a declined order with what the dashboard says. Read the history of a declined execution (cardToken tok_declined) from the first event to the last:
+
+  aws stepfunctions get-execution-history --execution-arn <executionArn>
+
+Which state follows the failure, and how does the execution end?

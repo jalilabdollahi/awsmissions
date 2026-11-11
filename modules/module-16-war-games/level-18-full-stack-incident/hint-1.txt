@@ -1,0 +1,9 @@
+Follow an order hop by hop and find the first place where it disappears:
+
+  curl -i -X POST -d '{"orderId":"o-test-1","sku":"mug-blue"}' "$AWS_ENDPOINT_URL/restapis/<api-id>/v1/_user_request_/orders"
+  aws lambda get-function-configuration --function-name ns-order-intake --query Environment
+  aws sqs get-queue-attributes --queue-url $AWS_ENDPOINT_URL/000000000000/ns-order-queue --attribute-names All
+  aws lambda get-function-concurrency --function-name ns-order-writer
+  aws dynamodb describe-table --table-name ns-orders --query Table.KeySchema
+
+HTTP 202 only means the intake function returned; it says nothing about the queue or the table.

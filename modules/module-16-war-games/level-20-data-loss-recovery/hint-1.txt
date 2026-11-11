@@ -1,0 +1,9 @@
+Look at what survives before you change anything:
+
+  aws s3api list-object-versions --bucket ml-case-documents
+  aws s3api get-bucket-versioning --bucket ml-case-documents
+  aws ssm get-parameter --name /marlow/incident/last-good-time
+  aws dynamodb describe-continuous-backups --table-name ml-case-index
+  aws iam get-user-policy --user-name ml-intern --policy-name casework
+
+In a versioned bucket a "delete" adds a marker on top of the history; nothing is gone. Read the versions of the Acme contract carefully: what is its newest real version?

@@ -1,0 +1,7 @@
+  aws logs put-metric-filter --log-group-name /kp/settlement-api --filter-name settlement-errors \
+    --filter-pattern '"level=ERROR"' \
+    --metric-transformations metricName=SettlementErrors,metricNamespace=KP/Settlement,metricValue=1
+
+put-metric-alarm replaces the whole alarm, so repeat all of its settings with two changes:
+  --comparison-operator GreaterThanOrEqualToThreshold
+  --alarm-actions arn:aws:sns:us-east-1:000000000000:kp-oncall-pager

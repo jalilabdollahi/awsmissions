@@ -1,0 +1,24 @@
+name: "Nobody Invited the Lambda"
+description: >-
+  Tidewater Freight prints a shipping label for every parcel through the state
+  machine tidewater-label-flow, which calls the Lambda function
+  print-shipping-label. The workflow was created last night by a teammate who
+  copied the execution role from another project. Since then every execution
+  dies on its very first step and the loading dock is hand-writing labels. The
+  Lambda function itself has been tested and works.
+objective: >-
+  Make tidewater-label-flow succeed for a parcel such as
+  {"shipmentId": "TF-1042"}, by changing what the state machine's execution role
+  is allowed to do. The role may call print-shipping-label and nothing else: the
+  sibling function print-customs-form must stay off limits.
+xp: 90
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Step Functions execution role
+  - lambda:InvokeFunction
+  - least privilege
+services:
+  - stepfunctions
+  - iam
+  - lambda

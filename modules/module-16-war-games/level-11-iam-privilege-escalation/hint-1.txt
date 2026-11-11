@@ -1,0 +1,5 @@
+Think like the red team. Read what the role is allowed to do, then ask for each permission: "could I use this to give myself more power?"
+
+  aws iam get-role-policy --role-name qf-ci-deployer --policy-name ci-deploy
+
+Try the attacks from the CI side yourself: `qf-ci-bot` can assume the role, so you can attempt "create a role", "create an access key for qf-platform-admin" and "create a function using the admin role" and see which succeed. Compare against the list of legitimate duties in the finding.

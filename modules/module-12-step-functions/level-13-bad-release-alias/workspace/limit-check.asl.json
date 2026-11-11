@@ -1,0 +1,39 @@
+{
+  "Comment": "Marlin Bank: convert a card payment to EUR and decide whether a person must review it",
+  "StartAt": "ConvertToEur",
+  "States": {
+    "ConvertToEur": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:marlin-convert-to-eur",
+      "ResultPath": "$.converted",
+      "Next": "Gate"
+    },
+    "Gate": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.converted.amountEur",
+          "NumericGreaterThanEquals": 100000,
+          "Next": "SendToReview"
+        }
+      ],
+      "Default": "AutoApprove"
+    },
+    "SendToReview": {
+      "Type": "Pass",
+      "Parameters": {
+        "txId.$": "$.txId",
+        "decision": "REVIEW"
+      },
+      "End": true
+    },
+    "AutoApprove": {
+      "Type": "Pass",
+      "Parameters": {
+        "txId.$": "$.txId",
+        "decision": "APPROVE"
+      },
+      "End": true
+    }
+  }
+}

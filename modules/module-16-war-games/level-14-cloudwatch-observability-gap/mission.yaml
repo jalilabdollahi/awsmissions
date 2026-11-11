@@ -1,0 +1,28 @@
+name: "Flying Blind"
+description: >-
+  Tallow & Finch's checkout Lambda failed one order in three for 47 minutes
+  and nothing paged. The postmortem (PM-2026-31, in your workspace) lists
+  the observability design that was supposed to catch this: structured
+  JSON logs, a metric filter, an alarm and an SNS page. Every piece
+  exists, but the monitoring chain carries nothing from the function's logs
+  to the on-call queue.
+objective: >-
+  A burst of failing checkouts (invoking tf-checkout-fn with {"fail": true})
+  must put the tf-checkout-errors alarm into ALARM and deliver a notification
+  to the on-call pager queue (tf-oncall-inbox) through the production topic
+  tf-oncall. Successful checkouts must not count as failures. Do not
+  point production paging at the sandbox topic.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+  - CloudWatch Logs metric filters (JSON patterns)
+  - Lambda log groups
+  - alarm metric matching
+  - SNS paging topology
+services:
+  - lambda
+  - logs
+  - cloudwatch
+  - sns
+  - sqs

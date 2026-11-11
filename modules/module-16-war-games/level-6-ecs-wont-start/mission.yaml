@@ -1,0 +1,22 @@
+name: "Container Chaos"
+description: >-
+  Ledger & Co.'s month-end close page is served by an ECS Fargate service,
+  ledger-web, which an engineer scaled down during a rollback drill. Now
+  the finance team needs it and nobody can get a task to stay up. The service
+  has no running tasks, and the task definition has not been touched since
+  the drill. The incident ticket (INC-6120) is in your workspace.
+objective: >-
+  Bring ledger-web in cluster ledger-prod back to two healthy running tasks
+  that stay up, using a fixed task definition revision. Keep the container
+  named "web" and keep the DB_HOST wrapper requirement; do not bypass it.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+  - ECS task definitions
+  - container startup failures
+  - ECS services and desired count
+  - stopped task diagnostics
+services:
+  - ecs
+  - iam

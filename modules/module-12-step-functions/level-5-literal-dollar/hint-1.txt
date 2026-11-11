@@ -1,0 +1,5 @@
+All executions succeed, so look at the data they produced instead of at the executions:
+
+  aws dynamodb scan --table-name saffron-subscribers
+
+Compare what is stored with what the sign-up inputs contained.

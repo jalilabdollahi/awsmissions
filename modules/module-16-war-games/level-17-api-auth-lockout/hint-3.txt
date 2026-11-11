@@ -1,0 +1,7 @@
+  aws apigateway update-method --rest-api-id <api> --resource-id <res> --http-method GET \
+     --patch-operations op=replace,path=/authorizationType,value=CUSTOM op=replace,path=/authorizerId,value=<authorizer id>
+  aws apigateway update-authorizer --rest-api-id <api> --authorizer-id <authorizer id> \
+     --patch-operations op=replace,path=/identitySource,value=method.request.header.Authorization
+  aws iam put-role-policy --role-name pl-auth-role ...      # add ssm:GetParameter on parameter/pelican/partner-token
+  aws iam put-role-policy --role-name pl-lockers-role ...   # add dynamodb:Scan on table/pl-lockers
+  aws apigateway create-deployment --rest-api-id <api> --stage-name live

@@ -1,0 +1,29 @@
+{
+  "Comment": "Cedarpoint Retail: allocate stock for a placed order and record the fulfilment",
+  "StartAt": "AllocateStock",
+  "States": {
+    "AllocateStock": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:cedarpoint-allocate-stock",
+      "Parameters": {
+        "orderId.$": "$.orderId",
+        "items.$": "$.items"
+      },
+      "ResultPath": "$.allocation",
+      "Next": "RecordFulfilment"
+    },
+    "RecordFulfilment": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:putItem",
+      "Parameters": {
+        "TableName": "cedarpoint-fulfilments",
+        "Item": {
+          "orderId": { "S.$": "$.orderId" },
+          "status": { "S": "ALLOCATED" },
+          "warehouse": { "S.$": "$.allocation.warehouse" }
+        }
+      },
+      "End": true
+    }
+  }
+}

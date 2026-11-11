@@ -1,0 +1,25 @@
+name: "Leaked Keys"
+description: >-
+  A secret scanner found Cinder Games' CI access key in a public repository,
+  still valid after 19 days, and the forensic review shows an attacker used it
+  six days ago and planted a hidden admin user and a role that trusts a
+  foreign account. The pipeline still needs to ship tonight's build. The alert
+  and forensic notes (SEC-INC-0402) are in your workspace.
+objective: >-
+  Respond to the leak: make the leaked key useless, give CI a new working
+  credential in the pipeline's parameter so uploads to cg-build-artifacts
+  continue, remove the attacker's persistence (the hidden user and the foreign
+  role), and shrink cg-build-bot to only what it needs. Do not delete the
+  build user or other staff accounts.
+xp: 550
+difficulty: expert
+expected_time: 40m
+concepts:
+  - credential leak response
+  - access key rotation
+  - attacker persistence
+  - least privilege
+services:
+  - iam
+  - s3
+  - ssm

@@ -1,0 +1,23 @@
+name: "The Dead API"
+description: >-
+  Quillmark Press migrated its partner catalogue API to a new API Gateway
+  REST API on Friday afternoon. Since then every retail partner sees a
+  different error: one gets 403, one gets "Stage not found", the mobile
+  app times out. The incident ticket (INC-4417, in your workspace) lists
+  the partner contract and what the migration team remembers doing.
+objective: >-
+  A partner calling GET /prod/books with the partner API key must receive
+  the catalogue from the qm-catalog-api function with HTTP 200. Calls
+  without an API key must still be rejected, and the fix may not move the
+  API onto a different stage name.
+xp: 500
+difficulty: expert
+expected_time: 35m
+concepts:
+  - API Gateway stages and deployments
+  - Lambda proxy integration
+  - usage plans and API keys
+  - Lambda reserved concurrency
+services:
+  - apigateway
+  - lambda

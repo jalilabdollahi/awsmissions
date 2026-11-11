@@ -1,0 +1,5 @@
+The Catch block works: it intercepts CardDeclined. The problem is where it sends the execution. The target is a Succeed state, so a failed payment is reported as success and nobody is told.
+
+The handler should do something useful with the error (and it must not lose the order data, think about ResultPath on a Catch) and then end in a state that reports a failure honestly. The declined-notice queue is already permitted by the role.
+
+Open checkout.asl.json with `edit`.

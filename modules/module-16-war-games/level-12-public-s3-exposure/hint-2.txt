@@ -1,0 +1,7 @@
+Three separate grants are too broad, one in each place a grant can live:
+
+- the bucket policy has an Allow for every principal that was meant to be temporary
+- the staff group's policy covers the whole bucket instead of the one prefix staff need
+- the partner users' policies cover all partner folders instead of their own
+
+Do not delete the bucket policy: it also contains the legitimate analyst grant that must stay. The public marketing bucket is meant to be public; leave it alone.

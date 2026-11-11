@@ -1,0 +1,9 @@
+Check each hand-off separately, starting at the bucket:
+
+  aws s3api get-bucket-notification-configuration --bucket mg-photo-uploads
+  aws s3api get-bucket-notification-configuration --bucket mg-photo-uploads-staging
+
+Then call the function yourself with a fake S3 record and read the error it returns:
+
+  aws lambda invoke --function-name mg-thumbnailer --cli-binary-format raw-in-base64-out \
+    --payload '{"Records":[{"s3":{"bucket":{"name":"mg-photo-uploads"},"object":{"key":"<an object you uploaded>"}}}]}' out.json; cat out.json

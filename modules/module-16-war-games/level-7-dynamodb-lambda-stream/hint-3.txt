@@ -1,0 +1,8 @@
+  # disable then re-enable with the right view type (the view type can only be changed while the stream is off)
+  aws dynamodb update-table --table-name orbit-workouts --stream-specification StreamEnabled=false
+  aws dynamodb update-table --table-name orbit-workouts --stream-specification StreamEnabled=true,StreamViewType=NEW_IMAGE
+  # a mapping cannot be re-pointed: delete it and create a new one with the current LatestStreamArn
+  aws lambda delete-event-source-mapping --uuid <uuid>
+  aws lambda create-event-source-mapping --function-name orbit-leaderboard-updater --event-source-arn <new stream arn> --starting-position LATEST --batch-size 1
+  aws lambda update-function-configuration --function-name orbit-leaderboard-updater --environment 'Variables={LEADERBOARD_TABLE=<real table>}'
+  aws iam put-role-policy ...   # allow dynamodb:UpdateItem on the leaderboard table only

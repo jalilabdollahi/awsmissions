@@ -1,0 +1,5 @@
+Try the obvious rollback in your head, or in practice by starting an execution on version 1's ARN: version 1 fails because it references a function that no longer exists. Version 2 runs but its Gate compares the converted amount with the wrong number (look closely at how many zeros the limit has).
+
+A published version is immutable. So the way out is to make a new, correct version and then change where the alias points. Remember that updating a state machine only creates a numbered version when asked to publish.
+
+The current definition is in limit-check.asl.json (open it with `edit`).

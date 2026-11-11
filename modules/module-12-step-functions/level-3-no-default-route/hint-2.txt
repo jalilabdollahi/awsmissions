@@ -1,0 +1,3 @@
+The error says the state "does not point to a next state". A Choice state tests its rules in order; when none of them matches, it needs a fallback to move on. Look at which keys the ByPriority state has besides "Choices", and at where a Choice state goes when no rule matches.
+
+Open the definition with `edit` (triage.asl.json).

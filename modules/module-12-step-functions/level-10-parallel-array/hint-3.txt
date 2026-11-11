@@ -1,0 +1,3 @@
+On the Gather state add a ResultSelector such as {"billing.$": "$[0]", "usage.$": "$[1]"} and a ResultPath such as "$.lookups". Then point the PublishCard parameters at $.lookups.billing.plan and $.lookups.usage.gbUsed (customerId stays $.customerId). Finally:
+
+  aws stepfunctions update-state-machine --state-machine-arn arn:aws:states:us-east-1:000000000000:stateMachine:orbit-profile-card --definition file://profile-card.asl.json

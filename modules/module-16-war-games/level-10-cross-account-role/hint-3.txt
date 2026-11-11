@@ -1,0 +1,4 @@
+  aws iam put-user-policy --user-name ashgrove-auditor --policy-name assume-bridge --policy-document file://p1.json    # Resource = the bridge role ARN, spelled right
+  aws iam update-assume-role-policy --role-name ferro-audit-bridge --policy-document file://t1.json                    # StringEquals sts:ExternalId = ferro-ext-2026
+  aws iam update-assume-role-policy --role-name ferro-ledger-reader --policy-document file://t2.json                   # Principal AWS = arn:aws:iam::000000000000:role/ferro-audit-bridge
+  aws iam put-role-policy --role-name ferro-ledger-reader --policy-name read-2026 --policy-document file://p2.json      # s3:GetObject on arn:aws:s3:::ferro-ledger-archive/2026/*

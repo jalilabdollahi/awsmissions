@@ -1,0 +1,25 @@
+name: "A Week Is Not Always a Week"
+description: >-
+  Halcyon CRM sends a "your trial ends soon" reminder through the state
+  machine halcyon-trial-reminder. The sign-up service starts one execution per
+  trial and passes the exact moment the reminder is due as remindAt, an ISO
+  8601 timestamp such as 2026-03-14T09:30:00Z. Customers on 3-day and 14-day
+  trials all received their reminders exactly one week after they signed up,
+  which is wrong for everybody except the 7-day plan. Support also notices
+  that some executions have been running for days.
+objective: >-
+  Make halcyon-trial-reminder wait until the moment given in the execution's
+  remindAt field and only then put the reminder message on halcyon-reminders.
+  Triggers with different remindAt values must produce reminders at different
+  times, and a reminder must never go out before its due time.
+xp: 170
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - Wait state
+  - Timestamp / TimestampPath
+  - long-running executions
+services:
+  - stepfunctions
+  - sqs
+  - iam

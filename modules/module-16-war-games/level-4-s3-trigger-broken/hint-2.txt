@@ -1,0 +1,8 @@
+Four faults across S3, IAM and Lambda, all "copied from staging":
+
+- the notification lives on the wrong bucket, so uploads never notify anything
+- the filter rules in the cloned notification do not match the files photographers upload
+- the role's read permission is scoped to a different bucket
+- the function's environment names a thumbs bucket that does not exist
+
+Be careful with the fix for the role: it needs read access to the uploads bucket, not write access.

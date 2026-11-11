@@ -1,0 +1,9 @@
+  cat > attrs.json <<'JSON'
+  {"VisibilityTimeout":"30","RedrivePolicy":"{\"deadLetterTargetArn\":\"arn:aws:sqs:us-east-1:000000000000:pw-sort-jobs-dlq\",\"maxReceiveCount\":\"3\"}"}
+  JSON
+  aws sqs set-queue-attributes --queue-url $AWS_ENDPOINT_URL/000000000000/pw-sort-jobs --attributes file://attrs.json
+
+  aws cloudwatch put-metric-alarm --alarm-name pw-dlq-not-empty --namespace AWS/SQS \
+    --metric-name ApproximateNumberOfMessagesVisible --dimensions Name=QueueName,Value=pw-sort-jobs-dlq \
+    --statistic Maximum --period 60 --evaluation-periods 1 --threshold 0 --comparison-operator GreaterThanThreshold \
+    --alarm-actions arn:aws:sns:us-east-1:000000000000:pw-ops-alerts

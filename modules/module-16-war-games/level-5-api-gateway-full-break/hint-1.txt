@@ -1,0 +1,7 @@
+Be the partner. Find the API id and call it exactly the way the contract says, then try the other stage names and see how the error changes:
+
+  aws apigateway get-rest-apis
+  aws apigateway get-api-keys --include-values
+  curl -i -H "x-api-key: <value>" "$AWS_ENDPOINT_URL/restapis/<api-id>/prod/_user_request_/books"
+
+Each error code points at a different layer: stage, integration, function, key. Look at the API's stages and at the integration of GET /books too.

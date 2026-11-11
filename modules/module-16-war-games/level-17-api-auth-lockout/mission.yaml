@@ -1,0 +1,28 @@
+name: "The Auth Maze"
+description: >-
+  Pelican Parcel Lockers' partner API rejects every call, although the
+  published contract says a partner just sends its token in the Authorization
+  header. Partners report three different errors, and a partner who
+  tried signing its requests with SigV4 got further, only to see a 502 from the
+  backend. The partner contract and migration notes are in the escalation file
+  (PX-318) in your workspace.
+objective: >-
+  GET /live/lockers with the correct partner token in the Authorization
+  header must return the locker list with HTTP 200 through the Lambda
+  authorizer and the backend. Requests with no token or a wrong token must
+  still be rejected. Do not switch the authorization off.
+xp: 575
+difficulty: expert
+expected_time: 45m
+concepts:
+  - API Gateway Lambda authorizers
+  - authorization types
+  - identity source
+  - Lambda execution roles
+  - stage deployments
+services:
+  - apigateway
+  - lambda
+  - iam
+  - ssm
+  - dynamodb
