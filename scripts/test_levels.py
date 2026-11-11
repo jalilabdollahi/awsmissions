@@ -154,8 +154,12 @@ def expand(targets: list[str]) -> list[Path]:
             if (path / "mission.yaml").exists() or path.name.startswith("level-"):
                 levels.append(path)
             elif path.is_dir():
-                levels.extend(sorted((p for p in path.iterdir() if p.is_dir() and p.name.startswith("level-")),
-                                     key=lambda p: int(re.match(r"level-(\d+)", p.name).group(1))))
+                # a module dir, or the top-level modules/ dir: walk in curriculum order
+                def order(p: Path) -> tuple[int, int]:
+                    module = re.match(r"module-(\d+)", p.parent.name)
+                    level = re.match(r"level-(\d+)", p.name)
+                    return (int(module.group(1)) if module else 0, int(level.group(1)) if level else 0)
+                levels.extend(sorted((m.parent for m in path.rglob("level-*/mission.yaml")), key=order))
     return levels
 
 
