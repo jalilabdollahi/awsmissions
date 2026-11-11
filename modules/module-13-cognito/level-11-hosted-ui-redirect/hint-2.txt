@@ -1,0 +1,3 @@
+Two separate problems. The redirect URI must match a registered callback URL exactly, character for character (compare the registered production URL with what the app sends). And the response type "code" has to be an enabled flow on the client: look at AllowedOAuthFlows.
+
+Cognito reports them one at a time: fix one, retry the request, and the other one shows itself. update-user-pool-client replaces all settings, so pass everything again.

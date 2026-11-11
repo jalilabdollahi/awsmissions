@@ -1,0 +1,23 @@
+name: "Door Without a Handle"
+description: >-
+  Brewline, a coffee-subscription startup, just shipped version 3 of its
+  mobile app. The app signs customers in with the plain username-and-password
+  call (InitiateAuth with USER_PASSWORD_AUTH) against the user pool
+  brewline-customers, app client brewline-app. Every sign-in attempt, even by
+  nora with the right password, now bounces with an error that has nothing to do
+  with her password. The web dashboard, which uses secure remote password
+  (SRP) sign-in on the same client, still works and must keep working.
+objective: >-
+  Make customer nora (password Latte-Art-2024!) able to sign in through the
+  brewline-app client with the username-and-password flow and receive tokens,
+  keep token refresh and the existing SRP sign-in working on that client, and do
+  not enable server-side admin flows on a client that ships inside a mobile app.
+xp: 90
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - app client auth flows
+  - USER_PASSWORD_AUTH
+  - ExplicitAuthFlows
+services:
+  - cognito-idp

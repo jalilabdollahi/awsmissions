@@ -1,0 +1,3 @@
+Look at the Policies > PasswordPolicy block of the pool. Compare MinimumLength and the Require... switches with the rule in the briefing (10 characters, upper, lower, digit, no symbol). Two values disagree with it.
+
+The policy belongs to the user pool, not to the app client, so update-user-pool is the command to use.

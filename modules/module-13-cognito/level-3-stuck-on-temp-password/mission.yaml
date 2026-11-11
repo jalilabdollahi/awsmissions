@@ -1,0 +1,23 @@
+name: "Welcome Aboard, Please Wait"
+description: >-
+  Lumen Logistics onboards dispatchers by creating them in the user pool
+  lumen-dispatch with a temporary password. Ines started on Monday with the temporary password Temp-Welcome-0001! and has
+  not changed it yet. Her portal
+  (client lumen-portal) calls the plain username-and-password sign-in, and for
+  her it never returns tokens: the response is a "challenge" that the portal
+  does not know how to answer, so she sees a blank screen. Her colleague Tomas,
+  who started last month, signs in without trouble. HR has told Ines to use the
+  new password Harbor-Crane-81x from now on.
+objective: >-
+  Make ines able to sign in to lumen-portal with the password Harbor-Crane-81x
+  and receive tokens straight from the username-and-password call, without
+  recreating her account or touching Tomas.
+xp: 90
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - FORCE_CHANGE_PASSWORD
+  - NEW_PASSWORD_REQUIRED challenge
+  - admin-set-user-password
+services:
+  - cognito-idp

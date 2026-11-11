@@ -1,0 +1,24 @@
+name: "Provisioner Denied"
+description: >-
+  Fernwood's HR system onboards every new hire automatically. It runs as the IAM
+  user fernwood-provisioner and is supposed to create the person in the user
+  pool fernwood-staff, set their first permanent password, and add them to the
+  group employees. After last month's migration, which rebuilt the pool,
+  the onboarding job fails with AccessDeniedException on the Cognito calls.
+  The job also looks accounts up with admin-get-user. Fernwood has a second pool,
+  fernwood-contractors, that this job has never been allowed to touch, and
+  nobody wants this job to be able to delete people.
+objective: >-
+  Make fernwood-provisioner able to create users in fernwood-staff, read them
+  back, set their password and add them to a group, using a least-privilege
+  policy: no access to fernwood-contractors, and no permission to delete users.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - IAM permissions for Cognito admin APIs
+  - user pool ARN
+  - least privilege
+services:
+  - cognito-idp
+  - iam

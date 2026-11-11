@@ -1,0 +1,24 @@
+name: "Twenty-Four Characters of Pain"
+description: >-
+  Tidewater Books lets readers create an account in its app, which calls
+  SignUp on the user pool tidewater-readers (client tidewater-web). Since the
+  security review last week, nearly every new reader is turned away with
+  InvalidPasswordException and the sign-up funnel has collapsed. Support
+  tickets quote passwords such as "Tidewater42Books", which readers consider
+  perfectly respectable. Product and security agreed on the rule: at least 10
+  characters with an upper-case letter, a lower-case letter and a digit.
+  Symbols are not required.
+objective: >-
+  Change the password policy of tidewater-readers so that a new reader can sign
+  up with Tidewater42Books, while passwords that are shorter than 10
+  characters or lack an upper-case letter, a lower-case letter or a digit are
+  still rejected.
+xp: 100
+difficulty: beginner
+expected_time: 7m
+concepts:
+  - password policy
+  - InvalidPasswordException
+  - user pool configuration
+services:
+  - cognito-idp

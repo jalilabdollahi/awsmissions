@@ -1,0 +1,26 @@
+name: "One Flag Too Few"
+description: >-
+  Skylark Air's booking SPA uses the app client skylark-spa in the user pool
+  skylark-travelers. Its contract with the app team: username-and-password
+  sign-in, refreshable sessions, access and ID tokens valid for 30 minutes,
+  refresh tokens valid for 14 days. Yesterday a developer added a second
+  callback URL (https://preview.example.com/cb) for preview deployments with a
+  single update-user-pool-client call that listed the callback URLs and the OAuth
+  settings the CLI complained about. Since then the app cannot sign anybody
+  in, and nobody changed the user pool or the users (test account: yuki,
+  password Window-Seat-12A!). The hosted-UI login for the two callback URLs
+  must keep working.
+objective: >-
+  Restore the skylark-spa client to its contract (password sign-in and refresh
+  working, access and ID tokens valid for exactly 30 minutes, refresh token
+  valid for 14 days) without losing the preview callback URL or the hosted-UI
+  authorization-code login on both callback URLs.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - update-user-pool-client replaces settings
+  - token validity
+  - hosted UI callback URLs
+services:
+  - cognito-idp

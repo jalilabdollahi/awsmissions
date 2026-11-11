@@ -1,0 +1,3 @@
+cognito:groups is a plain list of group names, compared as exact strings by the console. Put the group the console asks for next to the groups that exist and the groups Dara is in. They are not the same string.
+
+Remember that a token is issued at sign-in, so a changed membership only shows up in a new token.

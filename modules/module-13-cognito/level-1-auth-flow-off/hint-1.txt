@@ -1,0 +1,6 @@
+The password is correct, so look at the app client rather than at nora. Find the pool and its clients:
+
+  aws cognito-idp list-user-pools --max-results 10
+  aws cognito-idp list-user-pool-clients --user-pool-id <pool-id>
+
+Then try the sign-in yourself with `aws cognito-idp initiate-auth` and read the error carefully.

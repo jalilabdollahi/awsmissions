@@ -1,0 +1,6 @@
+Start with the evidence the security team left:
+
+  aws s3 ls s3://halyard-ir-evidence/ --recursive
+  aws s3 cp s3://halyard-ir-evidence/captured/laptop.json -
+
+Prove the sessions are alive: call `aws cognito-idp get-user --access-token <token>` and the refresh flow with each captured token. Then ask yourself which of Mara's sessions you do not know about.

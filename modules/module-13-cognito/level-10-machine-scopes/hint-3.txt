@@ -1,0 +1,6 @@
+  aws cognito-idp update-resource-server --user-pool-id <pool-id> --identifier inventory --name "Inventory API" \
+    --scopes ScopeName=read,ScopeDescription=r ScopeName=write,ScopeDescription=w ScopeName=admin,ScopeDescription=a
+
+  aws cognito-idp update-user-pool-client --user-pool-id <pool-id> --client-id <nightly-sync client id> --client-name nightly-sync \
+    --allowed-o-auth-flows client_credentials --allowed-o-auth-scopes inventory/read inventory/write \
+    --allowed-o-auth-flows-user-pool-client --supported-identity-providers COGNITO

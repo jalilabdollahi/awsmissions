@@ -1,0 +1,3 @@
+There are two separate faults. First: the trigger list on the pool (LambdaConfig) is replaced as a whole whenever you update it, and yesterday's change only mentioned one trigger. Second: even once the claims function runs again, check which attribute name claims.py reads and compare with the attribute stored on the user (admin-get-user).
+
+On AWS, update-user-pool also resets settings you leave out, so repeat the ones that must stay.

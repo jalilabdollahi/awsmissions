@@ -1,0 +1,3 @@
+A sign-up is not complete until it is confirmed. The six-digit code in the email proves that the owner of the address registered. Confirm the sign-up as the app would, with the client Kai registered through.
+
+There is a shortcut that confirms without a code, but check what it leaves behind: look at Kai's email_verified attribute afterwards.

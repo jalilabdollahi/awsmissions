@@ -1,0 +1,6 @@
+Create a second client named quill-mobile, without a secret, with the password and refresh flows:
+
+  aws cognito-idp create-user-pool-client --user-pool-id <pool-id> --client-name quill-mobile \
+    --no-generate-secret --explicit-auth-flows ALLOW_USER_PASSWORD_AUTH ALLOW_REFRESH_TOKEN_AUTH
+
+Leave quill-web exactly as it is.

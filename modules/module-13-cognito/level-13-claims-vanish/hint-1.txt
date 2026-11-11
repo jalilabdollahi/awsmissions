@@ -1,0 +1,5 @@
+Start by looking at a freshly issued ID token for Ava (decode its payload) and at how the pool is wired:
+
+  aws cognito-idp describe-user-pool --user-pool-id <pool-id> --query UserPool.LambdaConfig
+
+Which triggers does the pool call right now? Is the one that is supposed to add the tenant claim among them?

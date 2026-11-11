@@ -1,0 +1,5 @@
+Pass the full list of flows, the existing ones plus the missing one:
+
+  aws cognito-idp update-user-pool-client --user-pool-id <pool-id> --client-id <client-id> \
+    --client-name brewline-app \
+    --explicit-auth-flows ALLOW_USER_PASSWORD_AUTH ALLOW_USER_SRP_AUTH ALLOW_REFRESH_TOKEN_AUTH

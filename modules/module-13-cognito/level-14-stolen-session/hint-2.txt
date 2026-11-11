@@ -1,0 +1,3 @@
+Changing a password stops new sign-ins but does not end sessions that exist: access and refresh tokens stay valid on their own. You need something that ends sessions, and since you cannot list every token the attacker holds, it has to work on the user rather than on one token.
+
+You also need to make the leaked password unusable. Deleting the user or disabling the account for good would hurt the victim and is not acceptable.

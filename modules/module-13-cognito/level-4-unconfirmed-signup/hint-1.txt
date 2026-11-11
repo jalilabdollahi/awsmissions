@@ -1,0 +1,5 @@
+Look at what state Kai's account is in:
+
+  aws cognito-idp list-users --user-pool-id <pool-id>
+
+The briefing also says where the "lost" email can be found. Fetch it with curl against the emulator's /_aws/ses path.

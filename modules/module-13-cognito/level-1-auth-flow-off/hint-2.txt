@@ -1,0 +1,3 @@
+A client only accepts the sign-in flows listed in its ExplicitAuthFlows. Run describe-user-pool-client and compare that list with the flow the mobile app uses (USER_PASSWORD_AUTH).
+
+Careful: update-user-pool-client replaces settings rather than adding to them, so whatever you do not pass again is lost.

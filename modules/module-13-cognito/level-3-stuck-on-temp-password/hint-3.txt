@@ -1,0 +1,4 @@
+  aws cognito-idp admin-set-user-password --user-pool-id <pool-id> --username ines \
+    --password 'Harbor-Crane-81x' --permanent
+
+Without --permanent the password stays temporary and nothing changes.

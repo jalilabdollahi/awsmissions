@@ -1,0 +1,28 @@
+name: "Stolen Session"
+description: >-
+  Halyard, a maritime logistics company, got an alert at 03:12: crew member mara
+  was signed in from two continents at once. Her password, Anchor-Chain-0451!,
+  turned up in a credential dump and an attacker has been using her account
+  through the app client halyard-app of the user pool halyard-crew. Security
+  already captured two of the attacker's sessions (access and refresh tokens)
+  in the bucket halyard-ir-evidence, but the logs are patchy and the attacker
+  may have signed in other times as well. Another crew member, noah, is
+  mid-shift on a vessel with a valid session and must not be disrupted. Mara is
+  asleep and must be able to get back into her account later.
+objective: >-
+  Cut the attacker off: none of the captured sessions, nor any other session that
+  was opened with Mara's leaked password, may still work (neither the access
+  token nor the refresh token), and the leaked password itself must stop working.
+  Mara's account must not be deleted or left disabled (she has to be able to
+  recover it), and noah's session and sign-in must be untouched.
+xp: 550
+difficulty: expert
+expected_time: 20m
+concepts:
+  - incident response
+  - global sign-out
+  - token revocation
+  - password reset
+services:
+  - cognito-idp
+  - s3

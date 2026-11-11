@@ -1,0 +1,7 @@
+The sign-up is being refused by the pool itself. Reproduce it and read the error name:
+
+  aws cognito-idp sign-up --client-id <client-id> --username test1 --password 'Tidewater42Books'
+
+Then look at how the pool is configured:
+
+  aws cognito-idp describe-user-pool --user-pool-id <pool-id>
