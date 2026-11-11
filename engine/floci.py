@@ -15,6 +15,7 @@ import subprocess
 import time
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 FLOCI_IMAGE = os.environ.get("AWSMISSIONS_FLOCI_IMAGE", "floci/floci:2.4.0")
 DEFAULT_PORT = 4566
@@ -120,10 +121,32 @@ def _leftover_stacks(p: int) -> bool:
     return result.returncode != 0 or result.stdout.strip() not in ("0", "")
 
 
+# Services whose state Floci 2.4.0's reset endpoint does not fully clear
+# (CloudFormation stacks/exports, ECS tasks under a re-created cluster name).
+RESTART_SERVICES = {"cloudformation", "ecs"}
+
+
+def _marker(p: int) -> Path:
+    return Path(__file__).resolve().parent.parent / ".awsmissions" / f"last-services-{p}"
+
+
+def remember_services(services: list[str] | None, p: int | None = None) -> None:
+    """Record which services the level now being seeded uses."""
+    marker = _marker(p or port())
+    marker.parent.mkdir(exist_ok=True)
+    marker.write_text("\n".join(s.lower() for s in (services or [])), encoding="utf-8")
+
+
 def reset_state(p: int | None = None) -> None:
     """Wipe every service's state. Falls back to a container restart."""
     p = p or port()
     ensure_running(p)
+    marker = _marker(p)
+    previous = set(marker.read_text(encoding="utf-8").split()) if marker.exists() else set()
+    marker.unlink(missing_ok=True)
+    if previous & RESTART_SERVICES:
+        start(p)
+        return
     for _ in range(3):
         try:
             request = urllib.request.Request(f"{endpoint(p)}/_floci/state/reset", data=b"", method="POST")

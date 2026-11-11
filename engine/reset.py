@@ -76,9 +76,19 @@ def prepare_workspace(level_path: Path, workdir: Path) -> Path:
     return workdir
 
 
+def _services(level_path: Path) -> list[str]:
+    try:
+        import yaml
+        mission = yaml.safe_load((level_path / "mission.yaml").read_text(encoding="utf-8")) or {}
+        return [str(x) for x in mission.get("services", [])]
+    except Exception:  # an unreadable mission must not block the reset
+        return []
+
+
 def prepare_level(level_path: Path, workdir: Path) -> None:
     """Wipe the emulator, reset the workspace and seed the broken environment."""
     floci.reset_state()
+    floci.remember_services(_services(level_path))
     prepare_workspace(level_path, workdir)
     setup_script = level_path / "setup.sh"
     if not setup_script.exists():

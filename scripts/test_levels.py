@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from engine import floci  # noqa: E402
-from engine.reset import mission_env, prepare_workspace  # noqa: E402
+from engine.reset import _services, mission_env, prepare_workspace  # noqa: E402
 
 REQUIRED_FILES = ["mission.yaml", "setup.sh", "validate.sh", "solution.sh", "solution.md", "debrief.md",
                   "hint-1.txt", "hint-2.txt", "hint-3.txt"]
@@ -117,6 +117,7 @@ def dynamic_checks(level: Path, verbose: bool) -> list[str]:
     with tempfile.TemporaryDirectory(prefix="awsm-") as tmp:
         workdir = Path(tmp) / "workspace"
         floci.reset_state()
+        floci.remember_services(_services(level))
         prepare_workspace(level, workdir)
         r = run(level / "setup.sh", level, workdir, level)
         if r.returncode != 0:
@@ -137,6 +138,7 @@ def dynamic_checks(level: Path, verbose: bool) -> list[str]:
             problems.append(f"validate.sh FAILS after solution.sh\n{tail(r)}")
         # A player hitting `reset` gets a wiped emulator and a fresh workspace.
         floci.reset_state()
+        floci.remember_services(_services(level))
         prepare_workspace(level, workdir)
         r = run(level / "setup.sh", level, workdir, level)
         if r.returncode != 0:
