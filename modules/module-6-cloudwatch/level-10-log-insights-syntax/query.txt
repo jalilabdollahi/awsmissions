@@ -1,3 +1,0 @@
-fields @timestamp, @message
-filter @message like /ERROR/
-stats count() by bin(5m)

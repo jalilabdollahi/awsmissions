@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Add the GSI via table update: `aws dynamodb update-table`

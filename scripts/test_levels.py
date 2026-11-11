@@ -86,10 +86,13 @@ def static_checks(level: Path) -> list[str]:
     validate = level / "validate.sh"
     if validate.exists():
         text = validate.read_text(encoding="utf-8")
+        # Messages to the player may mention file names; only code may not read them.
+        code = "\n".join(line for line in text.splitlines()
+                         if not re.match(r"\s*(echo|printf|#)", line))
         workspace = level / "workspace"
         if workspace.is_dir():
             for f in workspace.rglob("*"):
-                if f.is_file() and re.search(rf"(?<![\w$/{{]){re.escape(f.name)}\b", text) and "$WORKDIR" not in text:
+                if f.is_file() and re.search(rf"(?<![\w$/{{]){re.escape(f.name)}\b", code) and "$WORKDIR" not in code:
                     problems.append(f"validate.sh reads workspace file {f.name} from the level dir; validate real AWS state instead")
         if "aws_local" not in text and "aws_as_" not in text and "aws_with_creds" not in text and "curl" not in text:
             problems.append("validate.sh never queries the emulator")

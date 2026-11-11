@@ -1,9 +1,0 @@
-{
-  "TableName": "MissionTable",
-  "KeyConditionExpression": "userId = :u",
-  "ExpressionAttributeValues": {
-    ":u": {
-      "S": "user-1"
-    }
-  }
-}

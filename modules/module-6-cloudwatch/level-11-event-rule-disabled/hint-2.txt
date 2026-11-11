@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Enable the rule: `aws events enable-rule`

@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Increase visibility timeout to 60s: `aws sqs set-queue-attributes`

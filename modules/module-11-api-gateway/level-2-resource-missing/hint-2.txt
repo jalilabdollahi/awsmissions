@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Create the resource: `aws apigateway create-resource` with correct path part

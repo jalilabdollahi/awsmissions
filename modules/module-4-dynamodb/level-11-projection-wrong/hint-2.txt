@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Delete the GSI and recreate it with `ProjectionType: ALL`

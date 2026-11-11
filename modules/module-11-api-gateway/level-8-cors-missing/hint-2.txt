@@ -1,1 +1,0 @@
-Focus on the specific mismatch described in the objective: Enable CORS on the resource (add OPTIONS method + response headers)

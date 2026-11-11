@@ -1,6 +1,0 @@
-{
-  "LoggingEnabled": {
-    "TargetBucket": "logs-bucket",
-    "TargetPrefix": "mission-bucket/"
-  }
-}
