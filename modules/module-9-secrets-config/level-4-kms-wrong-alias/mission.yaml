@@ -1,15 +1,23 @@
-name: Wrong Key Name
-description: Application uses `alias/production-key` but key was created with alias
-  `alias/prod-key`
-objective: Create the correct alias or update application config
-xp: 225
-difficulty: advanced
+name: "Wrong Key Name"
+description: >-
+  The Ironbridge Outfitters orders service encrypts customer records with the
+  alias alias/orders-prod. Support noticed that new production records land
+  encrypted under the staging key: the compliance team's audit script, which
+  is only allowed to read the production key, cannot decrypt anything written
+  since Tuesday's "alias tidy-up". Old records, written before that, are
+  fine. Nobody remembers which key the alias used to point at, and key IDs
+  are not very memorable.
+objective: >-
+  Make alias/orders-prod resolve to the production orders key again (the key
+  that decrypts the existing production records) without disturbing
+  alias/orders-staging or the staging key.
+xp: 175
+difficulty: intermediate
 expected_time: 12m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-4-kms-wrong-alias
-implementation_status: playable
+  - KMS aliases
+  - update-alias
+  - key identification
+services:
+  - kms
+  - ssm

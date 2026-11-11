@@ -1,16 +1,26 @@
-name: Rotation Breaks Decrypt
-description: "KMS key rotation was enabled but application has old key ARN hardcoded\
-  \ \u2014 decryption fails after rotation"
-objective: Update application to use key alias instead of key ARN (aliases track rotation
-  automatically)
-xp: 350
-difficulty: advanced
-expected_time: 20m
+name: "Rotation Breaks Decrypt"
+description: >-
+  Atlas Records "rotated" its archive encryption key the manual way: the
+  platform team created a new key, pointed alias/atlas-data at it, and then
+  disabled the old key as the runbook says. New writes work, but the archive
+  reader, which decrypts ciphertext stored in /atlas/archive/record-1 to
+  record-3 without naming any key, now fails on every old record with a
+  DisabledException. The records were encrypted with the encryption context
+  dataset=atlas-archive. Leaving the old key enabled forever defeats the point
+  of rotating, and a repeat of this exercise next year is not acceptable.
+objective: >-
+  Migrate the three archive records so they are encrypted under the key behind
+  alias/atlas-data (keeping their encryption context and plaintext), leave the
+  old key disabled but not deleted, and enable automatic key rotation on the
+  current key so that future rotations never need this migration.
+xp: 450
+difficulty: expert
+expected_time: 25m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-14-kms-key-rotation
-implementation_status: playable
+  - manual vs automatic key rotation
+  - kms:ReEncrypt
+  - encryption context
+  - key lifecycle
+services:
+  - kms
+  - ssm

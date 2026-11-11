@@ -1,18 +1,27 @@
-name: Credentials in Code
-description: Lambda function has `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` hardcoded
-  in environment variables
-objective: Remove hardcoded credentials, create proper IAM execution role with required
-  permissions
-xp: 375
-difficulty: advanced
+name: "Credentials in Code"
+description: >-
+  A code review at Nimbus Metrics found that the Lambda function
+  nimbus-exporter carries a long-lived IAM access key in its environment
+  variables (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, belonging to the CI
+  user nimbus-ci) so that it can read its API token from Secrets Manager. The
+  function's actual execution role, nimbus-bare, has no permissions. The key
+  has been visible to everyone with lambda:GetFunctionConfiguration since
+  March. The function also needs two settings, APP_ENV and TOKEN_SECRET_ID,
+  that must keep working.
+objective: >-
+  Make nimbus-exporter authenticate through its execution role instead: remove
+  the embedded keys (keeping its other settings), give it a role that trusts
+  Lambda and may read only the secret nimbus/exporter/api-token, and take the
+  leaked access key out of circulation.
+xp: 400
+difficulty: expert
 expected_time: 25m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- roles
-- lambda functions
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-15-hardcoded-credentials
-implementation_status: playable
+  - Lambda execution roles
+  - credential hygiene
+  - least privilege
+  - access key deactivation
+services:
+  - lambda
+  - iam
+  - secretsmanager

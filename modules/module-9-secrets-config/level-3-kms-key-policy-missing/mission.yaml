@@ -1,17 +1,25 @@
-name: No Key Permission
-description: KMS key exists and is enabled but key policy doesn't grant the IAM role
-  permission to use it
-objective: Update the key policy to grant `kms:Encrypt`, `kms:Decrypt` to the role
-xp: 300
-difficulty: advanced
-expected_time: 18m
+name: "No Key Permission"
+description: >-
+  Orbit Health encrypts patient reports with the KMS key alias/orbit-reports.
+  The reporting service runs as the IAM role orbit-report-writer, whose own
+  IAM policy already lists the KMS actions it needs. Yet the security audit
+  shows the writer would be refused by KMS: when the key was re-created last
+  month someone pasted in a key policy that only names the key administrator,
+  key-admin, and has no statement for anyone else. A KMS key policy is the
+  first thing KMS consults, and IAM policies alone cannot override it.
+objective: >-
+  Replace the key policy of alias/orbit-reports (key-policy.json in your
+  workspace holds the current one) so that orbit-report-writer may use the key
+  to encrypt and decrypt data, while key-admin keeps administering it. Do not
+  open the key to everyone or hand the writer administrative control.
+xp: 175
+difficulty: intermediate
+expected_time: 15m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- policy debugging
-- roles
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-3-kms-key-policy-missing
-implementation_status: playable
+  - KMS key policies
+  - IAM policies vs key policies
+  - least privilege
+services:
+  - kms
+  - iam
+  - sts

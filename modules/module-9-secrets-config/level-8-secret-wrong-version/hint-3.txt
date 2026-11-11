@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Move AWSCURRENT onto the newer version (currently labelled AWSPREVIOUS) and take it off the older one:
+
+  aws secretsmanager update-secret-version-stage --secret-id sable/cdn/signing-key --version-stage AWSCURRENT --move-to-version-id <newer VersionId> --remove-from-version-id <older VersionId>
+
+Secrets Manager then relabels the old version AWSPREVIOUS automatically.

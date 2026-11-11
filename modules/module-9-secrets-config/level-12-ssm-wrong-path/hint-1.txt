@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Application reads `/production/db/password` but parameter was created at `/prod/db/password`
+Do what the service does, as an administrator, and compare what lives where:
+
+  aws ssm get-parameter --name /lattice/production/db-host
+  aws ssm get-parameters-by-path --path /lattice --recursive --query 'Parameters[].Name'
+
+Then read the IAM policy attached to lattice-svc (aws iam get-user-policy).

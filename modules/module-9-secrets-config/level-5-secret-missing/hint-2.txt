@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create the secret: `aws secretsmanager create-secret`
+Deleting a secret is not immediate. By default Secrets Manager only schedules it: for the length of the recovery window (7 to 30 days) the secret still exists but every read is refused. During that window the deletion can be cancelled and all versions come back exactly as they were. Creating a *new* secret would give you an empty shell and a password that the database does not know.

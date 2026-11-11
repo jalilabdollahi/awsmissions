@@ -1,1 +1,7 @@
-Start by inspecting the resources involved in this mission: Application uses `alias/production-key` but key was created with alias `alias/prod-key`
+Compare where the two aliases point, then compare the keys themselves:
+
+  aws kms list-aliases --query 'Aliases[?contains(AliasName, `orders`)]'
+  aws kms list-keys
+  aws kms describe-key --key-id <KeyId>
+
+The description (and the tags: aws kms list-resource-tags --key-id <KeyId>) tell you which key is which.

@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: ECS task role is missing `ssm:GetParameter` permission — task crashes at startup
+Compare what the task calls with what the policy allows. The task uses ssm:GetParameter for each parameter, and the second one is encrypted:
+
+  aws iam get-role-policy --role-name kiln-task --policy-name kiln-task-config
+  aws ssm describe-parameters --parameter-filters "Key=Name,Option=BeginsWith,Values=/kiln/prod"
+
+Check the Action list, then the Resource ARN character by character.

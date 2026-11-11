@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Application reads SSM parameter `/mission/config/db-host` — parameter doesn't exist
+Confirm what exists under the path the service reads, and find where the connection details are recorded:
+
+  aws ssm get-parameters-by-path --path /corvid/checkout
+  aws secretsmanager get-secret-value --secret-id corvid/checkout/db-credentials

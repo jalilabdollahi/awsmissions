@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the required permission to the role policy
+The policy has the right action and the right shape (secret ARNs end with a random six-character suffix, hence the trailing -*), so this is not a missing permission but a permission on the wrong resource. IAM matches the Resource ARN character by character; a policy for another path never applies. Compare the path segment after "secret:" with the real secret's name, one environment word at a time.
+
+Do not "fix" it with Resource "*": the admin console and staging secrets live under the same account and must stay unreadable for this role.

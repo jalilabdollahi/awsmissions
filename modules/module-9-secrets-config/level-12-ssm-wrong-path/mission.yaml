@@ -1,16 +1,24 @@
-name: Path Confusion
-description: Application reads `/production/db/password` but parameter was created
-  at `/prod/db/password`
-objective: Create parameter at the correct path or fix the application path config
-xp: 225
-difficulty: advanced
+name: "Path Confusion"
+description: >-
+  Lattice Labs' inventory service reads its configuration from Parameter Store
+  at boot: /lattice/production/db-host, /lattice/production/db-user and
+  /lattice/production/db-password, running as the IAM user lattice-svc. It
+  crashes with ParameterNotFound on the very first one. The configuration was
+  provisioned by a script that wrote it under /lattice/prod instead. Other
+  teams' dashboards already read /lattice/prod, and the service's IAM policy
+  deliberately allows only the production subtree.
+objective: >-
+  Make the three parameters readable at the paths the service uses, as
+  lattice-svc, with the same values as in /lattice/prod and the password still
+  stored encrypted (SecureString). lattice-svc must remain unable to read
+  anything under /lattice/prod, and the old parameters must stay in place.
+xp: 200
+difficulty: intermediate
 expected_time: 12m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- parameter store
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-12-ssm-wrong-path
-implementation_status: playable
+  - Parameter Store hierarchies
+  - parameter naming
+  - path-scoped IAM
+services:
+  - ssm
+  - iam

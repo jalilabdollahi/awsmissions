@@ -1,16 +1,21 @@
-name: No Secret
-description: "Application calls `GetSecretValue` for `mission/db-password` \u2014\
-  \ secret doesn't exist"
-objective: 'Create the secret: `aws secretsmanager create-secret`'
-xp: 250
-difficulty: advanced
-expected_time: 15m
+name: "No Secret"
+description: >-
+  Wyvern Games' matchmaking service fetches its database credentials from the
+  Secrets Manager secret wyvern/matchmaker/db-credentials when it starts.
+  This morning every matchmaker instance failed its health check. The error is
+  not the usual "secret not found": Secrets Manager says it cannot perform the
+  operation on a secret that was marked for deletion. A tidy-up script ran
+  last night, and the database password only exists inside that secret.
+objective: >-
+  Get wyvern/matchmaker/db-credentials readable again with its original
+  contents (same password, username and host), without creating a replacement
+  secret.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- secrets
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-5-secret-missing
-implementation_status: playable
+  - Secrets Manager deletion
+  - recovery window
+  - restore-secret
+services:
+  - secretsmanager

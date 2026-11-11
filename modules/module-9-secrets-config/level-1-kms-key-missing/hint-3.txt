@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Three commands: create the key, name it, turn rotation on.
+
+  aws kms create-key --description "Lanternfish document vault"
+  aws kms create-alias --alias-name alias/lanternfish-vault --target-key-id <KeyId from the output>
+  aws kms enable-key-rotation --key-id <KeyId>

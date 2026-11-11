@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: KMS key exists and is enabled but key policy doesn't grant the IAM role permission to use it
+Look at the key's policy, not just the role's. The key policy is a resource policy stored on the key itself:
+
+  aws kms describe-key --key-id alias/orbit-reports
+  aws kms get-key-policy --key-id <KeyId> --policy-name default
+
+Read the Principal and Action of every statement and ask who is missing.

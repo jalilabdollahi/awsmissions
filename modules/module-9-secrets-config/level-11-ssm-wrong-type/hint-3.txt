@@ -1,1 +1,6 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Read the current value, then overwrite the parameter with a SecureString under the team's key:
+
+  aws ssm get-parameter --name /harrier/payments/api-key --query Parameter.Value --output text
+  aws ssm put-parameter --name /harrier/payments/api-key --type SecureString --key-id alias/harrier-config --value <the value> --overwrite
+
+Do not touch /harrier/payments/timeout-ms.

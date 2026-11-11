@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable the key: `aws kms enable-key`
+A KMS key can be Enabled, Disabled, PendingDeletion and a few other states. While it is Disabled, every Encrypt, Decrypt and GenerateDataKey call using it fails with DisabledException, but nothing is lost: the key material is still there and the change is reversible. Ciphertext always remembers the key that made it, so a *different* key can never decrypt these tokens; creating a replacement key would not help.

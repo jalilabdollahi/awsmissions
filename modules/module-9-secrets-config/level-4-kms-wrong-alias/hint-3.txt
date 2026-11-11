@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Find the key tagged env=prod, then repoint the alias:
+
+  aws kms update-alias --alias-name alias/orders-prod --target-key-id <production KeyId>
+
+Verify with: aws kms describe-key --key-id alias/orders-prod

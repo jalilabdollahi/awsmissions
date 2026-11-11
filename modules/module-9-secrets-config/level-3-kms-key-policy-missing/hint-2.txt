@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update the key policy to grant `kms:Encrypt`, `kms:Decrypt` to the role
+Unlike most AWS resources, a KMS key does not trust the account by default: access is granted only if the key policy allows it, either directly to a principal, or by delegating to the account (a statement for arn:aws:iam::<account>:root), which makes IAM policies effective. This key's policy names only key-admin, and that statement covers administration, not encryption, so nobody else, and not the writer role despite its IAM policy, can use the key.
+
+The cleanest fix is a new statement for the role limited to the crypto operations it needs. Keep the existing administrator statement.

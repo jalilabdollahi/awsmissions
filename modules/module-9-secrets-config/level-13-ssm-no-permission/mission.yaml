@@ -1,17 +1,27 @@
-name: SSM Blocked
-description: "ECS task role is missing `ssm:GetParameter` permission \u2014 task crashes\
-  \ at startup"
-objective: Add `ssm:GetParameter` and `ssm:GetParameters` to the task role
-xp: 275
+name: "SSM Blocked"
+description: >-
+  Kiln Games' matchmaking workers run as ECS tasks with the IAM role kiln-task.
+  At startup each task reads two parameters: the queue URL
+  /kiln/prod/queue-url (a plain String) and the database password
+  /kiln/prod/db-password (a SecureString encrypted with the customer-managed
+  key alias/kiln-config). Since the infrastructure refactor every task exits
+  within seconds, logging AccessDeniedException from SSM. policy.json in your
+  workspace is the inline policy that was applied to the role.
+objective: >-
+  Fix the role's inline policy kiln-task-config so that kiln-task can read
+  both production parameters, including decrypting the SecureString with its
+  key, while still being unable to read /kiln/dev/..., /kiln-admin/... or to
+  decrypt with other keys.
+xp: 250
 difficulty: advanced
 expected_time: 15m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- roles
-- parameter store
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-13-ssm-no-permission
-implementation_status: playable
+  - ssm:GetParameter
+  - parameter ARNs
+  - kms:Decrypt for SecureString
+  - least privilege
+services:
+  - ssm
+  - kms
+  - iam
+  - sts

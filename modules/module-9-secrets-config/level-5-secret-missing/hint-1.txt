@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Application calls `GetSecretValue` for `mission/db-password` — secret doesn't exist
+Ask Secrets Manager for the secret's own metadata; it will tell you what state the secret is in:
+
+  aws secretsmanager describe-secret --secret-id wyvern/matchmaker/db-credentials
+
+Look for a deletion date.

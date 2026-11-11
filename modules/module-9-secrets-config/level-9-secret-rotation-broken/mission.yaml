@@ -1,18 +1,23 @@
-name: Stale Credentials
-description: "Secret rotation was configured but rotation Lambda ARN is wrong \u2014\
-  \ secret is never rotated"
-objective: 'Fix the rotation Lambda ARN: `aws secretsmanager rotate-secret` with correct
-  config'
-xp: 325
+name: "Stale Credentials"
+description: >-
+  Pelican Freight's orders database password lives in the secret
+  pelican/orders-db/password and is supposed to rotate automatically. The
+  audit team noticed the "last rotated" date is months old and the console
+  shows rotation pointing at a Lambda function that no longer exists: the old
+  rotator (v1) was decommissioned when the platform team shipped its
+  replacement, and nobody reconfigured the secret. Company policy says
+  database passwords must rotate at least every 30 days.
+objective: >-
+  Reconfigure rotation of pelican/orders-db/password so that it uses the
+  rotation function that is actually deployed for the orders database, rotating
+  automatically at least every 30 days.
+xp: 275
 difficulty: advanced
-expected_time: 20m
+expected_time: 18m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- lambda functions
-- secrets
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-9-secret-rotation-broken
-implementation_status: playable
+  - Secrets Manager rotation
+  - rotation Lambda
+  - rotation rules
+services:
+  - secretsmanager
+  - lambda

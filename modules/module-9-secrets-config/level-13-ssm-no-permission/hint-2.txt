@@ -1,1 +1,5 @@
-Focus on the specific mismatch described in the objective: Add `ssm:GetParameter` and `ssm:GetParameters` to the task role
+Three separate things are wrong, and each alone would break the task:
+1. Actions are exact: ssm:GetParameters (plural, batch) does not imply ssm:GetParameter (single).
+2. The ARN of a parameter named /kiln/prod/x is arn:aws:ssm:<region>:<account>:parameter/kiln/prod/x. The slash that starts the name is the slash after "parameter", so writing "parameter//kiln/..." matches nothing.
+3. Reading a SecureString decrypts it with its KMS key, so the caller also needs kms:Decrypt on that key's ARN (a key ARN, not the alias).
+Keep the grants tight: /kiln/prod/* must not reach /kiln/dev or /kiln-admin, and the key permission belongs on the Kiln key only.

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Update application to use `AWSCURRENT` stage or fix the version reference
+A secret can hold several versions at once; staging labels say which is which. Clients that do not name a version get the one labelled AWSCURRENT, and AWSPREVIOUS marks the one before it. Labels are just movable tags: here the botched step moved AWSCURRENT back onto the old version (and the newer one became AWSPREVIOUS), so the data is all still there but the labels point the wrong way.
+
+Do not write a new secret value to fix this; move the labels so that the newer version is AWSCURRENT again.

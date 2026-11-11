@@ -1,1 +1,5 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+Point the secret at the deployed rotator and set a 30-day schedule:
+
+  aws secretsmanager rotate-secret --secret-id pelican/orders-db/password --rotation-lambda-arn <ARN of pelican-rotate-orders-db> --rotation-rules AutomaticallyAfterDays=30 --no-rotate-immediately
+
+(--no-rotate-immediately only changes the configuration; without it Secrets Manager also starts a rotation right away, and a second call while that one is unfinished is refused.)

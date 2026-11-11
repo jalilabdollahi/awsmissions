@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: KMS key exists but is disabled — encrypt/decrypt operations fail with `DisabledException`
+Follow the alias to the key and look at the key's state:
+
+  aws kms describe-key --key-id alias/marigold-tokens
+
+Then read the KeyState field, and try a decrypt to see the exact error text.

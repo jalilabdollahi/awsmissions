@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Application tries to encrypt using KMS key alias `alias/mission-key` — key doesn't exist
+Reproduce what the vault sees, then look at what aliases the account really has:
+
+  aws kms encrypt --key-id alias/lanternfish-vault --plaintext aGVsbG8=
+  aws kms list-aliases --query 'Aliases[?starts_with(AliasName, `alias/lanternfish`)]'
+
+(Ignore the alias/aws/... entries; those belong to AWS-managed keys.)

@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Application pinned to a specific secret version that no longer exists (was rotated)
+Look at which version carries which staging label, and what each version contains:
+
+  aws secretsmanager list-secret-version-ids --secret-id sable/cdn/signing-key --include-deprecated
+  aws secretsmanager get-secret-value --secret-id sable/cdn/signing-key --version-id <VersionId>
+
+Then compare with what a client gets when it asks for the secret without naming a version.

@@ -1,16 +1,21 @@
-name: Wrong Version
-description: Application pinned to a specific secret version that no longer exists
-  (was rotated)
-objective: Update application to use `AWSCURRENT` stage or fix the version reference
-xp: 300
-difficulty: advanced
-expected_time: 18m
+name: "Wrong Version"
+description: >-
+  Sable Streaming rotates the CDN URL-signing key stored in the secret
+  sable/cdn/signing-key by hand. On Thursday the new key was stored, and the
+  edge servers (which always fetch the default version of the secret) signed
+  URLs with it. A runbook step then "rolled back" something in the secret, and
+  since then the edge fleet signs URLs with the retired key, which the CDN
+  origin refuses. The new key is still in the secret; nobody deleted anything.
+objective: >-
+  Make the new signing key (the one stored in the newer version of
+  sable/cdn/signing-key) the default value again, keeping the retired key
+  available as AWSPREVIOUS for the 24-hour overlap period.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
 concepts:
-- Secrets Manager
-- SSM
-- KMS
-- secrets
-module: module-9-secrets-config
-module_title: Secrets & Config
-level: level-8-secret-wrong-version
-implementation_status: playable
+  - secret versions
+  - staging labels
+  - AWSCURRENT / AWSPREVIOUS
+services:
+  - secretsmanager

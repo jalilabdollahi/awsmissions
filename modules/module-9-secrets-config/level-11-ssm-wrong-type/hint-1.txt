@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: SSM parameter `/mission/config/api-key` is stored as `String` type — should be `SecureString` (encrypted)
+Look at how the two parameters are stored (type and key), then at the key the team wants:
+
+  aws ssm describe-parameters --parameter-filters "Key=Name,Option=BeginsWith,Values=/harrier/payments"
+  aws kms describe-key --key-id alias/harrier-config
