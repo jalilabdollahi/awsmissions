@@ -1,0 +1,1 @@
+Compare what the picker app asks for (a SKU) with what the index is built on. aws dynamodb describe-table --table-name stockroom-bins shows the index's KeySchema.

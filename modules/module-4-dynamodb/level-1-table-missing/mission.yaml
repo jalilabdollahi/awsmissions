@@ -1,0 +1,22 @@
+name: "No Table, No Orders"
+description: >-
+  Harvest Hub connects farm co-ops to restaurants. This morning the order-ingest
+  service was redeployed into a fresh account and every order is bouncing with
+  ResourceNotFoundException. The ops engineer says the table was "created by
+  Terraform", but nobody can find it. The service writes one item per order and
+  reads a farm's orders back in time order, so the key design matters: orders are
+  grouped by the farm that placed them (string attribute farmId) and ordered by
+  the moment they were placed (number attribute orderedAt, epoch seconds).
+objective: >-
+  Create the DynamoDB table harvest-orders so that the ingest service can write
+  orders and read one farm's orders back in chronological order, newest-first or
+  oldest-first. Use on-demand billing; the order volume is unpredictable.
+xp: 90
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - DynamoDB tables
+  - partition key and sort key
+  - on-demand billing
+services:
+  - dynamodb

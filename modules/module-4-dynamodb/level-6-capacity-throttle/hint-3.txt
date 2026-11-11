@@ -1,0 +1,3 @@
+aws application-autoscaling register-scalable-target --service-namespace dynamodb --resource-id table/pulsewire-readings --scalable-dimension dynamodb:table:WriteCapacityUnits --min-capacity 25 --max-capacity 1000
+aws application-autoscaling put-scaling-policy --service-namespace dynamodb --resource-id table/pulsewire-readings --scalable-dimension dynamodb:table:WriteCapacityUnits --policy-name any-name --policy-type TargetTrackingScaling --target-tracking-scaling-policy-configuration file://scaling-policy.json
+Repeat both for ReadCapacityUnits (metric DynamoDBReadCapacityUtilization).

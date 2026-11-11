@@ -1,0 +1,5 @@
+aws dynamodb scan --table-name clinic-appointments --output json > dump.json
+aws dynamodb delete-table --table-name clinic-appointments
+aws dynamodb create-table --cli-input-json file://create-table.json     # add the LSI to the template first
+# then for each element of Items in dump.json:
+aws dynamodb put-item --table-name clinic-appointments --item '<the item JSON>'

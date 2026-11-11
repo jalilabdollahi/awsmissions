@@ -1,0 +1,1 @@
+Point-in-time recovery is switched on per table with update-continuous-backups; it is off by default, and the compliance tag does not turn it on. Work out which tables carry compliance=sox (list every table and read its tags), then enable PITR on each of them that is not protected yet. The scratch table is deliberately out of scope.

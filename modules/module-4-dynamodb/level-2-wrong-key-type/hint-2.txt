@@ -1,0 +1,1 @@
+Key attributes have a fixed type (S, N or B) chosen at creation, and DynamoDB refuses values of another type. The key schema of an existing table can't be edited with update-table. The table is empty, so it can be replaced. Check whether anything stops you from deleting it.

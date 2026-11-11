@@ -1,0 +1,25 @@
+name: "Five Units Against a Flood"
+description: >-
+  Pulsewire collects sensor readings from wind turbines. Between 02:00 and 03:00
+  every night thousands of turbines flush their buffers at once, and the table
+  pulsewire-readings (provisioned mode, 5 read and 5 write capacity units) starts
+  rejecting writes with ProvisionedThroughputExceededException. During the day
+  traffic is calm, so flat high capacity would waste money. Finance has also made
+  clear that the table stays in provisioned mode: the company bought reserved
+  capacity, and on-demand pricing is off the table for this workload.
+objective: >-
+  Keep pulsewire-readings in provisioned mode and make its read and write
+  capacity follow demand automatically with Application Auto Scaling: both
+  dimensions need a scalable target that can grow to at least 500 units without
+  dropping below 20, and a target-tracking policy aiming for a sensible
+  utilisation (between 30 and 80 percent).
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts:
+  - provisioned capacity
+  - Application Auto Scaling
+  - target tracking
+services:
+  - dynamodb
+  - application-autoscaling

@@ -1,0 +1,22 @@
+name: "Sessions That Never Die"
+description: >-
+  Loginly keeps web sessions in the table loginly-sessions. Each session item
+  carries an attribute expiresAt holding the expiry time as epoch seconds, and
+  the privacy policy says expired sessions must disappear on their own, not stay
+  around for months. Months later the table has grown to a size nobody expected
+  and an auditor found sessions from last year. The platform team swears they
+  "turned on TTL" when they created the table.
+objective: >-
+  Make DynamoDB automatically delete sessions whose expiresAt time has passed.
+  Prove it works: a session whose expiresAt lies in the past must really vanish
+  from the table without anyone deleting it. Sessions that have not yet expired
+  must stay.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - DynamoDB TTL
+  - epoch-second timestamps
+  - eventual deletion
+services:
+  - dynamodb

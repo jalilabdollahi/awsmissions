@@ -1,0 +1,1 @@
+Run ./close-ticket.sh tk-77 test and read the error text carefully. The message names the word DynamoDB objects to.

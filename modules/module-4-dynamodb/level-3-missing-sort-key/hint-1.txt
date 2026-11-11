@@ -1,0 +1,1 @@
+Count what is stored: aws dynamodb scan --table-name fixline-ticket-events. Then ask yourself which attributes together make an item unique.

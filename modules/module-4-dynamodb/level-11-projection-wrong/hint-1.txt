@@ -1,0 +1,1 @@
+Compare an index query with the base item: query category-index for poetry, then get-item one of the ISBNs. What is present in one but not in the other? describe-table shows the index Projection.

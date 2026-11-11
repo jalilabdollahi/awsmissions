@@ -1,0 +1,1 @@
+A DynamoDB put replaces any existing item with the same primary key. Right now the primary key is only ticketId, so each ticket can hold exactly one item. A composite key (partition + sort) lets a ticket own many events and lets you query a range on the sort key. Key schemas cannot be edited on an existing table.

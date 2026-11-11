@@ -1,0 +1,1 @@
+The index only stores the attributes in its projection. KEYS_ONLY keeps the table key and the index key, nothing else. ALL would copy the entire item, including the large blurb, and is the expensive answer. The middle option, INCLUDE, lets you list exactly which extra attributes to copy. Projections can't be edited, so the index has to be dropped and created again.

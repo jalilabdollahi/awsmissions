@@ -1,0 +1,1 @@
+Streams are switched on per table with update-table --stream-specification. Besides StreamEnabled you must pick a StreamViewType. Think about what an auditor needs: the headline before the edit and the headline after it. Which of KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES carries both?

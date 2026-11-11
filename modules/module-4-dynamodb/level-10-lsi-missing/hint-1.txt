@@ -1,0 +1,1 @@
+Look at the table with aws dynamodb describe-table --table-name clinic-appointments. Then try to find any update-table option that adds a local secondary index; compare with what the docs say about when an LSI can be defined.

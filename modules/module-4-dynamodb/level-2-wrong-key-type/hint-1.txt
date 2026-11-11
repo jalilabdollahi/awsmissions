@@ -1,0 +1,1 @@
+Look at what the table expects: aws dynamodb describe-table --table-name postbox-prefs. Compare the key's declared type with the recipientId values the service sends.

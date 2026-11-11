@@ -1,0 +1,8 @@
+{
+  "TargetValue": 0,
+  "PredefinedMetricSpecification": {
+    "PredefinedMetricType": "DynamoDBWriteCapacityUtilization"
+  },
+  "ScaleInCooldown": 300,
+  "ScaleOutCooldown": 60
+}

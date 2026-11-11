@@ -1,0 +1,1 @@
+A query against an index needs an equality condition on that index's partition key, and its range condition goes on the sort key. The key schema of an existing GSI cannot be edited, but the GSI itself can be deleted and created again with update-table, without touching the items in the table. Don't create the new one until the old one is really gone.

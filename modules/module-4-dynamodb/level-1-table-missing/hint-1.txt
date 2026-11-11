@@ -1,0 +1,1 @@
+Start with aws dynamodb list-tables and compare the names carefully with what the service expects.

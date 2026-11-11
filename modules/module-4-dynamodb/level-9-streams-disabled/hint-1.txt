@@ -1,0 +1,1 @@
+The consumer says no stream exists. Check the table's configuration: aws dynamodb describe-table --table-name greenroom-articles, and look for StreamSpecification / LatestStreamArn.

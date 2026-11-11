@@ -1,0 +1,1 @@
+Check how the table is billed today and what else is attached to it: aws dynamodb describe-table, and aws application-autoscaling describe-scalable-targets --service-namespace dynamodb.

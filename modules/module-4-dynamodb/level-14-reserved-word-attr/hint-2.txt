@@ -1,0 +1,1 @@
+status, comment and timestamp are reserved words and cannot appear bare in an expression. Replace each name in the UpdateExpression with a placeholder that starts with # and describe what it stands for in --expression-attribute-names. Values keep their :placeholders. Edit close-ticket.sh and run it again for tk-77.

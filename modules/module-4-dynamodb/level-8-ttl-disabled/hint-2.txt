@@ -1,0 +1,1 @@
+TTL deletes items whose TTL attribute (a Number, epoch seconds) is in the past. It only looks at the attribute it was configured with; items without that attribute are ignored forever. The attribute can't be renamed in place: turn TTL off, then on again with the right name. Deletion is a background job, so it may take a few seconds.

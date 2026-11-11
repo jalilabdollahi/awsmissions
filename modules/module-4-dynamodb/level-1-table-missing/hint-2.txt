@@ -1,0 +1,1 @@
+The service writes to a table named exactly harvest-orders, and it does not exist yet. Think about the two reads it needs: "one farm" and "ordered by time". A partition key alone only gives you the first. Which attribute types do farmId and orderedAt have? Only key attributes go into --attribute-definitions.

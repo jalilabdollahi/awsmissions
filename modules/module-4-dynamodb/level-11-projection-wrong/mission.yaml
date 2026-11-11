@@ -1,0 +1,23 @@
+name: "Half the Picture"
+description: >-
+  Shelfwise is an online bookshop. Its category pages query the global
+  secondary index category-index of the table shelfwise-books (partition key
+  category, sort key price) and render a card with the book's title and author
+  plus its price. Since the index was rebuilt, the cards show only ISBNs and
+  prices: the title and author are missing. The front-end team's first
+  suggestion was to copy every attribute into the index, but each book also
+  carries a multi-kilobyte blurb that category pages never show, and the
+  finance team has already complained about the write bill.
+objective: >-
+  Fix category-index so a category query returns isbn, price, title and author for
+  every book, but not the large blurb attribute. All books must stay in the
+  table.
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - index projections
+  - KEYS_ONLY vs INCLUDE vs ALL
+  - index cost
+services:
+  - dynamodb

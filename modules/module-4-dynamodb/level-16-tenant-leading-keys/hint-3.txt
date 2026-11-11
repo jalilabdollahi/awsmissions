@@ -1,0 +1,3 @@
+In portal-policy.json: remove "dynamodb:Scan" from Action and add to the statement
+  "Condition": {"ForAllValues:StringEquals": {"dynamodb:LeadingKeys": ["acme"]}}
+then: aws iam put-user-policy --user-name portal-acme --policy-name portal-data-access --policy-document file://portal-policy.json

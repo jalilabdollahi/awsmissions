@@ -1,0 +1,3 @@
+--update-expression "SET #st = :closed, #co = :note, #ts = :now" \
+--expression-attribute-names '{"#st":"status","#co":"comment","#ts":"timestamp"}' \
+(keep the existing --expression-attribute-values), then: ./close-ticket.sh tk-77 "Refund issued"

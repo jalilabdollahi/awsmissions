@@ -1,0 +1,6 @@
+{
+  "farmId":    {"S": "farm-oakridge"},
+  "orderedAt": {"N": "1767225600"},
+  "product":   {"S": "heirloom tomatoes"},
+  "crates":    {"N": "12"}
+}

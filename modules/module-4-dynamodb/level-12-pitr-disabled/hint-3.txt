@@ -1,0 +1,2 @@
+aws dynamodb update-continuous-backups --table-name <table> --point-in-time-recovery-specification PointInTimeRecoveryEnabled=true
+Run it for every compliance=sox table that does not have it yet (there are two more besides ledger-entries).

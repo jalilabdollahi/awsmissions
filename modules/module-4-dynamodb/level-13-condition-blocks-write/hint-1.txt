@@ -1,0 +1,1 @@
+Run workspace/ship-orders.sh and read the error, then look at the current items: aws dynamodb get-item --table-name parcelo-orders --key '{"orderId":{"S":"ord-1042"}}'. What does the condition test, and what is the actual state of the item?

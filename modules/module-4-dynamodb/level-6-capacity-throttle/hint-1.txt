@@ -1,0 +1,1 @@
+The table is provisioned at 5/5 units: check aws dynamodb describe-table --table-name pulsewire-readings. Then look at which AWS service can adjust DynamoDB capacity for you (hint: it is not DynamoDB itself).

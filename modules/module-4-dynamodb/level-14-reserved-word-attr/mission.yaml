@@ -1,0 +1,24 @@
+name: "Words You Cannot Say"
+description: >-
+  Deskly is a help-desk tool. Closing a ticket is done by the helper script
+  workspace/close-ticket.sh, which updates the ticket in the table
+  deskly-tickets. Since the team added a closing comment and a closed-at stamp, the
+  script fails for every ticket with a ValidationException saying an attribute
+  name is a reserved keyword. Support is stuck with ticket tk-77 (a refund
+  request) that the agent resolved an hour ago and cannot close. The attributes
+  are called status, comment and timestamp, and renaming them in the stored data
+  is not an option because other services read them.
+objective: >-
+  Make close-ticket.sh work and close tk-77: its status must become CLOSED, its
+  comment must hold the closing note, and a numeric timestamp must be recorded,
+  with all other attributes of the ticket left as they were. The attribute names
+  in the table must not change.
+xp: 225
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - reserved words
+  - ExpressionAttributeNames
+  - UpdateExpression
+services:
+  - dynamodb

@@ -1,0 +1,1 @@
+Find out how the login code reads data: aws dynamodb describe-table --table-name cartwheel-members and look at what indexes the table has.

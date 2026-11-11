@@ -1,0 +1,1 @@
+Application Auto Scaling manages DynamoDB capacity in two steps: register the table's read/write capacity as a scalable target (min and max units), then attach a target-tracking policy that holds utilisation near a percentage. Both read and write dimensions need their own target and policy. The resource id of a table is table/<name>.
