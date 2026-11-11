@@ -68,6 +68,22 @@ def _running_image(p: int) -> str | None:
     return image if running == "true" else None
 
 
+def _isolation_env(p: int) -> list[str]:
+    """Keep parallel emulators (e.g. test runs on other ports) apart.
+
+    Floci names its Docker networks and hands out EC2 SSH ports from a fixed
+    pool; two emulators on one Docker host would otherwise collide.
+    """
+    if p == DEFAULT_PORT:
+        return []
+    ssh_start = 20000 + (p - 4500) * 100
+    return [
+        "-e", f"FLOCI_DOCKER_RESOURCE_NAMESPACE=awsm{p}",
+        "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_START={ssh_start}",
+        "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_END={ssh_start + 99}",
+    ]
+
+
 def start(p: int | None = None) -> None:
     p = p or port()
     _docker("rm", "-f", container_name(p))
@@ -79,6 +95,7 @@ def start(p: int | None = None) -> None:
         # Real IAM policy evaluation: the default `test` credentials act as the
         # account root, any other principal is checked against its policies.
         "-e", "FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true",
+        *_isolation_env(p),
         FLOCI_IMAGE,
     )
     if result.returncode != 0:
@@ -121,9 +138,10 @@ def _leftover_stacks(p: int) -> bool:
     return result.returncode != 0 or result.stdout.strip() not in ("0", "")
 
 
-# Services whose state Floci 2.4.0's reset endpoint does not fully clear
-# (CloudFormation stacks/exports, ECS tasks under a re-created cluster name).
-RESTART_SERVICES = {"cloudformation", "ecs"}
+# Services whose state Floci 2.4.0's reset endpoint does not fully clear:
+# CloudFormation stacks/exports, ECS tasks under a re-created cluster name,
+# and load balancer listeners that stay bound in the data plane.
+RESTART_SERVICES = {"cloudformation", "ecs", "elbv2", "elb", "autoscaling"}
 
 
 def _marker(p: int) -> Path:
