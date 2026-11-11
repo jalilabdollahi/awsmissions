@@ -1,0 +1,23 @@
+name: "Read-Only by Accident"
+description: >-
+  Parcelpoint's help desk widget lets customers file a ticket by POSTing JSON to
+  /tickets on the REST API parcelpoint-help (stage prod), and lists existing
+  tickets with GET /tickets. Listing works. Filing a ticket doesn't: the widget
+  gets HTTP 403 with "Missing Authentication Token" even though nobody asked for
+  authentication. Two Lambda functions exist, parcelpoint-ticket-list and
+  parcelpoint-ticket-create; only the first is attached to the API. The create
+  function expects a JSON body with a title and answers 201.
+objective: >-
+  Make POST /tickets on stage prod of parcelpoint-help create a ticket through
+  parcelpoint-ticket-create (HTTP 201 with the new ticket echoed back), without
+  breaking GET /tickets, which must keep using the list function.
+xp: 115
+difficulty: beginner
+expected_time: 12m
+concepts:
+  - HTTP methods on a resource
+  - one integration per method
+  - Lambda proxy request body
+services:
+  - apigateway
+  - lambda

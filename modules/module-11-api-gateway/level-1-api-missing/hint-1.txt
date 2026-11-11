@@ -1,0 +1,1 @@
+Start with aws apigateway get-rest-apis to see what exists, then aws lambda get-function --function-name lantern-status to learn the function's ARN.

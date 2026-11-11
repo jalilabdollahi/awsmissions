@@ -1,0 +1,1 @@
+Try the request and then inspect the method: aws apigateway get-method --rest-api-id <id> --resource-id <id> --http-method GET. Is there a methodIntegration in the output?

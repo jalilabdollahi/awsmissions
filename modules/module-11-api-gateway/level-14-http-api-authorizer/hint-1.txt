@@ -1,0 +1,1 @@
+Callers with valid and invalid keys all get 500, so the problem is not the key check. Compare the authorizer settings (aws apigatewayv2 get-authorizers --api-id <id>) with what the function returns (see its payload: a short JSON with isAuthorized).

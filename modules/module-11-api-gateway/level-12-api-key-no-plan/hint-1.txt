@@ -1,0 +1,1 @@
+Try the call with the partner key (aws apigateway get-api-keys --include-values shows the value). Then see how keys connect to the API: aws apigateway get-usage-plans.

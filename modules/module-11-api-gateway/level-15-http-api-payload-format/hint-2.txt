@@ -1,0 +1,1 @@
+The function reads requestContext.http.method and rawPath, which exist only in the version 2.0 event format. The integration is set to the older 1.0 format, so the function crashes and API Gateway reports 500. The setting lives on the integration object (PayloadFormatVersion); you don't have to touch the function or the route.

@@ -1,0 +1,26 @@
+name: "Zero Tolerance"
+description: >-
+  Ticketdash sells festival tickets through the REST API ticketdash-api (stage
+  v2). During the Friday launch, 100% of requests failed with HTTP 429 Too Many
+  Requests. A security hardening script had "locked down" the stage by setting
+  its default throttling to rate 0 and burst 0, and nobody noticed that zero does
+  not mean "unlimited". Besides browsing (GET /events), the API has the
+  expensive route POST /checkout, which talks to a payment provider that
+  tolerates at most about 20 requests per second. The emulator used here does not
+  count requests, so you will have to inspect the stage settings rather than
+  provoke a real 429.
+objective: >-
+  Give stage v2 sane throttling: a default rate between 50 and 1000 requests per
+  second with a burst between that rate and 2000, and a stricter override for
+  POST /checkout of 1 to 20 requests per second (burst not above 40). Both routes must
+  keep answering.
+xp: 275
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - stage throttling
+  - method settings
+  - rate vs burst
+services:
+  - apigateway
+  - lambda

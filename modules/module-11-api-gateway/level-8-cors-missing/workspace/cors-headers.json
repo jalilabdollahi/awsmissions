@@ -1,0 +1,5 @@
+{
+  "method.response.header.Access-Control-Allow-Origin": "'https://app.zestlist.example'",
+  "method.response.header.Access-Control-Allow-Methods": "'GET,POST'",
+  "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'"
+}

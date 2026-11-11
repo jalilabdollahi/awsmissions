@@ -1,0 +1,6 @@
+aws apigateway create-rest-api --name lantern-status-api
+aws apigateway get-resources --rest-api-id <id>                      # note the root id
+aws apigateway create-resource --rest-api-id <id> --parent-id <root> --path-part status
+aws apigateway put-method --rest-api-id <id> --resource-id <res> --http-method GET --authorization-type NONE
+aws apigateway put-integration --rest-api-id <id> --resource-id <res> --http-method GET --type AWS_PROXY --integration-http-method POST --uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/<function arn>/invocations
+aws apigateway create-deployment --rest-api-id <id> --stage-name live

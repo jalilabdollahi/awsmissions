@@ -1,0 +1,1 @@
+Reproduce what the browser does first: curl -i -X OPTIONS -H 'Origin: https://app.zestlist.example' -H 'Access-Control-Request-Method: POST' <invoke url of /tasks>. What status do you get? Then list the methods of /tasks.

@@ -1,0 +1,1 @@
+HTTP API authorizers can return either a full IAM policy or the short {"isAuthorized": bool} form, but the short form must be switched on in the authorizer's configuration; otherwise API Gateway cannot read the answer and returns 500. Change the authorizer object, not the function and not the route's authorization type.

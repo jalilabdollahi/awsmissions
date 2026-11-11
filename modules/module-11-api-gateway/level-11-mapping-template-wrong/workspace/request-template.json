@@ -1,0 +1,3 @@
+{
+  "application/json": "{\n  \"sku\": \"$input.path('$.product')\",\n  \"qty\": \"$input.path('$.qty')\",\n  \"note\": \"$input.path('$.comment')\"\n}"
+}

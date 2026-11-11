@@ -1,0 +1,1 @@
+Look at which stages the API has: aws apigateway get-stages --rest-api-id <id>, and compare with the stage in the URL the mobile app calls.

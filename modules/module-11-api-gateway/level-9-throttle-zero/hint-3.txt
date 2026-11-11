@@ -1,0 +1,3 @@
+aws apigateway update-stage --rest-api-id <id> --stage-name v2 --patch-operations \
+  'op=replace,path=/*/*/throttling/rateLimit,value=200' 'op=replace,path=/*/*/throttling/burstLimit,value=400' \
+  'op=replace,path=/~1checkout/POST/throttling/rateLimit,value=15' 'op=replace,path=/~1checkout/POST/throttling/burstLimit,value=30'

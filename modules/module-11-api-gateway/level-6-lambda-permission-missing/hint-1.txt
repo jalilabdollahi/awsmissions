@@ -1,0 +1,1 @@
+Look at who is allowed to invoke the function: aws lambda get-policy --function-name cobaltpay-fx-rates, then at the API that exists now: aws apigateway get-rest-apis.

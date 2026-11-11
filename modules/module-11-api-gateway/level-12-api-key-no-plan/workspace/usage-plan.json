@@ -1,0 +1,7 @@
+{
+  "name": "wanderpath-partner",
+  "description": "Contract WP-2026-03",
+  "apiStages": [],
+  "throttle": { "rateLimit": 0, "burstLimit": 0 },
+  "quota": { "limit": 0, "period": "DAY" }
+}

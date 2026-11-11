@@ -1,0 +1,2 @@
+aws apigateway put-integration --rest-api-id <id> --resource-id <brews resource id> --http-method GET --type AWS_PROXY --integration-http-method POST --uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:brewbook-search/invocations
+aws apigateway create-deployment --rest-api-id <id> --stage-name test

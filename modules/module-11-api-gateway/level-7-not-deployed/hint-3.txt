@@ -1,0 +1,1 @@
+aws apigateway create-deployment --rest-api-id <id> --stage-name prod --variables tier=production

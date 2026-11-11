@@ -1,0 +1,1 @@
+/tickets only has a GET method; HTTP 403 "Missing Authentication Token" is API Gateway's way of saying "no such route". Each verb needs its own method plus its own integration. POST must reach the create function, not the list function, so reusing the GET integration is not enough. Redeploy the stage afterwards.

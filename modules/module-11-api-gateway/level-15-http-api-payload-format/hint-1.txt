@@ -1,0 +1,1 @@
+The function works with its sample event but fails through the API. Compare the shape of the event API Gateway sends with what the code reads: aws apigatewayv2 get-integrations --api-id <id> shows how the integration is configured.

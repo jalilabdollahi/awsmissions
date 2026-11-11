@@ -1,0 +1,1 @@
+Call the endpoint both ways and compare. Then list the configured methods of the resource: aws apigateway get-resource --rest-api-id <id> --resource-id <id> shows resourceMethods.

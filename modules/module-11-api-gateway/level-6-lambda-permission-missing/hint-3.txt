@@ -1,0 +1,2 @@
+aws lambda remove-permission --function-name cobaltpay-fx-rates --statement-id allow-old-api
+aws lambda add-permission --function-name cobaltpay-fx-rates --statement-id <new-id> --action lambda:InvokeFunction --principal apigateway.amazonaws.com --source-arn "arn:aws:execute-api:us-east-1:000000000000:<api-id>/*/GET/rates"

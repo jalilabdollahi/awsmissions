@@ -1,0 +1,1 @@
+Every URL path needs its own resource in the API; /notes existing does not give you /notes/anything. Add a child resource under /notes. A path part written in curly braces becomes a path parameter, and its name is the key the function reads. Then it needs a method and an integration of its own, and the stage has to be deployed again.

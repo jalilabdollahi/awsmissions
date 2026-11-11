@@ -1,0 +1,4 @@
+aws apigateway create-resource --rest-api-id <id> --parent-id <the /notes resource id> --path-part '{noteId}'
+aws apigateway put-method --rest-api-id <id> --resource-id <new id> --http-method GET --authorization-type NONE
+aws apigateway put-integration ... (same AWS_PROXY / POST / uri as the /notes GET; see get-integration on /notes)
+aws apigateway create-deployment --rest-api-id <id> --stage-name v1

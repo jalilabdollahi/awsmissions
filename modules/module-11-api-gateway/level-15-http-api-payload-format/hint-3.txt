@@ -1,0 +1,1 @@
+aws apigatewayv2 update-integration --api-id <id> --integration-id <integration id> --payload-format-version 2.0

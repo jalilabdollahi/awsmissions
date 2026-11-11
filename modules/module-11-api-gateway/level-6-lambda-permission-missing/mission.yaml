@@ -1,0 +1,28 @@
+name: "Locked Out After the Rebuild"
+description: >-
+  Cobaltpay rebuilt its REST API cobaltpay-rates last night (new Terraform
+  module, new API id), and the Lambda function cobaltpay-fx-rates behind
+  GET /rates is supposed to be invokable only by that API. The old API's
+  resource-based permission on the function was left behind and nobody added one
+  for the new API. On real AWS the new API would answer 500 ("Execution failed
+  due to configuration error: Invalid permissions on Lambda function") and the
+  security team also flags the leftover grant to an API that no longer exists.
+  The emulator used in this environment does not enforce Lambda invoke
+  permissions, so you have to inspect the function's resource policy yourself
+  to see the problem.
+objective: >-
+  Fix the resource-based policy of cobaltpay-fx-rates so that the principal
+  apigateway.amazonaws.com may invoke it only on behalf of the current
+  cobaltpay-rates API (and only for GET /rates, no wildcard over all APIs), and
+  so that no statement referring to a different API remains. The API must keep
+  answering GET /rates on stage live.
+xp: 175
+difficulty: intermediate
+expected_time: 15m
+concepts:
+  - Lambda resource-based policy
+  - lambda add-permission
+  - source ARN scoping
+services:
+  - apigateway
+  - lambda

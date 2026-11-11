@@ -1,0 +1,23 @@
+name: "Status Page With No Page"
+description: >-
+  Lantern runs a public status page. Its front end calls
+  GET /status on the REST API lantern-status-api and shows the "state" field.
+  The Lambda function that knows the state, lantern-status, was deployed
+  yesterday, but the API in front of it never existed: the Terraform apply
+  that should have created it was cancelled halfway. Browsers get nothing but
+  errors and the support inbox is filling up with "is Lantern down?" mails.
+  The function already speaks the Lambda proxy format, so it needs no changes.
+objective: >-
+  Build the REST API lantern-status-api so that GET /status on the stage live
+  returns the status JSON produced by the lantern-status function, through
+  a Lambda proxy integration.
+xp: 100
+difficulty: beginner
+expected_time: 12m
+concepts:
+  - REST API building blocks
+  - Lambda proxy integration
+  - deployment and stages
+services:
+  - apigateway
+  - lambda

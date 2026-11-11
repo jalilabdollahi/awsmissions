@@ -1,0 +1,25 @@
+name: "Token in the Wrong Pocket"
+description: >-
+  Vaultline gives partner banks programmatic access to documents through
+  GET /documents on the REST API vaultline-api (stage partner). The method is
+  protected by a Lambda authorizer (vaultline-gatekeeper) that approves the
+  partner token vl-partner-7731. Partners send that token in the header
+  X-Vaultline-Token, as the integration guide says, and they all receive
+  HTTP 401 Unauthorized. The authorizer function itself is fine, and so are the
+  tokens. Someone tried to "fix" it earlier by switching the method to no
+  authorization, then reverted when the security team noticed.
+objective: >-
+  Make partner calls with the header X-Vaultline-Token: vl-partner-7731 succeed
+  on GET /documents of vaultline-api stage partner, while calls without the
+  header still get 401 and calls with a wrong token get 403. The method must
+  remain protected by the existing authorizer.
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - Lambda authorizer (TOKEN)
+  - identity source
+  - 401 vs 403
+services:
+  - apigateway
+  - lambda

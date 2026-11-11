@@ -1,0 +1,1 @@
+The list route works and the single-note route doesn't, so compare both: aws apigateway get-resources --rest-api-id <id> (find the id with get-rest-apis) and see which paths exist.

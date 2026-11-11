@@ -1,0 +1,1 @@
+The method accepts the request but nothing is configured behind it. Add an integration to it. Because the function needs the query string and returns its own status code and body, Lambda proxy (AWS_PROXY) is the right type; remember that the integration verb towards Lambda is POST and that the URI wraps the function ARN. The stage needs a new deployment afterwards.

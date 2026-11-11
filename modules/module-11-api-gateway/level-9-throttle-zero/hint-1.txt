@@ -1,0 +1,1 @@
+429 means throttled. Look at the stage's settings: aws apigateway get-stage --rest-api-id <id> --stage-name v2 and read methodSettings.
