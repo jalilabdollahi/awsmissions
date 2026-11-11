@@ -4,3 +4,6 @@ __pycache__/
 progress.json
 certificates/
 .sandboxes/
+.awsmissions/
+*.json.tmp
+*.json.corrupt

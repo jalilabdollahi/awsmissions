@@ -1,1 +1,6 @@
-Open `policy.json` with command `4` and look closely at the `Effect` field.
+The worker can list the bucket but not write to it, so authentication and the trust policy are working. Read the role's inline policy:
+
+  aws iam list-role-policies --role-name pixelforge-uploader
+  aws iam get-role-policy --role-name pixelforge-uploader --policy-name uploader-access
+
+Look at every field of the statement that covers s3:PutObject, not just Action and Resource.

@@ -1,1 +1,3 @@
-The action and resource are already close. Edit the JSON and then apply it with `file://policy.json`.
+IAM evaluates every statement that matches a request. An explicit "Deny" wins over any "Allow", no matter where it appears or how specific the Allow is. So adding a second Allow will not help while the Deny is still there.
+
+Your workspace has a copy of the policy: type `edit` to open policy.json.

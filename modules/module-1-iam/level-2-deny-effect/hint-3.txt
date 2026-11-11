@@ -1,1 +1,3 @@
-Set `Effect` to `Allow`, save the file, then run `aws iam put-role-policy --role-name uploader-role --policy-name uploader-policy --policy-document file://policy.json`.
+In policy.json, change the WriteUserUploads statement's "Effect" from "Deny" to "Allow". Leave its Resource as pixelforge-uploads/incoming/* so the role still can't write elsewhere. Then replace the inline policy with your edited file:
+
+  aws iam put-role-policy --role-name pixelforge-uploader --policy-name uploader-access --policy-document file://policy.json

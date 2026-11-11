@@ -8,6 +8,7 @@ from pathlib import Path
 from rich import box
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.markup import escape
 from rich.padding import Padding
 from rich.panel import Panel
 from rich.rule import Rule
@@ -98,8 +99,8 @@ def show_title(player_name: str, total_xp: int) -> None:
 def show_status(levels: list[dict], progress: dict) -> None:
     completed = set(progress.get("completed_levels", []))
     certs = set(progress.get("module_certificates", []))
+    current = progress.get("current_level")
 
-    # Group levels by module
     modules: dict[str, list[dict]] = {}
     for level in levels:
         modules.setdefault(level["module_name"], []).append(level)
@@ -109,45 +110,27 @@ def show_status(levels: list[dict], progress: dict) -> None:
     table.add_column("Mission", style="white", min_width=28)
     table.add_column("XP", justify="right", style="bright_magenta", no_wrap=True)
     table.add_column("Difficulty", no_wrap=True)
-    table.add_column("Status", no_wrap=True)
     table.add_column("Done", justify="center", no_wrap=True)
 
     for module_name, lvls in modules.items():
-        playable = [l for l in lvls if l.get("implementation_status", "playable") != "scaffolded"]
-        done_count = sum(1 for l in playable if l["id"] in completed)
+        done_count = sum(1 for l in lvls if l["key"] in completed)
         cert_mark = " [bright_yellow]CERT[/bright_yellow]" if module_name in certs else ""
-        title_text = f"[bold bright_cyan]{lvls[0]['module_title']}[/bold bright_cyan]"
-        prog_text = f"[grey50]{done_count}/{len(playable)} levels[/grey50]"
         table.add_section()
-        table.add_row(f"[bold bright_cyan]{title_text}[/bold bright_cyan]", prog_text + cert_mark, "", "", "", "")
-
+        table.add_row(
+            "",
+            f"[bold bright_cyan]{lvls[0]['module_title']}[/bold bright_cyan]  [grey50]{done_count}/{len(lvls)}[/grey50]{cert_mark}",
+            "", "", "",
+        )
         for level in lvls:
-            is_done = level["id"] in completed
-            status = level.get("implementation_status", "playable")
-            if status == "scaffolded":
-                status_text = Text("coming soon", style="grey35 italic")
-                name_style = "grey40"
-                done_cell = Text("·", style="grey35")
-            elif is_done:
-                status_text = Text("complete", style="bright_green")
-                name_style = "white"
-                done_cell = Text("[bright_green]✓[/bright_green]")
-            else:
-                status_text = Text("available", style="bright_yellow")
-                name_style = "white"
-                done_cell = Text("")
-
+            is_done = level["key"] in completed
+            marker = "[bright_cyan]▶[/bright_cyan] " if level["key"] == current else ""
             diff = level.get("difficulty", "beginner")
-            diff_color = _DIFFICULTY_COLOR.get(diff.lower(), "white")
-            diff_text = Text(diff, style=diff_color)
-
             table.add_row(
-                str(level["id"]),
-                Text(level["name"], style=name_style),
-                str(level["xp"]) if status != "scaffolded" else "",
-                diff_text if status != "scaffolded" else Text(""),
-                status_text,
-                done_cell,
+                str(level["number"]),
+                Text.from_markup(marker + escape(level["name"])),
+                str(level["xp"]),
+                Text(diff, style=_DIFFICULTY_COLOR.get(diff.lower(), "white")),
+                Text("✓", style="bright_green") if is_done else Text(""),
             )
 
     console.print()
@@ -156,7 +139,7 @@ def show_status(levels: list[dict], progress: dict) -> None:
     console.print()
 
 
-def show_mission(level: dict) -> None:
+def show_mission(level: dict, completed: bool = False) -> None:
     diff = level.get("difficulty", "beginner")
     diff_color = _DIFFICULTY_COLOR.get(diff.lower(), "white")
     level_num = level.get("module_level_number", level["id"])
@@ -182,6 +165,8 @@ def show_mission(level: dict) -> None:
     footer.append(f"  {level['xp']} XP", style="bold bright_magenta")
     footer.append("   ", style="")
     footer.append(f"{diff.upper()}", style=f"bold {diff_color}")
+    if completed:
+        footer.append("   ✓ COMPLETED", style="bold bright_green")
 
     rule = Text("─" * 52, style="grey23")
 
@@ -208,10 +193,11 @@ def show_mission(level: dict) -> None:
 
 def show_environment() -> None:
     rows = [
-        ("AWS commands", "Run [bright_cyan]aws ...[/bright_cyan] directly in-game"),
-        ("LocalStack", "Already configured — no setup needed"),
-        ("Local files", "[grey70]policy.json[/grey70] etc. work from the level dir"),
-        ("Example", "[grey50]aws iam put-role-policy --role-name ... --policy-document file://policy.json[/grey50]"),
+        ("AWS commands", "Type [bright_cyan]aws ...[/bright_cyan] at the prompt — it always targets the local emulator"),
+        ("Shell", "[bright_cyan]shell[/bright_cyan] opens a safe mission shell; [bright_cyan]!cmd[/bright_cyan] runs one command (zip, jq, cat...)"),
+        ("Emulator", "Floci, started for you — no AWS account, no bill"),
+        ("Workspace", "[bright_cyan]files[/bright_cyan] lists, [bright_cyan]edit[/bright_cyan] opens helper files; use them via file://name"),
+        ("Second terminal", "Run [bright_cyan]eval \"$(./play.sh --env)\"[/bright_cyan] first, or aws may hit your REAL account"),
     ]
     table = Table(box=None, show_header=False, padding=(0, 1))
     table.add_column(style="bright_yellow", no_wrap=True)
@@ -227,6 +213,16 @@ def show_environment() -> None:
         padding=(0, 1),
     ))
     console.print()
+
+
+def show_error(message: str) -> None:
+    console.print(Panel(
+        Text("\n" + message.strip() + "\n", style="white"),
+        title="[bold bright_red]Problem[/bold bright_red]",
+        border_style="bright_red",
+        box=box.ROUNDED,
+        padding=(0, 2),
+    ))
 
 
 def show_hint(content: str, number: int) -> None:
@@ -319,10 +315,12 @@ def show_help() -> None:
 
     pairs = [
         ("check",    "run the validator",           "hint",     "show the next hint"),
-        ("reset",    "rebuild the AWS environment",  "edit",     "open the helper file"),
+        ("reset",    "rebuild the AWS environment",  "edit [f]", "open a workspace file"),
         ("solution", "show the reference answer",    "debrief",  "show lesson summary"),
         ("status",   "show all missions",            "next",     "skip to next mission"),
-        ("aws ...",  "run an AWS CLI command",        "quit",     "exit the game"),
+        ("aws ...",  "run an AWS CLI command",       "files",    "list workspace files"),
+        ("shell",    "open a mission shell",         "!cmd",     "run one shell command"),
+        ("help",     "show this help",               "quit",     "exit the game"),
     ]
     for c1, d1, c2, d2 in pairs:
         table.add_row(c1, d1, c2, d2)

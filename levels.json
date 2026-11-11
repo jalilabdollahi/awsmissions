@@ -1,18 +1,19 @@
 {
-  "generated_at": "2026-04-09T11:37:20.234578+00:00",
+  "generated_at": "2026-11-11T05:40:34+00:00",
   "level_count": 196,
   "modules": [
     {
       "name": "module-1-iam",
+      "title": "IAM Foundations",
       "levels": [
         {
-          "id": "module-1-iam/level-1-empty-policy",
-          "name": "level-1-empty-policy",
+          "key": "module-1-iam/level-1-empty-policy",
+          "number": 1,
           "path": "modules/module-1-iam/level-1-empty-policy",
           "mission": {
             "name": "The Empty Statement",
-            "description": "An IAM role exists for a reporting app, but its inline policy only allows s3:ListBucket \u2014 it cannot read any objects.",
-            "objective": "Update the inline policy on role report-reader-role so it allows s3:GetObject on the mission bucket objects.",
+            "description": "An IAM role exists for a reporting app, but its inline policy only allows s3:ListBucket and cannot read any objects. Edit the local policy file, then apply it with the AWS CLI.",
+            "objective": "Update policy.json so it allows s3:GetObject on mission-bucket objects, then apply it to role report-reader-role.",
             "xp": 100,
             "difficulty": "beginner",
             "expected_time": "5m",
@@ -26,32 +27,35 @@
           }
         },
         {
-          "id": "module-1-iam/level-2-deny-effect",
-          "name": "level-2-deny-effect",
+          "key": "module-1-iam/level-2-deny-effect",
+          "number": 2,
           "path": "modules/module-1-iam/level-2-deny-effect",
           "mission": {
             "name": "Wrong Side of the Law",
-            "description": "The IAM policy for an upload service explicitly denies writes to the mission bucket, so PutObject requests always fail.",
-            "objective": "Replace the deny statement with an allow statement for s3:PutObject on the uploads bucket.",
+            "description": "PixelForge's image-upload worker runs as the IAM role pixelforge-uploader. Since this morning's \"permissions cleanup\" every upload fails with AccessDenied, and the support queue is filling up. The worker can still list the bucket, so the role itself is fine — something in its inline policy is actively blocking writes.",
+            "objective": "Make the role pixelforge-uploader able to upload objects under s3://pixelforge-uploads/incoming/ — without giving it write access to any other bucket or prefix.",
             "xp": 100,
             "difficulty": "beginner",
-            "expected_time": "5m",
+            "expected_time": "6m",
             "concepts": [
-              "IAM Effect",
-              "explicit deny",
+              "IAM policy evaluation",
+              "explicit Deny",
               "s3:PutObject"
             ],
-            "module": "module-1-iam",
-            "level": "level-2-deny-effect"
+            "services": [
+              "iam",
+              "s3",
+              "sts"
+            ]
           }
         },
         {
-          "id": "module-1-iam/level-3-action-typo",
-          "name": "level-3-action-typo",
+          "key": "module-1-iam/level-3-action-typo",
+          "number": 3,
           "path": "modules/module-1-iam/level-3-action-typo",
           "mission": {
             "name": "The Misspelled Gate",
-            "description": "Policy action has typo: `\"s3:GetObjcet\"` \u2014 IAM rejects all GetObject calls",
+            "description": "Policy action has typo: `\"s3:GetObjcet\"` — IAM rejects all GetObject calls",
             "objective": "Fix the typo to `\"s3:GetObject\"`",
             "xp": 100,
             "difficulty": "beginner",
@@ -69,8 +73,8 @@
           }
         },
         {
-          "id": "module-1-iam/level-4-wrong-resource",
-          "name": "level-4-wrong-resource",
+          "key": "module-1-iam/level-4-wrong-resource",
+          "number": 4,
           "path": "modules/module-1-iam/level-4-wrong-resource",
           "mission": {
             "name": "The Locked Vault",
@@ -93,12 +97,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-5-no-policy",
-          "name": "level-5-no-policy",
+          "key": "module-1-iam/level-5-no-policy",
+          "number": 5,
           "path": "modules/module-1-iam/level-5-no-policy",
           "mission": {
             "name": "The Bare Role",
-            "description": "IAM role exists and is attached to Lambda but has zero policies \u2014 all calls denied",
+            "description": "IAM role exists and is attached to Lambda but has zero policies — all calls denied",
             "objective": "Attach a managed policy or put an inline policy granting required permissions",
             "xp": 125,
             "difficulty": "beginner",
@@ -117,12 +121,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-6-wrong-principal",
-          "name": "level-6-wrong-principal",
+          "key": "module-1-iam/level-6-wrong-principal",
+          "number": 6,
           "path": "modules/module-1-iam/level-6-wrong-principal",
           "mission": {
             "name": "Trust Nobody",
-            "description": "Role trust policy has wrong account ID in Principal \u2014 `sts:AssumeRole` fails",
+            "description": "Role trust policy has wrong account ID in Principal — `sts:AssumeRole` fails",
             "objective": "Fix the Principal to the correct account ID (`000000000000` in LocalStack)",
             "xp": 150,
             "difficulty": "beginner",
@@ -140,12 +144,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-7-wrong-service-principal",
-          "name": "level-7-wrong-service-principal",
+          "key": "module-1-iam/level-7-wrong-service-principal",
+          "number": 7,
           "path": "modules/module-1-iam/level-7-wrong-service-principal",
           "mission": {
             "name": "Wrong Service",
-            "description": "Lambda execution role has `\"Service\": \"ec2.amazonaws.com\"` in trust policy \u2014 Lambda can't assume it",
+            "description": "Lambda execution role has `\"Service\": \"ec2.amazonaws.com\"` in trust policy — Lambda can't assume it",
             "objective": "Change service principal to `\"lambda.amazonaws.com\"`",
             "xp": 150,
             "difficulty": "beginner",
@@ -164,12 +168,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-8-missing-passrole",
-          "name": "level-8-missing-passrole",
+          "key": "module-1-iam/level-8-missing-passrole",
+          "number": 8,
           "path": "modules/module-1-iam/level-8-missing-passrole",
           "mission": {
             "name": "The Blocked Handoff",
-            "description": "IAM user can create Lambda but can't assign an execution role \u2014 missing `iam:PassRole`",
+            "description": "IAM user can create Lambda but can't assign an execution role — missing `iam:PassRole`",
             "objective": "Add `iam:PassRole` permission on the target role to the user policy",
             "xp": 175,
             "difficulty": "beginner",
@@ -188,8 +192,8 @@
           }
         },
         {
-          "id": "module-1-iam/level-9-user-no-group",
-          "name": "level-9-user-no-group",
+          "key": "module-1-iam/level-9-user-no-group",
+          "number": 9,
           "path": "modules/module-1-iam/level-9-user-no-group",
           "mission": {
             "name": "The Orphan User",
@@ -211,12 +215,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-10-group-no-policy",
-          "name": "level-10-group-no-policy",
+          "key": "module-1-iam/level-10-group-no-policy",
+          "number": 10,
           "path": "modules/module-1-iam/level-10-group-no-policy",
           "mission": {
             "name": "The Empty Club",
-            "description": "User is in a group but the group has no policies \u2014 all actions denied",
+            "description": "User is in a group but the group has no policies — all actions denied",
             "objective": "Attach a policy to the group",
             "xp": 125,
             "difficulty": "beginner",
@@ -234,12 +238,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-11-condition-wrong-key",
-          "name": "level-11-condition-wrong-key",
+          "key": "module-1-iam/level-11-condition-wrong-key",
+          "number": 11,
           "path": "modules/module-1-iam/level-11-condition-wrong-key",
           "mission": {
             "name": "The Bad Condition",
-            "description": "Policy has a condition block using wrong key: `\"aws:sourceIp\"` when it should be `\"aws:SourceAccount\"` \u2014 condition never matches",
+            "description": "Policy has a condition block using wrong key: `\"aws:sourceIp\"` when it should be `\"aws:SourceAccount\"` — condition never matches",
             "objective": "Fix the condition key to the correct one",
             "xp": 175,
             "difficulty": "beginner",
@@ -257,12 +261,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-12-condition-operator",
-          "name": "level-12-condition-operator",
+          "key": "module-1-iam/level-12-condition-operator",
+          "number": 12,
           "path": "modules/module-1-iam/level-12-condition-operator",
           "mission": {
             "name": "Almost Right",
-            "description": "Policy condition uses `StringEquals` for a value that requires wildcard matching \u2014 use `StringLike`",
+            "description": "Policy condition uses `StringEquals` for a value that requires wildcard matching — use `StringLike`",
             "objective": "Change condition operator from `StringEquals` to `StringLike`",
             "xp": 175,
             "difficulty": "beginner",
@@ -280,12 +284,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-13-policy-missing-version",
-          "name": "level-13-policy-missing-version",
+          "key": "module-1-iam/level-13-policy-missing-version",
+          "number": 13,
           "path": "modules/module-1-iam/level-13-policy-missing-version",
           "mission": {
             "name": "Time Traveler",
-            "description": "IAM policy document missing `\"Version\": \"2012-10-17\"` \u2014 policy variables don't resolve",
+            "description": "IAM policy document missing `\"Version\": \"2012-10-17\"` — policy variables don't resolve",
             "objective": "Add the Version field to the policy document",
             "xp": 125,
             "difficulty": "beginner",
@@ -303,12 +307,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-14-inline-blocks-managed",
-          "name": "level-14-inline-blocks-managed",
+          "key": "module-1-iam/level-14-inline-blocks-managed",
+          "number": 14,
           "path": "modules/module-1-iam/level-14-inline-blocks-managed",
           "mission": {
             "name": "Double Trouble",
-            "description": "Inline policy grants S3 access but a second inline policy explicitly Denies it \u2014 Deny wins",
+            "description": "Inline policy grants S3 access but a second inline policy explicitly Denies it — Deny wins",
             "objective": "Remove or fix the conflicting Deny policy",
             "xp": 200,
             "difficulty": "beginner",
@@ -326,12 +330,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-15-assume-role-no-sts",
-          "name": "level-15-assume-role-no-sts",
+          "key": "module-1-iam/level-15-assume-role-no-sts",
+          "number": 15,
           "path": "modules/module-1-iam/level-15-assume-role-no-sts",
           "mission": {
             "name": "Can't Switch Hats",
-            "description": "User policy is missing `sts:AssumeRole` \u2014 cannot switch to the target role",
+            "description": "User policy is missing `sts:AssumeRole` — cannot switch to the target role",
             "objective": "Add `sts:AssumeRole` on the target role ARN",
             "xp": 150,
             "difficulty": "beginner",
@@ -349,12 +353,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-16-external-id-missing",
-          "name": "level-16-external-id-missing",
+          "key": "module-1-iam/level-16-external-id-missing",
+          "number": 16,
           "path": "modules/module-1-iam/level-16-external-id-missing",
           "mission": {
             "name": "The Missing Secret Handshake",
-            "description": "Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it \u2014 AssumeRole denied",
+            "description": "Role trust policy requires `sts:ExternalId` condition but caller doesn't provide it — AssumeRole denied",
             "objective": "Provide the correct ExternalId when calling `aws sts assume-role`",
             "xp": 200,
             "difficulty": "beginner",
@@ -373,8 +377,8 @@
           }
         },
         {
-          "id": "module-1-iam/level-17-permission-boundary",
-          "name": "level-17-permission-boundary",
+          "key": "module-1-iam/level-17-permission-boundary",
+          "number": 17,
           "path": "modules/module-1-iam/level-17-permission-boundary",
           "mission": {
             "name": "The Invisible Ceiling",
@@ -396,12 +400,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-18-resource-wildcard",
-          "name": "level-18-resource-wildcard",
+          "key": "module-1-iam/level-18-resource-wildcard",
+          "number": 18,
           "path": "modules/module-1-iam/level-18-resource-wildcard",
           "mission": {
             "name": "Scope Creep",
-            "description": "Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects \u2014 only that file is allowed",
+            "description": "Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects — only that file is allowed",
             "objective": "Change resource to `arn:aws:s3:::bucket/*`",
             "xp": 125,
             "difficulty": "beginner",
@@ -420,12 +424,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-19-path-mismatch",
-          "name": "level-19-path-mismatch",
+          "key": "module-1-iam/level-19-path-mismatch",
+          "number": 19,
           "path": "modules/module-1-iam/level-19-path-mismatch",
           "mission": {
             "name": "The Wrong Path",
-            "description": "IAM user exists at path `/ops/` but policy ARN references `/dev/` \u2014 condition on path fails",
+            "description": "IAM user exists at path `/ops/` but policy ARN references `/dev/` — condition on path fails",
             "objective": "Fix the role/user path or the policy path condition",
             "xp": 175,
             "difficulty": "beginner",
@@ -443,12 +447,12 @@
           }
         },
         {
-          "id": "module-1-iam/level-20-policy-size",
-          "name": "level-20-policy-size",
+          "key": "module-1-iam/level-20-policy-size",
+          "number": 20,
           "path": "modules/module-1-iam/level-20-policy-size",
           "mission": {
             "name": "The Bloated Policy",
-            "description": "Inline policy exceeds 2,048 character limit \u2014 IAM rejects the PutRolePolicy call",
+            "description": "Inline policy exceeds 2,048 character limit — IAM rejects the PutRolePolicy call",
             "objective": "Refactor: extract into a managed policy and attach it",
             "xp": 200,
             "difficulty": "beginner",
@@ -469,10 +473,11 @@
     },
     {
       "name": "module-2-s3",
+      "title": "S3 Mastery",
       "levels": [
         {
-          "id": "module-2-s3/level-1-bucket-missing",
-          "name": "level-1-bucket-missing",
+          "key": "module-2-s3/level-1-bucket-missing",
+          "number": 1,
           "path": "modules/module-2-s3/level-1-bucket-missing",
           "mission": {
             "name": "No Bucket, No Service",
@@ -490,12 +495,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-2-access-denied-read",
-          "name": "level-2-access-denied-read",
+          "key": "module-2-s3/level-2-access-denied-read",
+          "number": 2,
           "path": "modules/module-2-s3/level-2-access-denied-read",
           "mission": {
             "name": "Keep Out",
-            "description": "Bucket exists and has an object but GetObject is denied \u2014 bucket policy blocks all access",
+            "description": "Bucket exists and has an object but GetObject is denied — bucket policy blocks all access",
             "objective": "Fix bucket policy to allow `s3:GetObject` for the required principal",
             "xp": 125,
             "difficulty": "beginner",
@@ -514,12 +519,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-3-access-denied-write",
-          "name": "level-3-access-denied-write",
+          "key": "module-2-s3/level-3-access-denied-write",
+          "number": 3,
           "path": "modules/module-2-s3/level-3-access-denied-write",
           "mission": {
             "name": "Read-Only Trap",
-            "description": "Bucket policy only allows `s3:GetObject` \u2014 PutObject is denied",
+            "description": "Bucket policy only allows `s3:GetObject` — PutObject is denied",
             "objective": "Add `s3:PutObject` to the bucket policy",
             "xp": 125,
             "difficulty": "beginner",
@@ -538,12 +543,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-4-versioning-disabled",
-          "name": "level-4-versioning-disabled",
+          "key": "module-2-s3/level-4-versioning-disabled",
+          "number": 4,
           "path": "modules/module-2-s3/level-4-versioning-disabled",
           "mission": {
             "name": "Lost History",
-            "description": "Application expects versioned objects but versioning is disabled \u2014 previous versions unreachable",
+            "description": "Application expects versioned objects but versioning is disabled — previous versions unreachable",
             "objective": "Enable versioning: `aws s3api put-bucket-versioning`",
             "xp": 125,
             "difficulty": "beginner",
@@ -562,12 +567,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-5-versioning-suspended",
-          "name": "level-5-versioning-suspended",
+          "key": "module-2-s3/level-5-versioning-suspended",
+          "number": 5,
           "path": "modules/module-2-s3/level-5-versioning-suspended",
           "mission": {
             "name": "Frozen in Time",
-            "description": "Versioning is Suspended (not Enabled) \u2014 new versions are not created",
+            "description": "Versioning is Suspended (not Enabled) — new versions are not created",
             "objective": "Change versioning status from `Suspended` to `Enabled`",
             "xp": 150,
             "difficulty": "beginner",
@@ -584,12 +589,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-6-public-access-block",
-          "name": "level-6-public-access-block",
+          "key": "module-2-s3/level-6-public-access-block",
+          "number": 6,
           "path": "modules/module-2-s3/level-6-public-access-block",
           "mission": {
             "name": "The Force Field",
-            "description": "Bucket policy grants public read but `BlockPublicPolicy` is true \u2014 policy silently rejected",
+            "description": "Bucket policy grants public read but `BlockPublicPolicy` is true — policy silently rejected",
             "objective": "Disable public access block: `aws s3api put-public-access-block`",
             "xp": 150,
             "difficulty": "beginner",
@@ -608,12 +613,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-7-cors-missing",
-          "name": "level-7-cors-missing",
+          "key": "module-2-s3/level-7-cors-missing",
+          "number": 7,
           "path": "modules/module-2-s3/level-7-cors-missing",
           "mission": {
             "name": "The CORS Complaint",
-            "description": "Web application can't fetch objects \u2014 CORS configuration is missing entirely",
+            "description": "Web application can't fetch objects — CORS configuration is missing entirely",
             "objective": "Add a CORS configuration via `aws s3api put-bucket-cors`",
             "xp": 150,
             "difficulty": "beginner",
@@ -632,8 +637,8 @@
           }
         },
         {
-          "id": "module-2-s3/level-8-cors-wrong-origin",
-          "name": "level-8-cors-wrong-origin",
+          "key": "module-2-s3/level-8-cors-wrong-origin",
+          "number": 8,
           "path": "modules/module-2-s3/level-8-cors-wrong-origin",
           "mission": {
             "name": "Wrong Domain Allowed",
@@ -654,12 +659,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-9-lifecycle-wrong-prefix",
-          "name": "level-9-lifecycle-wrong-prefix",
+          "key": "module-2-s3/level-9-lifecycle-wrong-prefix",
+          "number": 9,
           "path": "modules/module-2-s3/level-9-lifecycle-wrong-prefix",
           "mission": {
             "name": "Eternal Storage",
-            "description": "Lifecycle rule exists to expire objects after 30 days but prefix is `logs/` while objects are under `app-logs/` \u2014 objects never expire",
+            "description": "Lifecycle rule exists to expire objects after 30 days but prefix is `logs/` while objects are under `app-logs/` — objects never expire",
             "objective": "Fix the prefix in the lifecycle rule",
             "xp": 175,
             "difficulty": "beginner",
@@ -676,12 +681,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-10-lifecycle-missing",
-          "name": "level-10-lifecycle-missing",
+          "key": "module-2-s3/level-10-lifecycle-missing",
+          "number": 10,
           "path": "modules/module-2-s3/level-10-lifecycle-missing",
           "mission": {
             "name": "Incomplete Uploads Pile Up",
-            "description": "Multipart uploads are being abandoned and accumulating cost \u2014 no lifecycle rule to abort them",
+            "description": "Multipart uploads are being abandoned and accumulating cost — no lifecycle rule to abort them",
             "objective": "Add lifecycle rule: abort incomplete multipart uploads after 7 days",
             "xp": 175,
             "difficulty": "beginner",
@@ -698,12 +703,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-11-notification-missing",
-          "name": "level-11-notification-missing",
+          "key": "module-2-s3/level-11-notification-missing",
+          "number": 11,
           "path": "modules/module-2-s3/level-11-notification-missing",
           "mission": {
             "name": "Silent Arrivals",
-            "description": "Lambda function should trigger on object upload \u2014 S3 event notification not configured",
+            "description": "Lambda function should trigger on object upload — S3 event notification not configured",
             "objective": "Add event notification: `aws s3api put-bucket-notification-configuration`",
             "xp": 175,
             "difficulty": "beginner",
@@ -722,8 +727,8 @@
           }
         },
         {
-          "id": "module-2-s3/level-12-notification-wrong-event",
-          "name": "level-12-notification-wrong-event",
+          "key": "module-2-s3/level-12-notification-wrong-event",
+          "number": 12,
           "path": "modules/module-2-s3/level-12-notification-wrong-event",
           "mission": {
             "name": "Wrong Trigger",
@@ -744,12 +749,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-13-encryption-missing",
-          "name": "level-13-encryption-missing",
+          "key": "module-2-s3/level-13-encryption-missing",
+          "number": 13,
           "path": "modules/module-2-s3/level-13-encryption-missing",
           "mission": {
             "name": "Plaintext Exposure",
-            "description": "Bucket has no default encryption \u2014 objects stored unencrypted",
+            "description": "Bucket has no default encryption — objects stored unencrypted",
             "objective": "Enable default SSE-S3 encryption: `aws s3api put-bucket-encryption`",
             "xp": 150,
             "difficulty": "beginner",
@@ -768,12 +773,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-14-bucket-policy-syntax",
-          "name": "level-14-bucket-policy-syntax",
+          "key": "module-2-s3/level-14-bucket-policy-syntax",
+          "number": 14,
           "path": "modules/module-2-s3/level-14-bucket-policy-syntax",
           "mission": {
             "name": "The Broken Gate",
-            "description": "Bucket policy JSON has a syntax error (missing closing bracket) \u2014 policy rejected",
+            "description": "Bucket policy JSON has a syntax error (missing closing bracket) — policy rejected",
             "objective": "Fix the JSON syntax in the bucket policy",
             "xp": 125,
             "difficulty": "beginner",
@@ -792,12 +797,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-15-acl-too-open",
-          "name": "level-15-acl-too-open",
+          "key": "module-2-s3/level-15-acl-too-open",
+          "number": 15,
           "path": "modules/module-2-s3/level-15-acl-too-open",
           "mission": {
             "name": "Public by Accident",
-            "description": "Bucket ACL is set to `public-read` \u2014 all objects are publicly readable",
+            "description": "Bucket ACL is set to `public-read` — all objects are publicly readable",
             "objective": "Change ACL to `private`: `aws s3api put-bucket-acl --acl private`",
             "xp": 125,
             "difficulty": "beginner",
@@ -816,12 +821,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-16-static-website-missing",
-          "name": "level-16-static-website-missing",
+          "key": "module-2-s3/level-16-static-website-missing",
+          "number": 16,
           "path": "modules/module-2-s3/level-16-static-website-missing",
           "mission": {
             "name": "Silent Website",
-            "description": "Static website hosting is disabled \u2014 requests return `NoSuchWebsiteConfiguration`",
+            "description": "Static website hosting is disabled — requests return `NoSuchWebsiteConfiguration`",
             "objective": "Enable static website hosting with index.html and error.html",
             "xp": 150,
             "difficulty": "beginner",
@@ -838,12 +843,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-17-logging-disabled",
-          "name": "level-17-logging-disabled",
+          "key": "module-2-s3/level-17-logging-disabled",
+          "number": 17,
           "path": "modules/module-2-s3/level-17-logging-disabled",
           "mission": {
             "name": "No Paper Trail",
-            "description": "S3 server access logging is disabled \u2014 access logs not being collected",
+            "description": "S3 server access logging is disabled — access logs not being collected",
             "objective": "Enable logging: `aws s3api put-bucket-logging`",
             "xp": 150,
             "difficulty": "beginner",
@@ -862,8 +867,8 @@
           }
         },
         {
-          "id": "module-2-s3/level-18-object-lock-wrong-mode",
-          "name": "level-18-object-lock-wrong-mode",
+          "key": "module-2-s3/level-18-object-lock-wrong-mode",
+          "number": 18,
           "path": "modules/module-2-s3/level-18-object-lock-wrong-mode",
           "mission": {
             "name": "Too Flexible",
@@ -884,12 +889,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-19-wrong-storage-class",
-          "name": "level-19-wrong-storage-class",
+          "key": "module-2-s3/level-19-wrong-storage-class",
+          "number": 19,
           "path": "modules/module-2-s3/level-19-wrong-storage-class",
           "mission": {
             "name": "Expensive Archive",
-            "description": "Frequently accessed objects are set to `GLACIER` storage class \u2014 retrieval takes hours",
+            "description": "Frequently accessed objects are set to `GLACIER` storage class — retrieval takes hours",
             "objective": "Change storage class to `STANDARD` via copy with metadata replacement",
             "xp": 175,
             "difficulty": "beginner",
@@ -906,12 +911,12 @@
           }
         },
         {
-          "id": "module-2-s3/level-20-requester-pays-wrong",
-          "name": "level-20-requester-pays-wrong",
+          "key": "module-2-s3/level-20-requester-pays-wrong",
+          "number": 20,
           "path": "modules/module-2-s3/level-20-requester-pays-wrong",
           "mission": {
             "name": "Unexpected Bills",
-            "description": "Bucket has `requester-pays` enabled \u2014 callers are being charged unexpectedly",
+            "description": "Bucket has `requester-pays` enabled — callers are being charged unexpectedly",
             "objective": "Disable requester pays: `aws s3api put-bucket-request-payment --payer BucketOwner`",
             "xp": 175,
             "difficulty": "beginner",
@@ -933,14 +938,15 @@
     },
     {
       "name": "module-3-lambda",
+      "title": "Lambda Functions",
       "levels": [
         {
-          "id": "module-3-lambda/level-1-function-missing",
-          "name": "level-1-function-missing",
+          "key": "module-3-lambda/level-1-function-missing",
+          "number": 1,
           "path": "modules/module-3-lambda/level-1-function-missing",
           "mission": {
             "name": "No Function Found",
-            "description": "Invocation fails \u2014 Lambda function `mission-function` doesn't exist",
+            "description": "Invocation fails — Lambda function `mission-function` doesn't exist",
             "objective": "Deploy the function using `aws lambda create-function`",
             "xp": 100,
             "difficulty": "beginner",
@@ -958,12 +964,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-2-wrong-runtime",
-          "name": "level-2-wrong-runtime",
+          "key": "module-3-lambda/level-2-wrong-runtime",
+          "number": 2,
           "path": "modules/module-3-lambda/level-2-wrong-runtime",
           "mission": {
             "name": "Deprecated Engine",
-            "description": "Function uses runtime `python3.6` (deprecated/unsupported) \u2014 invocation fails",
+            "description": "Function uses runtime `python3.6` (deprecated/unsupported) — invocation fails",
             "objective": "Update runtime to `python3.11`: `aws lambda update-function-configuration`",
             "xp": 125,
             "difficulty": "beginner",
@@ -981,12 +987,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-3-handler-wrong",
-          "name": "level-3-handler-wrong",
+          "key": "module-3-lambda/level-3-handler-wrong",
+          "number": 3,
           "path": "modules/module-3-lambda/level-3-handler-wrong",
           "mission": {
             "name": "The Missing Door",
-            "description": "Function is deployed but handler is `main.handler` \u2014 file is actually `index.py` with function `lambda_handler`",
+            "description": "Function is deployed but handler is `main.handler` — file is actually `index.py` with function `lambda_handler`",
             "objective": "Fix handler to `index.lambda_handler`",
             "xp": 125,
             "difficulty": "beginner",
@@ -1004,12 +1010,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-4-role-missing",
-          "name": "level-4-role-missing",
+          "key": "module-3-lambda/level-4-role-missing",
+          "number": 4,
           "path": "modules/module-3-lambda/level-4-role-missing",
           "mission": {
             "name": "The Roleless Function",
-            "description": "Function has no execution role set \u2014 invocation rejected",
+            "description": "Function has no execution role set — invocation rejected",
             "objective": "Create an IAM role with Lambda trust policy and assign it to the function",
             "xp": 150,
             "difficulty": "beginner",
@@ -1028,8 +1034,8 @@
           }
         },
         {
-          "id": "module-3-lambda/level-5-role-wrong-service",
-          "name": "level-5-role-wrong-service",
+          "key": "module-3-lambda/level-5-role-wrong-service",
+          "number": 5,
           "path": "modules/module-3-lambda/level-5-role-wrong-service",
           "mission": {
             "name": "Wrong Trust",
@@ -1052,12 +1058,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-6-env-var-missing",
-          "name": "level-6-env-var-missing",
+          "key": "module-3-lambda/level-6-env-var-missing",
+          "number": 6,
           "path": "modules/module-3-lambda/level-6-env-var-missing",
           "mission": {
             "name": "The Blank Config",
-            "description": "Function code reads `os.environ['DATABASE_URL']` but the env var is not set \u2014 KeyError on invocation",
+            "description": "Function code reads `os.environ['DATABASE_URL']` but the env var is not set — KeyError on invocation",
             "objective": "Add the environment variable via `aws lambda update-function-configuration --environment`",
             "xp": 125,
             "difficulty": "beginner",
@@ -1075,12 +1081,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-7-timeout-too-low",
-          "name": "level-7-timeout-too-low",
+          "key": "module-3-lambda/level-7-timeout-too-low",
+          "number": 7,
           "path": "modules/module-3-lambda/level-7-timeout-too-low",
           "mission": {
             "name": "Three Seconds and Out",
-            "description": "Function needs 30 seconds to process but timeout is 3s \u2014 always times out",
+            "description": "Function needs 30 seconds to process but timeout is 3s — always times out",
             "objective": "Increase timeout to 60s: `aws lambda update-function-configuration --timeout 60`",
             "xp": 125,
             "difficulty": "beginner",
@@ -1098,12 +1104,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-8-memory-too-low",
-          "name": "level-8-memory-too-low",
+          "key": "module-3-lambda/level-8-memory-too-low",
+          "number": 8,
           "path": "modules/module-3-lambda/level-8-memory-too-low",
           "mission": {
             "name": "Out of Memory",
-            "description": "Function crashes with memory error \u2014 configured at 128MB, needs 512MB",
+            "description": "Function crashes with memory error — configured at 128MB, needs 512MB",
             "objective": "Increase memory: `aws lambda update-function-configuration --memory-size 512`",
             "xp": 125,
             "difficulty": "beginner",
@@ -1121,12 +1127,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-9-concurrency-zero",
-          "name": "level-9-concurrency-zero",
+          "key": "module-3-lambda/level-9-concurrency-zero",
+          "number": 9,
           "path": "modules/module-3-lambda/level-9-concurrency-zero",
           "mission": {
             "name": "The Throttled Function",
-            "description": "Function has reserved concurrency set to `0` \u2014 all invocations are throttled immediately",
+            "description": "Function has reserved concurrency set to `0` — all invocations are throttled immediately",
             "objective": "Remove or increase reserved concurrency: `aws lambda put-function-concurrency`",
             "xp": 150,
             "difficulty": "beginner",
@@ -1144,12 +1150,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-10-dlq-missing",
-          "name": "level-10-dlq-missing",
+          "key": "module-3-lambda/level-10-dlq-missing",
+          "number": 10,
           "path": "modules/module-3-lambda/level-10-dlq-missing",
           "mission": {
             "name": "Lost on Failure",
-            "description": "Async invocation fails silently \u2014 no dead-letter queue configured",
+            "description": "Async invocation fails silently — no dead-letter queue configured",
             "objective": "Configure DLQ: `aws lambda update-function-configuration --dead-letter-config`",
             "xp": 175,
             "difficulty": "beginner",
@@ -1168,12 +1174,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-11-layer-wrong-arn",
-          "name": "level-11-layer-wrong-arn",
+          "key": "module-3-lambda/level-11-layer-wrong-arn",
+          "number": 11,
           "path": "modules/module-3-lambda/level-11-layer-wrong-arn",
           "mission": {
             "name": "Missing Dependency",
-            "description": "Function references a Lambda layer ARN that doesn't exist \u2014 init fails",
+            "description": "Function references a Lambda layer ARN that doesn't exist — init fails",
             "objective": "Create the layer and update the function to use the correct ARN",
             "xp": 200,
             "difficulty": "beginner",
@@ -1191,12 +1197,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-12-trigger-missing",
-          "name": "level-12-trigger-missing",
+          "key": "module-3-lambda/level-12-trigger-missing",
+          "number": 12,
           "path": "modules/module-3-lambda/level-12-trigger-missing",
           "mission": {
             "name": "The Silent Upload",
-            "description": "S3 bucket receives files but Lambda is never triggered \u2014 event source mapping missing",
+            "description": "S3 bucket receives files but Lambda is never triggered — event source mapping missing",
             "objective": "Add S3 notification configuration pointing to the Lambda function",
             "xp": 175,
             "difficulty": "beginner",
@@ -1215,8 +1221,8 @@
           }
         },
         {
-          "id": "module-3-lambda/level-13-trigger-wrong-bucket",
-          "name": "level-13-trigger-wrong-bucket",
+          "key": "module-3-lambda/level-13-trigger-wrong-bucket",
+          "number": 13,
           "path": "modules/module-3-lambda/level-13-trigger-wrong-bucket",
           "mission": {
             "name": "Watching the Wrong Door",
@@ -1238,8 +1244,8 @@
           }
         },
         {
-          "id": "module-3-lambda/level-14-resource-policy-missing",
-          "name": "level-14-resource-policy-missing",
+          "key": "module-3-lambda/level-14-resource-policy-missing",
+          "number": 14,
           "path": "modules/module-3-lambda/level-14-resource-policy-missing",
           "mission": {
             "name": "Permission Denied by Lambda",
@@ -1262,12 +1268,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-15-alias-wrong-version",
-          "name": "level-15-alias-wrong-version",
+          "key": "module-3-lambda/level-15-alias-wrong-version",
+          "number": 15,
           "path": "modules/module-3-lambda/level-15-alias-wrong-version",
           "mission": {
             "name": "The Ghost Alias",
-            "description": "Lambda alias `production` points to version `5` which was deleted \u2014 invocations fail",
+            "description": "Lambda alias `production` points to version `5` which was deleted — invocations fail",
             "objective": "Update alias to point to an existing version or `$LATEST`",
             "xp": 175,
             "difficulty": "beginner",
@@ -1285,12 +1291,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-16-vpc-no-subnet",
-          "name": "level-16-vpc-no-subnet",
+          "key": "module-3-lambda/level-16-vpc-no-subnet",
+          "number": 16,
           "path": "modules/module-3-lambda/level-16-vpc-no-subnet",
           "mission": {
             "name": "Stranded in VPC",
-            "description": "Lambda has VPC config but `SubnetIds` is empty \u2014 deployment fails",
+            "description": "Lambda has VPC config but `SubnetIds` is empty — deployment fails",
             "objective": "Add the correct subnet IDs to VPC configuration",
             "xp": 175,
             "difficulty": "beginner",
@@ -1309,12 +1315,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-17-vpc-no-sg",
-          "name": "level-17-vpc-no-sg",
+          "key": "module-3-lambda/level-17-vpc-no-sg",
+          "number": 17,
           "path": "modules/module-3-lambda/level-17-vpc-no-sg",
           "mission": {
             "name": "Unguarded VPC",
-            "description": "Lambda VPC config has subnets but no security groups \u2014 cannot configure network interface",
+            "description": "Lambda VPC config has subnets but no security groups — cannot configure network interface",
             "objective": "Add at least one security group to the VPC configuration",
             "xp": 175,
             "difficulty": "beginner",
@@ -1333,12 +1339,12 @@
           }
         },
         {
-          "id": "module-3-lambda/level-18-function-url-auth",
-          "name": "level-18-function-url-auth",
+          "key": "module-3-lambda/level-18-function-url-auth",
+          "number": 18,
           "path": "modules/module-3-lambda/level-18-function-url-auth",
           "mission": {
             "name": "The Locked Door",
-            "description": "Lambda function URL is configured with `AuthType: AWS_IAM` \u2014 public HTTP requests return 403",
+            "description": "Lambda function URL is configured with `AuthType: AWS_IAM` — public HTTP requests return 403",
             "objective": "Change AuthType to `NONE` for public access: `aws lambda update-function-url-config`",
             "xp": 150,
             "difficulty": "beginner",
@@ -1359,14 +1365,15 @@
     },
     {
       "name": "module-4-dynamodb",
+      "title": "DynamoDB",
       "levels": [
         {
-          "id": "module-4-dynamodb/level-1-table-missing",
-          "name": "level-1-table-missing",
+          "key": "module-4-dynamodb/level-1-table-missing",
+          "number": 1,
           "path": "modules/module-4-dynamodb/level-1-table-missing",
           "mission": {
             "name": "No Table, No Data",
-            "description": "Application fails \u2014 DynamoDB table `MissionTable` doesn't exist",
+            "description": "Application fails — DynamoDB table `MissionTable` doesn't exist",
             "objective": "Create the table with the correct key schema via `aws dynamodb create-table`",
             "xp": 150,
             "difficulty": "intermediate",
@@ -1383,12 +1390,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-2-wrong-key-type",
-          "name": "level-2-wrong-key-type",
+          "key": "module-4-dynamodb/level-2-wrong-key-type",
+          "number": 2,
           "path": "modules/module-4-dynamodb/level-2-wrong-key-type",
           "mission": {
             "name": "Type Mismatch",
-            "description": "Table's hash key `userId` is defined as type `N` (Number) but application sends String values \u2014 all writes rejected",
+            "description": "Table's hash key `userId` is defined as type `N` (Number) but application sends String values — all writes rejected",
             "objective": "Delete and recreate table with hash key type `S` (String)",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1405,12 +1412,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-3-missing-sort-key",
-          "name": "level-3-missing-sort-key",
+          "key": "module-4-dynamodb/level-3-missing-sort-key",
+          "number": 3,
           "path": "modules/module-4-dynamodb/level-3-missing-sort-key",
           "mission": {
             "name": "One Key Short",
-            "description": "Table has only a hash key but the application queries with both hash + sort key \u2014 query fails",
+            "description": "Table has only a hash key but the application queries with both hash + sort key — query fails",
             "objective": "Recreate table with both partition key and sort key",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1427,8 +1434,8 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-4-gsi-missing",
-          "name": "level-4-gsi-missing",
+          "key": "module-4-dynamodb/level-4-gsi-missing",
+          "number": 4,
           "path": "modules/module-4-dynamodb/level-4-gsi-missing",
           "mission": {
             "name": "No Index, No Query",
@@ -1449,12 +1456,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-5-gsi-wrong-key",
-          "name": "level-5-gsi-wrong-key",
+          "key": "module-4-dynamodb/level-5-gsi-wrong-key",
+          "number": 5,
           "path": "modules/module-4-dynamodb/level-5-gsi-wrong-key",
           "mission": {
             "name": "Wrong Index Key",
-            "description": "GSI `email-index` exists but is keyed on `username` instead of `email` \u2014 queries return nothing",
+            "description": "GSI `email-index` exists but is keyed on `username` instead of `email` — queries return nothing",
             "objective": "Delete the wrong GSI and create a new one with the correct key attribute",
             "xp": 250,
             "difficulty": "intermediate",
@@ -1471,12 +1478,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-6-capacity-throttle",
-          "name": "level-6-capacity-throttle",
+          "key": "module-4-dynamodb/level-6-capacity-throttle",
+          "number": 6,
           "path": "modules/module-4-dynamodb/level-6-capacity-throttle",
           "mission": {
             "name": "Out of Capacity",
-            "description": "Table is in PROVISIONED mode with 1 RCU/WCU \u2014 application load causes constant throttling",
+            "description": "Table is in PROVISIONED mode with 1 RCU/WCU — application load causes constant throttling",
             "objective": "Increase provisioned capacity or switch to PAY_PER_REQUEST",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1493,8 +1500,8 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-7-billing-mode-wrong",
-          "name": "level-7-billing-mode-wrong",
+          "key": "module-4-dynamodb/level-7-billing-mode-wrong",
+          "number": 7,
           "path": "modules/module-4-dynamodb/level-7-billing-mode-wrong",
           "mission": {
             "name": "Provisionless Pain",
@@ -1515,12 +1522,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-8-ttl-disabled",
-          "name": "level-8-ttl-disabled",
+          "key": "module-4-dynamodb/level-8-ttl-disabled",
+          "number": 8,
           "path": "modules/module-4-dynamodb/level-8-ttl-disabled",
           "mission": {
             "name": "Eternal Records",
-            "description": "Application expects expired records to be cleaned up automatically \u2014 TTL is not enabled",
+            "description": "Application expects expired records to be cleaned up automatically — TTL is not enabled",
             "objective": "Enable TTL on the `expiresAt` attribute: `aws dynamodb update-time-to-live`",
             "xp": 175,
             "difficulty": "intermediate",
@@ -1537,12 +1544,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-9-streams-disabled",
-          "name": "level-9-streams-disabled",
+          "key": "module-4-dynamodb/level-9-streams-disabled",
+          "number": 9,
           "path": "modules/module-4-dynamodb/level-9-streams-disabled",
           "mission": {
             "name": "The Silent Table",
-            "description": "Lambda should process every table change \u2014 DynamoDB Streams are disabled",
+            "description": "Lambda should process every table change — DynamoDB Streams are disabled",
             "objective": "Enable streams: `aws dynamodb update-table --stream-specification StreamEnabled=true`",
             "xp": 225,
             "difficulty": "intermediate",
@@ -1561,12 +1568,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-10-lsi-missing",
-          "name": "level-10-lsi-missing",
+          "key": "module-4-dynamodb/level-10-lsi-missing",
+          "number": 10,
           "path": "modules/module-4-dynamodb/level-10-lsi-missing",
           "mission": {
             "name": "Local Index Gap",
-            "description": "Application queries with a Local Secondary Index `status-index` that doesn't exist \u2014 LSI must be created at table creation time",
+            "description": "Application queries with a Local Secondary Index `status-index` that doesn't exist — LSI must be created at table creation time",
             "objective": "Delete and recreate table with the LSI included",
             "xp": 275,
             "difficulty": "intermediate",
@@ -1583,8 +1590,8 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-11-projection-wrong",
-          "name": "level-11-projection-wrong",
+          "key": "module-4-dynamodb/level-11-projection-wrong",
+          "number": 11,
           "path": "modules/module-4-dynamodb/level-11-projection-wrong",
           "mission": {
             "name": "Half the Picture",
@@ -1605,12 +1612,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-12-pitr-disabled",
-          "name": "level-12-pitr-disabled",
+          "key": "module-4-dynamodb/level-12-pitr-disabled",
+          "number": 12,
           "path": "modules/module-4-dynamodb/level-12-pitr-disabled",
           "mission": {
             "name": "No Safety Net",
-            "description": "Compliance requires Point-in-Time Recovery \u2014 it's disabled on the table",
+            "description": "Compliance requires Point-in-Time Recovery — it's disabled on the table",
             "objective": "Enable PITR: `aws dynamodb update-continuous-backups`",
             "xp": 175,
             "difficulty": "intermediate",
@@ -1627,8 +1634,8 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-13-condition-blocks-write",
-          "name": "level-13-condition-blocks-write",
+          "key": "module-4-dynamodb/level-13-condition-blocks-write",
+          "number": 13,
           "path": "modules/module-4-dynamodb/level-13-condition-blocks-write",
           "mission": {
             "name": "The Overprotective Guard",
@@ -1649,12 +1656,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-14-reserved-word-attr",
-          "name": "level-14-reserved-word-attr",
+          "key": "module-4-dynamodb/level-14-reserved-word-attr",
+          "number": 14,
           "path": "modules/module-4-dynamodb/level-14-reserved-word-attr",
           "mission": {
             "name": "Reserved Words",
-            "description": "Attribute name `status` is a DynamoDB reserved word \u2014 query using it as an expression attribute fails",
+            "description": "Attribute name `status` is a DynamoDB reserved word — query using it as an expression attribute fails",
             "objective": "Use Expression Attribute Names (`#s = :val`) in the query",
             "xp": 225,
             "difficulty": "intermediate",
@@ -1671,12 +1678,12 @@
           }
         },
         {
-          "id": "module-4-dynamodb/level-15-scan-instead-of-query",
-          "name": "level-15-scan-instead-of-query",
+          "key": "module-4-dynamodb/level-15-scan-instead-of-query",
+          "number": 15,
           "path": "modules/module-4-dynamodb/level-15-scan-instead-of-query",
           "mission": {
             "name": "Full Table Scan",
-            "description": "Application uses `Scan` on a large table with a filter \u2014 extremely slow and expensive",
+            "description": "Application uses `Scan` on a large table with a filter — extremely slow and expensive",
             "objective": "Identify the proper key schema and rewrite as a `Query` operation",
             "xp": 300,
             "difficulty": "intermediate",
@@ -1696,10 +1703,11 @@
     },
     {
       "name": "module-5-sqs-sns",
+      "title": "SQS & SNS",
       "levels": [
         {
-          "id": "module-5-sqs-sns/level-1-queue-missing",
-          "name": "level-1-queue-missing",
+          "key": "module-5-sqs-sns/level-1-queue-missing",
+          "number": 1,
           "path": "modules/module-5-sqs-sns/level-1-queue-missing",
           "mission": {
             "name": "No Queue",
@@ -1721,12 +1729,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-2-wrong-queue-url",
-          "name": "level-2-wrong-queue-url",
+          "key": "module-5-sqs-sns/level-2-wrong-queue-url",
+          "number": 2,
           "path": "modules/module-5-sqs-sns/level-2-wrong-queue-url",
           "mission": {
             "name": "Wrong Address",
-            "description": "Application is configured with an incorrect queue URL \u2014 messages going nowhere",
+            "description": "Application is configured with an incorrect queue URL — messages going nowhere",
             "objective": "Retrieve the correct URL: `aws sqs get-queue-url` and update the config",
             "xp": 150,
             "difficulty": "intermediate",
@@ -1744,12 +1752,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-3-visibility-too-low",
-          "name": "level-3-visibility-too-low",
+          "key": "module-5-sqs-sns/level-3-visibility-too-low",
+          "number": 3,
           "path": "modules/module-5-sqs-sns/level-3-visibility-too-low",
           "mission": {
             "name": "Message Ghost",
-            "description": "Visibility timeout is 5 seconds \u2014 workers take 30s to process, messages become visible again and are re-processed",
+            "description": "Visibility timeout is 5 seconds — workers take 30s to process, messages become visible again and are re-processed",
             "objective": "Increase visibility timeout to 60s: `aws sqs set-queue-attributes`",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1767,12 +1775,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-4-dlq-missing",
-          "name": "level-4-dlq-missing",
+          "key": "module-5-sqs-sns/level-4-dlq-missing",
+          "number": 4,
           "path": "modules/module-5-sqs-sns/level-4-dlq-missing",
           "mission": {
             "name": "No Safety Net",
-            "description": "Queue has no Dead Letter Queue \u2014 failed messages disappear after max receive count",
+            "description": "Queue has no Dead Letter Queue — failed messages disappear after max receive count",
             "objective": "Create a DLQ and configure redrive policy on the source queue",
             "xp": 225,
             "difficulty": "intermediate",
@@ -1791,12 +1799,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-5-dlq-wrong-arn",
-          "name": "level-5-dlq-wrong-arn",
+          "key": "module-5-sqs-sns/level-5-dlq-wrong-arn",
+          "number": 5,
           "path": "modules/module-5-sqs-sns/level-5-dlq-wrong-arn",
           "mission": {
             "name": "Lost DLQ",
-            "description": "DLQ is configured but the ARN points to a non-existent queue \u2014 redrive fails silently",
+            "description": "DLQ is configured but the ARN points to a non-existent queue — redrive fails silently",
             "objective": "Fix the DLQ ARN in the redrive policy",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1815,12 +1823,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-6-max-receive-zero",
-          "name": "level-6-max-receive-zero",
+          "key": "module-5-sqs-sns/level-6-max-receive-zero",
+          "number": 6,
           "path": "modules/module-5-sqs-sns/level-6-max-receive-zero",
           "mission": {
             "name": "Zero Tolerance",
-            "description": "`maxReceiveCount` in redrive policy is set to `0` \u2014 messages go to DLQ immediately on first receive",
+            "description": "`maxReceiveCount` in redrive policy is set to `0` — messages go to DLQ immediately on first receive",
             "objective": "Set `maxReceiveCount` to a reasonable value (e.g., 3)",
             "xp": 175,
             "difficulty": "intermediate",
@@ -1838,8 +1846,8 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-7-fifo-missing",
-          "name": "level-7-fifo-missing",
+          "key": "module-5-sqs-sns/level-7-fifo-missing",
+          "number": 7,
           "path": "modules/module-5-sqs-sns/level-7-fifo-missing",
           "mission": {
             "name": "Order Ignored",
@@ -1861,12 +1869,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-8-fifo-no-deduplication",
-          "name": "level-8-fifo-no-deduplication",
+          "key": "module-5-sqs-sns/level-8-fifo-no-deduplication",
+          "number": 8,
           "path": "modules/module-5-sqs-sns/level-8-fifo-no-deduplication",
           "mission": {
             "name": "Duplicate Messages",
-            "description": "FIFO queue exists but `ContentBasedDeduplication` is disabled and application doesn't provide `MessageDeduplicationId` \u2014 duplicates processed",
+            "description": "FIFO queue exists but `ContentBasedDeduplication` is disabled and application doesn't provide `MessageDeduplicationId` — duplicates processed",
             "objective": "Enable content-based deduplication on the FIFO queue",
             "xp": 200,
             "difficulty": "intermediate",
@@ -1884,12 +1892,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-9-queue-policy-missing",
-          "name": "level-9-queue-policy-missing",
+          "key": "module-5-sqs-sns/level-9-queue-policy-missing",
+          "number": 9,
           "path": "modules/module-5-sqs-sns/level-9-queue-policy-missing",
           "mission": {
             "name": "SNS Can't Send",
-            "description": "SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send \u2014 messages lost",
+            "description": "SNS topic configured to deliver to SQS queue but queue policy doesn't allow SNS to send — messages lost",
             "objective": "Add queue policy allowing SNS service to `sqs:SendMessage`",
             "xp": 250,
             "difficulty": "intermediate",
@@ -1908,8 +1916,8 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-10-topic-missing",
-          "name": "level-10-topic-missing",
+          "key": "module-5-sqs-sns/level-10-topic-missing",
+          "number": 10,
           "path": "modules/module-5-sqs-sns/level-10-topic-missing",
           "mission": {
             "name": "No Topic",
@@ -1931,12 +1939,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-11-subscription-missing",
-          "name": "level-11-subscription-missing",
+          "key": "module-5-sqs-sns/level-11-subscription-missing",
+          "number": 11,
           "path": "modules/module-5-sqs-sns/level-11-subscription-missing",
           "mission": {
             "name": "Topic, No Subscribers",
-            "description": "SNS topic exists but has no subscriptions \u2014 published messages go nowhere",
+            "description": "SNS topic exists but has no subscriptions — published messages go nowhere",
             "objective": "Subscribe the SQS queue to the topic: `aws sns subscribe`",
             "xp": 175,
             "difficulty": "intermediate",
@@ -1955,8 +1963,8 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-12-subscription-wrong-endpoint",
-          "name": "level-12-subscription-wrong-endpoint",
+          "key": "module-5-sqs-sns/level-12-subscription-wrong-endpoint",
+          "number": 12,
           "path": "modules/module-5-sqs-sns/level-12-subscription-wrong-endpoint",
           "mission": {
             "name": "Wrong Endpoint",
@@ -1978,12 +1986,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-13-filter-policy-blocks-all",
-          "name": "level-13-filter-policy-blocks-all",
+          "key": "module-5-sqs-sns/level-13-filter-policy-blocks-all",
+          "number": 13,
           "path": "modules/module-5-sqs-sns/level-13-filter-policy-blocks-all",
           "mission": {
             "name": "The Silence Filter",
-            "description": "SNS subscription has a filter policy `{\"eventType\": [\"nonexistent\"]}` \u2014 no messages pass through",
+            "description": "SNS subscription has a filter policy `{\"eventType\": [\"nonexistent\"]}` — no messages pass through",
             "objective": "Fix or remove the filter policy to allow relevant message attributes",
             "xp": 250,
             "difficulty": "intermediate",
@@ -2001,12 +2009,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-14-raw-delivery-missing",
-          "name": "level-14-raw-delivery-missing",
+          "key": "module-5-sqs-sns/level-14-raw-delivery-missing",
+          "number": 14,
           "path": "modules/module-5-sqs-sns/level-14-raw-delivery-missing",
           "mission": {
             "name": "Double-Wrapped",
-            "description": "Lambda expects raw message body but SNS wraps it in an envelope \u2014 JSON parsing fails",
+            "description": "Lambda expects raw message body but SNS wraps it in an envelope — JSON parsing fails",
             "objective": "Enable `RawMessageDelivery` on the SNS-to-SQS subscription",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2024,12 +2032,12 @@
           }
         },
         {
-          "id": "module-5-sqs-sns/level-15-message-too-large",
-          "name": "level-15-message-too-large",
+          "key": "module-5-sqs-sns/level-15-message-too-large",
+          "number": 15,
           "path": "modules/module-5-sqs-sns/level-15-message-too-large",
           "mission": {
             "name": "Message Size Exceeded",
-            "description": "Application sends 300KB messages \u2014 SQS limit is 256KB \u2014 sends fail",
+            "description": "Application sends 300KB messages — SQS limit is 256KB — sends fail",
             "objective": "Use the SQS Extended Client pattern: store payload in S3, send S3 reference in queue",
             "xp": 300,
             "difficulty": "intermediate",
@@ -2050,14 +2058,15 @@
     },
     {
       "name": "module-6-cloudwatch",
+      "title": "CloudWatch & Logging",
       "levels": [
         {
-          "id": "module-6-cloudwatch/level-1-log-group-missing",
-          "name": "level-1-log-group-missing",
+          "key": "module-6-cloudwatch/level-1-log-group-missing",
+          "number": 1,
           "path": "modules/module-6-cloudwatch/level-1-log-group-missing",
           "mission": {
             "name": "Where Are My Logs?",
-            "description": "Lambda function writes logs but log group `/aws/lambda/mission-function` doesn't exist \u2014 logs dropped",
+            "description": "Lambda function writes logs but log group `/aws/lambda/mission-function` doesn't exist — logs dropped",
             "objective": "Create the log group: `aws logs create-log-group`",
             "xp": 150,
             "difficulty": "intermediate",
@@ -2075,12 +2084,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-2-retention-not-set",
-          "name": "level-2-retention-not-set",
+          "key": "module-6-cloudwatch/level-2-retention-not-set",
+          "number": 2,
           "path": "modules/module-6-cloudwatch/level-2-retention-not-set",
           "mission": {
             "name": "Infinite Log Growth",
-            "description": "Log group exists but retention is set to `Never` \u2014 logs accumulate indefinitely",
+            "description": "Log group exists but retention is set to `Never` — logs accumulate indefinitely",
             "objective": "Set retention policy to 30 days: `aws logs put-retention-policy`",
             "xp": 150,
             "difficulty": "intermediate",
@@ -2098,8 +2107,8 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-3-log-stream-missing",
-          "name": "level-3-log-stream-missing",
+          "key": "module-6-cloudwatch/level-3-log-stream-missing",
+          "number": 3,
           "path": "modules/module-6-cloudwatch/level-3-log-stream-missing",
           "mission": {
             "name": "Stream Doesn't Exist",
@@ -2121,8 +2130,8 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-4-metric-filter-wrong-pattern",
-          "name": "level-4-metric-filter-wrong-pattern",
+          "key": "module-6-cloudwatch/level-4-metric-filter-wrong-pattern",
+          "number": 4,
           "path": "modules/module-6-cloudwatch/level-4-metric-filter-wrong-pattern",
           "mission": {
             "name": "Filter Catches Nothing",
@@ -2143,12 +2152,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-5-alarm-missing",
-          "name": "level-5-alarm-missing",
+          "key": "module-6-cloudwatch/level-5-alarm-missing",
+          "number": 5,
           "path": "modules/module-6-cloudwatch/level-5-alarm-missing",
           "mission": {
             "name": "Silent Failure",
-            "description": "Error metric is being published but no CloudWatch alarm is configured \u2014 nobody gets alerted",
+            "description": "Error metric is being published but no CloudWatch alarm is configured — nobody gets alerted",
             "objective": "Create a CloudWatch alarm on the error metric",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2165,12 +2174,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-6-alarm-wrong-threshold",
-          "name": "level-6-alarm-wrong-threshold",
+          "key": "module-6-cloudwatch/level-6-alarm-wrong-threshold",
+          "number": 6,
           "path": "modules/module-6-cloudwatch/level-6-alarm-wrong-threshold",
           "mission": {
             "name": "Always Firing",
-            "description": "Alarm threshold is `0` \u2014 alarm fires constantly even with zero errors",
+            "description": "Alarm threshold is `0` — alarm fires constantly even with zero errors",
             "objective": "Set a reasonable threshold (e.g., `5`) for the alarm",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2187,12 +2196,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-7-alarm-no-action",
-          "name": "level-7-alarm-no-action",
+          "key": "module-6-cloudwatch/level-7-alarm-no-action",
+          "number": 7,
           "path": "modules/module-6-cloudwatch/level-7-alarm-no-action",
           "mission": {
             "name": "The Mute Alarm",
-            "description": "Alarm fires (changes state to ALARM) but no action is configured \u2014 nobody is notified",
+            "description": "Alarm fires (changes state to ALARM) but no action is configured — nobody is notified",
             "objective": "Add SNS topic ARN to alarm actions: `aws cloudwatch put-metric-alarm`",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2210,12 +2219,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-8-alarm-wrong-comparison",
-          "name": "level-8-alarm-wrong-comparison",
+          "key": "module-6-cloudwatch/level-8-alarm-wrong-comparison",
+          "number": 8,
           "path": "modules/module-6-cloudwatch/level-8-alarm-wrong-comparison",
           "mission": {
             "name": "Backwards Alarm",
-            "description": "Alarm uses `LessThanThreshold` to detect high error counts \u2014 should be `GreaterThanThreshold`",
+            "description": "Alarm uses `LessThanThreshold` to detect high error counts — should be `GreaterThanThreshold`",
             "objective": "Fix the comparison operator on the alarm",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2232,12 +2241,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-9-alarm-wrong-period",
-          "name": "level-9-alarm-wrong-period",
+          "key": "module-6-cloudwatch/level-9-alarm-wrong-period",
+          "number": 9,
           "path": "modules/module-6-cloudwatch/level-9-alarm-wrong-period",
           "mission": {
             "name": "Too Granular",
-            "description": "Alarm evaluation period is 10s but the metric is published every 5 minutes \u2014 alarm never evaluates",
+            "description": "Alarm evaluation period is 10s but the metric is published every 5 minutes — alarm never evaluates",
             "objective": "Fix period to match metric publish interval (300 seconds)",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2254,12 +2263,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-10-log-insights-syntax",
-          "name": "level-10-log-insights-syntax",
+          "key": "module-6-cloudwatch/level-10-log-insights-syntax",
+          "number": 10,
           "path": "modules/module-6-cloudwatch/level-10-log-insights-syntax",
           "mission": {
             "name": "Query Crash",
-            "description": "CloudWatch Logs Insights query has a syntax error \u2014 query fails to execute",
+            "description": "CloudWatch Logs Insights query has a syntax error — query fails to execute",
             "objective": "Fix the query syntax (check `fields`, `filter`, `stats` commands)",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2276,12 +2285,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-11-event-rule-disabled",
-          "name": "level-11-event-rule-disabled",
+          "key": "module-6-cloudwatch/level-11-event-rule-disabled",
+          "number": 11,
           "path": "modules/module-6-cloudwatch/level-11-event-rule-disabled",
           "mission": {
             "name": "Rule Is Off",
-            "description": "EventBridge rule exists but its state is `DISABLED` \u2014 no events are delivered",
+            "description": "EventBridge rule exists but its state is `DISABLED` — no events are delivered",
             "objective": "Enable the rule: `aws events enable-rule`",
             "xp": 150,
             "difficulty": "intermediate",
@@ -2298,8 +2307,8 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-12-event-rule-wrong-target",
-          "name": "level-12-event-rule-wrong-target",
+          "key": "module-6-cloudwatch/level-12-event-rule-wrong-target",
+          "number": 12,
           "path": "modules/module-6-cloudwatch/level-12-event-rule-wrong-target",
           "mission": {
             "name": "Wrong Destination",
@@ -2321,12 +2330,12 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-13-event-pattern-wrong",
-          "name": "level-13-event-pattern-wrong",
+          "key": "module-6-cloudwatch/level-13-event-pattern-wrong",
+          "number": 13,
           "path": "modules/module-6-cloudwatch/level-13-event-pattern-wrong",
           "mission": {
             "name": "Mismatched Pattern",
-            "description": "EventBridge rule has `\"source\": [\"aws.ec3\"]` (typo) instead of `\"aws.ec2\"` \u2014 events never match",
+            "description": "EventBridge rule has `\"source\": [\"aws.ec3\"]` (typo) instead of `\"aws.ec2\"` — events never match",
             "objective": "Fix the event pattern",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2343,8 +2352,8 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-14-composite-alarm-inverted",
-          "name": "level-14-composite-alarm-inverted",
+          "key": "module-6-cloudwatch/level-14-composite-alarm-inverted",
+          "number": 14,
           "path": "modules/module-6-cloudwatch/level-14-composite-alarm-inverted",
           "mission": {
             "name": "Logic Flipped",
@@ -2365,8 +2374,8 @@
           }
         },
         {
-          "id": "module-6-cloudwatch/level-15-missing-iam-for-logs",
-          "name": "level-15-missing-iam-for-logs",
+          "key": "module-6-cloudwatch/level-15-missing-iam-for-logs",
+          "number": 15,
           "path": "modules/module-6-cloudwatch/level-15-missing-iam-for-logs",
           "mission": {
             "name": "No Permission to Write",
@@ -2392,14 +2401,15 @@
     },
     {
       "name": "module-7-ec2-networking",
+      "title": "EC2 & Networking",
       "levels": [
         {
-          "id": "module-7-ec2-networking/level-1-sg-missing",
-          "name": "level-1-sg-missing",
+          "key": "module-7-ec2-networking/level-1-sg-missing",
+          "number": 1,
           "path": "modules/module-7-ec2-networking/level-1-sg-missing",
           "mission": {
             "name": "No Security Group",
-            "description": "Instance launch fails \u2014 no security group specified and no default SG exists in VPC",
+            "description": "Instance launch fails — no security group specified and no default SG exists in VPC",
             "objective": "Create a security group and reference it in the instance config",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2417,12 +2427,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-2-sg-no-inbound",
-          "name": "level-2-sg-no-inbound",
+          "key": "module-7-ec2-networking/level-2-sg-no-inbound",
+          "number": 2,
           "path": "modules/module-7-ec2-networking/level-2-sg-no-inbound",
           "mission": {
             "name": "The Closed Door",
-            "description": "Security group exists but has no inbound rules \u2014 all inbound traffic blocked (port 22, 80, 443)",
+            "description": "Security group exists but has no inbound rules — all inbound traffic blocked (port 22, 80, 443)",
             "objective": "Add inbound rules for the required ports",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2439,8 +2449,8 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-3-sg-wrong-port",
-          "name": "level-3-sg-wrong-port",
+          "key": "module-7-ec2-networking/level-3-sg-wrong-port",
+          "number": 3,
           "path": "modules/module-7-ec2-networking/level-3-sg-wrong-port",
           "mission": {
             "name": "Port Mismatch",
@@ -2461,8 +2471,8 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-4-sg-wrong-cidr",
-          "name": "level-4-sg-wrong-cidr",
+          "key": "module-7-ec2-networking/level-4-sg-wrong-cidr",
+          "number": 4,
           "path": "modules/module-7-ec2-networking/level-4-sg-wrong-cidr",
           "mission": {
             "name": "Too Restrictive CIDR",
@@ -2483,12 +2493,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-5-sg-egress-blocked",
-          "name": "level-5-sg-egress-blocked",
+          "key": "module-7-ec2-networking/level-5-sg-egress-blocked",
+          "number": 5,
           "path": "modules/module-7-ec2-networking/level-5-sg-egress-blocked",
           "mission": {
             "name": "No Way Out",
-            "description": "Security group has a custom outbound rule that blocks all egress \u2014 app can't reach external APIs",
+            "description": "Security group has a custom outbound rule that blocks all egress — app can't reach external APIs",
             "objective": "Remove the blocking egress rule or add an allow-all egress rule",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2506,12 +2516,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-6-vpc-missing",
-          "name": "level-6-vpc-missing",
+          "key": "module-7-ec2-networking/level-6-vpc-missing",
+          "number": 6,
           "path": "modules/module-7-ec2-networking/level-6-vpc-missing",
           "mission": {
             "name": "No Network",
-            "description": "Application requires a VPC with specific CIDR block \u2014 only the default VPC exists",
+            "description": "Application requires a VPC with specific CIDR block — only the default VPC exists",
             "objective": "Create a new VPC: `aws ec2 create-vpc --cidr-block 10.0.0.0/16`",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2529,12 +2539,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-7-subnet-missing",
-          "name": "level-7-subnet-missing",
+          "key": "module-7-ec2-networking/level-7-subnet-missing",
+          "number": 7,
           "path": "modules/module-7-ec2-networking/level-7-subnet-missing",
           "mission": {
             "name": "No Subnets",
-            "description": "VPC exists but has no subnets \u2014 instances cannot be launched",
+            "description": "VPC exists but has no subnets — instances cannot be launched",
             "objective": "Create public and private subnets in the VPC",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2553,12 +2563,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-8-igw-not-attached",
-          "name": "level-8-igw-not-attached",
+          "key": "module-7-ec2-networking/level-8-igw-not-attached",
+          "number": 8,
           "path": "modules/module-7-ec2-networking/level-8-igw-not-attached",
           "mission": {
             "name": "Internet Gap",
-            "description": "Internet gateway exists but is not attached to the VPC \u2014 no internet access",
+            "description": "Internet gateway exists but is not attached to the VPC — no internet access",
             "objective": "Attach the IGW to the VPC: `aws ec2 attach-internet-gateway`",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2576,8 +2586,8 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-9-route-table-missing",
-          "name": "level-9-route-table-missing",
+          "key": "module-7-ec2-networking/level-9-route-table-missing",
+          "number": 9,
           "path": "modules/module-7-ec2-networking/level-9-route-table-missing",
           "mission": {
             "name": "No Route to Internet",
@@ -2600,8 +2610,8 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-10-subnet-not-associated",
-          "name": "level-10-subnet-not-associated",
+          "key": "module-7-ec2-networking/level-10-subnet-not-associated",
+          "number": 10,
           "path": "modules/module-7-ec2-networking/level-10-subnet-not-associated",
           "mission": {
             "name": "Route Table Orphan",
@@ -2624,12 +2634,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-11-nacl-blocking-http",
-          "name": "level-11-nacl-blocking-http",
+          "key": "module-7-ec2-networking/level-11-nacl-blocking-http",
+          "number": 11,
           "path": "modules/module-7-ec2-networking/level-11-nacl-blocking-http",
           "mission": {
             "name": "Firewall in the Way",
-            "description": "Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule \u2014 HTTP blocked",
+            "description": "Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule — HTTP blocked",
             "objective": "Fix NACL rule order (lower rule number = higher priority) or remove the DENY rule",
             "xp": 275,
             "difficulty": "intermediate",
@@ -2646,8 +2656,8 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-12-iam-instance-profile-missing",
-          "name": "level-12-iam-instance-profile-missing",
+          "key": "module-7-ec2-networking/level-12-iam-instance-profile-missing",
+          "number": 12,
           "path": "modules/module-7-ec2-networking/level-12-iam-instance-profile-missing",
           "mission": {
             "name": "EC2 Can't Talk to AWS",
@@ -2670,12 +2680,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-13-key-pair-missing",
-          "name": "level-13-key-pair-missing",
+          "key": "module-7-ec2-networking/level-13-key-pair-missing",
+          "number": 13,
           "path": "modules/module-7-ec2-networking/level-13-key-pair-missing",
           "mission": {
             "name": "No SSH Key",
-            "description": "Instance launched without a key pair \u2014 SSH access impossible",
+            "description": "Instance launched without a key pair — SSH access impossible",
             "objective": "Create a key pair and re-launch instance with it",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2692,12 +2702,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-14-public-ip-disabled",
-          "name": "level-14-public-ip-disabled",
+          "key": "module-7-ec2-networking/level-14-public-ip-disabled",
+          "number": 14,
           "path": "modules/module-7-ec2-networking/level-14-public-ip-disabled",
           "mission": {
             "name": "Invisible Instance",
-            "description": "Instance in public subnet but `AssociatePublicIpAddress` is false \u2014 no public IP",
+            "description": "Instance in public subnet but `AssociatePublicIpAddress` is false — no public IP",
             "objective": "Enable auto-assign public IP on the subnet or allocate an Elastic IP",
             "xp": 250,
             "difficulty": "intermediate",
@@ -2715,12 +2725,12 @@
           }
         },
         {
-          "id": "module-7-ec2-networking/level-15-sg-missing-self-reference",
-          "name": "level-15-sg-missing-self-reference",
+          "key": "module-7-ec2-networking/level-15-sg-missing-self-reference",
+          "number": 15,
           "path": "modules/module-7-ec2-networking/level-15-sg-missing-self-reference",
           "mission": {
             "name": "Cluster Can't Talk",
-            "description": "Auto Scaling group instances need to communicate with each other \u2014 security group missing a self-referencing rule",
+            "description": "Auto Scaling group instances need to communicate with each other — security group missing a self-referencing rule",
             "objective": "Add an inbound rule referencing the security group ID as source",
             "xp": 275,
             "difficulty": "intermediate",
@@ -2740,14 +2750,15 @@
     },
     {
       "name": "module-8-cloudformation",
+      "title": "CloudFormation",
       "levels": [
         {
-          "id": "module-8-cloudformation/level-1-yaml-syntax",
-          "name": "level-1-yaml-syntax",
+          "key": "module-8-cloudformation/level-1-yaml-syntax",
+          "number": 1,
           "path": "modules/module-8-cloudformation/level-1-yaml-syntax",
           "mission": {
             "name": "Parse Error",
-            "description": "CFN template has a YAML indentation error \u2014 stack creation fails immediately",
+            "description": "CFN template has a YAML indentation error — stack creation fails immediately",
             "objective": "Fix the YAML syntax error in the template",
             "xp": 150,
             "difficulty": "intermediate",
@@ -2764,12 +2775,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-2-wrong-resource-type",
-          "name": "level-2-wrong-resource-type",
+          "key": "module-8-cloudformation/level-2-wrong-resource-type",
+          "number": 2,
           "path": "modules/module-8-cloudformation/level-2-wrong-resource-type",
           "mission": {
             "name": "Unknown Resource",
-            "description": "Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` \u2014 CREATE_FAILED",
+            "description": "Template has `AWS::S3::Bukcet` (typo) instead of `AWS::S3::Bucket` — CREATE_FAILED",
             "objective": "Fix the resource type name",
             "xp": 150,
             "difficulty": "intermediate",
@@ -2787,12 +2798,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-3-missing-required-property",
-          "name": "level-3-missing-required-property",
+          "key": "module-8-cloudformation/level-3-missing-required-property",
+          "number": 3,
           "path": "modules/module-8-cloudformation/level-3-missing-required-property",
           "mission": {
             "name": "Missing Requirement",
-            "description": "`AWS::SQS::Queue` resource is missing required `QueueName` \u2014 wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)",
+            "description": "`AWS::SQS::Queue` resource is missing required `QueueName` — wait, QueueName is optional. `AWS::IAM::Role` missing `AssumeRolePolicyDocument` (required)",
             "objective": "Add the missing required property",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2811,12 +2822,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-4-parameter-no-default",
-          "name": "level-4-parameter-no-default",
+          "key": "module-8-cloudformation/level-4-parameter-no-default",
+          "number": 4,
           "path": "modules/module-8-cloudformation/level-4-parameter-no-default",
           "mission": {
             "name": "No Default Value",
-            "description": "Template has a Parameter with no Default and no value passed at deploy \u2014 create fails",
+            "description": "Template has a Parameter with no Default and no value passed at deploy — create fails",
             "objective": "Either add a Default value or pass the parameter at stack creation",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2834,12 +2845,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-5-parameter-wrong-type",
-          "name": "level-5-parameter-wrong-type",
+          "key": "module-8-cloudformation/level-5-parameter-wrong-type",
+          "number": 5,
           "path": "modules/module-8-cloudformation/level-5-parameter-wrong-type",
           "mission": {
             "name": "Type Collision",
-            "description": "Parameter declared as `Type: Number` but value passed is a string \u2014 validation error",
+            "description": "Parameter declared as `Type: Number` but value passed is a string — validation error",
             "objective": "Fix parameter type or the value being passed",
             "xp": 175,
             "difficulty": "intermediate",
@@ -2857,8 +2868,8 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-6-ref-nonexistent",
-          "name": "level-6-ref-nonexistent",
+          "key": "module-8-cloudformation/level-6-ref-nonexistent",
+          "number": 6,
           "path": "modules/module-8-cloudformation/level-6-ref-nonexistent",
           "mission": {
             "name": "Missing Reference",
@@ -2880,12 +2891,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-7-getatt-wrong-attribute",
-          "name": "level-7-getatt-wrong-attribute",
+          "key": "module-8-cloudformation/level-7-getatt-wrong-attribute",
+          "number": 7,
           "path": "modules/module-8-cloudformation/level-7-getatt-wrong-attribute",
           "mission": {
             "name": "Wrong Attribute",
-            "description": "`!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` \u2014 depends on resource type",
+            "description": "`!GetAtt MyFunction.Arn` should be `!GetAtt MyFunction.FunctionArn` — depends on resource type",
             "objective": "Fix the attribute name in the GetAtt reference",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2902,12 +2913,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-8-circular-dependency",
-          "name": "level-8-circular-dependency",
+          "key": "module-8-cloudformation/level-8-circular-dependency",
+          "number": 8,
           "path": "modules/module-8-cloudformation/level-8-circular-dependency",
           "mission": {
             "name": "Going in Circles",
-            "description": "Resource A has `DependsOn: B` and B has `DependsOn: A` \u2014 circular dependency error",
+            "description": "Resource A has `DependsOn: B` and B has `DependsOn: A` — circular dependency error",
             "objective": "Break the circular dependency by removing one DependsOn or restructuring resources",
             "xp": 275,
             "difficulty": "intermediate",
@@ -2924,12 +2935,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-9-rollback-complete",
-          "name": "level-9-rollback-complete",
+          "key": "module-8-cloudformation/level-9-rollback-complete",
+          "number": 9,
           "path": "modules/module-8-cloudformation/level-9-rollback-complete",
           "mission": {
             "name": "Stack Stuck",
-            "description": "Stack is in `ROLLBACK_COMPLETE` state from a previous failed create \u2014 cannot update",
+            "description": "Stack is in `ROLLBACK_COMPLETE` state from a previous failed create — cannot update",
             "objective": "Delete the stack and recreate it (stacks in ROLLBACK_COMPLETE can't be updated)",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2946,12 +2957,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-10-output-export-duplicate",
-          "name": "level-10-output-export-duplicate",
+          "key": "module-8-cloudformation/level-10-output-export-duplicate",
+          "number": 10,
           "path": "modules/module-8-cloudformation/level-10-output-export-duplicate",
           "mission": {
             "name": "Name Conflict",
-            "description": "Two stacks both export a value with the same name `SharedBucketName` \u2014 second stack fails",
+            "description": "Two stacks both export a value with the same name `SharedBucketName` — second stack fails",
             "objective": "Change the export name in one of the stacks to be unique",
             "xp": 225,
             "difficulty": "intermediate",
@@ -2969,12 +2980,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-11-importvalue-wrong-name",
-          "name": "level-11-importvalue-wrong-name",
+          "key": "module-8-cloudformation/level-11-importvalue-wrong-name",
+          "number": 11,
           "path": "modules/module-8-cloudformation/level-11-importvalue-wrong-name",
           "mission": {
             "name": "Broken Cross-Stack Link",
-            "description": "`!ImportValue SharedBucketName` \u2014 but the export is actually named `mission-SharedBucketName`",
+            "description": "`!ImportValue SharedBucketName` — but the export is actually named `mission-SharedBucketName`",
             "objective": "Fix the ImportValue key to match the exact export name",
             "xp": 200,
             "difficulty": "intermediate",
@@ -2992,12 +3003,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-12-condition-inverted",
-          "name": "level-12-condition-inverted",
+          "key": "module-8-cloudformation/level-12-condition-inverted",
+          "number": 12,
           "path": "modules/module-8-cloudformation/level-12-condition-inverted",
           "mission": {
             "name": "Wrong Condition Logic",
-            "description": "Condition `IsProduction: !Equals [!Ref Env, dev]` \u2014 logic is inverted (true when env is dev, not prod)",
+            "description": "Condition `IsProduction: !Equals [!Ref Env, dev]` — logic is inverted (true when env is dev, not prod)",
             "objective": "Fix the condition expression",
             "xp": 225,
             "difficulty": "intermediate",
@@ -3014,12 +3025,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-13-deletion-policy-delete",
-          "name": "level-13-deletion-policy-delete",
+          "key": "module-8-cloudformation/level-13-deletion-policy-delete",
+          "number": 13,
           "path": "modules/module-8-cloudformation/level-13-deletion-policy-delete",
           "mission": {
             "name": "Dangerous Delete",
-            "description": "S3 bucket resource has no `DeletionPolicy` (defaults to Delete) \u2014 stack deletion will wipe data",
+            "description": "S3 bucket resource has no `DeletionPolicy` (defaults to Delete) — stack deletion will wipe data",
             "objective": "Add `DeletionPolicy: Retain` to the bucket resource",
             "xp": 200,
             "difficulty": "intermediate",
@@ -3038,12 +3049,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-14-stack-policy-blocks",
-          "name": "level-14-stack-policy-blocks",
+          "key": "module-8-cloudformation/level-14-stack-policy-blocks",
+          "number": 14,
           "path": "modules/module-8-cloudformation/level-14-stack-policy-blocks",
           "mission": {
             "name": "Policy Lock",
-            "description": "Stack update policy prevents changes to the S3 bucket resource \u2014 update fails",
+            "description": "Stack update policy prevents changes to the S3 bucket resource — update fails",
             "objective": "Update or remove the stack policy: `aws cloudformation set-stack-policy`",
             "xp": 250,
             "difficulty": "intermediate",
@@ -3062,12 +3073,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-15-mapping-wrong-key",
-          "name": "level-15-mapping-wrong-key",
+          "key": "module-8-cloudformation/level-15-mapping-wrong-key",
+          "number": 15,
           "path": "modules/module-8-cloudformation/level-15-mapping-wrong-key",
           "mission": {
             "name": "Missing Map Entry",
-            "description": "`!FindInMap [RegionMap, !Ref AWS::Region, AMI]` \u2014 the `us-east-1` key is missing from the Mappings section",
+            "description": "`!FindInMap [RegionMap, !Ref AWS::Region, AMI]` — the `us-east-1` key is missing from the Mappings section",
             "objective": "Add the missing key to the Mappings section",
             "xp": 200,
             "difficulty": "intermediate",
@@ -3084,8 +3095,8 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-16-transform-missing",
-          "name": "level-16-transform-missing",
+          "key": "module-8-cloudformation/level-16-transform-missing",
+          "number": 16,
           "path": "modules/module-8-cloudformation/level-16-transform-missing",
           "mission": {
             "name": "SAM Template Rejected",
@@ -3106,12 +3117,12 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-17-stack-drift",
-          "name": "level-17-stack-drift",
+          "key": "module-8-cloudformation/level-17-stack-drift",
+          "number": 17,
           "path": "modules/module-8-cloudformation/level-17-stack-drift",
           "mission": {
             "name": "Reality Diverged",
-            "description": "Stack resources were manually modified outside CFN \u2014 stack has drifted",
+            "description": "Stack resources were manually modified outside CFN — stack has drifted",
             "objective": "Detect drift: `aws cloudformation detect-stack-drift`, then reconcile by updating the stack",
             "xp": 300,
             "difficulty": "intermediate",
@@ -3128,8 +3139,8 @@
           }
         },
         {
-          "id": "module-8-cloudformation/level-18-nested-stack-wrong-url",
-          "name": "level-18-nested-stack-wrong-url",
+          "key": "module-8-cloudformation/level-18-nested-stack-wrong-url",
+          "number": 18,
           "path": "modules/module-8-cloudformation/level-18-nested-stack-wrong-url",
           "mission": {
             "name": "Nested Stack 404",
@@ -3153,14 +3164,15 @@
     },
     {
       "name": "module-9-secrets-config",
+      "title": "Secrets & Config",
       "levels": [
         {
-          "id": "module-9-secrets-config/level-1-kms-key-missing",
-          "name": "level-1-kms-key-missing",
+          "key": "module-9-secrets-config/level-1-kms-key-missing",
+          "number": 1,
           "path": "modules/module-9-secrets-config/level-1-kms-key-missing",
           "mission": {
             "name": "No Key",
-            "description": "Application tries to encrypt using KMS key alias `alias/mission-key` \u2014 key doesn't exist",
+            "description": "Application tries to encrypt using KMS key alias `alias/mission-key` — key doesn't exist",
             "objective": "Create a KMS key and alias: `aws kms create-key` + `aws kms create-alias`",
             "xp": 250,
             "difficulty": "advanced",
@@ -3177,12 +3189,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-2-kms-key-disabled",
-          "name": "level-2-kms-key-disabled",
+          "key": "module-9-secrets-config/level-2-kms-key-disabled",
+          "number": 2,
           "path": "modules/module-9-secrets-config/level-2-kms-key-disabled",
           "mission": {
             "name": "Disabled Key",
-            "description": "KMS key exists but is disabled \u2014 encrypt/decrypt operations fail with `DisabledException`",
+            "description": "KMS key exists but is disabled — encrypt/decrypt operations fail with `DisabledException`",
             "objective": "Enable the key: `aws kms enable-key`",
             "xp": 225,
             "difficulty": "advanced",
@@ -3199,8 +3211,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-3-kms-key-policy-missing",
-          "name": "level-3-kms-key-policy-missing",
+          "key": "module-9-secrets-config/level-3-kms-key-policy-missing",
+          "number": 3,
           "path": "modules/module-9-secrets-config/level-3-kms-key-policy-missing",
           "mission": {
             "name": "No Key Permission",
@@ -3223,8 +3235,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-4-kms-wrong-alias",
-          "name": "level-4-kms-wrong-alias",
+          "key": "module-9-secrets-config/level-4-kms-wrong-alias",
+          "number": 4,
           "path": "modules/module-9-secrets-config/level-4-kms-wrong-alias",
           "mission": {
             "name": "Wrong Key Name",
@@ -3245,12 +3257,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-5-secret-missing",
-          "name": "level-5-secret-missing",
+          "key": "module-9-secrets-config/level-5-secret-missing",
+          "number": 5,
           "path": "modules/module-9-secrets-config/level-5-secret-missing",
           "mission": {
             "name": "No Secret",
-            "description": "Application calls `GetSecretValue` for `mission/db-password` \u2014 secret doesn't exist",
+            "description": "Application calls `GetSecretValue` for `mission/db-password` — secret doesn't exist",
             "objective": "Create the secret: `aws secretsmanager create-secret`",
             "xp": 250,
             "difficulty": "advanced",
@@ -3268,8 +3280,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-6-secret-wrong-key",
-          "name": "level-6-secret-wrong-key",
+          "key": "module-9-secrets-config/level-6-secret-wrong-key",
+          "number": 6,
           "path": "modules/module-9-secrets-config/level-6-secret-wrong-key",
           "mission": {
             "name": "Wrong Key in JSON",
@@ -3291,8 +3303,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-7-secret-no-permission",
-          "name": "level-7-secret-no-permission",
+          "key": "module-9-secrets-config/level-7-secret-no-permission",
+          "number": 7,
           "path": "modules/module-9-secrets-config/level-7-secret-no-permission",
           "mission": {
             "name": "Access Denied to Secret",
@@ -3315,8 +3327,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-8-secret-wrong-version",
-          "name": "level-8-secret-wrong-version",
+          "key": "module-9-secrets-config/level-8-secret-wrong-version",
+          "number": 8,
           "path": "modules/module-9-secrets-config/level-8-secret-wrong-version",
           "mission": {
             "name": "Wrong Version",
@@ -3338,12 +3350,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-9-secret-rotation-broken",
-          "name": "level-9-secret-rotation-broken",
+          "key": "module-9-secrets-config/level-9-secret-rotation-broken",
+          "number": 9,
           "path": "modules/module-9-secrets-config/level-9-secret-rotation-broken",
           "mission": {
             "name": "Stale Credentials",
-            "description": "Secret rotation was configured but rotation Lambda ARN is wrong \u2014 secret is never rotated",
+            "description": "Secret rotation was configured but rotation Lambda ARN is wrong — secret is never rotated",
             "objective": "Fix the rotation Lambda ARN: `aws secretsmanager rotate-secret` with correct config",
             "xp": 325,
             "difficulty": "advanced",
@@ -3362,12 +3374,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-10-ssm-parameter-missing",
-          "name": "level-10-ssm-parameter-missing",
+          "key": "module-9-secrets-config/level-10-ssm-parameter-missing",
+          "number": 10,
           "path": "modules/module-9-secrets-config/level-10-ssm-parameter-missing",
           "mission": {
             "name": "Missing Config",
-            "description": "Application reads SSM parameter `/mission/config/db-host` \u2014 parameter doesn't exist",
+            "description": "Application reads SSM parameter `/mission/config/db-host` — parameter doesn't exist",
             "objective": "Create the parameter: `aws ssm put-parameter`",
             "xp": 225,
             "difficulty": "advanced",
@@ -3385,12 +3397,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-11-ssm-wrong-type",
-          "name": "level-11-ssm-wrong-type",
+          "key": "module-9-secrets-config/level-11-ssm-wrong-type",
+          "number": 11,
           "path": "modules/module-9-secrets-config/level-11-ssm-wrong-type",
           "mission": {
             "name": "Plaintext Secret",
-            "description": "SSM parameter `/mission/config/api-key` is stored as `String` type \u2014 should be `SecureString` (encrypted)",
+            "description": "SSM parameter `/mission/config/api-key` is stored as `String` type — should be `SecureString` (encrypted)",
             "objective": "Delete and recreate as SecureString: `aws ssm put-parameter --type SecureString`",
             "xp": 250,
             "difficulty": "advanced",
@@ -3409,8 +3421,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-12-ssm-wrong-path",
-          "name": "level-12-ssm-wrong-path",
+          "key": "module-9-secrets-config/level-12-ssm-wrong-path",
+          "number": 12,
           "path": "modules/module-9-secrets-config/level-12-ssm-wrong-path",
           "mission": {
             "name": "Path Confusion",
@@ -3432,12 +3444,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-13-ssm-no-permission",
-          "name": "level-13-ssm-no-permission",
+          "key": "module-9-secrets-config/level-13-ssm-no-permission",
+          "number": 13,
           "path": "modules/module-9-secrets-config/level-13-ssm-no-permission",
           "mission": {
             "name": "SSM Blocked",
-            "description": "ECS task role is missing `ssm:GetParameter` permission \u2014 task crashes at startup",
+            "description": "ECS task role is missing `ssm:GetParameter` permission — task crashes at startup",
             "objective": "Add `ssm:GetParameter` and `ssm:GetParameters` to the task role",
             "xp": 275,
             "difficulty": "advanced",
@@ -3456,12 +3468,12 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-14-kms-key-rotation",
-          "name": "level-14-kms-key-rotation",
+          "key": "module-9-secrets-config/level-14-kms-key-rotation",
+          "number": 14,
           "path": "modules/module-9-secrets-config/level-14-kms-key-rotation",
           "mission": {
             "name": "Rotation Breaks Decrypt",
-            "description": "KMS key rotation was enabled but application has old key ARN hardcoded \u2014 decryption fails after rotation",
+            "description": "KMS key rotation was enabled but application has old key ARN hardcoded — decryption fails after rotation",
             "objective": "Update application to use key alias instead of key ARN (aliases track rotation automatically)",
             "xp": 350,
             "difficulty": "advanced",
@@ -3478,8 +3490,8 @@
           }
         },
         {
-          "id": "module-9-secrets-config/level-15-hardcoded-credentials",
-          "name": "level-15-hardcoded-credentials",
+          "key": "module-9-secrets-config/level-15-hardcoded-credentials",
+          "number": 15,
           "path": "modules/module-9-secrets-config/level-15-hardcoded-credentials",
           "mission": {
             "name": "Credentials in Code",
@@ -3505,14 +3517,15 @@
     },
     {
       "name": "module-10-ecs",
+      "title": "ECS & Containers",
       "levels": [
         {
-          "id": "module-10-ecs/level-1-cluster-missing",
-          "name": "level-1-cluster-missing",
+          "key": "module-10-ecs/level-1-cluster-missing",
+          "number": 1,
           "path": "modules/module-10-ecs/level-1-cluster-missing",
           "mission": {
             "name": "No Cluster",
-            "description": "ECS service create fails \u2014 cluster `mission-cluster` doesn't exist",
+            "description": "ECS service create fails — cluster `mission-cluster` doesn't exist",
             "objective": "Create cluster: `aws ecs create-cluster --cluster-name mission-cluster`",
             "xp": 225,
             "difficulty": "advanced",
@@ -3529,8 +3542,8 @@
           }
         },
         {
-          "id": "module-10-ecs/level-2-task-definition-missing",
-          "name": "level-2-task-definition-missing",
+          "key": "module-10-ecs/level-2-task-definition-missing",
+          "number": 2,
           "path": "modules/module-10-ecs/level-2-task-definition-missing",
           "mission": {
             "name": "No Task Definition",
@@ -3552,13 +3565,13 @@
           }
         },
         {
-          "id": "module-10-ecs/level-3-wrong-cpu-memory",
-          "name": "level-3-wrong-cpu-memory",
+          "key": "module-10-ecs/level-3-wrong-cpu-memory",
+          "number": 3,
           "path": "modules/module-10-ecs/level-3-wrong-cpu-memory",
           "mission": {
             "name": "Invalid Config",
-            "description": "Fargate task definition has CPU `256` with memory `256` \u2014 Fargate requires memory >= 512MB for 256 CPU units",
-            "objective": "Fix memory to a valid Fargate combination (256 CPU \u2192 512, 1024, or 2048 MB)",
+            "description": "Fargate task definition has CPU `256` with memory `256` — Fargate requires memory >= 512MB for 256 CPU units",
+            "objective": "Fix memory to a valid Fargate combination (256 CPU → 512, 1024, or 2048 MB)",
             "xp": 250,
             "difficulty": "advanced",
             "expected_time": "15m",
@@ -3575,12 +3588,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-4-execution-role-missing",
-          "name": "level-4-execution-role-missing",
+          "key": "module-10-ecs/level-4-execution-role-missing",
+          "number": 4,
           "path": "modules/module-10-ecs/level-4-execution-role-missing",
           "mission": {
             "name": "Can't Pull Image",
-            "description": "Task fails to start \u2014 no `executionRoleArn` set, so ECS can't pull the ECR image or write logs",
+            "description": "Task fails to start — no `executionRoleArn` set, so ECS can't pull the ECR image or write logs",
             "objective": "Create execution role with `AmazonECSTaskExecutionRolePolicy` and attach it",
             "xp": 275,
             "difficulty": "advanced",
@@ -3599,12 +3612,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-5-task-role-wrong-perms",
-          "name": "level-5-task-role-wrong-perms",
+          "key": "module-10-ecs/level-5-task-role-wrong-perms",
+          "number": 5,
           "path": "modules/module-10-ecs/level-5-task-role-wrong-perms",
           "mission": {
             "name": "App Can't Access AWS",
-            "description": "Task starts but application inside container can't read from S3 \u2014 task role has no S3 permission",
+            "description": "Task starts but application inside container can't read from S3 — task role has no S3 permission",
             "objective": "Add S3 read permissions to the task IAM role",
             "xp": 275,
             "difficulty": "advanced",
@@ -3623,12 +3636,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-6-ecr-image-missing",
-          "name": "level-6-ecr-image-missing",
+          "key": "module-10-ecs/level-6-ecr-image-missing",
+          "number": 6,
           "path": "modules/module-10-ecs/level-6-ecr-image-missing",
           "mission": {
             "name": "No Image Found",
-            "description": "Task definition references ECR image that doesn't exist \u2014 task fails to pull",
+            "description": "Task definition references ECR image that doesn't exist — task fails to pull",
             "objective": "Push a valid image to ECR: `docker build`, `aws ecr get-login-password`, `docker push`",
             "xp": 300,
             "difficulty": "advanced",
@@ -3646,8 +3659,8 @@
           }
         },
         {
-          "id": "module-10-ecs/level-7-container-port-wrong",
-          "name": "level-7-container-port-wrong",
+          "key": "module-10-ecs/level-7-container-port-wrong",
+          "number": 7,
           "path": "modules/module-10-ecs/level-7-container-port-wrong",
           "mission": {
             "name": "Port Mismatch",
@@ -3669,12 +3682,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-8-service-desired-zero",
-          "name": "level-8-service-desired-zero",
+          "key": "module-10-ecs/level-8-service-desired-zero",
+          "number": 8,
           "path": "modules/module-10-ecs/level-8-service-desired-zero",
           "mission": {
             "name": "Zero Tasks",
-            "description": "Service exists but `desiredCount` is 0 \u2014 no tasks running",
+            "description": "Service exists but `desiredCount` is 0 — no tasks running",
             "objective": "Update service: `aws ecs update-service --desired-count 2`",
             "xp": 225,
             "difficulty": "advanced",
@@ -3692,8 +3705,8 @@
           }
         },
         {
-          "id": "module-10-ecs/level-9-env-var-missing",
-          "name": "level-9-env-var-missing",
+          "key": "module-10-ecs/level-9-env-var-missing",
+          "number": 9,
           "path": "modules/module-10-ecs/level-9-env-var-missing",
           "mission": {
             "name": "App Crash at Startup",
@@ -3715,12 +3728,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-10-secrets-wrong-arn",
-          "name": "level-10-secrets-wrong-arn",
+          "key": "module-10-ecs/level-10-secrets-wrong-arn",
+          "number": 10,
           "path": "modules/module-10-ecs/level-10-secrets-wrong-arn",
           "mission": {
             "name": "Secret Not Found",
-            "description": "Task definition references Secrets Manager ARN that doesn't exist \u2014 task fails to start",
+            "description": "Task definition references Secrets Manager ARN that doesn't exist — task fails to start",
             "objective": "Fix the ARN in the `secrets` section of the task definition",
             "xp": 300,
             "difficulty": "advanced",
@@ -3739,12 +3752,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-11-health-check-wrong",
-          "name": "level-11-health-check-wrong",
+          "key": "module-10-ecs/level-11-health-check-wrong",
+          "number": 11,
           "path": "modules/module-10-ecs/level-11-health-check-wrong",
           "mission": {
             "name": "Permanently Unhealthy",
-            "description": "Container health check command is `CMD [\"curl\", \"http://localhost/wrong-path\"]` \u2014 always fails",
+            "description": "Container health check command is `CMD [\"curl\", \"http://localhost/wrong-path\"]` — always fails",
             "objective": "Fix the health check path to match the actual application health endpoint",
             "xp": 275,
             "difficulty": "advanced",
@@ -3761,12 +3774,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-12-log-driver-wrong",
-          "name": "level-12-log-driver-wrong",
+          "key": "module-10-ecs/level-12-log-driver-wrong",
+          "number": 12,
           "path": "modules/module-10-ecs/level-12-log-driver-wrong",
           "mission": {
             "name": "No Logs",
-            "description": "Task definition uses `journald` log driver \u2014 ECS Fargate only supports `awslogs`",
+            "description": "Task definition uses `journald` log driver — ECS Fargate only supports `awslogs`",
             "objective": "Change `logDriver` to `awslogs` and configure the `awslogs-group` option",
             "xp": 275,
             "difficulty": "advanced",
@@ -3784,12 +3797,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-13-subnet-no-nat",
-          "name": "level-13-subnet-no-nat",
+          "key": "module-10-ecs/level-13-subnet-no-nat",
+          "number": 13,
           "path": "modules/module-10-ecs/level-13-subnet-no-nat",
           "mission": {
             "name": "No Internet in Private",
-            "description": "Fargate task in private subnet with no NAT gateway \u2014 task can't pull image or reach AWS APIs",
+            "description": "Fargate task in private subnet with no NAT gateway — task can't pull image or reach AWS APIs",
             "objective": "Either move to public subnet or note that NAT gateway is needed (add route via NAT)",
             "xp": 325,
             "difficulty": "advanced",
@@ -3808,12 +3821,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-14-sg-no-outbound",
-          "name": "level-14-sg-no-outbound",
+          "key": "module-10-ecs/level-14-sg-no-outbound",
+          "number": 14,
           "path": "modules/module-10-ecs/level-14-sg-no-outbound",
           "mission": {
             "name": "Locked Container",
-            "description": "Security group has no outbound rules \u2014 task can't pull image or call AWS services",
+            "description": "Security group has no outbound rules — task can't pull image or call AWS services",
             "objective": "Add egress rule allowing all outbound: `0.0.0.0/0`",
             "xp": 250,
             "difficulty": "advanced",
@@ -3831,12 +3844,12 @@
           }
         },
         {
-          "id": "module-10-ecs/level-15-service-discovery-missing",
-          "name": "level-15-service-discovery-missing",
+          "key": "module-10-ecs/level-15-service-discovery-missing",
+          "number": 15,
           "path": "modules/module-10-ecs/level-15-service-discovery-missing",
           "mission": {
             "name": "Can't Find Service",
-            "description": "Service A tries to reach Service B via DNS `service-b.local` \u2014 no Cloud Map service discovery configured",
+            "description": "Service A tries to reach Service B via DNS `service-b.local` — no Cloud Map service discovery configured",
             "objective": "Set up AWS Cloud Map namespace and service, link to ECS service",
             "xp": 375,
             "difficulty": "advanced",
@@ -3856,14 +3869,15 @@
     },
     {
       "name": "module-11-api-gateway",
+      "title": "API Gateway",
       "levels": [
         {
-          "id": "module-11-api-gateway/level-1-api-missing",
-          "name": "level-1-api-missing",
+          "key": "module-11-api-gateway/level-1-api-missing",
+          "number": 1,
           "path": "modules/module-11-api-gateway/level-1-api-missing",
           "mission": {
             "name": "No API Exists",
-            "description": "REST API `mission-api` doesn't exist \u2014 client gets connection refused",
+            "description": "REST API `mission-api` doesn't exist — client gets connection refused",
             "objective": "Create the REST API: `aws apigateway create-rest-api`",
             "xp": 250,
             "difficulty": "advanced",
@@ -3881,12 +3895,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-2-resource-missing",
-          "name": "level-2-resource-missing",
+          "key": "module-11-api-gateway/level-2-resource-missing",
+          "number": 2,
           "path": "modules/module-11-api-gateway/level-2-resource-missing",
           "mission": {
             "name": "No Path Configured",
-            "description": "API exists but the `/items` resource path doesn't exist \u2014 404 on all requests",
+            "description": "API exists but the `/items` resource path doesn't exist — 404 on all requests",
             "objective": "Create the resource: `aws apigateway create-resource` with correct path part",
             "xp": 250,
             "difficulty": "advanced",
@@ -3904,12 +3918,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-3-method-wrong",
-          "name": "level-3-method-wrong",
+          "key": "module-11-api-gateway/level-3-method-wrong",
+          "number": 3,
           "path": "modules/module-11-api-gateway/level-3-method-wrong",
           "mission": {
             "name": "Wrong HTTP Method",
-            "description": "`POST /items` resource only has a `GET` method configured \u2014 POST returns 405",
+            "description": "`POST /items` resource only has a `GET` method configured — POST returns 405",
             "objective": "Add a POST method to the resource",
             "xp": 275,
             "difficulty": "advanced",
@@ -3926,12 +3940,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-4-integration-missing",
-          "name": "level-4-integration-missing",
+          "key": "module-11-api-gateway/level-4-integration-missing",
+          "number": 4,
           "path": "modules/module-11-api-gateway/level-4-integration-missing",
           "mission": {
             "name": "No Backend",
-            "description": "Method exists but has no integration \u2014 request returns empty 200",
+            "description": "Method exists but has no integration — request returns empty 200",
             "objective": "Add Lambda proxy integration: `aws apigateway put-integration`",
             "xp": 300,
             "difficulty": "advanced",
@@ -3950,8 +3964,8 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-5-integration-wrong-arn",
-          "name": "level-5-integration-wrong-arn",
+          "key": "module-11-api-gateway/level-5-integration-wrong-arn",
+          "number": 5,
           "path": "modules/module-11-api-gateway/level-5-integration-wrong-arn",
           "mission": {
             "name": "Wrong Lambda",
@@ -3973,12 +3987,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-6-lambda-permission-missing",
-          "name": "level-6-lambda-permission-missing",
+          "key": "module-11-api-gateway/level-6-lambda-permission-missing",
+          "number": 6,
           "path": "modules/module-11-api-gateway/level-6-lambda-permission-missing",
           "mission": {
             "name": "API Can't Invoke Lambda",
-            "description": "Integration is correct but API Gateway can't invoke Lambda \u2014 missing resource policy",
+            "description": "Integration is correct but API Gateway can't invoke Lambda — missing resource policy",
             "objective": "Add Lambda permission: `aws lambda add-permission` for `apigateway.amazonaws.com`",
             "xp": 300,
             "difficulty": "advanced",
@@ -3997,12 +4011,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-7-not-deployed",
-          "name": "level-7-not-deployed",
+          "key": "module-11-api-gateway/level-7-not-deployed",
+          "number": 7,
           "path": "modules/module-11-api-gateway/level-7-not-deployed",
           "mission": {
             "name": "API Not Live",
-            "description": "API is fully configured but never deployed to a stage \u2014 all requests fail",
+            "description": "API is fully configured but never deployed to a stage — all requests fail",
             "objective": "Deploy the API: `aws apigateway create-deployment --stage-name prod`",
             "xp": 250,
             "difficulty": "advanced",
@@ -4020,12 +4034,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-8-cors-missing",
-          "name": "level-8-cors-missing",
+          "key": "module-11-api-gateway/level-8-cors-missing",
+          "number": 8,
           "path": "modules/module-11-api-gateway/level-8-cors-missing",
           "mission": {
             "name": "CORS Error",
-            "description": "API works from CLI but web browser gets CORS error \u2014 OPTIONS method and CORS headers not configured",
+            "description": "API works from CLI but web browser gets CORS error — OPTIONS method and CORS headers not configured",
             "objective": "Enable CORS on the resource (add OPTIONS method + response headers)",
             "xp": 325,
             "difficulty": "advanced",
@@ -4043,12 +4057,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-9-throttle-zero",
-          "name": "level-9-throttle-zero",
+          "key": "module-11-api-gateway/level-9-throttle-zero",
+          "number": 9,
           "path": "modules/module-11-api-gateway/level-9-throttle-zero",
           "mission": {
             "name": "All Requests Throttled",
-            "description": "Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` \u2014 every request throttled",
+            "description": "Stage has `throttlingBurstLimit: 0` and `throttlingRateLimit: 0` — every request throttled",
             "objective": "Update stage settings to allow reasonable throttle limits",
             "xp": 275,
             "difficulty": "advanced",
@@ -4065,12 +4079,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-10-auth-wrong",
-          "name": "level-10-auth-wrong",
+          "key": "module-11-api-gateway/level-10-auth-wrong",
+          "number": 10,
           "path": "modules/module-11-api-gateway/level-10-auth-wrong",
           "mission": {
             "name": "Authorization Required",
-            "description": "API requires AWS_IAM authorization but client expects no auth \u2014 all requests 403",
+            "description": "API requires AWS_IAM authorization but client expects no auth — all requests 403",
             "objective": "Change method authorization to `NONE` or provide correct SigV4 headers",
             "xp": 325,
             "difficulty": "advanced",
@@ -4088,12 +4102,12 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-11-mapping-template-wrong",
-          "name": "level-11-mapping-template-wrong",
+          "key": "module-11-api-gateway/level-11-mapping-template-wrong",
+          "number": 11,
           "path": "modules/module-11-api-gateway/level-11-mapping-template-wrong",
           "mission": {
             "name": "Garbled Request",
-            "description": "Mapping template transforms request body but uses wrong field name \u2014 Lambda receives null values",
+            "description": "Mapping template transforms request body but uses wrong field name — Lambda receives null values",
             "objective": "Fix the VTL mapping template to correctly map request fields",
             "xp": 375,
             "difficulty": "advanced",
@@ -4112,8 +4126,8 @@
           }
         },
         {
-          "id": "module-11-api-gateway/level-12-api-key-no-plan",
-          "name": "level-12-api-key-no-plan",
+          "key": "module-11-api-gateway/level-12-api-key-no-plan",
+          "number": 12,
           "path": "modules/module-11-api-gateway/level-12-api-key-no-plan",
           "mission": {
             "name": "API Key Rejected",
@@ -4138,10 +4152,11 @@
     },
     {
       "name": "module-12-war-games",
+      "title": "Production War Games",
       "levels": [
         {
-          "id": "module-12-war-games/level-1-lambda-cant-read-s3",
-          "name": "level-1-lambda-cant-read-s3",
+          "key": "module-12-war-games/level-1-lambda-cant-read-s3",
+          "number": 1,
           "path": "modules/module-12-war-games/level-1-lambda-cant-read-s3",
           "mission": {
             "name": "The Blocked Pipeline",
@@ -4164,12 +4179,12 @@
           }
         },
         {
-          "id": "module-12-war-games/level-2-sns-sqs-lambda-broken",
-          "name": "level-2-sns-sqs-lambda-broken",
+          "key": "module-12-war-games/level-2-sns-sqs-lambda-broken",
+          "number": 2,
           "path": "modules/module-12-war-games/level-2-sns-sqs-lambda-broken",
           "mission": {
             "name": "The Silent Chain",
-            "description": "SNS\u2192SQS\u2192Lambda pipeline: SQS queue policy missing (SNS can't send) + Lambda concurrency is 0",
+            "description": "SNS→SQS→Lambda pipeline: SQS queue policy missing (SNS can't send) + Lambda concurrency is 0",
             "objective": "Diagnose and fix the misconfiguration(s) affecting the silent chain.",
             "xp": 450,
             "difficulty": "expert",
@@ -4188,8 +4203,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-3-alarm-never-fires",
-          "name": "level-3-alarm-never-fires",
+          "key": "module-12-war-games/level-3-alarm-never-fires",
+          "number": 3,
           "path": "modules/module-12-war-games/level-3-alarm-never-fires",
           "mission": {
             "name": "The Blind System",
@@ -4211,8 +4226,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-4-s3-trigger-broken",
-          "name": "level-4-s3-trigger-broken",
+          "key": "module-12-war-games/level-4-s3-trigger-broken",
+          "number": 4,
           "path": "modules/module-12-war-games/level-4-s3-trigger-broken",
           "mission": {
             "name": "Upload Goes Nowhere",
@@ -4235,8 +4250,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-5-api-gateway-full-break",
-          "name": "level-5-api-gateway-full-break",
+          "key": "module-12-war-games/level-5-api-gateway-full-break",
+          "number": 5,
           "path": "modules/module-12-war-games/level-5-api-gateway-full-break",
           "mission": {
             "name": "The Dead API",
@@ -4259,8 +4274,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-6-ecs-wont-start",
-          "name": "level-6-ecs-wont-start",
+          "key": "module-12-war-games/level-6-ecs-wont-start",
+          "number": 6,
           "path": "modules/module-12-war-games/level-6-ecs-wont-start",
           "mission": {
             "name": "Container Chaos",
@@ -4283,8 +4298,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-7-dynamodb-lambda-stream",
-          "name": "level-7-dynamodb-lambda-stream",
+          "key": "module-12-war-games/level-7-dynamodb-lambda-stream",
+          "number": 7,
           "path": "modules/module-12-war-games/level-7-dynamodb-lambda-stream",
           "mission": {
             "name": "Stream Silence",
@@ -4307,8 +4322,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-8-cfn-stack-broken",
-          "name": "level-8-cfn-stack-broken",
+          "key": "module-12-war-games/level-8-cfn-stack-broken",
+          "number": 8,
           "path": "modules/module-12-war-games/level-8-cfn-stack-broken",
           "mission": {
             "name": "Stack Refuses to Update",
@@ -4330,8 +4345,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-9-secrets-rotation-cascade",
-          "name": "level-9-secrets-rotation-cascade",
+          "key": "module-12-war-games/level-9-secrets-rotation-cascade",
+          "number": 9,
           "path": "modules/module-12-war-games/level-9-secrets-rotation-cascade",
           "mission": {
             "name": "The Credential Crisis",
@@ -4354,8 +4369,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-10-cross-account-role",
-          "name": "level-10-cross-account-role",
+          "key": "module-12-war-games/level-10-cross-account-role",
+          "number": 10,
           "path": "modules/module-12-war-games/level-10-cross-account-role",
           "mission": {
             "name": "The Missing Bridge",
@@ -4378,12 +4393,12 @@
           }
         },
         {
-          "id": "module-12-war-games/level-11-iam-privilege-escalation",
-          "name": "level-11-iam-privilege-escalation",
+          "key": "module-12-war-games/level-11-iam-privilege-escalation",
+          "number": 11,
           "path": "modules/module-12-war-games/level-11-iam-privilege-escalation",
           "mission": {
             "name": "Security Audit",
-            "description": "Role has `iam:CreateRole` + `iam:AttachRolePolicy` + `iam:PassRole` \u2014 can create admin role and escalate",
+            "description": "Role has `iam:CreateRole` + `iam:AttachRolePolicy` + `iam:PassRole` — can create admin role and escalate",
             "objective": "Diagnose and fix the misconfiguration(s) affecting security audit.",
             "xp": 550,
             "difficulty": "expert",
@@ -4402,8 +4417,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-12-public-s3-exposure",
-          "name": "level-12-public-s3-exposure",
+          "key": "module-12-war-games/level-12-public-s3-exposure",
+          "number": 12,
           "path": "modules/module-12-war-games/level-12-public-s3-exposure",
           "mission": {
             "name": "Data Exposure Incident",
@@ -4426,8 +4441,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-13-sqs-message-pileup",
-          "name": "level-13-sqs-message-pileup",
+          "key": "module-12-war-games/level-13-sqs-message-pileup",
+          "number": 13,
           "path": "modules/module-12-war-games/level-13-sqs-message-pileup",
           "mission": {
             "name": "Queue Meltdown",
@@ -4450,8 +4465,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-14-cloudwatch-observability-gap",
-          "name": "level-14-cloudwatch-observability-gap",
+          "key": "module-12-war-games/level-14-cloudwatch-observability-gap",
+          "number": 14,
           "path": "modules/module-12-war-games/level-14-cloudwatch-observability-gap",
           "mission": {
             "name": "Flying Blind",
@@ -4474,8 +4489,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-15-ecs-networking-labyrinth",
-          "name": "level-15-ecs-networking-labyrinth",
+          "key": "module-12-war-games/level-15-ecs-networking-labyrinth",
+          "number": 15,
           "path": "modules/module-12-war-games/level-15-ecs-networking-labyrinth",
           "mission": {
             "name": "The Unreachable Service",
@@ -4498,8 +4513,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-16-kms-breaks-everything",
-          "name": "level-16-kms-breaks-everything",
+          "key": "module-12-war-games/level-16-kms-breaks-everything",
+          "number": 16,
           "path": "modules/module-12-war-games/level-16-kms-breaks-everything",
           "mission": {
             "name": "Encryption Lockout",
@@ -4522,8 +4537,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-17-api-auth-lockout",
-          "name": "level-17-api-auth-lockout",
+          "key": "module-12-war-games/level-17-api-auth-lockout",
+          "number": 17,
           "path": "modules/module-12-war-games/level-17-api-auth-lockout",
           "mission": {
             "name": "The Auth Maze",
@@ -4546,8 +4561,8 @@
           }
         },
         {
-          "id": "module-12-war-games/level-18-full-stack-incident",
-          "name": "level-18-full-stack-incident",
+          "key": "module-12-war-games/level-18-full-stack-incident",
+          "number": 18,
           "path": "modules/module-12-war-games/level-18-full-stack-incident",
           "mission": {
             "name": "The Production Incident",

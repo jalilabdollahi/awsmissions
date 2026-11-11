@@ -1,23 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://uploads-bucket >/dev/null 2>&1 || true
+aws_local s3 mb s3://pixelforge-uploads >/dev/null
+aws_local s3 mb s3://pixelforge-billing-exports >/dev/null
 
-aws_local iam create-role \
-  --role-name uploader-role \
-  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
+# The worker authenticates as this user and assumes the role.
+aws_local iam create-user --user-name upload-worker >/dev/null
+aws_local iam put-user-policy --user-name upload-worker --policy-name assume-uploader \
+  --policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"sts:AssumeRole\",\"Resource\":\"arn:aws:iam::${ACCOUNT_ID}:role/pixelforge-uploader\"}]}"
 
-for _ in {1..10}; do
-  if aws_local iam get-role --role-name uploader-role >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
-done
+aws_local iam create-role --role-name pixelforge-uploader \
+  --assume-role-policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${ACCOUNT_ID}:user/upload-worker\"},\"Action\":\"sts:AssumeRole\"}]}" >/dev/null
 
-aws_local iam put-role-policy \
-  --role-name uploader-role \
-  --policy-name uploader-policy \
-  --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Deny","Action":["s3:PutObject"],"Resource":"arn:aws:s3:::uploads-bucket/*"}]}' >/dev/null
+# The "cleanup" flipped the write statement to Deny.
+aws_local iam put-role-policy --role-name pixelforge-uploader --policy-name uploader-access \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
 
-echo "Broken IAM role created: uploader-role"
+echo "pixelforge-uploader is live — and every upload is being rejected."
