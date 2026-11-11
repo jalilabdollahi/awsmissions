@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create public and private subnets in the VPC
+There are no subnets. A load balancer needs subnets in two or more different availability zones, because each subnet exists in a single AZ. Give each subnet its own slice of 10.70.0.0/16 and the Tier=public tag.

@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Route table has correct routes but is not associated with the subnet
+Check which subnets each route table is actually attached to, not just what routes it holds:
+
+  aws ec2 describe-route-tables --filters Name=tag:Name,Values=fernhill-public --query 'RouteTables[0].Associations'
+  aws ec2 describe-subnets --query 'Subnets[].[SubnetId,CidrBlock,Tags[0].Value]'

@@ -1,16 +1,19 @@
-name: Route Table Orphan
-description: Route table has correct routes but is not associated with the subnet
-objective: 'Associate route table with subnet: `aws ec2 associate-route-table`'
-xp: 225
+name: "Wired to the Wrong Subnet"
+description: >-
+  Fernhill Games' matchmaking service runs on instances in fh-app (public) and
+  keeps its database in fh-data (private). The fernhill-public route table has a
+  perfectly good default route to the internet gateway, and the matchmaking
+  servers still cannot get out. Meanwhile the security scanner just reported that
+  something in the data subnet is exposed.
+objective: >-
+  Put the internet route where it belongs: the fh-app subnet must use the
+  fernhill-public route table, and fh-data must have no route to an internet
+  gateway. Keep the fernhill-public table and its route.
+xp: 150
 difficulty: intermediate
-expected_time: 15m
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-- subnets
-- routing
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-10-subnet-not-associated
-implementation_status: playable
+  - route table associations
+  - subnet isolation
+services:
+  - ec2

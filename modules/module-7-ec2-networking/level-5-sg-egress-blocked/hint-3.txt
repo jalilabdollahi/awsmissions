@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 authorize-security-group-egress --group-id <worker sg> --protocol tcp --port 443  --cidr 0.0.0.0/0
+  aws ec2 authorize-security-group-egress --group-id <worker sg> --protocol tcp --port 5432 --source-group <db sg>

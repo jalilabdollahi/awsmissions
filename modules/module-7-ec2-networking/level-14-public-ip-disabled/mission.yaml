@@ -1,16 +1,20 @@
-name: Invisible Instance
-description: "Instance in public subnet but `AssociatePublicIpAddress` is false \u2014\
-  \ no public IP"
-objective: Enable auto-assign public IP on the subnet or allocate an Elastic IP
-xp: 250
+name: "Invisible Instance"
+description: >-
+  Orbit Telecom hosts its public status page on the orbit-status instance in the
+  orbit-prod public subnet. Routing, the internet gateway and the security group
+  have all been reviewed and are correct, yet the page is unreachable: the
+  instance only has a private address. A partner firewall allow-lists the
+  status page's IP, so whatever address it gets must stay the same across
+  stop/start cycles.
+objective: >-
+  Give the running orbit-status instance a public IPv4 address that is stable
+  across restarts. Do not replace the instance.
+xp: 175
 difficulty: intermediate
-expected_time: 15m
+expected_time: 10m
 concepts:
-- EC2
-- VPC
-- networking
-- subnets
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-14-public-ip-disabled
-implementation_status: playable
+  - public IPv4 addresses
+  - Elastic IPs
+  - auto-assign public IP
+services:
+  - ec2

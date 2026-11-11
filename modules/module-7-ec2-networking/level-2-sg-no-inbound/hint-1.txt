@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Security group exists but has no inbound rules — all inbound traffic blocked (port 22, 80, 443)
+The instance is fine, so look at what the network lets in. Show the group's rules:
+
+  aws ec2 describe-security-groups --filters Name=group-name,Values=quillpad-web-sg
+
+Look at the IpPermissions list.

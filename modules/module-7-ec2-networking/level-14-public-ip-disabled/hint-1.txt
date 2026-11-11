@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Instance in public subnet but `AssociatePublicIpAddress` is false — no public IP
+The network path was reviewed, so look at the instance itself:
+
+  aws ec2 describe-instances --filters Name=tag:Name,Values=orbit-status --query 'Reservations[].Instances[].[PrivateIpAddress,PublicIpAddress]'
+  aws ec2 describe-subnets   (look at MapPublicIpOnLaunch)

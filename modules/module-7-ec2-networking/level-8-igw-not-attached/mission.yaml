@@ -1,16 +1,21 @@
-name: Internet Gap
-description: "Internet gateway exists but is not attached to the VPC \u2014 no internet\
-  \ access"
-objective: 'Attach the IGW to the VPC: `aws ec2 attach-internet-gateway`'
-xp: 225
+name: "Skyline Café Is Offline"
+description: >-
+  Skyline Café's online ordering site runs on one instance in the skyline-prod
+  VPC's public subnet. It has a public IP and a permissive security group, and
+  the subnet's route table even has a default route. Still, customers cannot
+  load the page and the instance cannot reach the internet. There are two
+  internet gateways in the account: skyline-igw, built for this VPC, and an old
+  legacy-igw from a decommissioned project.
+objective: >-
+  Restore internet access for the skyline-prod public subnet: the default route of
+  its route table must lead to an internet gateway that is actually attached to
+  skyline-prod. Keep using skyline-igw and do not touch the instance.
+xp: 150
 difficulty: intermediate
-expected_time: 15m
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-- VPCs
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-8-igw-not-attached
-implementation_status: playable
+  - internet gateway attachment
+  - route targets
+  - public subnets
+services:
+  - ec2

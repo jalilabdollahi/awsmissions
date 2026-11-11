@@ -1,15 +1,21 @@
-name: Port Mismatch
-description: Security group allows port 8080 inbound but application runs on port
-  80
-objective: Fix the security group inbound rule to allow port 80
-xp: 175
-difficulty: intermediate
-expected_time: 10m
+name: "Eight-Thousand-Eighty Is Not Home"
+description: >-
+  Ledgerly's internal ledger-api sits behind the ledger-alb load balancer. After
+  a rollout the ALB reports every target as unreachable. Someone opened port
+  8080 on ledger-api-sg because "APIs usually listen on 8080", but the platform
+  team records the real listening port of each service in Parameter Store, under
+  /ledger/api/listen-port.
+objective: >-
+  Make ledger-api-sg accept traffic on the port the service really listens on,
+  only from the ledger-alb-sg load balancer group (not from CIDR ranges), and
+  remove the stale 8080 opening.
+xp: 100
+difficulty: beginner
+expected_time: 8m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-3-sg-wrong-port
-implementation_status: playable
+  - security group ports
+  - source security groups
+  - Parameter Store
+services:
+  - ec2
+  - ssm

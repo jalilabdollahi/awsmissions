@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Security group allows port 8080 inbound but application runs on port 80
+Compare what the security group allows with what the service actually uses. Inspect the group:
+
+  aws ec2 describe-security-groups --filters Name=group-name,Values=ledger-api-sg
+
+Then find where the platform team records the service's port (the description names it).

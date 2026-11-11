@@ -1,16 +1,24 @@
-name: EC2 Can't Talk to AWS
-description: Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile
-objective: Create instance profile with IAM role and associate it with the instance
-xp: 250
+name: "Born Without Credentials"
+description: >-
+  Ember Analytics' ember-api instance is supposed to read its configuration from
+  s3://ember-config at startup. The platform team prepared an IAM role called
+  ember-app-role with the right S3 permissions and told the application team "the
+  instance can use it". The app still logs "Unable to locate credentials", and the
+  security review noted that the role could not be used by EC2 even if it were
+  attached.
+objective: >-
+  Make the running ember-api instance able to use ember-app-role: the instance
+  needs an instance profile containing the role, and EC2 must be allowed to assume
+  it. The role may read objects in s3://ember-config only (no write access, no
+  other buckets).
+xp: 200
 difficulty: intermediate
-expected_time: 15m
+expected_time: 12m
 concepts:
-- EC2
-- VPC
-- networking
-- roles
-- REST APIs
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-12-iam-instance-profile-missing
-implementation_status: playable
+  - instance profiles
+  - role trust policy
+  - least privilege
+services:
+  - ec2
+  - iam
+  - s3

@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Network ACL has a DENY rule for port 80 with lower rule number than the ALLOW rule — HTTP blocked
+The security group is fine, so look one layer up, at the subnet's network ACL:
+
+  aws ec2 describe-network-acls   (find the ACL named lumen-web-nacl and read its Entries)
+
+Read the entries sorted by RuleNumber for the inbound (Egress: false) direction.

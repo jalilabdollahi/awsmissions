@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Instance launched without a key pair — SSH access impossible
+Inspect the bastion and the key pairs available:
+
+  aws ec2 describe-instances --filters Name=tag:Name,Values=atlas-bastion --query 'Reservations[].Instances[].[InstanceId,KeyName,SubnetId]'
+  aws ec2 describe-key-pairs

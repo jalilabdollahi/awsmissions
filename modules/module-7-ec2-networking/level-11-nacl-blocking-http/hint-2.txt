@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Fix NACL rule order (lower rule number = higher priority) or remove the DENY rule
+NACL rules are checked lowest number first and the first match decides. A deny on tcp/80 from 0.0.0.0/0 sits at a lower number than the allow for tcp/80, so the allow is never reached. Remove or correct that early rule, but leave the rule that blocks 198.51.100.0/24 in place.

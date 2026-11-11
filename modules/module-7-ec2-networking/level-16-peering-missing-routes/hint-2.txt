@@ -1,0 +1,1 @@
+Three separate gaps: the request was never accepted, neither route table knows the peer's CIDR (and you need a route on both sides so replies can return), and the database group allows a different range than the orders VPC. The peering never needs a default route.

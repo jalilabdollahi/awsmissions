@@ -1,1 +1,2 @@
-Use the AWS CLI command family for this service and compare the current state against the target configuration.
+  aws ec2 authorize-security-group-ingress --group-id <sg> --protocol tcp --port 22 --cidr <new range>
+  aws ec2 revoke-security-group-ingress    --group-id <sg> --protocol tcp --port 22 --cidr <old range>

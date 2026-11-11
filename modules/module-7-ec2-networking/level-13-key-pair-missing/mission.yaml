@@ -1,14 +1,22 @@
-name: No SSH Key
-description: "Instance launched without a key pair \u2014 SSH access impossible"
-objective: Create a key pair and re-launch instance with it
-xp: 225
+name: "No Key, No Entry"
+description: >-
+  Atlas Robotics' on-call engineers need to SSH into the atlas-bastion host in
+  the public subnet. The instance was launched from the console without choosing
+  a key pair, and the team's shared key pair platform-ops already exists in the
+  account. Engineers get "Permission denied (publickey)". A key pair can only be
+  chosen when an instance is launched; there is no command to add one to a
+  running instance.
+objective: >-
+  Replace the keyless bastion with one that boots with the existing platform-ops
+  key pair: in the same subnet (atlas-public) and security group
+  (atlas-bastion-sg), same Name tag atlas-bastion. Exactly one atlas-bastion may
+  be left running, and the keyless one must be terminated.
+xp: 200
 difficulty: intermediate
-expected_time: 15m
+expected_time: 10m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-13-key-pair-missing
-implementation_status: playable
+  - EC2 key pairs
+  - immutable launch parameters
+  - instance replacement
+services:
+  - ec2

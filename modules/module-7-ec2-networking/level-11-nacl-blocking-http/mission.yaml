@@ -1,16 +1,22 @@
-name: Firewall in the Way
-description: "Network ACL has a DENY rule for port 80 with lower rule number than\
-  \ the ALLOW rule \u2014 HTTP blocked"
-objective: Fix NACL rule order (lower rule number = higher priority) or remove the
-  DENY rule
-xp: 275
+name: "The Rule Before the Rule"
+description: >-
+  Lumen Tickets' box-office site runs in the lumen-prod VPC behind the
+  lumen-web-nacl network ACL. After an abuse incident the security team added
+  rules to that NACL, and since then visitors get timeouts on port 80 although
+  the security group allows it and HTTPS still works. The abuse range
+  198.51.100.0/24 must remain blocked, and the NACL must keep working as a
+  stateless filter.
+objective: >-
+  Let the internet reach the web subnet on HTTP (80) and HTTPS (443) through
+  lumen-web-nacl, keep 198.51.100.0/24 blocked, keep replies able to leave
+  (ephemeral ports), and do not expose any other port. The subnet must stay
+  associated with lumen-web-nacl.
+xp: 200
 difficulty: intermediate
-expected_time: 18m
+expected_time: 12m
 concepts:
-- EC2
-- VPC
-- networking
-module: module-7-ec2-networking
-module_title: EC2 & Networking
-level: level-11-nacl-blocking-http
-implementation_status: playable
+  - network ACL rule ordering
+  - stateless filtering
+  - ephemeral ports
+services:
+  - ec2

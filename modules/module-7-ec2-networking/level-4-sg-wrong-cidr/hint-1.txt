@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Security group inbound rule has CIDR `0.0.0.0/32` (single IP) instead of `0.0.0.0/0`
+Look at who the bastion's security group lets in on port 22:
+
+  aws ec2 describe-security-groups --filters Name=group-name,Values=nw-bastion-sg
+
+Compare the CidrIp values with the new office range from the briefing.

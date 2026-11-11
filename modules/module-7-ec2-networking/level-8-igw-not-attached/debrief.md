@@ -1,13 +1,10 @@
-# Internet Gap
+# Debrief: an internet gateway has to be attached
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in EC2 & Networking: Internet gateway exists but is not attached to the VPC — no internet access
+Internet access for a subnet needs four things at once: an IGW **attached** to the VPC, a route `0.0.0.0/0 -> igw-...` in the subnet's route table, a public (or Elastic) IP on the instance, and security group / NACL rules that allow the traffic. Miss any one and you get a plain timeout with no error message anywhere.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+An unattached IGW is easy to miss because it exists, it has an id, and a route can point at it; the console even lets you create that route. A VPC can have only one IGW attached, and an IGW only one VPC.
 
-## Key Concepts
-- EC2
-- VPC
-- networking
-- VPCs
+Real-world tips:
+- Diagnose from the outside in: `describe-internet-gateways` (attachment state), then `describe-route-tables` for the subnet, then the instance's public IP, then SG/NACL.
+- In AWS, a route to a gateway that is not attached shows up as `blackhole` in the route table. Check the route's State when debugging.
+- Name your gateways (tags) so a leftover like `legacy-igw` is recognisable and can be cleaned up safely.

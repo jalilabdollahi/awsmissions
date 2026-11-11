@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create instance profile with IAM role and associate it with the instance
+There are two gaps. EC2 hands credentials to an instance through an instance profile, and none is attached. Separately, the role's trust policy lists the wrong service principal, so even a correctly attached profile could not be used. The permission policy itself is already fine.

@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create a key pair and re-launch instance with it
+The running bastion has no KeyName. AWS only installs a key pair while an instance first boots, so you cannot repair this host in place. You need a replacement that is launched with the platform-ops key, in the same subnet and security group, and the old keyless instance must go.

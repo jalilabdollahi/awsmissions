@@ -1,14 +1,11 @@
-# EC2 Can't Talk to AWS
+# Debrief: roles reach instances through instance profiles
 
-## Why This Matters
-This mission practices a real troubleshooting pattern in EC2 & Networking: Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile
+IAM roles are assumed by a *principal* named in the role's trust policy. For EC2 that principal is the service `ec2.amazonaws.com`, and the delivery vehicle is an **instance profile**, a thin container that holds one role. The instance fetches short-lived credentials from the metadata service (IMDS) and SDKs find them automatically, so no access keys ever need to sit on disk.
 
-## Production Lesson
-In real AWS incidents, the fastest path is usually to compare actual state with expected state, then fix the smallest misconfiguration that restores service safely.
+Two independent things must be true: the profile is attached to the instance, and the role trusts EC2. Copying a trust policy from a Lambda role is a classic cause of the second failure.
 
-## Key Concepts
-- EC2
-- VPC
-- networking
-- roles
-- REST APIs
+Real-world tips:
+- The console creates the profile for you when you create an EC2 role; the CLI and CloudFormation do not.
+- `associate-iam-instance-profile` works on running instances: no relaunch needed. Replacing a profile uses `replace-iam-instance-profile-association`.
+- `iam simulate-principal-policy` verifies what the role can do without running the app.
+- Require IMDSv2 (`HttpTokens=required`) so SSRF bugs cannot steal the role's credentials easily.

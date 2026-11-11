@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Enable auto-assign public IP on the subnet or allocate an Elastic IP
+The instance has no public IPv4. The subnet's auto-assign setting is off, and turning it on would only affect instances launched later. Even an auto-assigned address would not meet the "stable across restarts" requirement; an Elastic IP does both.

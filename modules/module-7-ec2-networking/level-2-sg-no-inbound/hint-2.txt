@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add inbound rules for the required ports
+IpPermissions is empty. Security groups are allow-lists: with no inbound rule nothing can enter, and unlike a firewall appliance there is no "deny" rule to remove. You must add an allow rule for each port readers use.

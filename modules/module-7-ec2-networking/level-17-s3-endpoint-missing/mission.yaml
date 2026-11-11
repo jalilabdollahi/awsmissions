@@ -1,0 +1,22 @@
+name: "Private Road to S3"
+description: >-
+  Quartz Data runs nightly exports from quartz-batch in a private subnet that
+  deliberately has no route to the internet. The job writes to the bucket
+  quartz-exports and now hangs on every upload. Management refuses to add a NAT
+  gateway ("we pay for that per hour and per GB"), and compliance demands that
+  the private path to S3 can only reach the company's own bucket.
+objective: >-
+  Give the private subnet a private path to S3 with a VPC gateway endpoint: it
+  must serve com.amazonaws.us-east-1.s3, be attached to the private route table
+  only (not the public one), and its endpoint policy may only allow access to
+  quartz-exports. The private route table must still have no internet route.
+xp: 400
+difficulty: expert
+expected_time: 15m
+concepts:
+  - VPC gateway endpoints
+  - endpoint policies
+  - private subnets
+services:
+  - ec2
+  - s3

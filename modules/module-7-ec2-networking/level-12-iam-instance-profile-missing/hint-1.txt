@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Instance needs to call AWS APIs (SSM, S3) but has no IAM instance profile
+Check what the instance has attached, then look at the role itself:
+
+  aws ec2 describe-iam-instance-profile-associations
+  aws iam get-role --role-name ember-app-role
+  aws iam list-instance-profiles
