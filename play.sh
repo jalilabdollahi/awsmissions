@@ -25,7 +25,9 @@ ENV
     exit 0
     ;;
   --stop)
-    docker rm -f "$container" >/dev/null 2>&1 && echo "Stopped $container." || echo "$container is not running."
+    if [ -x .venv/bin/python ]; then py=.venv/bin/python; else py=python3; fi
+    AWSMISSIONS_PORT="$port" "$py" -c "from engine import floci; floci.stop()"
+    echo "Stopped $container and the containers it spawned."
     exit 0
     ;;
   --reset|--reset-progress)

@@ -68,25 +68,60 @@ def _running_image(p: int) -> str | None:
     return image if running == "true" else None
 
 
-def _isolation_env(p: int) -> list[str]:
-    """Keep parallel emulators (e.g. test runs on other ports) apart.
+def namespace(p: int | None = None) -> str:
+    p = p or port()
+    return "awsmissions" if p == DEFAULT_PORT else f"awsm{p}"
 
-    Floci names its Docker networks and hands out EC2 SSH ports from a fixed
-    pool; two emulators on one Docker host would otherwise collide.
+
+def _isolation_env(p: int) -> list[str]:
+    """Keep this emulator's Docker resources separate and removable.
+
+    Floci names the containers and networks it spawns (EC2 instances, Lambda
+    and ECS containers, VPC networks) after a resource namespace, and hands
+    out EC2 SSH ports from a fixed pool. A namespace per port lets parallel
+    emulators coexist and lets us clean up after a restart.
     """
-    if p == DEFAULT_PORT:
-        return []
-    ssh_start = 20000 + (p - 4500) * 100
-    return [
-        "-e", f"FLOCI_DOCKER_RESOURCE_NAMESPACE=awsm{p}",
-        "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_START={ssh_start}",
-        "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_END={ssh_start + 99}",
-    ]
+    env = ["-e", f"FLOCI_DOCKER_RESOURCE_NAMESPACE={namespace(p)}"]
+    if p != DEFAULT_PORT:
+        ssh_start = 20000 + (p - 4500) * 100
+        env += [
+            "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_START={ssh_start}",
+            "-e", f"FLOCI_SERVICES_EC2_SSH_PORT_RANGE_END={ssh_start + 99}",
+        ]
+    return env
+
+
+def remove_spawned(p: int | None = None) -> None:
+    """Remove containers and networks the emulator spawned.
+
+    They outlive the emulator container, so without this every restart would
+    leave EC2/Lambda/ECS containers running.
+    """
+    ns = namespace(p)
+    ids: set[str] = set()
+    for args in (("--filter", f"label=floci_namespace={ns}"), ("--filter", f"name=^floci-aws-{ns}-")):
+        result = _docker("ps", "-aq", *args)
+        ids.update(result.stdout.split())
+    if ids:
+        _docker("rm", "-f", *sorted(ids))
+    networks = _docker("network", "ls", "--format", "{{.Name}}", "--filter", f"name=floci-aws-{ns}-")
+    for name in networks.stdout.split():
+        if name.startswith(f"floci-aws-{ns}-"):
+            _docker("network", "rm", name)
+
+
+def _namespace_of(p: int) -> str | None:
+    result = _docker("inspect", "--format", "{{range .Config.Env}}{{println .}}{{end}}", container_name(p))
+    for line in result.stdout.splitlines():
+        if line.startswith("FLOCI_DOCKER_RESOURCE_NAMESPACE="):
+            return line.split("=", 1)[1]
+    return None
 
 
 def start(p: int | None = None) -> None:
     p = p or port()
     _docker("rm", "-f", container_name(p))
+    remove_spawned(p)
     result = _docker(
         "run", "-d",
         "--name", container_name(p),
@@ -105,6 +140,7 @@ def start(p: int | None = None) -> None:
 
 def stop(p: int | None = None) -> None:
     _docker("rm", "-f", container_name(p))
+    remove_spawned(p)
 
 
 def wait_ready(p: int | None = None, timeout: int = 90) -> None:
@@ -119,7 +155,7 @@ def wait_ready(p: int | None = None, timeout: int = 90) -> None:
 def ensure_running(p: int | None = None) -> None:
     """Reuse a healthy container running the pinned image, otherwise (re)start it."""
     p = p or port()
-    if _running_image(p) == FLOCI_IMAGE and healthy(p):
+    if _running_image(p) == FLOCI_IMAGE and _namespace_of(p) == namespace(p) and healthy(p):
         return
     start(p)
 
