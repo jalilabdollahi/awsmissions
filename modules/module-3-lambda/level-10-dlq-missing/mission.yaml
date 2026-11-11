@@ -1,0 +1,24 @@
+name: "Lost on Failure"
+description: >-
+  Relaycast's order service sends text messages by invoking the Lambda function
+  sms-notifier asynchronously and never looks at the result. Customer support
+  keeps hearing "I never got my delivery text", and nobody can say how many
+  messages are failing, because failed events simply disappear. The team has
+  already created the SQS queue sms-failed-deliveries for investigation, and
+  the function's role is allowed to write to it. Sending a text twice is
+  worse than not sending it, so retries are switched off on purpose.
+objective: >-
+  Make every asynchronous invocation of sms-notifier that fails land in the
+  queue sms-failed-deliveries together with the error details, while keeping
+  retries disabled and leaving successful invocations out of the queue.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts:
+  - asynchronous invocation
+  - on-failure destinations
+  - event invoke config
+services:
+  - lambda
+  - sqs
+  - iam

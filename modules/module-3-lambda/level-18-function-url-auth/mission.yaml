@@ -1,0 +1,24 @@
+name: "The Locked Door"
+description: >-
+  Pebble Studio collects beta sign-ups on a public page whose JavaScript posts
+  the visitor's email straight to the HTTPS URL of the Lambda function
+  invite-landing. Launch day is here and visitors only see an error. The URL
+  was created by a template that defaults to the safest authentication setting,
+  and that same template already restricts browsers (CORS) to the sign-up page
+  at https://pebblestudio.example. The team also runs invite-admin, an internal
+  function with its own URL, which must stay private.
+objective: >-
+  Make the invite-landing function URL accept unauthenticated requests from the
+  public while keeping its CORS restriction to the sign-up origin, and keep the
+  invite-admin URL IAM-protected.
+xp: 350
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - Lambda function URLs
+  - AuthType NONE
+  - resource-based policy
+  - CORS
+services:
+  - lambda
+  - iam

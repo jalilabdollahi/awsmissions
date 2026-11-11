@@ -1,0 +1,1 @@
+An alias is a named pointer to a published version; this one points at a version number that was never published. Fixing it means picking the right version, not just any existing one: each version's Description holds its release notes, and finance approved exactly one of them for production. Do not use $LATEST and do not touch the staging alias.

@@ -1,0 +1,23 @@
+name: "Nobody Home"
+description: >-
+  Tidewater Insurance archives every claim receipt through the Lambda function
+  claim-receipt-archiver. Last week the platform team ran an "unused IAM
+  roles" cleanup. Since then the security team's nightly audit flags the
+  function: the role in its configuration no longer exists. Whoever recreates
+  it has to be careful, because the legal-hold bucket tidewater-claim-evidence
+  sits in the same account and the archiver's event accepts a bucket override.
+objective: >-
+  Give claim-receipt-archiver a working execution role that trusts Lambda and
+  lets it write receipts to tidewater-claim-receipts and its own logs, but not
+  to any other bucket.
+xp: 125
+difficulty: beginner
+expected_time: 12m
+concepts:
+  - Lambda execution role
+  - trust policy
+  - least privilege
+services:
+  - lambda
+  - iam
+  - s3

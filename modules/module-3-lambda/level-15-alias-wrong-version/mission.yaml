@@ -1,0 +1,23 @@
+name: "The Ghost Alias"
+description: >-
+  Fernhill Billing's checkout calls the tax-calculator function through its
+  prod alias, so releases can be promoted without touching the callers. This
+  morning checkout started failing with "Function version not found" and
+  nobody is sure what the alias is supposed to point at. Three versions have
+  been published over the past year; the release notes live in their
+  descriptions. The staging alias must keep pointing at the version being
+  trialled there.
+objective: >-
+  Make the prod alias of tax-calculator serve the version that finance
+  approved for production, without touching the staging alias and without
+  pointing prod at $LATEST.
+xp: 275
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - Lambda versions
+  - aliases
+  - safe releases
+services:
+  - lambda
+  - iam

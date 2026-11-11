@@ -1,0 +1,3 @@
+Change only the runtime of the existing function:
+
+  aws lambda update-function-configuration --function-name ledger-month-close --runtime python3.12

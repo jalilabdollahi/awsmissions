@@ -1,0 +1,21 @@
+name: "Three Seconds and Out"
+description: >-
+  Quillmark Reports renders customer statements in the Lambda function
+  statement-renderer. Short statements work, but every long one (the quarterly
+  statements run to a dozen pages) just stops: the customer portal shows a
+  spinner and then an error. The function logic is fine; ops noticed that its
+  configuration still carries the default limits from the project template.
+objective: >-
+  Let a 12-page statement render successfully. The portal calls the function
+  through an HTTP API that gives up after 29 seconds, so the function's
+  timeout must not exceed that.
+xp: 150
+difficulty: intermediate
+expected_time: 8m
+concepts:
+  - Lambda timeout
+  - function configuration limits
+  - API integration limits
+services:
+  - lambda
+  - iam

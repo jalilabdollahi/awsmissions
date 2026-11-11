@@ -1,0 +1,6 @@
+Invoke the function once and read the error, then compare it with the configuration:
+
+  aws lambda invoke --function-name webhook-relay out.json; cat out.json
+  aws lambda get-function-configuration --function-name webhook-relay --query Handler
+
+Then look at which file and exports your workspace has.

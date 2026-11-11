@@ -1,0 +1,1 @@
+  aws lambda update-function-configuration --function-name txn-scorer --layers arn:aws:lambda:us-east-1:000000000000:layer:riskkit-core:2 arn:aws:lambda:us-east-1:000000000000:layer:tracekit-logging:1

@@ -1,0 +1,1 @@
+  aws lambda update-function-configuration --function-name statement-renderer --timeout 20

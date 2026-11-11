@@ -1,0 +1,1 @@
+The trigger lives in the bucket's notification configuration. It is on the staging bucket and missing on prod, so you need to change both: connect prod and disconnect staging. The working configuration (with its .pdf filter) is in your workspace as notification.json. Putting a configuration replaces whatever the bucket had before.

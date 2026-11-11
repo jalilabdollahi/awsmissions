@@ -1,0 +1,22 @@
+name: "Return to Sender"
+description: >-
+  Cobalt Parcel prints its shipping labels with a small Lambda function that
+  the nightly dispatch job calls by the name parcel-label-formatter. Last
+  night the job died on its first call and the warehouse printed zero labels.
+  The platform team says the function "must have been cleaned up with the old
+  sandbox", but the IAM role it ran under is still there, and the source code
+  is sitting in your workspace.
+objective: >-
+  Make parcel-label-formatter callable again, running the code from your
+  workspace under the existing label role, so that the dispatch job gets
+  correctly formatted labels back.
+xp: 75
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Lambda deployment packages
+  - create-function
+  - handler naming
+services:
+  - lambda
+  - iam

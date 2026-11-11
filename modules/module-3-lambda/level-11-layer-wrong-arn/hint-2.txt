@@ -1,0 +1,1 @@
+Layer versions are immutable and a function is pinned to one exact version, so publishing the 2024 ruleset as a new version changed nothing for this function. The descriptions of the versions tell you which one is the 2024 ruleset. Remember that `--layers` replaces the function's whole list: tracekit-logging has to stay.

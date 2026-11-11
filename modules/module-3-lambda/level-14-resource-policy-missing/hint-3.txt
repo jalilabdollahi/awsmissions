@@ -1,0 +1,1 @@
+  aws lambda add-permission --function-name rate-quote-engine --statement-id allow-shipright-invoke --action lambda:InvokeFunction --principal arn:aws:iam::000000000000:user/partner-shipright

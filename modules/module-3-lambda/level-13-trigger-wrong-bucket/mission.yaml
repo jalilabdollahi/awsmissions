@@ -1,0 +1,24 @@
+name: "Watching the Wrong Door"
+description: >-
+  Marlowe Freight registers every invoice PDF in a billing ledger through the
+  Lambda function invoice-extractor. Since the staging environment was cloned
+  last month, the finance team sees a strange picture: test invoices from
+  marlowe-invoices-staging show up in the real ledger, while the real invoices
+  uploaded to marlowe-invoices-prod are never registered at all. Someone wired
+  the trigger to the wrong bucket during the clone.
+objective: >-
+  Have PDF invoices uploaded to marlowe-invoices-prod registered in the ledger,
+  while nothing uploaded to marlowe-invoices-staging reaches the ledger any
+  more. Only .pdf files may trigger the function.
+xp: 250
+difficulty: advanced
+expected_time: 15m
+concepts:
+  - S3 event notifications
+  - environment separation
+  - Lambda triggers
+services:
+  - s3
+  - lambda
+  - dynamodb
+  - iam

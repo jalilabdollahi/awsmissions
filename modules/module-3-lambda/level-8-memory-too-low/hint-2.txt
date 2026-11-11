@@ -1,0 +1,1 @@
+The error is "exit status 137": the process was killed because it asked for more memory than the function is allowed. Check how much memory the code needs: a 16x16 block of 512x512 RGBA tiles has to fit in memory at once (see stitch.mjs). The setting must cover that plus the Node.js runtime itself, but finance caps it at 1024 MB.

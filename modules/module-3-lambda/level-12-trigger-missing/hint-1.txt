@@ -1,0 +1,4 @@
+Check whether the bucket is set up to tell anyone about new objects, and what the function is allowed to receive:
+
+  aws s3api get-bucket-notification-configuration --bucket helixia-lab-inbox
+  aws lambda get-policy --function-name lab-result-indexer

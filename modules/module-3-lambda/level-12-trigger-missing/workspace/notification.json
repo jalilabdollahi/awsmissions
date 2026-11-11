@@ -1,0 +1,17 @@
+{
+  "LambdaFunctionConfigurations": [
+    {
+      "Id": "index-new-results",
+      "LambdaFunctionArn": "TODO",
+      "Events": ["TODO"],
+      "Filter": {
+        "Key": {
+          "FilterRules": [
+            { "Name": "prefix", "Value": "TODO" },
+            { "Name": "suffix", "Value": "TODO" }
+          ]
+        }
+      }
+    }
+  ]
+}

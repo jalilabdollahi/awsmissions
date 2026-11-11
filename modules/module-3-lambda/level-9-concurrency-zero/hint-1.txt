@@ -1,0 +1,3 @@
+The call is rejected before any of your code runs. Invoke once to see the exact error and then look at the function's concurrency settings:
+
+  aws lambda get-function-concurrency --function-name coupon-redeemer

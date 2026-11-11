@@ -1,0 +1,1 @@
+  aws lambda update-alias --function-name tax-calculator --name prod --function-version 2

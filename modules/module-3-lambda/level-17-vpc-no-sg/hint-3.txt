@@ -1,0 +1,1 @@
+  aws lambda update-function-configuration --function-name warehouse-exporter --vpc-config SubnetIds=<subnet-a>,<subnet-b>,SecurityGroupIds=<id of etl-clients-sg>

@@ -1,0 +1,4 @@
+Compare what each bucket does when an object arrives:
+
+  aws s3api get-bucket-notification-configuration --bucket marlowe-invoices-prod
+  aws s3api get-bucket-notification-configuration --bucket marlowe-invoices-staging

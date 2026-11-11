@@ -1,0 +1,20 @@
+name: "Wrong Door, Right House"
+description: >-
+  Pinecrest Outfitters pushes every new order to its dropshipping partners
+  through a small Node.js Lambda called webhook-relay. Since the migration
+  to the new deployment pipeline, partners report that no order webhooks
+  arrive. The function's package was uploaded correctly and its source is in
+  your workspace, yet every invocation dies immediately.
+objective: >-
+  Make webhook-relay sign and relay order events again. The deployed package
+  must stay as it is; fix how Lambda is told to find the entry point.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - Lambda handler
+  - Node.js ES modules
+  - Lambda init errors
+services:
+  - lambda
+  - iam

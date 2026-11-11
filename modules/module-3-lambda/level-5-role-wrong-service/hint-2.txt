@@ -1,0 +1,1 @@
+The trust policy lists which principals may assume the role. A service principal such as "ec2.amazonaws.com" lets that service use the role; the thumbnail function is run by a different service. The trust document is also in your workspace (`edit trust.json`). It contains a second statement for the CI user: keep it, because update-assume-role-policy replaces the whole document.

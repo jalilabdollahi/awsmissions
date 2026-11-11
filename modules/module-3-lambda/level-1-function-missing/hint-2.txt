@@ -1,0 +1,1 @@
+There is nothing named parcel-label-formatter, so you have to create it. Lambda needs a zip with your code, a runtime, a handler (module name, a dot, then the function name inside that module) and an execution role ARN. Open the workspace file with `edit` or `!cat label_builder.py` to see what the handler function is called.

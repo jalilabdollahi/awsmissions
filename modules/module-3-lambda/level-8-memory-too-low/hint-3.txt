@@ -1,0 +1,1 @@
+  aws lambda update-function-configuration --function-name tile-stitcher --memory-size 512

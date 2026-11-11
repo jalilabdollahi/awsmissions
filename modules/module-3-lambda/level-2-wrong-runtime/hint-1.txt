@@ -1,0 +1,5 @@
+The function exists, and so does its role, so look at what it is configured to run on:
+
+  aws lambda get-function-configuration --function-name ledger-month-close
+
+Then invoke it once and read the error message carefully.

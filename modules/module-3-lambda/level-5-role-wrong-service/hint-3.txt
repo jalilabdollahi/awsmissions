@@ -1,0 +1,3 @@
+Change the EC2 service principal to the Lambda one in trust.json (keep the ci-deployer statement), then:
+
+  aws iam update-assume-role-policy --role-name lumen-thumb-scanner --policy-document file://trust.json

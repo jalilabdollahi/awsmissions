@@ -1,0 +1,3 @@
+Look up the subnet IDs of orders-app-a and orders-app-b (aws ec2 describe-subnets) and the function's security group, then set the whole block again:
+
+  aws lambda update-function-configuration --function-name order-sync --vpc-config SubnetIds=<subnet-a>,<subnet-b>,SecurityGroupIds=<sg-id>

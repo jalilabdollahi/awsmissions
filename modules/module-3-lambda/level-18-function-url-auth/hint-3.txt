@@ -1,0 +1,2 @@
+  aws lambda update-function-url-config --function-name invite-landing --auth-type NONE
+  aws lambda add-permission --function-name invite-landing --statement-id public-url-access --action lambda:InvokeFunctionUrl --principal '*' --function-url-auth-type NONE

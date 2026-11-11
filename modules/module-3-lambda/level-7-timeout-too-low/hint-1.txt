@@ -1,0 +1,4 @@
+Reproduce the failure and read the message, then look at the function's limits:
+
+  aws lambda invoke --function-name statement-renderer --cli-binary-format raw-in-base64-out --payload '{"customer":"ACME-0042","pages":12}' out.json; cat out.json
+  aws lambda get-function-configuration --function-name statement-renderer --query '[Timeout,MemorySize]'

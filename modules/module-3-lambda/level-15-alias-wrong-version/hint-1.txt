@@ -1,0 +1,4 @@
+Look at what the alias points to and what actually exists:
+
+  aws lambda get-alias --function-name tax-calculator --name prod
+  aws lambda list-versions-by-function --function-name tax-calculator

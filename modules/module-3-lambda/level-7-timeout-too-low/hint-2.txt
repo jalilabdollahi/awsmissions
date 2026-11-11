@@ -1,0 +1,1 @@
+Lambda stops any invocation that runs longer than the function's Timeout. A page takes about 600 ms (see renderer.py), and a statement has twelve of them. The new timeout must clear that work with some headroom, but stay inside the 29 second limit of the HTTP API in front of the function.

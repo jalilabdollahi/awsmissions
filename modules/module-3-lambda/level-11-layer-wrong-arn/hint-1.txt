@@ -1,0 +1,4 @@
+The failure happens at import time, so look at the layers the function has and the versions that exist:
+
+  aws lambda get-function-configuration --function-name txn-scorer --query 'Layers[].Arn'
+  aws lambda list-layer-versions --layer-name riskkit-core

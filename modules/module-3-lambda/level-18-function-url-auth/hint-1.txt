@@ -1,0 +1,4 @@
+Compare the two URLs and look at what protects the public one:
+
+  aws lambda get-function-url-config --function-name invite-landing
+  aws lambda get-policy --function-name invite-landing

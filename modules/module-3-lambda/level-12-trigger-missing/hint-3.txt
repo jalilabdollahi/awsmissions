@@ -1,0 +1,3 @@
+Fill in notification.json (function ARN, event s3:ObjectCreated:*, prefix results/, suffix .json), then:
+
+  aws s3api put-bucket-notification-configuration --bucket helixia-lab-inbox --notification-configuration file://notification.json

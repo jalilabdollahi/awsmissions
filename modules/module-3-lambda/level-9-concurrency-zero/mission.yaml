@@ -1,0 +1,22 @@
+name: "The Throttled Function"
+description: >-
+  Brightside Coupons went through a nasty incident on Sunday night: a runaway
+  retry loop opened hundreds of database connections, and the on-call engineer
+  "paused" the coupon-redeemer Lambda function with a quick CLI command. The
+  incident is long closed but checkout still shows "coupons are unavailable".
+  Callers get "Rate Exceeded" even though traffic is tiny. The database pool
+  has room for 20 concurrent redemptions, and the post-mortem insists that
+  nothing should be able to exceed that again.
+objective: >-
+  Let coupon-redeemer process requests again while keeping a concurrency cap
+  in place that is never above 20 simultaneous executions.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
+concepts:
+  - reserved concurrency
+  - throttling
+  - protecting downstream resources
+services:
+  - lambda
+  - iam

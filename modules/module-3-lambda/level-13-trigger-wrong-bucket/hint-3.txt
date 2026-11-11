@@ -1,0 +1,2 @@
+  aws s3api put-bucket-notification-configuration --bucket marlowe-invoices-staging --notification-configuration '{}'
+  aws s3api put-bucket-notification-configuration --bucket marlowe-invoices-prod --notification-configuration file://notification.json

@@ -1,0 +1,4 @@
+Failures in async invocations leave no trace by default. See how this function is set up for async calls:
+
+  aws lambda get-function-event-invoke-config --function-name sms-notifier
+  aws sqs list-queues

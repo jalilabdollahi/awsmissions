@@ -1,0 +1,3 @@
+Send the complete map, the new variable plus the one that already exists:
+
+  aws lambda update-function-configuration --function-name fx-rate-lookup --environment 'Variables={RATES_TABLE=maple-fx-rates-prod,FX_PRECISION=4}'

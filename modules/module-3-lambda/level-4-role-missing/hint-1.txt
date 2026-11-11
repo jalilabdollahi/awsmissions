@@ -1,0 +1,4 @@
+Find out which role the function expects, then ask IAM whether it exists:
+
+  aws lambda get-function-configuration --function-name claim-receipt-archiver --query Role
+  aws iam get-role --role-name claim-archiver-role

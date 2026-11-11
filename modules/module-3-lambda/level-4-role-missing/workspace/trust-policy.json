@@ -1,0 +1,10 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": { "Service": "TODO-who-is-allowed-to-assume-this-role" },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}

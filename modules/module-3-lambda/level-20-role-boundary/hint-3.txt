@@ -1,0 +1,3 @@
+Add a statement allowing ssm:GetParameter on arn:aws:ssm:us-east-1:000000000000:parameter/quasar/* to boundary.json, then:
+
+  aws iam create-policy-version --policy-arn arn:aws:iam::000000000000:policy/quasar-self-service-boundary --set-as-default --policy-document file://boundary.json

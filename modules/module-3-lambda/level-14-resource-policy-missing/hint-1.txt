@@ -1,0 +1,4 @@
+Check who is currently allowed to invoke the function:
+
+  aws lambda get-policy --function-name rate-quote-engine
+  aws iam list-attached-user-policies --user-name partner-shipright

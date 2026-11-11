@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FromTheOldRenderBox",
+      "Effect": "Allow",
+      "Principal": { "Service": "ec2.amazonaws.com" },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Sid": "CiCanDryRun",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::000000000000:user/ci-deployer" },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
