@@ -1,0 +1,1 @@
+The pattern is matched against the raw text of each log event, character by character, and it is case-sensitive. Read the filterPattern field again and compare its capitalisation with the log line. aws logs test-metric-filter lets you try a pattern against sample lines without changing anything.

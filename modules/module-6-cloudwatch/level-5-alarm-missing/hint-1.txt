@@ -1,0 +1,6 @@
+Check what already watches this metric and what the topic is for:
+
+  aws cloudwatch describe-alarms --query "MetricAlarms[?Namespace==`Meridian/Checkout`]"
+  aws sns list-topics
+
+Then open alarm.json.

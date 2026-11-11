@@ -1,0 +1,3 @@
+Create the stream with the exact name:
+
+  aws logs create-log-stream --log-group-name /harvest/sensors --log-stream-name field-gateway-07

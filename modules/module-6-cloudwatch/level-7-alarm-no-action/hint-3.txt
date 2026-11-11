@@ -1,0 +1,3 @@
+In alarm.json set "ActionsEnabled" to true and replace the AlarmActions ARN with the one of halcyon-oncall (arn:aws:sns:us-east-1:000000000000:halcyon-oncall), then apply it:
+
+  aws cloudwatch put-metric-alarm --cli-input-json file://alarm.json

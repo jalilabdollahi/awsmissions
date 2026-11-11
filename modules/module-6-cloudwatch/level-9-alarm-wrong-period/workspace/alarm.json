@@ -1,3 +1,12 @@
 {
-  "Period": 300
+  "AlarmName": "brightside-bounce-spike",
+  "AlarmDescription": "Bounced e-mails spiking: sender reputation at risk",
+  "Namespace": "Brightside/Mail",
+  "MetricName": "BouncedMessages",
+  "Statistic": "Sum",
+  "Period": 300,
+  "EvaluationPeriods": 1,
+  "Threshold": 50,
+  "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+  "TreatMissingData": "notBreaching"
 }

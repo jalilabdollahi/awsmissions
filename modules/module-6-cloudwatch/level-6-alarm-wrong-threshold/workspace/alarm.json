@@ -1,3 +1,12 @@
 {
-  "Threshold": 5
+  "AlarmName": "pylon-node-cpu-saturated",
+  "AlarmDescription": "Page when any Pylon node is CPU saturated",
+  "Namespace": "Pylon/Compute",
+  "MetricName": "NodeCpuPercent",
+  "Statistic": "Maximum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 900,
+  "ComparisonOperator": "GreaterThanThreshold",
+  "TreatMissingData": "notBreaching"
 }

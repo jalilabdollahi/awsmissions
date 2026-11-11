@@ -1,0 +1,5 @@
+The rule is enabled and has a target, so it must be the pattern. Read it next to a real event:
+
+  aws events describe-rule --name quillshop-gold-orders
+
+The event the shop publishes has source "quillshop.orders", detail-type "OrderPlaced" and detail.tier "gold".

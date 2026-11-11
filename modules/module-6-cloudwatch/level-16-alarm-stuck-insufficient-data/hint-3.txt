@@ -1,0 +1,3 @@
+Set "TreatMissingData" to "notBreaching" in alarm.json and apply it:
+
+  aws cloudwatch put-metric-alarm --cli-input-json file://alarm.json

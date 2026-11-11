@@ -1,0 +1,6 @@
+The alarm turns red, so evaluation works. Look at what it does when it fires:
+
+  aws cloudwatch describe-alarms --alarm-names halcyon-db-connections-high \
+    --query 'MetricAlarms[0].[ActionsEnabled,AlarmActions]'
+
+Then check who listens to the topic it publishes to: aws sns list-subscriptions-by-topic --topic-arn <ARN>

@@ -1,0 +1,1 @@
+The alarm judges the metric in windows of Period seconds, and with one evaluation period it needs a complete window before it can say ALARM. A five-minute window means a five-minute reaction time. Shorten the window; keep the statistic, the threshold and the comparison unchanged.

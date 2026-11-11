@@ -1,0 +1,1 @@
+The group exists and the six old gateways write happily. A write needs both the group and the exact stream name, and field-gateway-07 does not exist yet. Because the gateway's agent may not create streams, someone with permissions has to.

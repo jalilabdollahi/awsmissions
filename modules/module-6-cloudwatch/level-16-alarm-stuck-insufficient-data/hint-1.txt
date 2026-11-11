@@ -1,0 +1,6 @@
+Ask the alarm why it is grey:
+
+  aws cloudwatch describe-alarms --alarm-names vesper-backup-failed \
+    --query 'MetricAlarms[0].[StateValue,StateReason,TreatMissingData]'
+
+Think about what the backup job publishes on a good night.

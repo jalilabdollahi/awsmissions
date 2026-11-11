@@ -1,0 +1,3 @@
+In the widget's query inside dashboard.json, make the group name /rivergate/payments (plural) and the filter on the lower-case field level. Then publish the dashboard again:
+
+  aws cloudwatch put-dashboard --dashboard-name rivergate-payments --dashboard-body file://dashboard.json

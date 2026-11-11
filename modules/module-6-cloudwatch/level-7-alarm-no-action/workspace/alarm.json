@@ -1,5 +1,14 @@
 {
-  "AlarmActions": [
-    "arn:aws:sns:us-east-1:000000000000:mission-topic"
-  ]
+  "AlarmName": "halcyon-db-connections-high",
+  "AlarmDescription": "Open connections on the primary database",
+  "Namespace": "Halcyon/Database",
+  "MetricName": "OpenConnections",
+  "Statistic": "Maximum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 150,
+  "ComparisonOperator": "GreaterThanThreshold",
+  "TreatMissingData": "notBreaching",
+  "ActionsEnabled": false,
+  "AlarmActions": ["arn:aws:sns:us-east-1:000000000000:halcyon-oncall-legacy"]
 }

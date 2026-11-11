@@ -1,0 +1,1 @@
+The only target of the rule is the staging queue. Targets are identified by an Id inside the rule: a put-targets with an existing Id modifies that target, with a new Id it adds another one. Whatever you do, the staging queue must not be left as a target.

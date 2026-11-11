@@ -1,0 +1,1 @@
+The checkout API's log group is gone, and the log driver is configured to create streams but never groups, so every flush fails. A log group has to exist, with exactly the name the driver uses (including the leading slash), before any stream can be created in it.

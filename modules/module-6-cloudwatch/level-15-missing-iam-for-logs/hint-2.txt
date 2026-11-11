@@ -1,0 +1,1 @@
+In CloudWatch Logs, creating a stream and writing events into it are separate actions with separate permissions. The policy allows the first and not the second. Grant only the missing action: broad permissions like logs:* would also allow deleting the group or shortening its retention.

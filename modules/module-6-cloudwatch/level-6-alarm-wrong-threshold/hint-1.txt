@@ -1,0 +1,5 @@
+Compare the alarm's rule with the definition of "saturated" in the mission text:
+
+  aws cloudwatch describe-alarms --alarm-names pylon-node-cpu-saturated
+
+Read Threshold and ComparisonOperator, and think about what values CPU percent can take.

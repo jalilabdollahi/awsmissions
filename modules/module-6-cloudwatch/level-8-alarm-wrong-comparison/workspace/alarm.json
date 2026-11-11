@@ -1,3 +1,13 @@
 {
-  "ComparisonOperator": "GreaterThanThreshold"
+  "AlarmName": "nimbus-data-volume-low-space",
+  "AlarmDescription": "Free space on the data volume is running out",
+  "Namespace": "Nimbus/Storage",
+  "MetricName": "FreeSpaceGB",
+  "Dimensions": [{ "Name": "VolumeId", "Value": "data-01" }],
+  "Statistic": "Minimum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 10,
+  "ComparisonOperator": "GreaterThanThreshold",
+  "TreatMissingData": "notBreaching"
 }

@@ -1,0 +1,3 @@
+Change "ComparisonOperator" in alarm.json to "LessThanThreshold" and apply the file again:
+
+  aws cloudwatch put-metric-alarm --cli-input-json file://alarm.json

@@ -1,0 +1,4 @@
+Replace the target: remove the old one by its Id, then add one for the production queue.
+
+  aws events remove-targets --rule harbor-shipment-created --ids ingest
+  aws events put-targets --rule harbor-shipment-created --targets Id=ingest,Arn=<ARN of harbor-ingest-prod>

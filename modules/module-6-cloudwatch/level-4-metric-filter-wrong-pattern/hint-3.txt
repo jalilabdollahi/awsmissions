@@ -1,0 +1,3 @@
+Set "filterPattern" in filter.json to "\"ERROR\"" (a quoted term with exactly the right capitalisation), then re-apply the file; putting a filter with an existing name replaces it:
+
+  aws logs put-metric-filter --cli-input-json file://filter.json

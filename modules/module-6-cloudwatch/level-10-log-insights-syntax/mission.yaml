@@ -1,0 +1,24 @@
+name: "The Empty Error Table"
+description: >-
+  Rivergate's payments team keeps a CloudWatch dashboard, rivergate-payments,
+  with one Logs Insights widget titled "Recent payment errors". The service logs
+  JSON lines such as {"level":"ERROR","code":"CARD_DECLINED","order":"..."} to
+  the log group /rivergate/payments. During an incident review today the table
+  was empty although the logs plainly contain errors, and the team lost ten
+  minutes believing everything was fine. The dashboard definition is in
+  dashboard.json in your workspace.
+objective: >-
+  Make the widget on the dashboard rivergate-payments show the error entries of
+  /rivergate/payments (and only those): running the widget's query must return
+  exactly the ERROR log lines.
+xp: 200
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - Logs Insights
+  - query syntax
+  - JSON field discovery
+  - CloudWatch dashboards
+services:
+  - logs
+  - cloudwatch

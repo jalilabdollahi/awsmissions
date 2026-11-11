@@ -1,0 +1,4 @@
+Set filterPattern to "\"ERROR\"" in filter.json and make the alarm's Namespace in alarm.json identical to the filter's metricNamespace (Talon/Orders). Re-apply both files:
+
+  aws logs put-metric-filter --cli-input-json file://filter.json
+  aws cloudwatch put-metric-alarm --cli-input-json file://alarm.json

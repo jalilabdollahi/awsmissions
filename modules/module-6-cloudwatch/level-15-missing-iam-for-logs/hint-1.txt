@@ -1,0 +1,5 @@
+Read the exact permissions the user has, and compare them with the two things the agent does (create a stream, upload events):
+
+  aws iam get-user-policy --user-name lumen-shipper --policy-name lumen-shipper-logs
+
+The AccessDenied message names the action that was refused.

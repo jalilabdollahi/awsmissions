@@ -1,0 +1,23 @@
+name: "Counting the Wrong Word"
+description: >-
+  Ledgerbox's payment service writes lines such as
+  "2026-11-11T10:02:11Z ERROR gateway timeout order=88123" to the log group
+  /ledgerbox/payments. A metric filter named payment-failures is supposed to
+  turn each of those lines into a count for the metric
+  Ledgerbox/PaymentFailures, which the finance dashboard charts. The chart has
+  been flat zero for a week although customers are complaining about failed
+  payments, and the logs clearly contain failures.
+objective: >-
+  Make the filter payment-failures count every log line that reports an ERROR
+  (and only those) into Ledgerbox/PaymentFailures, with one count per matching
+  line. Keep the metric name and namespace: dashboards depend on them.
+xp: 150
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - metric filters
+  - filter pattern syntax
+  - logs to metrics
+services:
+  - logs
+  - cloudwatch

@@ -1,0 +1,17 @@
+{
+  "widgets": [
+    {
+      "type": "log",
+      "x": 0,
+      "y": 0,
+      "width": 24,
+      "height": 6,
+      "properties": {
+        "title": "Recent payment errors",
+        "region": "us-east-1",
+        "view": "table",
+        "query": "SOURCE '/rivergate/payment' | fields @timestamp, @message | filter Level = \"ERROR\" | sort @timestamp desc | limit 20"
+      }
+    }
+  ]
+}

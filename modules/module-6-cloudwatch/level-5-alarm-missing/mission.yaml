@@ -1,0 +1,23 @@
+name: "Nobody Is Watching Checkout"
+description: >-
+  Meridian's checkout service publishes its 99th-percentile latency to the
+  custom metric Meridian/Checkout P99LatencyMs. During last night's incident
+  the metric climbed past 2 seconds for an hour and nobody was paged, because
+  no alarm exists for it. The on-call rotation is notified through the SNS
+  topic meridian-oncall. The file alarm.json in your workspace is a half-filled
+  template from the post-mortem.
+objective: >-
+  Create an alarm on Meridian/Checkout P99LatencyMs that goes to ALARM when
+  the latency is above 800 ms and publishes to the topic meridian-oncall when
+  it does. It must stay OK for normal values. For this lab the alarm should
+  evaluate a single 10-second period using the Maximum statistic.
+xp: 150
+difficulty: intermediate
+expected_time: 12m
+concepts:
+  - CloudWatch alarms
+  - alarm actions
+  - SNS notifications
+services:
+  - cloudwatch
+  - sns

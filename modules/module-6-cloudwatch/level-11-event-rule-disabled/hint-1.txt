@@ -1,0 +1,5 @@
+Ask EventBridge about the rule itself, not just its pattern:
+
+  aws events describe-rule --name skyline-ticket-sold
+
+Read every field in the output.

@@ -1,4 +1,12 @@
 {
-  "AlarmName": "mission-error-alarm",
-  "MetricName": "ErrorCount"
+  "AlarmName": "FILL_IN_ALARM_NAME",
+  "Namespace": "Meridian/Checkout",
+  "MetricName": "P99LatencyMs",
+  "Statistic": "Maximum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 0,
+  "ComparisonOperator": "FILL_IN_OPERATOR",
+  "TreatMissingData": "notBreaching",
+  "AlarmActions": ["FILL_IN_TOPIC_ARN"]
 }

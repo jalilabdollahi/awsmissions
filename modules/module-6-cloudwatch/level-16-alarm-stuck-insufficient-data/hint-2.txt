@@ -1,0 +1,1 @@
+On good nights nothing is published, so every evaluation period is empty. The alarm's TreatMissingData setting decides what an empty period means. The default skips empty periods, which leaves the alarm with nothing to judge. For a metric that only exists when something went wrong, an empty period means everything is fine.

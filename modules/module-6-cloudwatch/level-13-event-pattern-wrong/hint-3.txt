@@ -1,0 +1,3 @@
+Fix the source ("quillshop.orders") and the tier value ("gold") in pattern.json, then replace the rule's pattern:
+
+  aws events put-rule --name quillshop-gold-orders --state ENABLED --event-pattern file://pattern.json

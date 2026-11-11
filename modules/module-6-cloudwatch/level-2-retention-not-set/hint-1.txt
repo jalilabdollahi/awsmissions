@@ -1,0 +1,3 @@
+Find which groups never expire. A group without a retentionInDays value keeps its logs forever:
+
+  aws logs describe-log-groups --log-group-name-prefix /orbit

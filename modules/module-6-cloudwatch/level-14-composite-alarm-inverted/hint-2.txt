@@ -1,0 +1,1 @@
+A composite alarm is ALARM when its expression is true. Ask yourself what the expression in alarm-rule.txt evaluates to when both children are OK, and when one of them is in ALARM. The NOT in front changes the meaning completely. Also remember that re-defining a composite replaces its actions.

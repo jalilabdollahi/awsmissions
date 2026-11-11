@@ -1,0 +1,4 @@
+The rule itself is right, so look at the timing. Read how the alarm slices time:
+
+  aws cloudwatch describe-alarms --alarm-names brightside-bounce-spike \
+    --query 'MetricAlarms[0].[Period,EvaluationPeriods,Statistic,Threshold]'

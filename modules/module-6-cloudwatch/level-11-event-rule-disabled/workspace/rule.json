@@ -1,3 +1,6 @@
 {
-  "State": "ENABLED"
+  "Name": "skyline-ticket-sold",
+  "Description": "Send every sold ticket to the receipts printer",
+  "EventPattern": "{\"source\":[\"skyline.box-office\"],\"detail-type\":[\"TicketSold\"]}",
+  "State": "DISABLED"
 }

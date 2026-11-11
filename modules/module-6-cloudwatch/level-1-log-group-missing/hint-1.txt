@@ -1,0 +1,3 @@
+The error says a resource was not found. List the log groups that exist and compare them with the name the checkout API writes to (/swiftpost/checkout-api):
+
+  aws logs describe-log-groups

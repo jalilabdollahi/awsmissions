@@ -1,0 +1,4 @@
+Read the composite's rule and its state, and note what the two child alarms are doing right now:
+
+  aws cloudwatch describe-alarms --alarm-types CompositeAlarm MetricAlarm \
+    --query '[CompositeAlarms[].[AlarmName,AlarmRule,StateValue],MetricAlarms[].[AlarmName,StateValue]]'

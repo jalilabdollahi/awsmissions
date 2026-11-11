@@ -1,0 +1,27 @@
+name: "Last Night's Outage Was Silent"
+description: >-
+  Talon Orders' API logs every failure as a line containing the word ERROR in
+  the group /talon/orders-api. The monitoring chain was meant to be: a metric
+  filter (order-errors) turns each failing line into a count, an alarm
+  (talon-order-errors-high) fires at 3 or more errors in 10 seconds, and the
+  alarm publishes to the SNS topic talon-oncall, which the pager reads. During
+  last night's outage hundreds of errors were logged and nobody was paged. Each
+  link of the chain was configured by a different person; both files are in
+  your workspace (filter.json and alarm.json). The topic and the pager already
+  work.
+objective: >-
+  Repair the chain end to end: when the API logs a burst of ERROR lines, the
+  alarm talon-order-errors-high must go to ALARM and the page must reach the
+  pager queue behind talon-oncall. Ordinary INFO lines must not count.
+xp: 450
+difficulty: expert
+expected_time: 20m
+concepts:
+  - logs to metrics to alarms
+  - metric filter patterns
+  - metric namespaces
+  - end-to-end verification
+services:
+  - logs
+  - cloudwatch
+  - sns

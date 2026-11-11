@@ -1,5 +1,7 @@
 {
-  "source": [
-    "aws.ec2"
-  ]
+  "source": ["quillshop.order"],
+  "detail-type": ["OrderPlaced"],
+  "detail": {
+    "tier": ["Gold"]
+  }
 }

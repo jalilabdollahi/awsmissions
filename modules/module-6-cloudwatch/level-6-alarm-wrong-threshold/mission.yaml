@@ -1,0 +1,20 @@
+name: "A Zero Too Many"
+description: >-
+  Pylon Compute's capacity team wants a heads-up when a node is CPU saturated,
+  which they define as NodeCpuPercent above 90. Their alarm
+  pylon-node-cpu-saturated has never fired, even though last Thursday three
+  nodes sat at 97% for twenty minutes and a customer called. The alarm is
+  defined in alarm.json in your workspace and was applied from there.
+objective: >-
+  Make pylon-node-cpu-saturated go to ALARM when NodeCpuPercent is above 90,
+  and stay out of ALARM at normal load (45%). Keep the metric, statistic and
+  period as they are.
+xp: 100
+difficulty: beginner
+expected_time: 8m
+concepts:
+  - alarm thresholds
+  - metric units and ranges
+  - put-metric-alarm
+services:
+  - cloudwatch

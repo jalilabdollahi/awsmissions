@@ -1,0 +1,3 @@
+Create the group:
+
+  aws logs create-log-group --log-group-name /swiftpost/checkout-api

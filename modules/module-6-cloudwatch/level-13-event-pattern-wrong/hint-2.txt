@@ -1,0 +1,1 @@
+Event patterns are matched exactly and are case-sensitive, field by field. Two of the three conditions in pattern.json are not identical to what the events contain. aws events test-event-pattern lets you try a pattern against a sample event to see which version matches.

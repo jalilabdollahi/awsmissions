@@ -1,0 +1,3 @@
+Set "Period" in alarm.json to 60 (or less) and apply the file; put-metric-alarm replaces an alarm of the same name:
+
+  aws cloudwatch put-metric-alarm --cli-input-json file://alarm.json

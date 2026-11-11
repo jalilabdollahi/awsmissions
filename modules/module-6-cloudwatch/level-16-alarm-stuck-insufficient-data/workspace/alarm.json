@@ -1,0 +1,12 @@
+{
+  "AlarmName": "vesper-backup-failed",
+  "AlarmDescription": "At least one nightly backup job reported a failure",
+  "Namespace": "Vesper/Backup",
+  "MetricName": "BackupFailures",
+  "Statistic": "Sum",
+  "Period": 10,
+  "EvaluationPeriods": 1,
+  "Threshold": 1,
+  "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+  "TreatMissingData": "missing"
+}

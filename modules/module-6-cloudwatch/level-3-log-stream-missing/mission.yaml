@@ -1,0 +1,21 @@
+name: "Gateway Seven Is Mute"
+description: >-
+  Harvest Co. monitors greenhouse sensors through field gateways that each log
+  to their own stream in the log group /harvest/sensors. Gateways 01 to 06 have
+  been shipping logs for months. This morning gateway 07 was installed at a new
+  site; it boots, reads its sensors, and its agent logs
+  ResourceNotFoundException (stream does not exist). The agent on a gateway is
+  allowed to write events but not to create streams, and the group is fine.
+objective: >-
+  Make gateway 07 able to ship its logs: the stream field-gateway-07 must exist
+  in /harvest/sensors and accept log events. Do not disturb the six existing
+  streams.
+xp: 100
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - log streams
+  - PutLogEvents
+  - CloudWatch Logs hierarchy
+services:
+  - logs

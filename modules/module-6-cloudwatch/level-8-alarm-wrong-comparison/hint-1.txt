@@ -1,0 +1,5 @@
+Look at the alarm's rule and at its reason text, and compare with what the metric means (free space):
+
+  aws cloudwatch describe-alarms --alarm-names nimbus-data-volume-low-space
+
+StateReason prints the datapoint and the comparison that decided the state.

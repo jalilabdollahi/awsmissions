@@ -1,0 +1,3 @@
+Use the rule ALARM("strata-api-errors") OR ALARM("strata-api-latency") in alarm-rule.txt and redefine the composite, passing the action again:
+
+  aws cloudwatch put-composite-alarm --alarm-name strata-api-unhealthy --alarm-rule "$(cat alarm-rule.txt)" --alarm-actions <ARN of strata-oncall>

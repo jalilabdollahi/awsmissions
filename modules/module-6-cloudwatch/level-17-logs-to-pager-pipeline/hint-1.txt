@@ -1,0 +1,4 @@
+Follow one ERROR line through the chain, one link at a time. First compare what the filter looks for with what the API writes, then compare the metric the filter publishes with the metric the alarm watches:
+
+  aws logs describe-metric-filters --log-group-name /talon/orders-api
+  aws cloudwatch describe-alarms --alarm-names talon-order-errors-high
