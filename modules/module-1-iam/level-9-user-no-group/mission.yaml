@@ -1,15 +1,23 @@
-name: The Orphan User
-description: IAM user exists but is in no group and has no policies attached
-objective: Create a group with a policy, add the user to the group
-xp: 125
-difficulty: beginner
+name: "First Day, No Access"
+description: >-
+  Nimbus Analytics hired Priya Nair today. Her IAM user, nimbus-priya, was
+  created and she can sign in, but every call she makes, including listing the
+  curated data lake bucket, comes back AccessDenied. At Nimbus nobody has
+  permissions attached to their own user; access is handed out through
+  groups, and there are several groups in the account for different kinds of
+  people.
+objective: >-
+  Give nimbus-priya the access of a regular data analyst: she must be able to
+  read from the curated data lake bucket. She is not a platform administrator
+  and not a contractor, so she must not read the raw landing bucket or manage
+  IAM. Do not attach policies directly to her user.
+xp: 150
+difficulty: intermediate
 expected_time: 8m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-9-user-no-group
-implementation_status: playable
+  - IAM groups
+  - group membership
+  - least privilege
+services:
+  - iam
+  - s3

@@ -1,25 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-printf 'classified\n' > /tmp/awsmissions-data.txt
-aws_local s3 cp /tmp/awsmissions-data.txt s3://mission-bucket/data.txt >/dev/null
+aws_local s3 mb s3://harborline-reports >/dev/null
+aws_local s3 mb s3://harborline-payroll >/dev/null
 
-aws_local iam create-role \
-  --role-name report-reader-role \
-  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
+seed="$(mktemp)"
+trap 'rm -f "$seed"' EXIT
+printf 'lane,teu,margin\nRTM-NYC,412,0.18\nSIN-LAX,377,0.22\n' > "$seed"
+aws_local s3api put-object --bucket harborline-reports --key reports/2025-q3.csv --body "$seed" >/dev/null
+printf 'employee,salary\nredacted,redacted\n' > "$seed"
+aws_local s3api put-object --bucket harborline-payroll --key payroll/2025-09.csv --body "$seed" >/dev/null
 
-for _ in {1..10}; do
-  if aws_local iam get-role --role-name report-reader-role >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
-done
+aws_local iam create-user --user-name ledgerlens-report >/dev/null
+aws_local iam put-user-policy --user-name ledgerlens-report --policy-name report-access \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
 
-aws_local iam put-role-policy \
-  --role-name report-reader-role \
-  --policy-name report-reader-policy \
-  --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"s3:ListBucket","Resource":"arn:aws:s3:::mission-bucket"}]}' >/dev/null
-
-echo "Broken IAM role created: report-reader-role"
+echo "ledgerlens-report can list harborline-reports but cannot open a single report."

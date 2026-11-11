@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Inline policy grants S3 access but a second inline policy explicitly Denies it — Deny wins
+Full S3 access is granted, so something must be taking it away. List everything that applies to the user, managed and inline:
+
+  aws iam list-attached-user-policies --user-name forge-deployer
+  aws iam list-user-policies --user-name forge-deployer
+
+Then read each inline policy with get-user-policy.

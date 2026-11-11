@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Attach a managed policy or put an inline policy granting required permissions
+The function runs with its execution role's permissions, and invoice-digest-role has none. It reads one bucket and writes to another, so that is what its policy must allow: list and get on the invoices, put on the digests.
+
+Draft the policy in policy.json (`edit`) and attach it to the role.

@@ -1,1 +1,3 @@
-Use the account ID returned by STS and compare it with the `Principal` in `trust-policy.json`. In LocalStack this should be `000000000000`.
+STS matches the caller's full ARN against the Principal in the trust policy. Every part of the ARN counts: account ID, resource type and user name. After the account consolidation, the policy still names a principal from the old account, so it never matches.
+
+Correct the Principal in trust-policy.json (`edit`). Trust the one user that needs it, not the whole account.

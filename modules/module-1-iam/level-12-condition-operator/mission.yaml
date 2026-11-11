@@ -1,16 +1,21 @@
-name: Almost Right
-description: "Policy condition uses `StringEquals` for a value that requires wildcard\
-  \ matching \u2014 use `StringLike`"
-objective: Change condition operator from `StringEquals` to `StringLike`
-xp: 175
-difficulty: beginner
+name: "Almost, But Not Quite"
+description: >-
+  Ashgrove Law lets its case clerk (IAM user ashgrove-clerk) browse only the
+  2025 matters in the case-files bucket. The policy allows ListBucket when the
+  requested prefix lies under matters/2025/, and the author is certain it is
+  correct: the value even contains the right wildcard. Yet the clerk cannot list
+  matters/2025/ or any folder below it.
+objective: >-
+  Let ashgrove-clerk list matters/2025/ and every folder below it, and read the
+  files there. Browsing any other part of the bucket, including matters/2024/
+  and the bucket root, must stay forbidden.
+xp: 200
+difficulty: intermediate
 expected_time: 12m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-12-condition-operator
-implementation_status: playable
+  - IAM condition operators
+  - StringEquals vs StringLike
+  - s3:prefix
+services:
+  - iam
+  - s3

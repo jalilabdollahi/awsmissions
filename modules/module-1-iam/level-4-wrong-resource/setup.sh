@@ -1,26 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source ../../../scripts/aws_helpers.sh
+source "$AWSMISSIONS_ROOT/scripts/aws_helpers.sh"
 
-aws_local s3 mb s3://mission-bucket >/dev/null 2>&1 || true
-printf 'classified\n' > /tmp/awsmissions-level4.txt
-aws_local s3 cp /tmp/awsmissions-level4.txt s3://mission-bucket/data.txt >/dev/null
+prod_url="$(aws_local sqs create-queue --queue-name orders-prod --query QueueUrl --output text)"
+aws_local sqs create-queue --queue-name orders-dlq >/dev/null
+aws_local sqs send-message --queue-url "$prod_url" --message-body '{"order":"TW-88121","teu":4}' >/dev/null
 
-aws_local iam create-role \
-  --role-name vault-reader-role \
-  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}' >/dev/null 2>&1 || true
+aws_local iam create-user --user-name orderflow-consumer >/dev/null
+aws_local iam put-user-policy --user-name orderflow-consumer --policy-name consumer-access \
+  --policy-document "file://$MISSION_DIR/workspace/policy.json"
 
-for _ in {1..10}; do
-  if aws_local iam get-role --role-name vault-reader-role >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
-done
-
-aws_local iam put-role-policy \
-  --role-name vault-reader-role \
-  --policy-name vault-reader-policy \
-  --policy-document "file://$SCRIPT_DIR/policy.json" >/dev/null
-
-echo "Broken IAM role created: vault-reader-role"
+echo "orderflow-consumer is polling orders-prod and getting AccessDenied."

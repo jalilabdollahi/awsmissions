@@ -1,16 +1,23 @@
-name: The Wrong Path
-description: "IAM user exists at path `/ops/` but policy ARN references `/dev/` \u2014\
-  \ condition on path fails"
-objective: Fix the role/user path or the policy path condition
-xp: 175
-difficulty: beginner
-expected_time: 12m
+name: "Lost in the Path"
+description: >-
+  Redwood Labs lets its contractors manage their own credentials. The IAM group
+  redwood-contractors carries a self-service policy: each member may list and
+  inspect their own access keys, using the policy variable for the caller's
+  username so one policy fits everyone. All contractor accounts live under the
+  IAM path /contractors/. Nobody can use the self-service policy; every attempt
+  to list their own keys gets AccessDenied, while the identical policy worked in
+  the pilot with a few test accounts.
+objective: >-
+  Make each member of redwood-contractors able to list and inspect their own
+  access keys, and only their own. Other contractors' keys and other IAM users'
+  keys must remain off limits.
+xp: 400
+difficulty: expert
+expected_time: 15m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-19-path-mismatch
-implementation_status: playable
+  - IAM paths
+  - user ARNs
+  - policy variables
+  - self-service credentials
+services:
+  - iam

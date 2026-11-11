@@ -1,16 +1,22 @@
-name: The Bad Condition
-description: "Policy has a condition block using wrong key: `\"aws:sourceIp\"` when\
-  \ it should be `\"aws:SourceAccount\"` \u2014 condition never matches"
-objective: Fix the condition key to the correct one
-xp: 175
-difficulty: beginner
+name: "Data Stays in Europe"
+description: >-
+  Meridian Health must keep patient events inside the EU. Its EU ingest worker
+  (IAM user meridian-eu-worker) is only supposed to touch SQS queues through
+  eu-west-1, so the security team wrote a policy that allows SQS actions when
+  the request goes to that region. After the policy was rolled out the worker
+  cannot use the eu-west-1 queue either. The Condition block was written by
+  hand from memory.
+objective: >-
+  Let meridian-eu-worker send and receive messages on the eu-west-1 queue
+  patient-events-eu, while keeping the residency guardrail: it must still be
+  refused when it calls SQS in us-east-1.
+xp: 200
+difficulty: intermediate
 expected_time: 12m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-11-condition-wrong-key
-implementation_status: playable
+  - IAM condition keys
+  - aws:RequestedRegion
+  - data residency guardrails
+services:
+  - iam
+  - sqs

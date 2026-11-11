@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add the Version field to the policy document
+IAM only substitutes ${aws:username}-style variables when the document declares which version of the policy language it is written in. Without that element it falls back to the old language, where the variable is plain text. Add the missing element to policy.json (`edit`).
+
+Managed policies are versioned: you cannot edit v1 in place.

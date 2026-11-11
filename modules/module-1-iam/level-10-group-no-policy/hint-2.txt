@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Attach a policy to the group
+A group only hands out the policies attached to it, and this one has none. Several ready-made policies exist for the bucket, with different levels of power. Read each one (aws iam get-policy-version --policy-arn <arn> --version-id v1) and choose the smallest one that allows uploading and downloading without deleting.

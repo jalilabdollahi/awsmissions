@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Policy grants `s3:GetObject` on `arn:aws:s3:::wrong-bucket/*` but app reads from `mission-bucket`
+The consumer authenticates fine; the policy just does not apply to the queues. Print the policy and look at the Resource of each statement:
+
+  aws iam get-user-policy --user-name orderflow-consumer --policy-name consumer-access
+
+Then ask SQS what the ARN of each queue really is (get-queue-url, then get-queue-attributes).

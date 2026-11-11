@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Create a group with a policy, add the user to the group
+A new user has no permissions until they get some, and at Nimbus they come from groups. The account already has groups for different kinds of people. Inspect each group's policies (list-group-policies / get-group-policy / list-attached-group-policies) and pick the one that grants exactly what an analyst needs, nothing more.

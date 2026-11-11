@@ -1,17 +1,21 @@
-name: The Locked Vault
-description: Policy grants `s3:GetObject` on `arn:aws:s3:::wrong-bucket/*` but app
-  reads from `mission-bucket`
-objective: Fix the resource ARN to point to the correct bucket
+name: "Right Queue, Wrong Address"
+description: >-
+  Tidewater Freight's order consumer runs as the IAM user orderflow-consumer.
+  It pulls orders from the SQS queue orders-prod and parks poison messages in
+  orders-dlq. After the policy was moved over from the staging account the
+  consumer sees AccessDenied on both queues, although the queue names in the
+  policy are spelled correctly.
+objective: >-
+  Make orderflow-consumer able to receive and delete messages on orders-prod and
+  to send messages to orders-dlq. It must not be able to touch either queue in
+  any other way.
 xp: 125
 difficulty: beginner
 expected_time: 8m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- buckets
-module: module-1-iam
-module_title: IAM Foundations
-level: level-4-wrong-resource
-implementation_status: playable
+  - IAM resource ARNs
+  - SQS ARNs
+  - region and account in ARNs
+services:
+  - iam
+  - sqs

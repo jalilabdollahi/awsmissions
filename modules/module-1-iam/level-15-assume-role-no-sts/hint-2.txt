@@ -1,1 +1,1 @@
-Focus on the specific mismatch described in the objective: Add `sts:AssumeRole` on the target role ARN
+The role trusts the whole account, which only delegates the decision to each user's own permissions. For the switch to work, the auditor's identity needs permission to assume that role. Grant it for the specific role the auditor needs; there is another role in the account with the same trust policy that must stay out of reach.

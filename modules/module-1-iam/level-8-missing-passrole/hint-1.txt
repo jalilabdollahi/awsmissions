@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: IAM user can create Lambda but can't assign an execution role — missing `iam:PassRole`
+Reproduce the failure the way the pipeline sees it, then read the whole error: which action does it say is not authorized?
+
+  aws iam get-user-policy --user-name kestrel-releaser --policy-name release-pipeline
+
+Compare the actions allowed with the full list of things CreateFunction needs.

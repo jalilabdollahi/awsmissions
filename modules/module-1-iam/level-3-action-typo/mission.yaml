@@ -1,16 +1,21 @@
-name: The Misspelled Gate
-description: "Policy action has typo: `\"s3:GetObjcet\"` \u2014 IAM rejects all GetObject\
-  \ calls"
-objective: Fix the typo to `"s3:GetObject"`
+name: "Fat Fingers"
+description: >-
+  Lantern Studio resizes customer photos with a small worker that runs as the
+  IAM user lantern-thumbs. It reads originals from lantern-originals and writes
+  the resized copies to lantern-thumbnails. A teammate rewrote its inline policy
+  by hand last night; this morning both halves of the job fail with AccessDenied
+  even though the policy "looks right" in code review.
+objective: >-
+  Get lantern-thumbs working again: it must be able to read objects from
+  lantern-originals and write objects to lantern-thumbnails, and nothing more
+  than that.
 xp: 100
 difficulty: beginner
-expected_time: 5m
+expected_time: 6m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-3-action-typo
-implementation_status: playable
+  - IAM action names
+  - implicit deny
+  - least privilege
+services:
+  - iam
+  - s3

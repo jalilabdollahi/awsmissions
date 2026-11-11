@@ -1,1 +1,3 @@
-After editing `policy.json`, apply it with `aws iam put-role-policy --role-name report-reader-role --policy-name report-reader-policy --policy-document file://policy.json`.
+Listing the contents of a bucket and reading an object are different S3 actions, and they apply to different resource ARNs (the bucket itself vs the objects inside it). The policy covers only the first.
+
+Open the working copy with `edit` and add a statement for the missing action.

@@ -1,1 +1,3 @@
-Focus on the specific mismatch described in the objective: Add `iam:PassRole` permission on the target role to the user policy
+Giving a function a role is guarded by its own permission, checked against the role's ARN. Whoever can attach a role can run code with that role's powers, so AWS makes you grant this explicitly, per role.
+
+Think about which role the pipeline legitimately needs, and make sure the other one stays out of reach.

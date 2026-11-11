@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: Policy action has typo: `"s3:GetObjcet"` — IAM rejects all GetObject calls
+Authentication works; the policy simply does not allow what the worker asks for. Print the policy that is attached to the user:
+
+  aws iam list-user-policies --user-name lantern-thumbs
+  aws iam get-user-policy --user-name lantern-thumbs --policy-name thumbnailer
+
+Compare each Action with the S3 API call the worker makes (GetObject, PutObject).

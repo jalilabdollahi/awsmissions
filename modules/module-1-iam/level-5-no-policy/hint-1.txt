@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: IAM role exists and is attached to Lambda but has zero policies — all calls denied
+Invoke the function and read the error message it returns, then look at what its execution role is allowed to do:
+
+  aws lambda invoke --function-name invoice-digest /dev/stdout
+  aws iam list-role-policies --role-name invoice-digest-role
+  aws iam list-attached-role-policies --role-name invoice-digest-role

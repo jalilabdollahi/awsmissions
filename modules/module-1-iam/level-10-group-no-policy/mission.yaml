@@ -1,16 +1,23 @@
-name: The Empty Club
-description: "User is in a group but the group has no policies \u2014 all actions\
-  \ denied"
-objective: Attach a policy to the group
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "The Empty Club"
+description: >-
+  The Pigeonpost helpdesk keeps customer screenshots in the S3 bucket
+  ticket-attachments. Agents Dana and Omar are members of the IAM group
+  helpdesk-agents, but neither can upload or open an attachment: every call
+  gets AccessDenied. Somebody created the group last week and never gave it
+  any permissions. Three customer-managed policies for this bucket already
+  exist in the account, written by the security team.
+objective: >-
+  Make every member of helpdesk-agents able to upload and download ticket
+  attachments, but not delete them. Fix it at group level so that future
+  agents get the same access just by joining.
+xp: 175
+difficulty: intermediate
+expected_time: 10m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-10-group-no-policy
-implementation_status: playable
+  - IAM groups
+  - managed policies
+  - attaching policies
+  - least privilege
+services:
+  - iam
+  - s3

@@ -1,16 +1,22 @@
-name: Can't Switch Hats
-description: "User policy is missing `sts:AssumeRole` \u2014 cannot switch to the\
-  \ target role"
-objective: Add `sts:AssumeRole` on the target role ARN
-xp: 150
-difficulty: beginner
+name: "One Hat Short"
+description: >-
+  Cobalt Bank's external auditor signs in as the IAM user cobalt-auditor and is
+  meant to switch into the role cobalt-audit-readonly to read the
+  cobalt-audit-logs bucket. The role's trust policy already trusts the account,
+  and the auditor has been told the role ARN, but "aws sts assume-role" is
+  answered with AccessDenied. There is a second role in the account,
+  cobalt-finance-admin, with the same trust policy and far more power.
+objective: >-
+  Let cobalt-auditor assume cobalt-audit-readonly and read the audit logs
+  through it. The auditor must still be unable to assume cobalt-finance-admin.
+xp: 225
+difficulty: intermediate
 expected_time: 10m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-15-assume-role-no-sts
-implementation_status: playable
+  - sts:AssumeRole
+  - identity-based permission to assume a role
+  - same-account trust
+services:
+  - iam
+  - sts
+  - s3

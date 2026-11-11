@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadOriginals",
+      "Effect": "Allow",
+      "Action": "s3:GetObjcet",
+      "Resource": "arn:aws:s3:::lantern-originals/*"
+    },
+    {
+      "Sid": "WriteThumbnails",
+      "Effect": "Allow",
+      "Action": "s3:PutObjects",
+      "Resource": "arn:aws:s3:::lantern-thumbnails/*"
+    }
+  ]
+}

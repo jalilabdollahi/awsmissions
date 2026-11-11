@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Policy has a condition block using wrong key: `"aws:sourceIp"` when it should be `"aws:SourceAccount"` — condition never matches
+The worker is allowed the right actions on every resource, so the Condition must be what stops it. Read the policy:
+
+  aws iam get-user-policy --user-name meridian-eu-worker --policy-name eu-sqs-only
+
+Try the call yourself in each region and see which one the policy affects.

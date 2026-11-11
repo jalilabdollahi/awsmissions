@@ -1,1 +1,4 @@
-Start by asking STS which account you are acting as: `aws sts get-caller-identity --query Account --output text`
+There are two sides to every AssumeRole: the caller's permissions and the role's trust policy. The caller's side is fine here. Print the trust policy and compare it with who you actually are:
+
+  aws iam get-role --role-name ledger-nightly --query Role.AssumeRolePolicyDocument
+  aws sts get-caller-identity

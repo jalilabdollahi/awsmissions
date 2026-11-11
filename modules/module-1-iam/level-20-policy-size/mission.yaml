@@ -1,16 +1,22 @@
-name: The Bloated Policy
-description: "Inline policy exceeds 2,048 character limit \u2014 IAM rejects the PutRolePolicy\
-  \ call"
-objective: 'Refactor: extract into a managed policy and attach it'
-xp: 200
-difficulty: beginner
+name: "The Bloated Policy"
+description: >-
+  Fleetwise Telematics collects vehicle telemetry in one S3 bucket per region,
+  fleet-<region>-telemetry, fourteen in total. The analytics user fleet-ops is
+  supposed to read from all of them. A generated policy draft is sitting in your
+  workspace, but whenever someone tries to attach it to the user, IAM refuses
+  it. For now fleet-ops can only list bucket names. There is also a
+  fleet-payroll bucket in the account that the analytics user must never read.
+objective: >-
+  Give fleet-ops read access (list and get) to all fourteen regional telemetry
+  buckets, without exposing fleet-payroll, even though the draft cannot be
+  attached the way it is.
+xp: 450
+difficulty: expert
 expected_time: 15m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-module: module-1-iam
-module_title: IAM Foundations
-level: level-20-policy-size
-implementation_status: playable
+  - IAM policy size limits
+  - inline vs managed policies
+  - policy consolidation
+services:
+  - iam
+  - s3

@@ -1,1 +1,6 @@
-Use command `4` to open `policy.json`, then compare it to what the mission needs.
+The dashboard can browse the bucket, so the user and its keys are fine. Read what the inline policy actually allows:
+
+  aws iam list-user-policies --user-name ledgerlens-report
+  aws iam get-user-policy --user-name ledgerlens-report --policy-name report-access
+
+Compare the list of Actions with what a download needs.

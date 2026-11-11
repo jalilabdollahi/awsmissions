@@ -1,17 +1,22 @@
-name: Scope Creep
-description: "Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but\
-  \ app accesses multiple objects \u2014 only that file is allowed"
-objective: Change resource to `arn:aws:s3:::bucket/*`
-xp: 125
-difficulty: beginner
-expected_time: 8m
+name: "Scope Creep"
+description: >-
+  Vantage Media's render farm worker runs as the IAM user vantage-render. Its
+  policy reads source files from vantage-assets (and its EU twin
+  vantage-assets-eu) and writes finished videos to vantage-renders. To "save
+  typing" someone wrote the bucket ARNs as vantage-*. Everything works, which is
+  exactly why nobody noticed that a security scan just flagged the worker as
+  able to read other buckets in the account.
+objective: >-
+  Tighten vantage-render's policy so it can still read the two asset buckets and
+  write to vantage-renders, but can no longer touch any other bucket whose name
+  starts with vantage-.
+xp: 300
+difficulty: advanced
+expected_time: 12m
 concepts:
-- IAM
-- roles
-- policies
-- policy debugging
-- buckets
-module: module-1-iam
-module_title: IAM Foundations
-level: level-18-resource-wildcard
-implementation_status: playable
+  - resource wildcards
+  - over-permissive policies
+  - least privilege
+services:
+  - iam
+  - s3

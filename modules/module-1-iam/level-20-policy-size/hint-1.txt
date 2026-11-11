@@ -1,1 +1,5 @@
-Start by inspecting the resources involved in this mission: Inline policy exceeds 2,048 character limit — IAM rejects the PutRolePolicy call
+Try to apply the draft yourself and read the exact error IAM returns:
+
+  aws iam put-user-policy --user-name fleet-ops --policy-name telemetry --policy-document file://policy.json
+
+Then look at how many statements the draft contains and what the user already has attached.

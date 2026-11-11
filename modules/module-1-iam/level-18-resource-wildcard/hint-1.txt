@@ -1,1 +1,4 @@
-Start by inspecting the resources involved in this mission: Policy uses specific object ARN `arn:aws:s3:::bucket/specific.txt` but app accesses multiple objects — only that file is allowed
+Nothing is failing here, so the way to see the problem is to look at what the policy can reach. Read the policy, then list the buckets in the account:
+
+  aws iam get-user-policy --user-name vantage-render --policy-name render-storage
+  aws s3api list-buckets --query 'Buckets[].Name'

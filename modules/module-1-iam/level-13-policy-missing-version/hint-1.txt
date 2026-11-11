@@ -1,1 +1,6 @@
-Start by inspecting the resources involved in this mission: IAM policy document missing `"Version": "2012-10-17"` — policy variables don't resolve
+Look at the default version of the managed policy and compare it with a policy from the IAM documentation:
+
+  aws iam get-policy --policy-arn arn:aws:iam::000000000000:policy/home-folders
+  aws iam get-policy-version --policy-arn arn:aws:iam::000000000000:policy/home-folders --version-id v1
+
+Is anything missing from the top of the document?

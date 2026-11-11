@@ -1,0 +1,4 @@
+The reviewer has no IAM policy, so the permission has to come from the bucket. Read the bucket policy and compare its Principal with the real user:
+
+  aws s3api get-bucket-policy --bucket harborprint-proofs --query Policy --output text
+  aws iam get-user --user-name proofreader
