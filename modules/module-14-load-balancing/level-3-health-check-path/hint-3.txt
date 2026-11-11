@@ -1,0 +1,5 @@
+Change only the health check path of the target group to the endpoint that returned 200 (the "z" ending one: healthz):
+
+  aws elbv2 modify-target-group --target-group-arn <arn> --health-check-path /healthz
+
+Two passing checks at 5-second intervals are needed, so wait roughly 10 seconds, then run check.

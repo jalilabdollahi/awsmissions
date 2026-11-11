@@ -1,0 +1,5 @@
+Swap the order of the two rules with one call (priorities just have to be unique, and the block rule has to be lower than the /api/* rule):
+
+  aws elbv2 set-rule-priorities --rule-priorities RuleArn=<arn of the /api/admin/* rule>,Priority=5 RuleArn=<arn of the /api/* rule>,Priority=10
+
+Then verify:  bash probe.sh /api/admin/users   (403)   and   bash probe.sh /api/orders/42   (API answer)

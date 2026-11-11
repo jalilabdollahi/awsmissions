@@ -1,0 +1,7 @@
+  aws autoscaling update-auto-scaling-group --auto-scaling-group-name saffron-green-asg --min-size 2 --desired-capacity 2
+
+Wait until two targets in saffron-green show "healthy". Then edit listener-actions.json: set green's Weight to 100 and blue's to 0 (keep both entries), and apply it:
+
+  aws elbv2 modify-listener --listener-arn <listener-arn> --default-actions file://listener-actions.json
+
+Verify with bash probe.sh: all 10 answers should say release 2.

@@ -1,0 +1,6 @@
+Repoint the group, then roll the fleet:
+
+  aws autoscaling update-auto-scaling-group --auto-scaling-group-name parcelway-asg --launch-template 'LaunchTemplateName=parcelway-lt,Version=$Latest'
+  aws autoscaling start-instance-refresh --auto-scaling-group-name parcelway-asg --preferences MinHealthyPercentage=50
+
+(Use single quotes so your shell does not eat the $.) Follow progress with describe-instance-refreshes, and use bash probe.sh to see the release.

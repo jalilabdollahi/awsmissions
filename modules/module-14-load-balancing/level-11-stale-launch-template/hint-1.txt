@@ -1,0 +1,6 @@
+First see what the group launches from, and what the instances were launched from:
+
+  aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names parcelway-asg
+  aws ec2 describe-launch-template-versions --launch-template-name parcelway-lt
+
+Compare the version the group references (and each instance's LaunchTemplate.Version) with the versions that exist.

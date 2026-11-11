@@ -1,0 +1,6 @@
+See what a visitor's browser gets back from port 80, then read how the listener builds that answer:
+
+  bash probe.sh "/pricing?plan=pro"
+  aws elbv2 describe-listeners --load-balancer-arn <arn of quillstone-alb>
+
+Compare the status line and Location header with what the objective asks for.

@@ -1,0 +1,6 @@
+The instances are fine and the load balancer is fine, so look at the thing that is supposed to connect them. Compare:
+
+  aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names orbit-dispatch-asg
+  aws elbv2 describe-target-health --target-group-arn <arn of orbit-dispatch>
+
+Which target groups does the Auto Scaling group list? Which instances does the target group list?

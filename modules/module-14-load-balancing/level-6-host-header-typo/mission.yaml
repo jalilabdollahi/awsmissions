@@ -1,0 +1,22 @@
+name: "One Letter Off"
+description: >-
+  HelixPay serves several hostnames from one load balancer, helix-alb, and picks
+  the fleet by the Host header: the customer app lives on portal.helixpay.example
+  and app.helixpay.example, while everything else lands on the marketing site.
+  After a DNS cleanup, support tickets say "portal works but app. shows the
+  marketing page". Both hostnames resolve to the load balancer correctly, and
+  both are meant to be served by the same fleet.
+objective: >-
+  Make both portal.helixpay.example and app.helixpay.example reach the customer
+  portal fleet through helix-alb, while any other host still lands on
+  the marketing fleet.
+xp: 170
+difficulty: intermediate
+expected_time: 9m
+concepts:
+  - host-header conditions
+  - listener rules
+  - virtual hosting
+services:
+  - elbv2
+  - ec2

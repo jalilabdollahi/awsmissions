@@ -1,0 +1,23 @@
+name: "Orphaned Fleet"
+description: >-
+  Orbit Rides' dispatch API moved to an Auto Scaling group, orbit-dispatch-asg,
+  behind the load balancer orbit-alb. The migration ticket is closed, the group
+  shows two InService instances, the instances answer when called directly, and
+  yet orbit-alb returns 503 to every rider app. An engineer's quick workaround
+  last week was to register the instance IDs by hand; the on-call knows that
+  would break the next time an instance is replaced.
+objective: >-
+  Wire the Auto Scaling group to the target group orbit-dispatch so that orbit-alb
+  serves traffic, and so that replacement instances join the target group on
+  their own without anyone running register-targets.
+xp: 260
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - Auto Scaling + load balancer integration
+  - attach target groups
+  - self-healing
+services:
+  - autoscaling
+  - elbv2
+  - ec2

@@ -1,0 +1,5 @@
+The service has no instances. Start with the Auto Scaling group itself and anything that touches its size:
+
+  aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names lumen-api-asg
+  aws autoscaling describe-scheduled-actions --auto-scaling-group-name lumen-api-asg
+  aws autoscaling describe-scaling-activities --auto-scaling-group-name lumen-api-asg

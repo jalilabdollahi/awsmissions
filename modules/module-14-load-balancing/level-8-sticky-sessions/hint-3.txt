@@ -1,0 +1,5 @@
+Change the attributes on the target group in one call:
+
+  aws elbv2 modify-target-group-attributes --target-group-arn <arn> --attributes Key=stickiness.enabled,Value=true Key=stickiness.type,Value=lb_cookie Key=stickiness.lb_cookie.duration_seconds,Value=86400
+
+Then run bash probe.sh -v again: you should see an AWSALB cookie and the same server name every time.

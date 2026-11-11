@@ -1,0 +1,7 @@
+Two things are unfinished: where traffic goes, and how big the new fleet is. See both:
+
+  aws elbv2 describe-listeners --load-balancer-arn <arn of saffron-alb>
+  aws elbv2 describe-target-health --target-group-arn <arn of saffron-green>
+  aws elbv2 describe-target-health --target-group-arn <arn of saffron-blue>
+
+Your workspace has listener-actions.json, a copy of the listener's current action. bash probe.sh shows who answers now.

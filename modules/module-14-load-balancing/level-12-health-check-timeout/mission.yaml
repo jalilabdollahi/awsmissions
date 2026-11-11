@@ -1,0 +1,23 @@
+name: "Out of Breath"
+description: >-
+  Fathomly's analytics dashboard API runs on two instances in the target group
+  fathomly-api behind fathomly-alb. Since the team added a "deep" dependency
+  probe to the /health endpoint, both targets bounce to unhealthy with the reason
+  Target.Timeout. The endpoint is not broken: asked directly it answers with
+  HTTP 200 and { "db": "ok" }, it just takes a while because it checks the
+  reporting database. The app also has a trivial /livez route that answers
+  instantly.
+objective: >-
+  Make both targets of fathomly-api healthy again with a health check that is
+  sane: it must fail fast enough to detect a real outage within about two
+  minutes, and its timing settings must be valid for the load balancer.
+xp: 300
+difficulty: advanced
+expected_time: 12m
+concepts:
+  - health check timeout and interval
+  - failure detection time
+  - Target.Timeout
+services:
+  - elbv2
+  - ec2

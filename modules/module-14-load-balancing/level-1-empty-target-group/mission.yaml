@@ -1,0 +1,20 @@
+name: "Ghost Town Storefront"
+description: >-
+  Pageturn Books put their storefront behind an Application Load Balancer last
+  night. The web server is up (an instance named pageturn-web-1), the load
+  balancer is active and has a listener on port 80, yet every visitor gets an
+  HTTP 503 error page. Nothing is wrong with the app itself; the load balancer
+  just has nowhere to send the traffic.
+objective: >-
+  Make http://pageturn-alb on port 80 serve the storefront from the pageturn-web-1
+  instance, and make sure the target group reports that instance as healthy.
+xp: 80
+difficulty: beginner
+expected_time: 6m
+concepts:
+  - target groups
+  - register targets
+  - ALB 503
+services:
+  - elbv2
+  - ec2

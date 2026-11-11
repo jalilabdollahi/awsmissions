@@ -1,0 +1,3 @@
+An Auto Scaling group registers its instances only with the target groups listed in its own configuration. This group lists none, so launches and replacements never reach orbit-dispatch.
+
+Registering instance IDs by hand would only help the two current instances. The permanent fix is to tell the group about the target group, so it registers every instance it launches, now and in the future.

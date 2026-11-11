@@ -1,0 +1,3 @@
+There is no "modify scheme" operation: a load balancer's scheme and type are set at creation. You need a new load balancer (internet-facing, subnets in at least two zones) and a copy of the old routing: a listener on the same port as the old one whose default action forwards to the web target group, plus both rules with the same conditions and actions.
+
+The target groups are separate objects. Reuse them; do not delete or recreate them.

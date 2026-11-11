@@ -1,0 +1,22 @@
+name: "Secure by Redirect"
+description: >-
+  Quillstone Publishing wants every visitor on plain HTTP to be bounced to HTTPS
+  by the load balancer quillstone-alb itself (the TLS listener on 443 is the
+  platform team's job and already exists elsewhere). The security review of the
+  existing port-80 redirect found three problems: browsers and search engines do
+  not remember it as the permanent move it should be, people clicking a link to
+  a deep page such as /pricing?plan=pro end up on the home page, and the redirect
+  points at a non-standard TLS port that firewalls often block.
+objective: >-
+  Make the port-80 listener of quillstone-alb answer every request with a
+  permanent redirect to the same host on the standard HTTPS port 443, keeping
+  the original path and query string.
+xp: 175
+difficulty: intermediate
+expected_time: 8m
+concepts:
+  - redirect action
+  - HTTP 301 vs 302
+  - redirect placeholders
+services:
+  - elbv2

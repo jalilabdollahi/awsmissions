@@ -1,0 +1,7 @@
+Watch what one shopper experiences, and what the load balancer hands out on the first response:
+
+  bash probe.sh -v
+
+Then look at the settings of the target group that holds the two servers:
+
+  aws elbv2 describe-target-group-attributes --target-group-arn <arn of kestrel-web>

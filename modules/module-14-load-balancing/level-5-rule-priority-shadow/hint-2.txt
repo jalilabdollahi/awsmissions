@@ -1,0 +1,3 @@
+Rules are evaluated in priority order, lowest number first, and the first match wins. The path /api/admin/users matches BOTH "/api/*" and "/api/admin/*". Whichever of those two rules has the smaller priority number gets the request, and the other one is never evaluated.
+
+The 403 rule must be checked before the broad API rule. Do not delete either rule: you need both behaviours.

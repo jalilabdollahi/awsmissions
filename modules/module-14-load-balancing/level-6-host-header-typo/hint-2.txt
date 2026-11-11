@@ -1,0 +1,1 @@
+Read the host-header values in the rule's condition very carefully, character by character. Host matching is literal: the load balancer does not know what you meant. One of the two names is spelled differently from what customers actually type, so those requests never match the rule and fall through to the marketing default.

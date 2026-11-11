@@ -1,0 +1,24 @@
+name: "Version One Forever"
+description: >-
+  Parcelway Courier's routing service runs in the Auto Scaling group
+  parcelway-asg behind parcelway-alb. Release 2.3 shipped with a bad startup
+  script: the service came up on the wrong port, and the group's two instances
+  have been failing health checks since. The developers fixed the script
+  yesterday and published it as a new version of the launch template
+  parcelway-lt. Instances keep launching with the old behaviour anyway, and
+  terminating them by hand just produces the same broken instances again.
+objective: >-
+  Get parcelway-alb serving release 2.4 from healthy instances. Every instance in
+  the group must be running the corrected launch template version, and the
+  group itself must be set up so future instances use it too.
+xp: 280
+difficulty: advanced
+expected_time: 14m
+concepts:
+  - launch template versions
+  - instance refresh
+  - ASG launch template reference
+services:
+  - autoscaling
+  - ec2
+  - elbv2

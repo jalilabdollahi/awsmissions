@@ -1,0 +1,5 @@
+Repoint the listener's default action at the production target group:
+
+  aws elbv2 modify-listener --listener-arn <listener-arn> --default-actions Type=forward,TargetGroupArn=<arn of portal-prod>
+
+Do not delete portal-staging or deregister its instance: testers still need it.

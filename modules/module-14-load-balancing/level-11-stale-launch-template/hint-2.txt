@@ -1,0 +1,3 @@
+Launch template versions never change after they are created, and a group uses exactly the version it references. This group references version 1, so even instances launched after the fix come out broken.
+
+Two things have to happen: the group's reference must move to the corrected version (a number, $Latest or $Default all work if they resolve to the right one), and the already-running instances must be replaced, since they keep their old configuration for life.

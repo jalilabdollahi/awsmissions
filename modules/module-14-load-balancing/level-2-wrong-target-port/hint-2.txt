@@ -1,0 +1,3 @@
+The instance was registered with a port override. A registered target is the pair (instance id, port), and the load balancer uses that port for both traffic and health checks, no matter what the target group's own port says.
+
+There is no "modify" call for a registered target. You have to remove that registration and add it again.

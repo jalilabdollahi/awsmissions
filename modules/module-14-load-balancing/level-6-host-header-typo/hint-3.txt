@@ -1,0 +1,5 @@
+Replace the rule's conditions with both hostnames spelled correctly. modify-rule overwrites the whole list, so send both values:
+
+  aws elbv2 modify-rule --rule-arn <rule-arn> --conditions '[{"Field":"host-header","Values":["portal.helixpay.example","app.helixpay.example"]}]'
+
+Do not switch to a catch-all pattern like "*": other hosts must still reach the marketing site.

@@ -1,0 +1,6 @@
+Ask the load balancer for the exact reason and compare it with how the check is configured:
+
+  aws elbv2 describe-target-health --target-group-arn <arn of fathomly-api>
+  aws elbv2 describe-target-groups --names fathomly-api
+
+Then time the endpoint yourself: bash probe.sh /health   and   bash probe.sh /livez
