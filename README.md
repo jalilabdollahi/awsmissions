@@ -55,7 +55,8 @@ What `install.sh` does:
 - builds the level registry (`levels.json`, `MODULES.md`)
 
 `./play.sh` starts the emulator container (`awsmissions-floci`, port 4566) on
-first use and keeps it running between sessions. `./play.sh --stop` stops it.
+first use and keeps it running between sessions. `./play.sh --stop` stops it and
+removes the EC2, Lambda and ECS containers the emulator started.
 
 ---
 
@@ -104,7 +105,8 @@ A plain terminal uses **your real AWS credentials**. Point it at the emulator fi
 eval "$(./play.sh --env)"
 ```
 
-This hides `~/.aws` profiles, sets the local endpoint and test credentials, and prefixes your prompt with `(awsmissions)`.
+This hides `~/.aws` profiles, sets the local endpoint and test credentials
+(plus `AWSMISSIONS_PORT` and `AWSMISSIONS_NAMESPACE`), and prefixes your prompt with `(awsmissions)`.
 
 ---
 
@@ -154,6 +156,7 @@ The full contract for contributors is in [LEVEL_SPEC.md](LEVEL_SPEC.md).
 # setup → validate must FAIL → solution → validate must PASS → setup repeatable
 .venv/bin/python scripts/test_levels.py modules/module-1-iam
 .venv/bin/python scripts/test_levels.py modules/module-3-lambda/level-7-*
+.venv/bin/python scripts/test_levels.py modules        # every level, in curriculum order
 
 # run on a separate emulator so it doesn't disturb a game in progress
 AWSMISSIONS_PORT=4601 .venv/bin/python scripts/test_levels.py modules/module-2-s3
@@ -242,6 +245,11 @@ the emulator differs from real AWS.
   takes a few seconds.
 - The first Lambda invoke of a runtime pulls and starts a container, which can
   take about 10 seconds.
+- Containers Floci spawns (EC2 instances, Lambda functions, ECS tasks) are
+  named `floci-aws-<namespace>-<service>-...`. The namespace is `awsmissions`
+  on the default port 4566 and `awsm<port>` on any other port, so parallel
+  emulators never collide. Spawned containers and networks are removed whenever
+  the engine restarts or stops the emulator.
 
 ---
 
